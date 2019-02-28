@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mq.mapper.MenuMapper">
+    <resultMap id="BaseResultMap" type="com.mq.model.Menu">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="m_name" property="mName" jdbcType="VARCHAR"/>
+        <result column="pid" property="pid" jdbcType="BIGINT"/>
+        <result column="icon" property="icon" jdbcType="VARCHAR"/>
+        <result column="sort" property="sort" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="del_flag" property="delFlag" jdbcType="INTEGER"/>
+        <result column="url" property="url" jdbcType="VARCHAR"/>
+    </resultMap>
+    <resultMap id="MenuTree" type="com.mq.vo.MenuTree">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="m_name" property="mName" jdbcType="VARCHAR"/>
+        <result column="pid" property="pid" jdbcType="BIGINT"/>
+        <result column="icon" property="icon" jdbcType="VARCHAR"/>
+        <result column="sort" property="sort" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="del_flag" property="delFlag" jdbcType="INTEGER"/>
+        <result column="url" property="url" jdbcType="VARCHAR"/>
+        <result column="eid" property="eid" jdbcType="BIGINT"/>
+        <collection property="child" ofType="com.mq.vo.MenuTree" column="{id=id, eid=eid}" select="findMenuByParentId"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, m_name, pid, icon, sort, create_time, update_time, del_flag, url
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from t_menu
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_menu
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.mq.model.Menu">
+    insert into t_menu (id, m_name, pid, 
+      icon, sort, create_time, 
+      update_time, del_flag, url
+      )
+    values (#{id,jdbcType=BIGINT}, #{mName,jdbcType=VARCHAR}, #{pid,jdbcType=BIGINT}, 
+      #{icon,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP},
+      #{updateTime,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.mq.model.Menu">
+        insert into t_menu
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="mName != null">
+                m_name,
+            </if>
+            <if test="pid != null">
+                pid,
+            </if>
+            <if test="icon != null">
+                icon,
+            </if>
+            <if test="sort != null">
+                sort,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="delFlag != null">
+                del_flag,
+            </if>
+            <if test="url != null">
+                url,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="mName != null">
+                #{mName,jdbcType=VARCHAR},
+            </if>
+            <if test="pid != null">
+                #{pid,jdbcType=BIGINT},
+            </if>
+            <if test="icon != null">
+                #{icon,jdbcType=VARCHAR},
+            </if>
+            <if test="sort != null">
+                #{sort,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag,jdbcType=INTEGER},
+            </if>
+            <if test="url != null">
+                #{url,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.mq.model.Menu">
+        update t_menu
+        <set>
+            <if test="mName != null">
+                m_name = #{mName,jdbcType=VARCHAR},
+            </if>
+            <if test="pid != null">
+                pid = #{pid,jdbcType=BIGINT},
+            </if>
+            <if test="icon != null">
+                icon = #{icon,jdbcType=VARCHAR},
+            </if>
+            <if test="sort != null">
+                sort = #{sort,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delFlag != null">
+                del_flag = #{delFlag,jdbcType=INTEGER},
+            </if>
+            <if test="url != null">
+                url = #{url,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.mq.model.Menu">
+    update t_menu
+    set m_name = #{mName,jdbcType=VARCHAR},
+      pid = #{pid,jdbcType=BIGINT},
+      icon = #{icon,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      del_flag = #{delFlag,jdbcType=INTEGER},
+      url = #{url,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+    <select id="selectMenuTree" resultMap="MenuTree" parameterType="java.lang.Long">
+    select
+      m.id, m.m_name, m.pid, m.icon, m.sort, m.create_time, m.update_time, m.del_flag, m.url
+        <if test="_parameter != null">
+            , em.eid
+        </if>
+        <if test="_parameter == null">
+            , null as eid
+        </if>
+    from t_menu m
+        <if test="_parameter != null">
+            left join t_emp_menu em on m.id = em.mid
+            where m.pid = 0
+            and em.eid = #{employeeId,jdbcType=BIGINT}
+        </if>
+        <if test="_parameter == null">
+            where m.pid = 0
+        </if>
+      order by m.sort asc
+  </select>
+    <select id="findMenuByParentId" resultMap="MenuTree">
+        select
+          m.id, m.m_name, m.pid, m.icon, m.sort, m.create_time, m.update_time, m.del_flag, m.url
+            <if test="eid != null">
+                , em.eid
+            </if>
+            <if test="eid == null">
+                , null as eid
+            </if>
+        from t_menu m
+            <if test="eid != null">
+                left join t_emp_menu em on m.id = em.mid
+                where m.pid = #{id, jdbcType=BIGINT}
+                and em.eid = #{eid, jdbcType=BIGINT}
+            </if>
+            <if test="eid == null">
+                where m.pid = #{id, jdbcType=BIGINT}
+            </if>
+          order by m.sort asc
+    </select>
+</mapper>

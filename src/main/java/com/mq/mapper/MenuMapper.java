@@ -1,0 +1,22 @@
+package com.mq.mapper;
+
+import com.mq.model.Menu;
+import com.mq.vo.MenuTree;
+
+import java.util.List;
+
+public interface MenuMapper {
+    int deleteByPrimaryKey(Long id);
+
+    int insert(Menu record);
+
+    int insertSelective(Menu record);
+
+    Menu selectByPrimaryKey(Long id);
+
+    int updateByPrimaryKeySelective(Menu record);
+
+    int updateByPrimaryKey(Menu record);
+
+    List<MenuTree> selectMenuTree(Long employeeId);
+}

@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mq.mapper.VideoMapper" >
+  <resultMap id="BaseResultMap" type="com.mq.model.Video" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="subtitle" property="subtitle" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="watched" property="watched" jdbcType="INTEGER" />
+    <result column="purchased" property="purchased" jdbcType="INTEGER" />
+    <result column="cover_real_name" property="coverRealName" jdbcType="VARCHAR" />
+    <result column="description_real_name" property="descriptionRealName" jdbcType="VARCHAR" />
+    <result column="video_real_name" property="videoRealName" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="del_flag" property="delFlag" jdbcType="INTEGER" />
+    <result column="classification" property="classification" jdbcType="BIGINT" />
+    <result column="share_commission" property="shareCommission" jdbcType="DECIMAL" />
+    <result column="accessed" property="accessed" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="cover_name" property="coverName" jdbcType="VARCHAR" />
+    <result column="description_name" property="descriptionName" jdbcType="VARCHAR" />
+    <result column="video_name" property="videoName" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="VoResultMap" type="com.mq.vo.VideoVo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="subtitle" property="subtitle" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="watched" property="watched" jdbcType="INTEGER" />
+    <result column="purchased" property="purchased" jdbcType="INTEGER" />
+    <result column="cover_real_name" property="coverRealName" jdbcType="VARCHAR" />
+    <result column="description_real_name" property="descriptionRealName" jdbcType="VARCHAR" />
+    <result column="video_real_name" property="videoRealName" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="del_flag" property="delFlag" jdbcType="INTEGER" />
+    <result column="classification" property="classification" jdbcType="BIGINT" />
+    <result column="classification_name" property="classificationName" jdbcType="VARCHAR" />
+    <result column="share_commission" property="shareCommission" jdbcType="DECIMAL" />
+    <result column="accessed" property="accessed" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="cover_name" property="coverName" jdbcType="VARCHAR" />
+    <result column="description_name" property="descriptionName" jdbcType="VARCHAR" />
+    <result column="video_name" property="videoName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, title, subtitle, price, watched, purchased, cover_real_name, description_real_name, 
+    video_real_name, create_time, update_time, del_flag, classification, share_commission, 
+    accessed, status, cover_name, description_name, video_name
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_video
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_video
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.mq.model.Video" >
+    insert into t_video (id, title, subtitle, 
+      price, watched, purchased, 
+      cover_real_name, description_real_name, video_real_name, 
+      create_time, update_time, del_flag, 
+      classification, share_commission, accessed, 
+      status, cover_name, description_name, 
+      video_name)
+    values (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{subtitle,jdbcType=VARCHAR}, 
+      #{price,jdbcType=DECIMAL}, #{watched,jdbcType=INTEGER}, #{purchased,jdbcType=INTEGER},
+      #{coverRealName,jdbcType=VARCHAR}, #{descriptionRealName,jdbcType=VARCHAR}, #{videoRealName,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=INTEGER}, 
+      #{classification,jdbcType=BIGINT}, #{shareCommission,jdbcType=DECIMAL}, #{accessed,jdbcType=INTEGER},
+      #{status,jdbcType=VARCHAR}, #{coverName,jdbcType=VARCHAR}, #{descriptionName,jdbcType=VARCHAR}, 
+      #{videoName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mq.model.Video" >
+    insert into t_video
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="subtitle != null" >
+        subtitle,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="watched != null" >
+        watched,
+      </if>
+      <if test="purchased != null" >
+        purchased,
+      </if>
+      <if test="coverRealName != null" >
+        cover_real_name,
+      </if>
+      <if test="descriptionRealName != null" >
+        description_real_name,
+      </if>
+      <if test="videoRealName != null" >
+        video_real_name,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+      <if test="classification != null" >
+        classification,
+      </if>
+      <if test="shareCommission != null" >
+        share_commission,
+      </if>
+      <if test="accessed != null" >
+        accessed,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="coverName != null" >
+        cover_name,
+      </if>
+      <if test="descriptionName != null" >
+        description_name,
+      </if>
+      <if test="videoName != null" >
+        video_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="subtitle != null" >
+        #{subtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="watched != null" >
+        #{watched,jdbcType=INTEGER},
+      </if>
+      <if test="purchased != null" >
+        #{purchased,jdbcType=INTEGER},
+      </if>
+      <if test="coverRealName != null" >
+        #{coverRealName,jdbcType=VARCHAR},
+      </if>
+      <if test="descriptionRealName != null" >
+        #{descriptionRealName,jdbcType=VARCHAR},
+      </if>
+      <if test="videoRealName != null" >
+        #{videoRealName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=INTEGER},
+      </if>
+      <if test="classification != null" >
+        #{classification,jdbcType=BIGINT},
+      </if>
+      <if test="shareCommission != null" >
+        #{shareCommission,jdbcType=DECIMAL},
+      </if>
+      <if test="accessed != null" >
+        #{accessed,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="coverName != null" >
+        #{coverName,jdbcType=VARCHAR},
+      </if>
+      <if test="descriptionName != null" >
+        #{descriptionName,jdbcType=VARCHAR},
+      </if>
+      <if test="videoName != null" >
+        #{videoName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mq.model.Video" >
+    update t_video
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="subtitle != null" >
+        subtitle = #{subtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="watched != null" >
+        watched = #{watched,jdbcType=INTEGER},
+      </if>
+      <if test="purchased != null" >
+        purchased = #{purchased,jdbcType=INTEGER},
+      </if>
+      <if test="coverRealName != null" >
+        cover_real_name = #{coverRealName,jdbcType=VARCHAR},
+      </if>
+      <if test="descriptionRealName != null" >
+        description_real_name = #{descriptionRealName,jdbcType=VARCHAR},
+      </if>
+      <if test="videoRealName != null" >
+        video_real_name = #{videoRealName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=INTEGER},
+      </if>
+      <if test="classification != null" >
+        classification = #{classification,jdbcType=BIGINT},
+      </if>
+      <if test="shareCommission != null" >
+        share_commission = #{shareCommission,jdbcType=DECIMAL},
+      </if>
+      <if test="accessed != null" >
+        accessed = #{accessed,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="coverName != null" >
+        cover_name = #{coverName,jdbcType=VARCHAR},
+      </if>
+      <if test="descriptionName != null" >
+        description_name = #{descriptionName,jdbcType=VARCHAR},
+      </if>
+      <if test="videoName != null" >
+        video_name = #{videoName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mq.model.Video" >
+    update t_video
+    set title = #{title,jdbcType=VARCHAR},
+      subtitle = #{subtitle,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      watched = #{watched,jdbcType=INTEGER},
+      purchased = #{purchased,jdbcType=INTEGER},
+      cover_real_name = #{coverRealName,jdbcType=VARCHAR},
+      description_real_name = #{descriptionRealName,jdbcType=VARCHAR},
+      video_real_name = #{videoRealName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      del_flag = #{delFlag,jdbcType=INTEGER},
+      classification = #{classification,jdbcType=BIGINT},
+      share_commission = #{shareCommission,jdbcType=DECIMAL},
+      accessed = #{accessed,jdbcType=INTEGER},
+      status = #{status,jdbcType=VARCHAR},
+      cover_name = #{coverName,jdbcType=VARCHAR},
+      description_name = #{descriptionName,jdbcType=VARCHAR},
+      video_name = #{videoName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectByQuery" parameterType="com.mq.query.VideoQuery" resultMap="VoResultMap">
+    select
+    v.id, v.title, v.subtitle, v.price, v.watched, v.purchased, v.cover_real_name, v.description_real_name, v.video_real_name,
+    v.create_time, v.update_time, v.del_flag, v.classification, v.share_commission, v.accessed, v.status, v.cover_name,
+    v.description_name, v.video_name, vc.v_name as classification_name
+    from t_video v
+    left join t_video_classification vc on v.classification = vc.id
+    where v.del_flag = 0
+    <if test="title != null and title != ''" >
+      and v.title like concat(concat("%",#{title}),"%")
+    </if>
+    <if test="subtitle != null" >
+      and v.subtitle = #{subtitle,jdbcType=VARCHAR}
+    </if>
+    <if test="price != null" >
+      and v.price = #{price,jdbcType=DECIMAL}
+    </if>
+    <if test="watched != null" >
+      and v.watched = #{watched,jdbcType=INTEGER}
+    </if>
+    <if test="purchased != null" >
+      and v.purchased = #{purchased,jdbcType=INTEGER}
+    </if>
+    <if test="coverRealName != null" >
+      and v.cover_real_name = #{coverRealName,jdbcType=VARCHAR}
+    </if>
+    <if test="descriptionRealName != null" >
+      and v.description_real_name = #{descriptionRealName,jdbcType=VARCHAR}
+    </if>
+    <if test="videoRealName != null" >
+      and v.video_real_name = #{videoRealName,jdbcType=VARCHAR}
+    </if>
+    <if test="createTime != null" >
+      and v.create_time = #{createTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="createTimeBegin != null" >
+      and v.create_time &gt;= #{createTimeBegin,jdbcType=TIMESTAMP}
+    </if>
+    <if test="createTimeEnd != null" >
+      and v.create_time &lt;= #{createTimeEnd,jdbcType=TIMESTAMP}
+    </if>
+    <if test="updateTime != null" >
+      and v.update_time = #{updateTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="updateTimeBegin != null" >
+      and v.update_time &gt;= #{updateTimeBegin,jdbcType=TIMESTAMP}
+    </if>
+    <if test="updateTimeEnd != null" >
+      and v.update_time &lt;= #{updateTimeEnd,jdbcType=TIMESTAMP}
+    </if>
+    <if test="delFlag != null" >
+      and v.del_flag = #{delFlag,jdbcType=INTEGER}
+    </if>
+    <if test="classification != null" >
+      and v.classification = #{classification,jdbcType=BIGINT}
+    </if>
+    <if test="shareCommission != null" >
+      and v.share_commission = #{shareCommission,jdbcType=DECIMAL}
+    </if>
+    <if test="accessed != null" >
+      and v.accessed = #{accessed,jdbcType=INTEGER}
+    </if>
+    <if test="status != null" >
+      and v.status = #{status,jdbcType=VARCHAR}
+    </if>
+    <if test="coverName != null" >
+      and v.cover_name = #{coverName,jdbcType=VARCHAR}
+    </if>
+    <if test="descriptionName != null" >
+      and v.description_name = #{descriptionName,jdbcType=VARCHAR}
+    </if>
+    <if test="videoName != null" >
+      and v.video_name = #{videoName,jdbcType=VARCHAR}
+    </if>
+  </select>
+  <select id="selectNums" parameterType="com.mq.query.VideoQuery" resultType="java.lang.Long">
+    select count(1) from t_video
+    where del_flag = 0
+    <if test="title != null and title != ''" >
+      and title like concat(concat("%",#{title}),"%")
+    </if>
+    <if test="subtitle != null" >
+      and subtitle = #{subtitle,jdbcType=VARCHAR}
+    </if>
+    <if test="price != null" >
+      and price = #{price,jdbcType=DECIMAL}
+    </if>
+    <if test="watched != null" >
+      and watched = #{watched,jdbcType=INTEGER}
+    </if>
+    <if test="purchased != null" >
+      and purchased = #{purchased,jdbcType=INTEGER}
+    </if>
+    <if test="coverRealName != null" >
+      and v.cover_real_name = #{coverRealName,jdbcType=VARCHAR}
+    </if>
+    <if test="descriptionRealName != null" >
+      and v.description_real_name = #{descriptionRealName,jdbcType=VARCHAR}
+    </if>
+    <if test="videoRealName != null" >
+      and v.video_real_name = #{videoRealName,jdbcType=VARCHAR}
+    </if>
+    <if test="createTime != null" >
+      and create_time = #{createTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="createTimeBegin != null" >
+      and create_time &gt;= #{createTimeBegin,jdbcType=TIMESTAMP}
+    </if>
+    <if test="createTimeEnd != null" >
+      and create_time &lt;= #{createTimeEnd,jdbcType=TIMESTAMP}
+    </if>
+    <if test="updateTime != null" >
+      and update_time = #{updateTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="updateTimeBegin != null" >
+      and update_time &gt;= #{updateTimeBegin,jdbcType=TIMESTAMP}
+    </if>
+    <if test="updateTimeEnd != null" >
+      and update_time &lt;= #{updateTimeEnd,jdbcType=TIMESTAMP}
+    </if>
+    <if test="delFlag != null" >
+      and del_flag = #{delFlag,jdbcType=INTEGER}
+    </if>
+    <if test="classification != null" >
+      and classification = #{classification,jdbcType=BIGINT}
+    </if>
+    <if test="shareCommission != null" >
+      and share_commission = #{shareCommission,jdbcType=DECIMAL}
+    </if>
+    <if test="accessed != null" >
+      and accessed = #{accessed,jdbcType=INTEGER}
+    </if>
+    <if test="status != null" >
+      and v.status = #{status,jdbcType=VARCHAR}
+    </if>
+    <if test="coverName != null" >
+      and v.cover_name = #{coverName,jdbcType=VARCHAR}
+    </if>
+    <if test="descriptionName != null" >
+      and v.description_name = #{descriptionName,jdbcType=VARCHAR}
+    </if>
+    <if test="videoName != null" >
+      and v.video_name = #{videoName,jdbcType=VARCHAR}
+    </if>
+  </select>
+</mapper>
