@@ -201,7 +201,7 @@
     var ctx = "${ctx}";
     var image = "${image}";
     var video = "${video}";
-    var cur = "${curEmp.id}"
+    var cur = "${curEmp.id}";
 </script>
 <script src="${ctx }/static/js/video.js"></script>
 </html>

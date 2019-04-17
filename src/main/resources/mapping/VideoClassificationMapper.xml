@@ -155,9 +155,6 @@
     <if test="updateTimeEnd != null" >
       and update_time &lt;= #{updateTimeEnd,jdbcType=TIMESTAMP}
     </if>
-    <if test="delFlag != null" >
-      and del_flag = #{delFlag,jdbcType=INTEGER}
-    </if>
     <if test="sort != null" >
       and sort = #{sort,jdbcType=INTEGER}
     </if>
@@ -194,9 +191,6 @@
     </if>
     <if test="updateTimeEnd != null" >
       and update_time &lt;= #{updateTimeEnd,jdbcType=TIMESTAMP}
-    </if>
-    <if test="delFlag != null" >
-      and del_flag = #{delFlag,jdbcType=INTEGER}
     </if>
     <if test="sort != null" >
       and sort = #{sort,jdbcType=INTEGER}

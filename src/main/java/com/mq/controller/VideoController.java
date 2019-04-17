@@ -6,7 +6,7 @@ import com.mq.model.Video;
 import com.mq.model.VideoClassification;
 import com.mq.query.VideoClassificationQuery;
 import com.mq.query.VideoQuery;
-import com.mq.service.VideoConfigService;
+import com.mq.service.BasicConfigService;
 import com.mq.service.VideoService;
 import com.mq.vo.Page;
 import com.mq.vo.VideoVo;
@@ -25,7 +25,7 @@ public class VideoController extends BaseController {
     @Resource
     private VideoService videoService;
     @Resource
-    private VideoConfigService videoConfigService;
+    private BasicConfigService basicConfigService;
 
     @RequestMapping("/index")
     public String index() {
@@ -42,7 +42,7 @@ public class VideoController extends BaseController {
     @RequestMapping("/findAllClassification")
     @ResponseBody
     public String findAllClassification() {
-        List<VideoClassification> classifications = videoConfigService.findClassification(new VideoClassificationQuery());
+        List<VideoClassification> classifications = basicConfigService.findClassification(new VideoClassificationQuery());
         return JSON.toJSONString(classifications);
     }
 

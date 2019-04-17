@@ -7,6 +7,7 @@ import com.mq.model.Employee;
 import com.mq.query.EmployeeQuery;
 import com.mq.service.EmployeeService;
 import com.mq.util.DateUtil;
+import com.mq.util.FileUtil;
 import com.mq.util.MD5Util;
 import com.mq.util.PageUtil;
 import com.mq.vo.Page;
@@ -99,7 +100,7 @@ public class EmployeeServiceImpl implements EmployeeService {
          */
         if (employee.getId() == null) {
             employeeMapper.insertSelective(employee);
-            persistAvatar(avatar, employee.getAvatarRealName());
+            FileUtil.persistFile(avatar, employee.getAvatarRealName(), GlobalConstants.IMAGE_PATH);
         }
         /**
          * 更新员工信息
@@ -112,17 +113,10 @@ public class EmployeeServiceImpl implements EmployeeService {
              */
             if (!StringUtils.isEmpty(employee.getAvatarRealName())) {
                 String avatarRealPath = GlobalConstants.IMAGE_PATH.concat(byPrimaryKey.getAvatarRealName());
-                File delete = new File(avatarRealPath);
-                delete.delete();
-                persistAvatar(avatar, employee.getAvatarRealName());
+                FileUtil.removeFile(avatarRealPath);
+                FileUtil.persistFile(avatar, employee.getAvatarRealName(), GlobalConstants.IMAGE_PATH);
             }
         }
-    }
-
-    private void persistAvatar(MultipartFile avatar, String realName) throws IOException {
-        String avatarRealPath = GlobalConstants.IMAGE_PATH.concat(realName);
-        File dest = new File(avatarRealPath);
-        avatar.transferTo(dest);
     }
 
     @Override

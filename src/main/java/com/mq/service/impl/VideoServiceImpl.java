@@ -6,6 +6,7 @@ import com.mq.mapper.VideoMapper;
 import com.mq.model.Video;
 import com.mq.query.VideoQuery;
 import com.mq.service.VideoService;
+import com.mq.util.FileUtil;
 import com.mq.util.PageUtil;
 import com.mq.vo.Page;
 import com.mq.vo.VideoVo;
@@ -19,6 +20,7 @@ import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -108,8 +110,8 @@ public class VideoServiceImpl implements VideoService {
          */
         if (video.getId() == null) {
             videoMapper.insertSelective(video);
-            persistFile(cover, GlobalConstants.IMAGE_PATH, video.getCoverRealName());
-            persistFile(description, GlobalConstants.IMAGE_PATH, video.getDescriptionRealName());
+            FileUtil.persistFile(cover, video.getCoverRealName(), GlobalConstants.IMAGE_PATH);
+            FileUtil.persistFile(description, video.getDescriptionRealName(), GlobalConstants.IMAGE_PATH);
         }
         /**
          * 更新视频信息
@@ -124,7 +126,7 @@ public class VideoServiceImpl implements VideoService {
                 String coverRealPath = GlobalConstants.IMAGE_PATH.concat(byPrimaryKey.getCoverRealName());
                 File delete = new File(coverRealPath);
                 delete.delete();
-                persistFile(cover, GlobalConstants.IMAGE_PATH, video.getCoverRealName());
+                FileUtil.persistFile(cover, video.getCoverRealName(), GlobalConstants.IMAGE_PATH);
             }
             /**
              * 更新了视频描述
@@ -133,15 +135,9 @@ public class VideoServiceImpl implements VideoService {
                 String descriptionRealPath = GlobalConstants.IMAGE_PATH.concat(byPrimaryKey.getDescriptionRealName());
                 File delete = new File(descriptionRealPath);
                 delete.delete();
-                persistFile(description, GlobalConstants.IMAGE_PATH, video.getDescriptionRealName());
+                FileUtil.persistFile(description, video.getDescriptionRealName(), GlobalConstants.IMAGE_PATH);
             }
         }
-    }
-
-    private void persistFile(MultipartFile file, String type, String realName) throws IOException {
-        String realPath = type.concat(realName);
-        File dest = new File(realPath);
-        file.transferTo(dest);
     }
 
     @Override
@@ -155,13 +151,12 @@ public class VideoServiceImpl implements VideoService {
         Video video = videoMapper.selectByPrimaryKey(id);
         video.setDelFlag(1);
         video.setUpdateTime(new Date());
+        videoMapper.updateByPrimaryKeySelective(video);
+
         String coverPath = GlobalConstants.IMAGE_PATH.concat(video.getCoverRealName());
         String descriptionPath = GlobalConstants.IMAGE_PATH.concat(video.getDescriptionRealName());
-        File cover = new File(coverPath);
-        File description = new File(descriptionPath);
-        videoMapper.updateByPrimaryKeySelective(video);
-        cover.delete();
-        description.delete();
+        FileUtil.removeFile(coverPath);
+        FileUtil.removeFile(descriptionPath);
     }
 
     @Override
@@ -194,6 +189,11 @@ public class VideoServiceImpl implements VideoService {
         byPrimaryKey.setUpdateTime(new Date());
         byPrimaryKey.setStatus(GlobalConstants.UN_RELEASED);
         videoMapper.updateByPrimaryKeySelective(byPrimaryKey);
-        persistFile(video, GlobalConstants.VIDEO_PATH, byPrimaryKey.getVideoRealName());
+        FileUtil.persistFile(video, byPrimaryKey.getVideoRealName(), GlobalConstants.VIDEO_PATH);
+    }
+
+    @Override
+    public List<VideoVo> find(VideoQuery query) {
+        return videoMapper.selectByQuery(query);
     }
 }
