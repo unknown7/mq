@@ -1,7 +1,9 @@
 package com.mq.wx.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.mq.base.GlobalConstants;
+import com.mq.util.MD5Util;
 import com.mq.util.WxDecrptUtil;
 import com.mq.wx.vo.LoginResponse;
 import com.mq.wx.vo.LoginRequest;
@@ -43,9 +45,10 @@ public class LoginController {
                 String.class
         ).getBody();
         LoginResponse loginResponse = JSONObject.parseObject(result, LoginResponse.class);
-        JSONObject userInfo = WxDecrptUtil.getUserInfo(request.getEncryptedData(), loginResponse.getSession_key(), request.getIv());
-        System.err.println(userInfo);
 
-        return null;
+        JSONObject userInfo = WxDecrptUtil.getUserInfo(request.getEncryptedData(), loginResponse.getSession_key(), request.getIv());
+        // TODO: 2019/4/18  保存用户信息
+
+        return JSON.toJSONString(MD5Util.getEncryption(loginResponse.getSession_key()));
     }
 }
