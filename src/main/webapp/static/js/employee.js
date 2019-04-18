@@ -232,7 +232,7 @@ $(function () {
         e.stopPropagation();
     });
 
-    $('#query').on('click', function (e) {
+    $('#vo').on('click', function (e) {
         $('#table').DataTable().ajax.reload();
     });
     $('#clear').on('click', function (e) {
