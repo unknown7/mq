@@ -46,7 +46,6 @@ public class LoginController {
         JSONObject userInfo = WxDecrptUtil.getUserInfo(request.getEncryptedData(), loginResponse.getSession_key(), request.getIv());
         System.err.println(userInfo);
 
-
         return null;
     }
 }
