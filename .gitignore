@@ -17,6 +17,7 @@
 *.ipr
 *.mvn
 *.cmd
+*.p12
 mvnw
 
 ### NetBeans ###
