@@ -155,17 +155,21 @@ public class VideoServiceImpl implements VideoService {
 
     @Override
     public VideoVo selectOneWithAuthById(Long id, String skey) {
+        boolean isPurchased = false;
         Video video = videoMapper.selectByPrimaryKey(id);
         UserVo userVo = GlobalConstants.USER_CACHE.get(skey);
-        OrderQuery query = new OrderQuery();
-        query.setGoodsType(GlobalConstants.PurchaseType.VIDEO.getKey());
-        query.setUserId(userVo.getId());
-        query.setGoodsId(video.getId());
-        List<Order> orders = orderMapper.selectByQuery(query);
+        if (userVo != null) {
+            OrderQuery query = new OrderQuery();
+            query.setGoodsType(GlobalConstants.PurchaseType.VIDEO.getKey());
+            query.setUserId(userVo.getId());
+            query.setGoodsId(video.getId());
+            List<Order> orders = orderMapper.selectByQuery(query);
+            isPurchased = !orders.isEmpty();
+        }
 
         VideoVo videoVo = new VideoVo();
         BeanUtils.copyProperties(video, videoVo);
-        videoVo.setIsPurchased(!orders.isEmpty());
+        videoVo.setIsPurchased(isPurchased);
         return videoVo;
     }
 

@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Configuration
-public class VideoSecurityConfig implements WebMvcConfigurer {
+public class WxSecurityConfig implements WebMvcConfigurer {
 
     @Bean
     public VideoSecurityInterceptor getVideoSecurityInterceptor() {
@@ -23,6 +23,9 @@ public class VideoSecurityConfig implements WebMvcConfigurer {
         addInterceptor.excludePathPatterns("/wx/index/**")
                         .excludePathPatterns("/wx/auth")
                         .excludePathPatterns("/wx/saveUser")
+                        .excludePathPatterns("/wx/listUserCache")
+                        .excludePathPatterns("/wx/clearUserCache")
+                        .excludePathPatterns("/wx/video/getVideo")
                         .addPathPatterns("/wx/**");
     }
 
