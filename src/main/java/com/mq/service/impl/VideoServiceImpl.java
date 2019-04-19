@@ -2,14 +2,20 @@ package com.mq.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.mq.base.GlobalConstants;
+import com.mq.mapper.OrderMapper;
 import com.mq.mapper.VideoMapper;
+import com.mq.model.Order;
 import com.mq.model.Video;
+import com.mq.query.OrderQuery;
 import com.mq.query.VideoQuery;
 import com.mq.service.VideoService;
 import com.mq.util.FileUtil;
 import com.mq.util.PageUtil;
 import com.mq.vo.Page;
+import com.mq.vo.UserVo;
 import com.mq.vo.VideoVo;
+import jdk.nashorn.internal.objects.Global;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -27,6 +33,8 @@ import java.util.UUID;
 public class VideoServiceImpl implements VideoService {
     @Resource
     private VideoMapper videoMapper;
+    @Resource
+    private OrderMapper orderMapper;
 
     @Override
     public Page<VideoVo> findPage(VideoQuery query) {
@@ -143,6 +151,22 @@ public class VideoServiceImpl implements VideoService {
     @Override
     public Video selectOneById(Long id) {
         return videoMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public VideoVo selectOneWithAuthById(Long id, String skey) {
+        Video video = videoMapper.selectByPrimaryKey(id);
+        UserVo userVo = GlobalConstants.USER_CACHE.get(skey);
+        OrderQuery query = new OrderQuery();
+        query.setGoodsType(GlobalConstants.PurchaseType.VIDEO.getKey());
+        query.setUserId(userVo.getId());
+        query.setGoodsId(video.getId());
+        List<Order> orders = orderMapper.selectByQuery(query);
+
+        VideoVo videoVo = new VideoVo();
+        BeanUtils.copyProperties(video, videoVo);
+        videoVo.setIsPurchased(!orders.isEmpty());
+        return videoVo;
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.mq.wx.vo;
 
-public class LoginResponse {
+public class AuthResponse {
     private String session_key;
     private String openid;
 

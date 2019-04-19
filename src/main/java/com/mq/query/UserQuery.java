@@ -1,8 +1,10 @@
-package com.mq.model;
+package com.mq.query;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
-public class User {
+public class UserQuery {
     private Long id;
 
     private String country;
@@ -25,9 +27,19 @@ public class User {
 
     private String skey;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date createTimeBegin;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date createTimeEnd;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date updateTimeBegin;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date updateTimeEnd;
 
     private Integer delFlag;
 
@@ -44,7 +56,7 @@ public class User {
     }
 
     public void setCountry(String country) {
-        this.country = country == null ? null : country.trim();
+        this.country = country;
     }
 
     public Integer getGender() {
@@ -60,7 +72,7 @@ public class User {
     }
 
     public void setProvince(String province) {
-        this.province = province == null ? null : province.trim();
+        this.province = province;
     }
 
     public String getCity() {
@@ -68,7 +80,7 @@ public class User {
     }
 
     public void setCity(String city) {
-        this.city = city == null ? null : city.trim();
+        this.city = city;
     }
 
     public String getAvatarUrl() {
@@ -76,7 +88,7 @@ public class User {
     }
 
     public void setAvatarUrl(String avatarUrl) {
-        this.avatarUrl = avatarUrl == null ? null : avatarUrl.trim();
+        this.avatarUrl = avatarUrl;
     }
 
     public String getOpenId() {
@@ -84,7 +96,7 @@ public class User {
     }
 
     public void setOpenId(String openId) {
-        this.openId = openId == null ? null : openId.trim();
+        this.openId = openId;
     }
 
     public String getNickName() {
@@ -92,7 +104,7 @@ public class User {
     }
 
     public void setNickName(String nickName) {
-        this.nickName = nickName == null ? null : nickName.trim();
+        this.nickName = nickName;
     }
 
     public String getLanguage() {
@@ -100,7 +112,7 @@ public class User {
     }
 
     public void setLanguage(String language) {
-        this.language = language == null ? null : language.trim();
+        this.language = language;
     }
 
     public String getSessionKey() {
@@ -108,7 +120,7 @@ public class User {
     }
 
     public void setSessionKey(String sessionKey) {
-        this.sessionKey = sessionKey == null ? null : sessionKey.trim();
+        this.sessionKey = sessionKey;
     }
 
     public String getSkey() {
@@ -116,7 +128,7 @@ public class User {
     }
 
     public void setSkey(String skey) {
-        this.skey = skey == null ? null : skey.trim();
+        this.skey = skey;
     }
 
     public Date getCreateTime() {
@@ -127,12 +139,44 @@ public class User {
         this.createTime = createTime;
     }
 
+    public Date getCreateTimeBegin() {
+        return createTimeBegin;
+    }
+
+    public void setCreateTimeBegin(Date createTimeBegin) {
+        this.createTimeBegin = createTimeBegin;
+    }
+
+    public Date getCreateTimeEnd() {
+        return createTimeEnd;
+    }
+
+    public void setCreateTimeEnd(Date createTimeEnd) {
+        this.createTimeEnd = createTimeEnd;
+    }
+
     public Date getUpdateTime() {
         return updateTime;
     }
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Date getUpdateTimeBegin() {
+        return updateTimeBegin;
+    }
+
+    public void setUpdateTimeBegin(Date updateTimeBegin) {
+        this.updateTimeBegin = updateTimeBegin;
+    }
+
+    public Date getUpdateTimeEnd() {
+        return updateTimeEnd;
+    }
+
+    public void setUpdateTimeEnd(Date updateTimeEnd) {
+        this.updateTimeEnd = updateTimeEnd;
     }
 
     public Integer getDelFlag() {

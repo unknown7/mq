@@ -1,6 +1,7 @@
 package com.mq.util;
 
 import com.alibaba.fastjson.JSONObject;
+import com.mq.model.User;
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
@@ -12,7 +13,7 @@ import java.security.Security;
 import java.util.Arrays;
 
 public class WxDecrptUtil {
-    public static JSONObject getUserInfo(String encryptedData, String sessionKey, String iv){
+    public static User getUserInfo(String encryptedData, String sessionKey, String iv){
         // 被加密的数据
         byte[] dataByte = Base64.decode(encryptedData);
         // 加密秘钥
@@ -40,7 +41,7 @@ public class WxDecrptUtil {
             byte[] resultByte = cipher.doFinal(dataByte);
             if (null != resultByte && resultByte.length > 0) {
                 String result = new String(resultByte, "UTF-8");
-                return JSONObject.parseObject(result);
+                return JSONObject.parseObject(result, User.class);
             }
         } catch (Exception e) {
             e.printStackTrace();

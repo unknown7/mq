@@ -24,6 +24,8 @@ public interface VideoService {
 
     Video selectOneById(Long id);
 
+    VideoVo selectOneWithAuthById(Long id, String skey);
+
     void remove(Long id);
 
     void pulloff(Long id);
