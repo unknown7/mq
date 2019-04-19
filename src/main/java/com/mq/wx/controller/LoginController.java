@@ -47,6 +47,7 @@ public class LoginController {
         LoginResponse loginResponse = JSONObject.parseObject(result, LoginResponse.class);
 
         JSONObject userInfo = WxDecrptUtil.getUserInfo(request.getEncryptedData(), loginResponse.getSession_key(), request.getIv());
+        System.err.println(userInfo);
         // TODO: 2019/4/18  保存用户信息
 
         return JSON.toJSONString(MD5Util.getEncryption(loginResponse.getSession_key()));

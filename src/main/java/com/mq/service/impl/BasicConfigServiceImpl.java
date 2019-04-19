@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -48,7 +49,11 @@ public class BasicConfigServiceImpl implements BasicConfigService {
     public void saveClassification(VideoClassification videoClassification) {
         Date now = new Date();
         if (videoClassification.getDefaultShareCommission() != null) {
-            videoClassification.setDefaultShareCommission(videoClassification.getDefaultShareCommission() / 100);
+            videoClassification.setDefaultShareCommission(
+                    videoClassification.getDefaultShareCommission().divide(
+                            new BigDecimal("100")
+                    )
+            );
         }
         /**
          * 新增

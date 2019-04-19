@@ -41,7 +41,7 @@ public class IndexController {
         VideoQuery query = new VideoQuery();
         query.setDelFlag(0);
         query.setClassification(id);
-        query.setStatus(GlobalConstants.RELEASED);
+        query.setStatus(GlobalConstants.VideoStatus.RELEASED.getKey());
         List<VideoVo> videos = videoService.find(query);
         return JSON.toJSONString(videos);
     }

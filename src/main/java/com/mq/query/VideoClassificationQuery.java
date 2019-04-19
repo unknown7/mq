@@ -2,6 +2,7 @@ package com.mq.query;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class VideoClassificationQuery extends DefaultQuery {
@@ -29,7 +30,7 @@ public class VideoClassificationQuery extends DefaultQuery {
 
     private String desc;
 
-    private Double defaultShareCommission;
+    private BigDecimal defaultShareCommission;
 
     public Long getId() {
         return id;
@@ -119,11 +120,11 @@ public class VideoClassificationQuery extends DefaultQuery {
         this.desc = desc;
     }
 
-    public Double getDefaultShareCommission() {
+    public BigDecimal getDefaultShareCommission() {
         return defaultShareCommission;
     }
 
-    public void setDefaultShareCommission(Double defaultShareCommission) {
+    public void setDefaultShareCommission(BigDecimal defaultShareCommission) {
         this.defaultShareCommission = defaultShareCommission;
     }
 }
