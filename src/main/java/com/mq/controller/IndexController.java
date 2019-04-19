@@ -1,4 +1,4 @@
-package com.mq.wx;
+package com.mq.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.mq.base.GlobalConstants;
@@ -20,7 +20,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/wx/index")
-public class IndexController extends WxBaseController {
+public class IndexController {
     @Resource
     private BasicConfigService basicConfigService;
     @Resource

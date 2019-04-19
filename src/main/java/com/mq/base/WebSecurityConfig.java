@@ -30,6 +30,8 @@ public class WebSecurityConfig implements WebMvcConfigurer {
                         .excludePathPatterns("/login**")
                         .excludePathPatterns("/static/**")
                         .excludePathPatterns("/wx/**")
+                        .excludePathPatterns("/videos/**")
+                        .excludePathPatterns("/images/**")
                         .addPathPatterns("/**");
     }
 
