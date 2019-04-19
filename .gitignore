@@ -18,6 +18,7 @@
 *.mvn
 *.cmd
 *.p12
+src/main/webapp/videos/
 mvnw
 
 ### NetBeans ###
