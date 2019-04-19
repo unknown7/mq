@@ -9,7 +9,7 @@
     <result column="del_flag" property="delFlag" jdbcType="INTEGER" />
     <result column="sort" property="sort" jdbcType="INTEGER" />
     <result column="desc" property="desc" jdbcType="VARCHAR" />
-    <result column="default_share_commission" property="defaultShareCommission" jdbcType="DOUBLE" />
+    <result column="default_share_commission" property="defaultShareCommission" jdbcType="DECIMAL" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, v_name, create_time, update_time, del_flag, sort, `desc`, default_share_commission
@@ -30,7 +30,7 @@
       `desc`, default_share_commission)
     values (#{id,jdbcType=BIGINT}, #{vName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
       #{updateTime,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=INTEGER}, #{sort,jdbcType=INTEGER},
-      #{desc,jdbcType=VARCHAR}, #{defaultShareCommission,jdbcType=DOUBLE})
+      #{desc,jdbcType=VARCHAR}, #{defaultShareCommission,jdbcType=DECIMAL})
   </insert>
   <insert id="insertSelective" parameterType="com.mq.model.VideoClassification" >
     insert into t_video_classification
@@ -83,7 +83,7 @@
         #{desc,jdbcType=VARCHAR},
       </if>
       <if test="defaultShareCommission != null" >
-        #{defaultShareCommission,jdbcType=DOUBLE},
+        #{defaultShareCommission,jdbcType=DECIMAL},
       </if>
     </trim>
   </insert>
@@ -109,7 +109,7 @@
         `desc` = #{desc,jdbcType=VARCHAR},
       </if>
       <if test="defaultShareCommission != null" >
-        default_share_commission = #{defaultShareCommission,jdbcType=DOUBLE},
+        default_share_commission = #{defaultShareCommission,jdbcType=DECIMAL},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
@@ -122,7 +122,7 @@
       del_flag = #{delFlag,jdbcType=INTEGER},
       sort = #{sort,jdbcType=INTEGER},
       `desc` = #{desc,jdbcType=VARCHAR},
-      default_share_commission = #{defaultShareCommission,jdbcType=DOUBLE}
+      default_share_commission = #{defaultShareCommission,jdbcType=DECIMAL}
     where id = #{id,jdbcType=BIGINT}
   </update>
 
@@ -162,7 +162,7 @@
       and `desc` = #{desc,jdbcType=VARCHAR}
     </if>
     <if test="defaultShareCommission != null" >
-      and default_share_commission = #{defaultShareCommission,jdbcType=DOUBLE}
+      and default_share_commission = #{defaultShareCommission,jdbcType=DECIMAL}
     </if>
   </select>
   <select id="selectNums" parameterType="com.mq.query.VideoClassificationQuery" resultType="java.lang.Long">
@@ -199,7 +199,7 @@
       and `desc` = #{desc,jdbcType=VARCHAR}
     </if>
     <if test="defaultShareCommission != null" >
-      and default_share_commission = #{defaultShareCommission,jdbcType=DOUBLE}
+      and default_share_commission = #{defaultShareCommission,jdbcType=DECIMAL}
     </if>
   </select>
 </mapper>

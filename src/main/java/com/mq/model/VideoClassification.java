@@ -1,5 +1,6 @@
 package com.mq.model;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class VideoClassification {
@@ -17,7 +18,7 @@ public class VideoClassification {
 
     private String desc;
 
-    private Double defaultShareCommission;
+    private BigDecimal defaultShareCommission;
 
     public Long getId() {
         return id;
@@ -75,11 +76,11 @@ public class VideoClassification {
         this.desc = desc == null ? null : desc.trim();
     }
 
-    public Double getDefaultShareCommission() {
+    public BigDecimal getDefaultShareCommission() {
         return defaultShareCommission;
     }
 
-    public void setDefaultShareCommission(Double defaultShareCommission) {
+    public void setDefaultShareCommission(BigDecimal defaultShareCommission) {
         this.defaultShareCommission = defaultShareCommission;
     }
 }

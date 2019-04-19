@@ -75,7 +75,7 @@ public class VideoServiceImpl implements VideoService {
             video.setWatched(0);
             video.setPurchased(0);
             video.setAccessed(0);
-            video.setStatus(GlobalConstants.UN_UPLOADED);
+            video.setStatus(GlobalConstants.VideoStatus.UN_RELEASED.getKey());
             video.setCreateTime(now);
             video.setUpdateTime(now);
             video.setDelFlag(0);
@@ -163,7 +163,7 @@ public class VideoServiceImpl implements VideoService {
     @Transactional
     public void pulloff(Long id) {
         Video video = videoMapper.selectByPrimaryKey(id);
-        video.setStatus(GlobalConstants.UN_RELEASED);
+        video.setStatus(GlobalConstants.VideoStatus.UN_RELEASED.getKey());
         video.setUpdateTime(new Date());
         videoMapper.updateByPrimaryKeySelective(video);
     }
@@ -172,7 +172,7 @@ public class VideoServiceImpl implements VideoService {
     @Transactional
     public void release(Long id) {
         Video video = videoMapper.selectByPrimaryKey(id);
-        video.setStatus(GlobalConstants.RELEASED);
+        video.setStatus(GlobalConstants.VideoStatus.RELEASED.getKey());
         video.setUpdateTime(new Date());
         videoMapper.updateByPrimaryKeySelective(video);
     }
@@ -187,7 +187,7 @@ public class VideoServiceImpl implements VideoService {
         byPrimaryKey.setVideoName(videoName);
         byPrimaryKey.setVideoRealName(UUID.randomUUID().toString().concat(fileSuffix));
         byPrimaryKey.setUpdateTime(new Date());
-        byPrimaryKey.setStatus(GlobalConstants.UN_RELEASED);
+        byPrimaryKey.setStatus(GlobalConstants.VideoStatus.UN_RELEASED.getKey());
         videoMapper.updateByPrimaryKeySelective(byPrimaryKey);
         FileUtil.persistFile(video, byPrimaryKey.getVideoRealName(), GlobalConstants.VIDEO_PATH);
     }
