@@ -20,14 +20,21 @@ public class VideoSecurityConfig implements WebMvcConfigurer {
 
     public void addInterceptors(InterceptorRegistry registry) {
         InterceptorRegistration addInterceptor = registry.addInterceptor(getVideoSecurityInterceptor());
-        addInterceptor.addPathPatterns("/videos/**");
+        addInterceptor.excludePathPatterns("/wx/index/**")
+                        .excludePathPatterns("/wx/auth")
+                        .excludePathPatterns("/wx/saveUser")
+                        .addPathPatterns("/wx/**");
     }
 
     private class VideoSecurityInterceptor extends HandlerInterceptorAdapter {
         @Override
-        public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-            System.err.println("video intercepter...");
-            return true;
+        public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+            String skey = request.getParameter("skey");
+            if (GlobalConstants.USER_CACHE.get(skey) != null) {
+                return true;
+            }
+            response.sendRedirect("/mq/login");
+            return false;
         }
     }
 
