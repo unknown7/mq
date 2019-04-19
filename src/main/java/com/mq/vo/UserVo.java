@@ -1,8 +1,8 @@
-package com.mq.model;
+package com.mq.vo;
 
 import java.util.Date;
 
-public class User {
+public class UserVo {
     private Long id;
 
     private String country;
@@ -15,15 +15,9 @@ public class User {
 
     private String avatarUrl;
 
-    private String openId;
-
     private String nickName;
 
     private String language;
-
-    private String sessionKey;
-
-    private String skey;
 
     private Date createTime;
 
@@ -44,7 +38,7 @@ public class User {
     }
 
     public void setCountry(String country) {
-        this.country = country == null ? null : country.trim();
+        this.country = country;
     }
 
     public Integer getGender() {
@@ -60,7 +54,7 @@ public class User {
     }
 
     public void setProvince(String province) {
-        this.province = province == null ? null : province.trim();
+        this.province = province;
     }
 
     public String getCity() {
@@ -68,7 +62,7 @@ public class User {
     }
 
     public void setCity(String city) {
-        this.city = city == null ? null : city.trim();
+        this.city = city;
     }
 
     public String getAvatarUrl() {
@@ -76,15 +70,7 @@ public class User {
     }
 
     public void setAvatarUrl(String avatarUrl) {
-        this.avatarUrl = avatarUrl == null ? null : avatarUrl.trim();
-    }
-
-    public String getOpenId() {
-        return openId;
-    }
-
-    public void setOpenId(String openId) {
-        this.openId = openId == null ? null : openId.trim();
+        this.avatarUrl = avatarUrl;
     }
 
     public String getNickName() {
@@ -92,7 +78,7 @@ public class User {
     }
 
     public void setNickName(String nickName) {
-        this.nickName = nickName == null ? null : nickName.trim();
+        this.nickName = nickName;
     }
 
     public String getLanguage() {
@@ -100,23 +86,7 @@ public class User {
     }
 
     public void setLanguage(String language) {
-        this.language = language == null ? null : language.trim();
-    }
-
-    public String getSessionKey() {
-        return sessionKey;
-    }
-
-    public void setSessionKey(String sessionKey) {
-        this.sessionKey = sessionKey == null ? null : sessionKey.trim();
-    }
-
-    public String getSkey() {
-        return skey;
-    }
-
-    public void setSkey(String skey) {
-        this.skey = skey == null ? null : skey.trim();
+        this.language = language;
     }
 
     public Date getCreateTime() {

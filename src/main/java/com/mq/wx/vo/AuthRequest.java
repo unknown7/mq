@@ -1,6 +1,6 @@
 package com.mq.wx.vo;
 
-public class LoginRequest {
+public class AuthRequest {
     /**
      * code             // 临时登录凭证
      * rawData          // 用户非敏感信息

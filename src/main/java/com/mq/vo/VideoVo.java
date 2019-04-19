@@ -40,6 +40,8 @@ public class VideoVo {
 
     private String status;
 
+    private boolean isPurchased;
+
     public Long getId() {
         return id;
     }
@@ -198,5 +200,13 @@ public class VideoVo {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public boolean getIsPurchased() {
+        return isPurchased;
+    }
+
+    public void setIsPurchased(boolean isPurchased) {
+        this.isPurchased = isPurchased;
     }
 }

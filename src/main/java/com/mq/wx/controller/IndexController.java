@@ -1,4 +1,4 @@
-package com.mq.controller;
+package com.mq.wx.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.mq.base.GlobalConstants;
@@ -53,12 +53,5 @@ public class IndexController {
         query.setDelFlag(0);
         List<Banner> banners = basicConfigService.findBanner(query);
         return JSON.toJSONString(banners);
-    }
-
-    @RequestMapping("/getVideo")
-    @ResponseBody
-    public String getVideo(Long id) {
-        Video video = videoService.selectOneById(id);
-        return JSON.toJSONString(video);
     }
 }

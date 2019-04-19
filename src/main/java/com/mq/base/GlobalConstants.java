@@ -1,8 +1,18 @@
 package com.mq.base;
 
+import com.google.common.collect.Maps;
+import com.mq.model.User;
+import com.mq.vo.UserVo;
+
+import java.util.Map;
+
 public class GlobalConstants {
     public static String IMAGE_PATH;
     public static String VIDEO_PATH;
+    /**
+     * 用户缓存
+     */
+    public static final Map<String, UserVo> USER_CACHE = Maps.newConcurrentMap();
     /**
      * 微信开发账户信息
      */
@@ -32,7 +42,7 @@ public class GlobalConstants {
     /**
      * 商品购买类型
      */
-    enum PurchaseType {
+    public enum PurchaseType {
         VIDEO("0101", "视频"),
         GOODS("0102", "商品");
         private String key;
