@@ -63,7 +63,7 @@ $(function () {
                     /**
                      * 未上传
                      */
-                    if (row.status == '0101') {
+                    if (row.status == '001001') {
                         result +=
                             '<span class="btn btn-danger btn-xs ml-5" data-id="' + data + '" onclick="remove(' + data + ')">删除</span> ' +
                             '<span class="btn btn-purple btn-xs ml-5" data-id="' + data + '" onclick="upload(' + data + ')">上传</span> ';
@@ -71,7 +71,7 @@ $(function () {
                     /**
                      * 未发布
                      */
-                    else if (row.status == '0102') {
+                    else if (row.status == '001002') {
                         result +=
                             '<span class="btn btn-danger btn-xs ml-5" data-id="' + data + '" onclick="remove(' + data + ')">删除</span> ' +
                             '<span class="btn btn-success btn-xs ml-5" data-id="' + data + '" onclick="release(' + data + ')">发布</span> ';

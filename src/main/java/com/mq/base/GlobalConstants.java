@@ -21,9 +21,10 @@ public class GlobalConstants {
      * 视频状态
      */
     public enum VideoStatus {
-        UN_UPLOADED("0101", "未上传"),
-        UN_RELEASED("0102", "未发布"),
-        RELEASED("0103", "已发布");
+        UN_UPLOADED("001001", "未上传"),
+        UN_RELEASED("001002", "未发布"),
+        RELEASED("001003", "已发布"),
+        ;
         private String key;
         private String value;
         VideoStatus(String key, String value) {
@@ -42,11 +43,38 @@ public class GlobalConstants {
      * 商品购买类型
      */
     public enum PurchaseType {
-        VIDEO("0101", "视频"),
-        GOODS("0102", "商品");
+        VIDEO("002001", "视频"),
+        GOODS("002002", "商品"),
+        ;
         private String key;
         private String value;
         PurchaseType(String key, String value) {
+            this.key = key;
+            this.value = value;
+        }
+        public String getKey() {
+            return key;
+        }
+        public String getValue() {
+            return value;
+        }
+    }
+
+    /**
+     * 统计类型
+     */
+    public enum StatisticsType {
+        PV("003001", "PV量"),
+        UV("003002", "UV量"),
+        VIDEO_WATCHED("003003", "视频播放量"),
+        VIDEO_PURCHASED("003004", "视频购买量"),
+        VIDEO_ACCESSED("003005", "视频访问量"),
+        GOODS_PURCHASED("003006", "商品购买量"),
+        GOODS_ACCESSED("003006", "商品访问量"),
+        ;
+        private String key;
+        private String value;
+        StatisticsType(String key, String value) {
             this.key = key;
             this.value = value;
         }

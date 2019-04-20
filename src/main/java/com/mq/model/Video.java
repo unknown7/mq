@@ -12,10 +12,6 @@ public class Video {
 
     private BigDecimal price;
 
-    private Integer watched;
-
-    private Integer purchased;
-
     private String coverRealName;
 
     private String descriptionRealName;
@@ -31,8 +27,6 @@ public class Video {
     private Long classification;
 
     private BigDecimal shareCommission;
-
-    private Integer accessed;
 
     private String status;
 
@@ -72,22 +66,6 @@ public class Video {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
-    }
-
-    public Integer getWatched() {
-        return watched;
-    }
-
-    public void setWatched(Integer watched) {
-        this.watched = watched;
-    }
-
-    public Integer getPurchased() {
-        return purchased;
-    }
-
-    public void setPurchased(Integer purchased) {
-        this.purchased = purchased;
     }
 
     public String getCoverRealName() {
@@ -152,14 +130,6 @@ public class Video {
 
     public void setShareCommission(BigDecimal shareCommission) {
         this.shareCommission = shareCommission;
-    }
-
-    public Integer getAccessed() {
-        return accessed;
-    }
-
-    public void setAccessed(Integer accessed) {
-        this.accessed = accessed;
     }
 
     public String getStatus() {
