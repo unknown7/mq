@@ -195,6 +195,7 @@
     <if test="bName != null" >
       and `b_name` like concat(concat("%",#{bName}),"%")
     </if>
+    order by sort
   </select>
   <select id="selectNums" parameterType="com.mq.query.BannerQuery" resultType="java.lang.Long">
     select count(1) from t_banner
