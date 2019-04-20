@@ -1,7 +1,6 @@
 package com.mq.base;
 
 import com.google.common.collect.Maps;
-import com.mq.model.User;
 import com.mq.vo.UserVo;
 
 import java.util.Map;
