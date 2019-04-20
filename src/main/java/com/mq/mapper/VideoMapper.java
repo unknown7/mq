@@ -22,4 +22,8 @@ public interface VideoMapper {
     List<VideoVo> selectByQuery(VideoQuery query);
 
     Long selectNums(VideoQuery query);
+
+    VideoVo selectVoByPrimaryKey(Long id);
+
+    VideoVo selectOneVoWithAuth(Long videoId, Long userId);
 }
