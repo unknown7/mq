@@ -254,7 +254,7 @@
     v.description_name, v.video_name,
     vc.v_name as classification_name,
     (select count(1) from t_statistics s where s.statistics_type = '003003' and s.business_id = v.id) as watched,
-    (select count(1) from t_statistics s where s.statistics_type = '003004' and s.business_id = v.id) as pruchased,
+    (select count(1) from t_statistics s where s.statistics_type = '003004' and s.business_id = v.id) as purchased,
     (select count(1) from t_statistics s where s.statistics_type = '003005' and s.business_id = v.id) as accessed
     from t_video v
     left join t_video_classification vc on v.classification = vc.id
@@ -330,13 +330,13 @@
       and price = #{price,jdbcType=DECIMAL}
     </if>
     <if test="coverRealName != null" >
-      and v.cover_real_name = #{coverRealName,jdbcType=VARCHAR}
+      and cover_real_name = #{coverRealName,jdbcType=VARCHAR}
     </if>
     <if test="descriptionRealName != null" >
-      and v.description_real_name = #{descriptionRealName,jdbcType=VARCHAR}
+      and description_real_name = #{descriptionRealName,jdbcType=VARCHAR}
     </if>
     <if test="videoRealName != null" >
-      and v.video_real_name = #{videoRealName,jdbcType=VARCHAR}
+      and video_real_name = #{videoRealName,jdbcType=VARCHAR}
     </if>
     <if test="createTime != null" >
       and create_time = #{createTime,jdbcType=TIMESTAMP}
@@ -366,16 +366,16 @@
       and share_commission = #{shareCommission,jdbcType=DECIMAL}
     </if>
     <if test="status != null" >
-      and v.status = #{status,jdbcType=VARCHAR}
+      and status = #{status,jdbcType=VARCHAR}
     </if>
     <if test="coverName != null" >
-      and v.cover_name = #{coverName,jdbcType=VARCHAR}
+      and cover_name = #{coverName,jdbcType=VARCHAR}
     </if>
     <if test="descriptionName != null" >
-      and v.description_name = #{descriptionName,jdbcType=VARCHAR}
+      and description_name = #{descriptionName,jdbcType=VARCHAR}
     </if>
     <if test="videoName != null" >
-      and v.video_name = #{videoName,jdbcType=VARCHAR}
+      and video_name = #{videoName,jdbcType=VARCHAR}
     </if>
   </select>
 
@@ -386,7 +386,7 @@
     v.description_name, v.video_name,
     vc.v_name as classification_name,
     (select count(1) from t_statistics s where s.statistics_type = '003003' and s.business_id = v.id) as watched,
-    (select count(1) from t_statistics s where s.statistics_type = '003004' and s.business_id = v.id) as pruchased,
+    (select count(1) from t_statistics s where s.statistics_type = '003004' and s.business_id = v.id) as purchased,
     (select count(1) from t_statistics s where s.statistics_type = '003005' and s.business_id = v.id) as accessed
     from t_video v
     left join t_video_classification vc on v.classification = vc.id
@@ -400,7 +400,7 @@
     v.description_name, v.video_name,
     vc.v_name as classification_name,
     (select count(1) from t_statistics s where s.statistics_type = '003003' and s.business_id = v.id) as watched,
-    (select count(1) from t_statistics s where s.statistics_type = '003004' and s.business_id = v.id) as pruchased,
+    (select count(1) from t_statistics s where s.statistics_type = '003004' and s.business_id = v.id) as purchased,
     (select count(1) from t_statistics s where s.statistics_type = '003005' and s.business_id = v.id) as accessed
     <if test="userId != null">
       ,(case when o.id is null then false else true end) as is_purchased

@@ -164,6 +164,7 @@
     <if test="defaultShareCommission != null" >
       and default_share_commission = #{defaultShareCommission,jdbcType=DECIMAL}
     </if>
+    order by sort
   </select>
   <select id="selectNums" parameterType="com.mq.query.VideoClassificationQuery" resultType="java.lang.Long">
   select count(1) from t_video_classification
