@@ -36,6 +36,8 @@ public class Video {
 
     private String videoName;
 
+    private Integer freeWatchTime;
+
     public Long getId() {
         return id;
     }
@@ -162,5 +164,13 @@ public class Video {
 
     public void setVideoName(String videoName) {
         this.videoName = videoName == null ? null : videoName.trim();
+    }
+
+    public Integer getFreeWatchTime() {
+        return freeWatchTime;
+    }
+
+    public void setFreeWatchTime(Integer freeWatchTime) {
+        this.freeWatchTime = freeWatchTime;
     }
 }

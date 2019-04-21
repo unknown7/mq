@@ -1,6 +1,7 @@
 package com.mq.service.impl;
 
 import com.github.pagehelper.PageHelper;
+import com.google.common.collect.Lists;
 import com.mq.base.GlobalConstants;
 import com.mq.mapper.VideoMapper;
 import com.mq.model.Video;
@@ -48,11 +49,12 @@ public class VideoServiceImpl implements VideoService {
                      String classification,
                      String price,
                      String shareCommission,
+                     String freeWatchTime,
                      MultipartFile cover,
                      MultipartFile description) throws IOException {
         Video video = new Video();
         this
-        .handleVideo(id, title, subtitle, classification, price, shareCommission, video)
+        .handleVideo(id, title, subtitle, classification, price, shareCommission, freeWatchTime, video)
         .handleImage(video, cover, description)
         .executeSave(video, cover, description);
     }
@@ -63,17 +65,21 @@ public class VideoServiceImpl implements VideoService {
                                          String classification,
                                          String price,
                                          String shareCommission,
+                                         String freeWatchTime,
                                          Video video) {
         Date now = new Date();
         if (!StringUtils.isEmpty(shareCommission)) {
             video.setShareCommission(new BigDecimal(shareCommission).divide(new BigDecimal("100")));
+        }
+        if (!StringUtils.isEmpty(freeWatchTime)) {
+            video.setFreeWatchTime(Integer.valueOf(freeWatchTime));
         }
         video.setTitle(title);
         video.setSubtitle(subtitle);
         video.setClassification(Long.valueOf(classification));
         video.setPrice(new BigDecimal(price));
         if (StringUtils.isEmpty(id)) {
-            video.setStatus(GlobalConstants.VideoStatus.UN_RELEASED.getKey());
+            video.setStatus(GlobalConstants.VideoStatus.UN_UPLOADED.getKey());
             video.setCreateTime(now);
             video.setUpdateTime(now);
             video.setDelFlag(0);
@@ -198,7 +204,32 @@ public class VideoServiceImpl implements VideoService {
     }
 
     @Override
-    public List<VideoVo> find(VideoQuery query) {
+    public List<List<VideoVo>> findAllSortByClassification() {
+        VideoQuery query = new VideoQuery();
+        query.setDelFlag(0);
+        query.setStatus(GlobalConstants.VideoStatus.RELEASED.getKey());
+        query.setOrderBy("classification");
+        List<VideoVo> videoVos = videoMapper.selectByQuery(query);
+        List<List<VideoVo>> result = Lists.newArrayList();
+        long max = 0;
+        List<VideoVo> item = null;
+        for (VideoVo videoVo : videoVos) {
+            if (videoVo.getClassification() > max) {
+                max = videoVo.getClassification();
+                item = Lists.newArrayList();
+                result.add(item);
+            }
+            item.add(videoVo);
+        }
+        return result;
+    }
+
+    @Override
+    public List<VideoVo> find(Long id) {
+        VideoQuery query = new VideoQuery();
+        query.setDelFlag(0);
+        query.setStatus(GlobalConstants.VideoStatus.RELEASED.getKey());
+        query.setClassification(id);
         List<VideoVo> videoVos = videoMapper.selectByQuery(query);
         return videoVos;
     }

@@ -22,7 +22,14 @@ $(function () {
                 "data": "defaultShareCommission",
                 "class": "text-center",
                 "render": function (data, type, row) {
-                    return (data * 100) + "%";
+                    return (Math.format(data * 100, 2)) + "%";
+                }
+            },
+            {
+                "data": "defaultFreeWatchTime",
+                "class": "text-center",
+                "render": function (data, type, row) {
+                    return data + "秒";
                 }
             },
             {
@@ -105,16 +112,18 @@ $(function () {
     }).on('click', 'a[row-index]', function () {
     });
 
-    $('#defaultShareCommission').css({width: '77%', 'float': 'right', margin: '15px'}).empty().slider({
+    $('.default-value-slider').css({width: '77%', 'float': 'right', margin: '15px'}).empty().slider({
         value: 0,
         range: "min",
         animate: true,
         slide: function (event, handle) {
-            $('#defaultShareCommissionValue').val(handle.value);
+            // $('#defaultShareCommissionValue').val(handle.value);
+            $(this).prev().prev().val(handle.value);
         },
         change: function (event, handle) {
-            $('#defaultShareCommissionValue').val(handle.value);
-            $('#defaultShareCommissionValue').val(handle.value);
+            $(this).prev().prev().val(handle.value);
+            // $('#defaultShareCommissionValue').val(handle.value);
+            // $('#defaultShareCommissionValue').val(handle.value);
         }
     });
 
@@ -132,10 +141,10 @@ $(function () {
 
     $('#classification-detail-form').on('hide.bs.modal', function () {
         $(':input', '#classificationForm').not(':button,:submit,:reset').val('').removeAttr('checked');
-        $('#defaultShareCommission').slider({
+        $('.default-value-slider').slider({
             value: 0
         });
-        $('#defaultShareCommissionValue').val(0);
+        $('.default-value-input').val(0);
         $('#classificationForm').find('input, textarea').filter('.valid').removeClass('valid');
     });
 
@@ -165,7 +174,7 @@ $(function () {
         },
         invalidHandler: function (form, e) {
             var shakes = $(e.currentElements).not('.valid');
-            _shake($(shakes).not('#defaultShareCommissionValue').closest('.form-group'));
+            _shake($(shakes).not("#defaultShareCommissionValue, #defaultFreeWatchTimeValue").closest('.form-group'));
         }
     });
 
@@ -253,12 +262,15 @@ var editClassification = function (id) {
         dataType: "json",
         success: function (result) {
             $('#classification-detail-form').find('input, textarea').each(function () {
-                var value = result[$(this).attr('name')];
-                if ($(this).attr('type') == 'number') {
-                    value = value * 100;
-                    $(this).val(value).keyup();
+                var that = $(this);
+                var value = result[that.attr('name')];
+                if (that.attr('type') == 'number') {
+                    if (that.attr('name') == 'defaultShareCommission') {
+                        value = Math.format(value * 100, 2);
+                    }
+                    that.val(value).keyup();
                 }
-                $(this).val(value);
+                that.val(value);
             });
             $('#classification-detail-form').modal('show');
         }

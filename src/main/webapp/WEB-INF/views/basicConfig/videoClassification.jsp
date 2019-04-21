@@ -29,7 +29,8 @@
                 <th width="10%" class="min-mobile-l">名称</th>
                 <th width="3%" class="min-mobile-l">排序</th>
                 <th width="7%" class="min-mobile-l">分享提成</th>
-                <th width="7%" class="min-mobile-l">最后修改时间</th>
+                <th width="7%" class="min-mobile-l">免费观看时长</th>
+                <th width="10%" class="min-mobile-l">最后修改时间</th>
                 <th width="20%" class="min-mobile-l">描述</th>
                 <th width="8%" class="min-mobile-l">操作</th>
             </tr>
@@ -71,14 +72,29 @@
                             <label class="col-sm-2 control-label no-padding-right" for="defaultShareCommission"> 分享提成 </label>
 
                             <div class="col-sm-9">
-                                <input type="number" max="100" min="0" value="0"
+                                <input class="default-value-input" type="number" max="100" min="0" value="0"
                                        id="defaultShareCommissionValue"
                                        name="defaultShareCommission"
                                        style="width: 10%;float: left;"
                                        onfocus="$(this).select();"
                                        onkeyup="$('#defaultShareCommission').slider({value: $(this).val()});">
-                                <span style="width: 3%;float: left;"><font size="5">%</font></span>
-                                <span id="defaultShareCommission" class="ui-slider-simple ui-slider-orange"></span>
+                                <span style="width: 3%;padding-left: 5px;padding-top: 10px;font-size: 16px;">%</span>
+                                <span id="defaultShareCommission" class="ui-slider-simple ui-slider-orange default-value-slider"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label no-padding-right" for="defaultFreeWatchTime"> 免费观看时长 </label>
+
+                            <div class="col-sm-9">
+                                <input type="number" max="1000" min="0" value="0"
+                                       id="defaultFreeWatchTimeValue"
+                                       name="defaultFreeWatchTime"
+                                       style="width: 10%;float: left;"
+                                       onfocus="$(this).select();"
+                                       onkeyup="$('#defaultFreeWatchTime').slider({value: $(this).val()});">
+                                <span style="width: 3%;padding-left: 5px;padding-top: 10px;font-size: 16px;">秒</span>
+                                <span id="defaultFreeWatchTime" class="ui-slider-simple ui-slider-orange default-value-slider"></span>
                             </div>
                         </div>
 

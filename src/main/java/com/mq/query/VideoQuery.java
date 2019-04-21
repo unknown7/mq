@@ -51,6 +51,8 @@ public class VideoQuery extends DefaultQuery {
 
     private String status;
 
+    private Integer freeWatchTime;
+
     public Long getId() {
         return id;
     }
@@ -233,5 +235,13 @@ public class VideoQuery extends DefaultQuery {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Integer getFreeWatchTime() {
+        return freeWatchTime;
+    }
+
+    public void setFreeWatchTime(Integer freeWatchTime) {
+        this.freeWatchTime = freeWatchTime;
     }
 }

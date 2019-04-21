@@ -7,6 +7,10 @@ public abstract class DefaultQuery {
 
     private Integer page;
 
+    private String orderBy;
+
+    private String sequence = "ASC";
+
     public Integer getStart() {
         return start;
     }
@@ -29,5 +33,21 @@ public abstract class DefaultQuery {
 
     public void setPage(Integer page) {
         this.page = page;
+    }
+
+    public String getOrderBy() {
+        return orderBy;
+    }
+
+    public void setOrderBy(String orderBy) {
+        this.orderBy = orderBy;
+    }
+
+    public String getSequence() {
+        return sequence;
+    }
+
+    public void setSequence(String sequence) {
+        this.sequence = sequence;
     }
 }

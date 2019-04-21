@@ -18,6 +18,7 @@
     <result column="cover_name" property="coverName" jdbcType="VARCHAR" />
     <result column="description_name" property="descriptionName" jdbcType="VARCHAR" />
     <result column="video_name" property="videoName" jdbcType="VARCHAR" />
+    <result column="free_watch_time" property="freeWatchTime" jdbcType="INTEGER" />
   </resultMap>
   <resultMap id="VoResultMap" type="com.mq.vo.VideoVo" >
     <id column="id" property="id" jdbcType="BIGINT" />
@@ -41,11 +42,12 @@
     <result column="description_name" property="descriptionName" jdbcType="VARCHAR" />
     <result column="video_name" property="videoName" jdbcType="VARCHAR" />
     <result column="is_purchased" property="isPurchased" jdbcType="BOOLEAN" />
+    <result column="free_watch_time" property="freeWatchTime" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, title, subtitle, price, cover_real_name, description_real_name,
     video_real_name, create_time, update_time, del_flag, classification, share_commission, 
-    status, cover_name, description_name, video_name
+    status, cover_name, description_name, video_name, free_watch_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -64,14 +66,14 @@
       create_time, update_time, del_flag, 
       classification, share_commission,
       status, cover_name, description_name, 
-      video_name)
+      video_name, free_watch_time)
     values (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{subtitle,jdbcType=VARCHAR}, 
       #{price,jdbcType=DECIMAL},
       #{coverRealName,jdbcType=VARCHAR}, #{descriptionRealName,jdbcType=VARCHAR}, #{videoRealName,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=INTEGER}, 
       #{classification,jdbcType=BIGINT}, #{shareCommission,jdbcType=DECIMAL},
       #{status,jdbcType=VARCHAR}, #{coverName,jdbcType=VARCHAR}, #{descriptionName,jdbcType=VARCHAR}, 
-      #{videoName,jdbcType=VARCHAR})
+      #{videoName,jdbcType=VARCHAR}), #{freeWatchTime,jdbcType=INTEGER}
   </insert>
   <insert id="insertSelective" parameterType="com.mq.model.Video" >
     insert into t_video
@@ -124,6 +126,9 @@
       <if test="videoName != null" >
         video_name,
       </if>
+      <if test="freeWatchTime != null" >
+        free_watch_time,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -173,6 +178,9 @@
       </if>
       <if test="videoName != null" >
         #{videoName,jdbcType=VARCHAR},
+      </if>
+      <if test="freeWatchTime != null" >
+        #{freeWatchTime,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -224,6 +232,9 @@
       <if test="videoName != null" >
         video_name = #{videoName,jdbcType=VARCHAR},
       </if>
+      <if test="freeWatchTime != null" >
+        free_watch_time = #{freeWatchTime,jdbcType=INTEGER},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -243,7 +254,8 @@
       status = #{status,jdbcType=VARCHAR},
       cover_name = #{coverName,jdbcType=VARCHAR},
       description_name = #{descriptionName,jdbcType=VARCHAR},
-      video_name = #{videoName,jdbcType=VARCHAR}
+      video_name = #{videoName,jdbcType=VARCHAR},
+      free_watch_time = #{freeWatchTime,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
 
@@ -251,7 +263,7 @@
     select
     v.id, v.title, v.subtitle, v.price, v.cover_real_name, v.description_real_name, v.video_real_name,
     v.create_time, v.update_time, v.del_flag, v.classification, v.share_commission, v.status, v.cover_name,
-    v.description_name, v.video_name,
+    v.description_name, v.video_name, v.free_watch_time,
     vc.v_name as classification_name,
     (select count(1) from t_statistics s where s.statistics_type = '003003' and s.business_id = v.id) as watched,
     (select count(1) from t_statistics s where s.statistics_type = '003004' and s.business_id = v.id) as purchased,
@@ -316,6 +328,12 @@
     <if test="videoName != null" >
       and v.video_name = #{videoName,jdbcType=VARCHAR}
     </if>
+    <if test="freeWatchTime != null" >
+      and v.free_watch_time = #{freeWatchTime,jdbcType=INTEGER}
+    </if>
+    <if test="orderBy != null" >
+      order by v.${orderBy} ${sequence}
+    </if>
   </select>
   <select id="selectNums" parameterType="com.mq.query.VideoQuery" resultType="java.lang.Long">
     select count(1) from t_video
@@ -377,13 +395,16 @@
     <if test="videoName != null" >
       and video_name = #{videoName,jdbcType=VARCHAR}
     </if>
+    <if test="freeWatchTime != null" >
+      and free_watch_time = #{freeWatchTime,jdbcType=INTEGER}
+    </if>
   </select>
 
   <select id="selectVoByPrimaryKey" parameterType="java.lang.Long" resultType="com.mq.vo.VideoVo">
     select
     v.id, v.title, v.subtitle, v.price, v.cover_real_name, v.description_real_name, v.video_real_name,
     v.create_time, v.update_time, v.del_flag, v.classification, v.share_commission, v.status, v.cover_name,
-    v.description_name, v.video_name,
+    v.description_name, v.video_name, v.free_watch_time,
     vc.v_name as classification_name,
     (select count(1) from t_statistics s where s.statistics_type = '003003' and s.business_id = v.id) as watched,
     (select count(1) from t_statistics s where s.statistics_type = '003004' and s.business_id = v.id) as purchased,
@@ -397,7 +418,7 @@
     select
     v.id, v.title, v.subtitle, v.price, v.cover_real_name, v.description_real_name, v.video_real_name,
     v.create_time, v.update_time, v.del_flag, v.classification, v.share_commission, v.status, v.cover_name,
-    v.description_name, v.video_name,
+    v.description_name, v.video_name, v.free_watch_time,
     vc.v_name as classification_name,
     (select count(1) from t_statistics s where s.statistics_type = '003003' and s.business_id = v.id) as watched,
     (select count(1) from t_statistics s where s.statistics_type = '003004' and s.business_id = v.id) as purchased,
