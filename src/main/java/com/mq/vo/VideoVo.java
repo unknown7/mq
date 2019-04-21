@@ -42,6 +42,8 @@ public class VideoVo {
 
     private boolean isPurchased;
 
+    private Integer freeWatchTime;
+
     public Long getId() {
         return id;
     }
@@ -208,5 +210,13 @@ public class VideoVo {
 
     public void setIsPurchased(boolean isPurchased) {
         this.isPurchased = isPurchased;
+    }
+
+    public Integer getFreeWatchTime() {
+        return freeWatchTime;
+    }
+
+    public void setFreeWatchTime(Integer freeWatchTime) {
+        this.freeWatchTime = freeWatchTime;
     }
 }

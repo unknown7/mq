@@ -38,12 +38,9 @@ public class IndexController {
     @RequestMapping("/getVideos")
     @ResponseBody
     public String getVideos(Long id) {
-        VideoQuery query = new VideoQuery();
-        query.setDelFlag(0);
-        query.setClassification(id);
-        query.setStatus(GlobalConstants.VideoStatus.RELEASED.getKey());
-        List<VideoVo> videos = videoService.find(query);
-        return JSON.toJSONString(videos);
+        List<List<VideoVo>> videoVos = videoService.findAllSortByClassification();
+//        List<VideoVo> videoVos = videoService.find(id);
+        return JSON.toJSONString(videoVos);
     }
 
     @RequestMapping("/getBanners")

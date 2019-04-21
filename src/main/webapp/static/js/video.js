@@ -9,7 +9,25 @@ $(function () {
             },
             {
                 "data": "subtitle",
-                "class": "text-center"
+                "class": "text-center",
+                "render": function (data, type, row) {
+                    var length = 0;
+                    var result = data;
+                    var i;
+                    if (data.length > 30) {
+                        for (i = 0; length < 60 && i < data.length; i++) {
+                            if (data.charCodeAt(i) > 127 || data.charCodeAt(i) == 94) {
+                                length += 2;
+                            } else {
+                                length += 1;
+                            }
+                        }
+                        if (length >= 60) {
+                            result = data.substring(0, i - 1) + "...";
+                        }
+                    }
+                    return result;
+                }
             },
             {
                 "data": "price",
@@ -40,7 +58,14 @@ $(function () {
                 "data": "shareCommission",
                 "class": "text-center",
                 "render": function (data, type, row) {
-                    return (data * 100) + "%";
+                    return (Math.format(data * 100, 2)) + "%";
+                }
+            },
+            {
+                "data": "freeWatchTime",
+                "class": "text-center",
+                "render": function (data, type, row) {
+                    return data + "秒";
                 }
             },
             {
@@ -154,12 +179,12 @@ $(function () {
         success: function (result) {
             $.each(result, function (i, item) {
                 $('#search_form select[name=classification]').append('<option value="' + item.id + '">' + item.vName + '</option>');
-                $('#videoForm select[name=classification]').append('<option value="' + item.id + '">' + item.vName + '</option>');
+                $('#videoForm select[name=classification]').append('<option value="' + item.id + '" data-default-share-commission="' + item.defaultShareCommission + '" data-default-free-watch-time="' + item.defaultFreeWatchTime + '">' + item.vName + '</option>');
             });
         }
     });
 
-    $('#vo').on('click', function (e) {
+    $('#query').on('click', function (e) {
         $('#table').DataTable().ajax.reload();
     });
     $('#clear').on('click', function (e) {
@@ -169,15 +194,15 @@ $(function () {
         $('#video-detail-form').modal('show');
     });
 
-    $('#shareCommission').css({width: '77%', 'float': 'right', margin: '15px'}).empty().slider({
+    $('.value-slider').css({width: '77%', 'float': 'right', margin: '15px'}).empty().slider({
         value: 0,
         range: "min",
         animate: true,
         slide: function (event, handle) {
-            $('#shareCommissionValue').val(handle.value);
+            $(this).prev().prev().val(handle.value);
         },
         change: function (event, handle) {
-            $('#shareCommissionValue').val(handle.value);
+            $(this).prev().prev().val(handle.value);
         }
     });
 
@@ -313,7 +338,7 @@ $(function () {
         },
         invalidHandler: function (form, e) {
             var shakes = $(e.currentElements).not('.valid');
-            _shake($(shakes).not('#cover_success, #description_success, #shareCommissionValue').closest('.form-group'));
+            _shake($(shakes).not('#cover_success, #description_success, #shareCommissionValue, #freeWatchTimeValue').closest('.form-group'));
             if ($('#cover_success').val() == '') {
                 _shake($('#cover_success').parent());
             }
@@ -329,10 +354,10 @@ $(function () {
 
     $('#video-detail-form').on('hide.bs.modal', function () {
         $(':input', '#videoForm').not(':button,:submit,:reset').val('').removeAttr('checked');
-        $('#shareCommission').slider({
+        $('.value-slider').slider({
             value: 0
         });
-        $('#shareCommissionValue').val(0);
+        $('.value-input').val(0);
         $('#price').val(0);
         $('#videoForm').find('input, select').filter('.valid').removeClass('valid');
         $('#fileDiv .remove').trigger('click');
@@ -373,6 +398,28 @@ $(function () {
             _shake($('#video_success').parent());
         }
     });
+
+    $("#videoForm select[name=classification]").on("change", function () {
+        var $selected = $(this).find("option:selected");
+        var defaultShareCommision = 0;
+        var defaultFreeWatchTime = 0;
+        if ($selected.val()) {
+            defaultShareCommision = $selected.attr("data-default-share-commission");
+            defaultShareCommision = Math.format(defaultShareCommision * 100, 2);
+            defaultFreeWatchTime = $selected.attr("data-default-free-watch-time");
+        } else {
+            $(this).removeClass('valid');
+        }
+        console.log(defaultShareCommision + " " + defaultFreeWatchTime);
+        $("#shareCommission ").slider({
+            value: defaultShareCommision
+        });
+        $("#shareCommissionValue").val(defaultShareCommision);
+        $("#freeWatchTime ").slider({
+            value: defaultFreeWatchTime
+        });
+        $("#freeWatchTimeValue").val(defaultFreeWatchTime);
+    });
 });
 var edit = function (id) {
     $.ajax({
@@ -385,12 +432,15 @@ var edit = function (id) {
         dataType: "json",
         success: function (result) {
             $('#videoForm').find('input, select').each(function () {
-                var value = result[$(this).attr('name')];
-                if ($(this).attr('type') == 'number') {
-                    value = value * 100;
-                    $(this).val(value).keyup();
+                var that = $(this);
+                var value = result[that.attr('name')];
+                if (that.attr('type') == 'number') {
+                    if (that.attr('name') == 'shareCommission') {
+                        value = Math.format(value * 100, 2);
+                    }
+                    that.val(value).keyup();
                 }
-                $(this).val(value);
+                that.val(value);
             });
             var data = [
                 {

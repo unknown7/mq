@@ -56,7 +56,8 @@ public class VideoController extends BaseController {
             String classification = request.getParameter("classification");
             String price = request.getParameter("price");
             String shareCommission = request.getParameter("shareCommission");
-            videoService.save(id, title, subtitle, classification, price, shareCommission, cover, description);
+            String freeWatchTime = request.getParameter("freeWatchTime");
+            videoService.save(id, title, subtitle, classification, price, shareCommission, freeWatchTime, cover, description);
             return success("视频信息已保存");
         } catch (Exception e) {
             e.printStackTrace();

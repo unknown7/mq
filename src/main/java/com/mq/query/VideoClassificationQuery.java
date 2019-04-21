@@ -32,6 +32,8 @@ public class VideoClassificationQuery extends DefaultQuery {
 
     private BigDecimal defaultShareCommission;
 
+    private Integer defaultFreeWatchTime;
+
     public Long getId() {
         return id;
     }
@@ -126,5 +128,13 @@ public class VideoClassificationQuery extends DefaultQuery {
 
     public void setDefaultShareCommission(BigDecimal defaultShareCommission) {
         this.defaultShareCommission = defaultShareCommission;
+    }
+
+    public Integer getDefaultFreeWatchTime() {
+        return defaultFreeWatchTime;
+    }
+
+    public void setDefaultFreeWatchTime(Integer defaultFreeWatchTime) {
+        this.defaultFreeWatchTime = defaultFreeWatchTime;
     }
 }

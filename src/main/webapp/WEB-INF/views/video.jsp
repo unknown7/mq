@@ -41,13 +41,14 @@
                    width="100%">
                 <thead>
                 <tr>
-                    <th width="12%" class="min-mobile-l">标题</th>
+                    <th width="9%" class="min-mobile-l">标题</th>
                     <th width="12%" class="min-mobile-l">介绍</th>
                     <th width="3%" class="min-mobile-l">价格</th>
                     <th width="3%" class="min-mobile-l">封面</th>
                     <th width="3%" class="min-mobile-l">详情</th>
                     <th width="4%" class="min-mobile-l">分类</th>
                     <th width="4%" class="min-mobile-l">分享提成</th>
+                    <th width="6%" class="min-mobile-l">免费观看时长</th>
                     <th width="3%" class="min-mobile-l">访问量</th>
                     <th width="3%" class="min-mobile-l">观看量</th>
                     <th width="4%" class="min-mobile-l">已购人数</th>
@@ -109,14 +110,29 @@
                                 <label class="col-sm-2 control-label no-padding-right" for="shareCommission"> 分享提成 </label>
 
                                 <div class="col-sm-9">
-                                    <input type="number" max="100" min="0" value="0"
+                                    <input class="value-input" type="number" max="100" min="0" value="0"
                                            id="shareCommissionValue"
                                            name="shareCommission"
                                            style="width: 10%;float: left;"
                                            onfocus="$(this).select();"
                                            onkeyup="$('#shareCommission').slider({value: $(this).val()});">
-                                    <span style="width: 3%;float: left;"><font size="5">%</font></span>
-                                    <span id="shareCommission" class="ui-slider-simple ui-slider-orange"></span>
+                                    <span style="width: 3%;padding-left: 5px;padding-top: 10px;font-size: 16px;">%</span>
+                                    <span id="shareCommission" class="ui-slider-simple ui-slider-orange value-slider"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label no-padding-right" for="freeWatchTime"> 免费观看时长 </label>
+
+                                <div class="col-sm-9">
+                                    <input class="value-input" type="number" max="1000" min="0" value="0"
+                                           id="freeWatchTimeValue"
+                                           name="freeWatchTime"
+                                           style="width: 10%;float: left;"
+                                           onfocus="$(this).select();"
+                                           onkeyup="$('#freeWatchTime').slider({value: $(this).val()});">
+                                    <span style="width: 3%;padding-left: 5px;padding-top: 10px;font-size: 16px;">秒</span>
+                                    <span id="freeWatchTime" class="ui-slider-simple ui-slider-orange value-slider"></span>
                                 </div>
                             </div>
 

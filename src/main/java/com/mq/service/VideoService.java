@@ -18,6 +18,7 @@ public interface VideoService {
               String classification,
               String price,
               String shareCommission,
+              String freeWatchTime,
               MultipartFile cover,
               MultipartFile description
     ) throws IOException;
@@ -34,5 +35,6 @@ public interface VideoService {
 
     void upload(String id, MultipartFile video) throws IOException;
 
-    List<VideoVo> find(VideoQuery query);
+    List<List<VideoVo>> findAllSortByClassification();
+    List<VideoVo> find(Long id);
 }
