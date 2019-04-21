@@ -19,6 +19,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
@@ -75,32 +76,81 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public AuthResult auth(String code) {
+    public AuthResult auth(String code, String skey) {
         AuthResponse authResponse = requestAuth(code);
         AuthResult authResult = new AuthResult();
         authResult.setSuccess(false);
         /**
-         * 微信鉴权成功
+         * 1 微信登录成功
          */
         if (authResponse.getSession_key() != null) {
             String openIdMD5 = MD5Util.getEncryption(authResponse.getOpenid());
-            UserVo userVo = GlobalConstants.USER_CACHE.get(openIdMD5);
             /**
-             * 用户已注册
+             * 1.1 有skey，小程序判断用户操作超时
              */
-            if (userVo != null) {
-                authResult.setSuccess(true);
-                authResult.setUserVo(userVo);
-                authResult.setSkey(openIdMD5);
+            if (!StringUtils.isEmpty(skey)) {
+                /**
+                 * 1.1.1 skey与加密后的openid相等，初步认证成功，进一步检测用户是否已注册
+                 */
+                if (skey.equals(openIdMD5)) {
+                    UserVo userVo = GlobalConstants.USER_CACHE.get(openIdMD5);
+                    /**
+                     * 1.1.1.1 用户已注册
+                     */
+                    if (userVo != null) {
+                        authResult.setSuccess(true);
+                        authResult.setUserVo(userVo);
+                        authResult.setSkey(openIdMD5);
+                    }
+                    /**
+                     * 1.1.1.2 用户未注册，存在缓存出现问题的可能，检查数据库
+                     * -->若用户存在，将用户信息存入缓存，返回成功
+                     * -->若用户不存在，有问题的skey，返回失败，弃用此skey，当做未授权用户
+                     */
+                    else {
+                        User user = userMapper.selectByOpenId(authResponse.getOpenid());
+                        if (user != null) {
+                            // 此时是userVo == null的分支，直接拷贝
+                            BeanUtils.copyProperties(user, userVo);
+                            GlobalConstants.USER_CACHE.put(openIdMD5, userVo);
+                            authResult.setSuccess(true);
+                            authResult.setUserVo(userVo);
+                            authResult.setSkey(openIdMD5);
+                        } else {
+                            authResult.setSuccess(false);
+                        }
+                    }
+                }
+                /**
+                 * 1.1.2 skey与加密后的openid不相等，有问题的skey，返回失败，弃用此skey，当做未授权用户
+                 */
+                else {
+                    authResult.setSuccess(false);
+                }
             }
             /**
-             * 用户未注册
+             * 1.2 没有skey，检测用户是否已注册
              */
             else {
+                UserVo userVo = GlobalConstants.USER_CACHE.get(openIdMD5);
+                /**
+                 * 1.2.1 用户已注册
+                 */
+                if (userVo != null) {
+                    authResult.setSuccess(true);
+                    authResult.setUserVo(userVo);
+                    authResult.setSkey(openIdMD5);
+                }
+                /**
+                 * 1.2.2 用户未注册
+                 */
+                else {
+                    authResult.setSuccess(false);
+                }
             }
         }
         /**
-         * 微信鉴权失败
+         * 2 微信登录失败
          */
         else {
         }

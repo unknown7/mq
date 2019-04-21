@@ -204,32 +204,11 @@ public class VideoServiceImpl implements VideoService {
     }
 
     @Override
-    public List<List<VideoVo>> findAllSortByClassification() {
+    public List<VideoVo> findReleaseds() {
         VideoQuery query = new VideoQuery();
         query.setDelFlag(0);
         query.setStatus(GlobalConstants.VideoStatus.RELEASED.getKey());
         query.setOrderBy("classification");
-        List<VideoVo> videoVos = videoMapper.selectByQuery(query);
-        List<List<VideoVo>> result = Lists.newArrayList();
-        long max = 0;
-        List<VideoVo> item = null;
-        for (VideoVo videoVo : videoVos) {
-            if (videoVo.getClassification() > max) {
-                max = videoVo.getClassification();
-                item = Lists.newArrayList();
-                result.add(item);
-            }
-            item.add(videoVo);
-        }
-        return result;
-    }
-
-    @Override
-    public List<VideoVo> find(Long id) {
-        VideoQuery query = new VideoQuery();
-        query.setDelFlag(0);
-        query.setStatus(GlobalConstants.VideoStatus.RELEASED.getKey());
-        query.setClassification(id);
         List<VideoVo> videoVos = videoMapper.selectByQuery(query);
         return videoVos;
     }

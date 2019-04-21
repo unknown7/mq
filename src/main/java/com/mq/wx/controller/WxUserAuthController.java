@@ -21,8 +21,8 @@ public class WxUserAuthController {
 
     @RequestMapping("/auth")
     @ResponseBody
-    public String auth(String code) {
-        AuthResult authResult = userService.auth(code);
+    public String auth(String code, String skey) {
+        AuthResult authResult = userService.auth(code, skey);
         return JSON.toJSONString(authResult);
     }
 

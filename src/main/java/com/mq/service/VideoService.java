@@ -35,6 +35,5 @@ public interface VideoService {
 
     void upload(String id, MultipartFile video) throws IOException;
 
-    List<List<VideoVo>> findAllSortByClassification();
-    List<VideoVo> find(Long id);
+    List<VideoVo> findReleaseds();
 }

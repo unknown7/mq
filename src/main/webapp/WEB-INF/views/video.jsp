@@ -103,6 +103,7 @@
 
                                 <div class="col-sm-9">
                                     <input type="text" id="price" name="price" class="form-control" onfocus="$(this).select();"/>
+                                    <span style="width: 3%;padding-left: 5px;padding-top: 10px;font-size: 16px;">元</span>
                                 </div>
                             </div>
 
@@ -147,6 +148,8 @@
                                     <input type="hidden" id="description_success" name="description_success"/>
                                 </div>
                             </div>
+
+
 
                         </div>
                     </div>
