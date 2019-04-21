@@ -1,4 +1,5 @@
 $(function () {
+
     var $dt = $('#table').on('preXhr.dt', function (e, settings, data) {
         //data.search.value = $searchForm.formGet();
     }).dataTable({
@@ -105,7 +106,8 @@ $(function () {
                      * 已发布
                      */
                     else {
-                        result = '<span class="btn btn-danger btn-xs ml-5" data-id="' + data + '" onclick="pulloff(' + data + ')">下架</span>';
+                        result = '<span class="btn btn-danger btn-xs ml-5" data-id="' + data + '" onclick="pulloff(' + data + ')">下架</span> ' +
+                            '<span class="btn btn-primary btn-xs ml-5" data-id="' + data + '" onclick="view(' + data + ')">查看</span> ';
                     }
                     return result;
                 }
@@ -360,6 +362,7 @@ $(function () {
         $('.value-input').val(0);
         $('#price').val(0);
         $('#videoForm').find('input, select').filter('.valid').removeClass('valid');
+        editStatus();
         $('#fileDiv .remove').trigger('click');
     });
 
@@ -410,7 +413,6 @@ $(function () {
         } else {
             $(this).removeClass('valid');
         }
-        console.log(defaultShareCommision + " " + defaultFreeWatchTime);
         $("#shareCommission ").slider({
             value: defaultShareCommision
         });
@@ -636,4 +638,77 @@ var progress = function () {
             clearInterval(interval);
         }
     }, 1000);
+}
+var view = function(id) {
+    $.ajax({
+        type: "POST",
+        url: ctx + "/video/selectOne",
+        cache: false,  //禁用缓存
+        data: {
+            id: id
+        },
+        dataType: "json",
+        success: function (result) {
+            $('#videoForm').find('input, select').each(function () {
+                var that = $(this);
+                var value = result[that.attr('name')];
+                if (that.attr('type') == 'number') {
+                    if (that.attr('name') == 'shareCommission') {
+                        value = Math.format(value * 100, 2);
+                    }
+                    that.val(value).keyup();
+                }
+                that.val(value);
+            });
+            var data = [
+                {
+                    'id': 'cover',
+                    'oldTile': "请上传视频封面",
+                    'newTile': result.coverName,
+                    'url': image + result.coverRealName
+                },
+                {
+                    'id': 'description',
+                    'oldTile': "请上传视频详情",
+                    'newTile': result.descriptionName,
+                    'url': image + result.descriptionRealName
+                }
+            ];
+            $.each(data, function (i, item) {
+                var span = $('span[data-title=' + item.oldTile + ']');
+                $(span).addClass('hide-placeholder selected');
+                $(span).children()
+                    .attr('data-title', item.newTile)
+                    .addClass('large')
+                    .prepend("<img class='middle'" +
+                        "style='backgroud-image: url(" + item.url + ");width: 150px;height: 112px;'" +
+                        "src='" + item.url + "'>")
+                    .children().attr('class', ' ace-icon fa fa-picture-o file-image');
+            });
+            viewStatus();
+            $('#video-detail-form').modal('show');
+        }
+    });
+}
+var viewStatus = function() {
+    $('#videoForm').find("input[type=text], input[type=number]").attr("readonly", "readonly");
+    $('#videoForm').find("input[type=file], select").attr("disabled", "disabled");
+    $("#price").prev().css("display", "none");
+    $("#price").next().css("display", "none");
+    $("#shareCommissionValue").next().next().attr("hidden", "hidden");
+    $("#freeWatchTimeValue").next().next().attr("hidden", "hidden");
+    $("#cover").next().next().css("display", "none");
+    $("#description").next().next().css("display", "none");
+    $(".modal-footer").css("display", "none");
+}
+var editStatus = function() {
+    $('#videoForm').find("input[type=text], input[type=number]").removeAttr("readonly");
+    $('#videoForm').find("input[type=file], select").removeAttr("disabled");
+    $("#price").prev().removeAttr("style");
+    $("#price").next().removeAttr("style");
+    $("#shareCommissionValue").next().next().removeAttr("hidden");
+    $("#freeWatchTimeValue").next().next().removeAttr("hidden");
+    $("#cover").next().next().removeAttr("style");
+    $("#description").next().next().removeAttr("style");
+    $(".modal-footer").removeAttr("style");
 }
