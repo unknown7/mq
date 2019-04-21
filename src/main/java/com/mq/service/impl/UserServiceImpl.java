@@ -153,6 +153,7 @@ public class UserServiceImpl implements UserService {
          * 2 微信登录失败
          */
         else {
+            authResult.setSuccess(false);
         }
         return authResult;
     }

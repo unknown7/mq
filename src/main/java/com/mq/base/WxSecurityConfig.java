@@ -2,6 +2,7 @@ package com.mq.base;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -31,12 +32,11 @@ public class WxSecurityConfig implements WebMvcConfigurer {
 
     private class VideoSecurityInterceptor extends HandlerInterceptorAdapter {
         @Override
-        public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
             String skey = request.getParameter("skey");
-            if (GlobalConstants.USER_CACHE.get(skey) != null) {
+            if (!StringUtils.isEmpty(skey) && GlobalConstants.USER_CACHE.get(skey) != null) {
                 return true;
             }
-            response.sendRedirect("/mq/login");
             return false;
         }
     }
