@@ -1,4 +1,4 @@
-package com.mq.wx.vo;
+package com.mq.wx.vo.auth;
 
 import com.mq.vo.UserVo;
 

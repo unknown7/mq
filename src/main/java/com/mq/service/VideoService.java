@@ -36,4 +36,6 @@ public interface VideoService {
     void upload(String id, MultipartFile video) throws IOException;
 
     List<VideoVo> findReleaseds();
+
+    void generateWxQrcode(String skey) throws Exception;
 }

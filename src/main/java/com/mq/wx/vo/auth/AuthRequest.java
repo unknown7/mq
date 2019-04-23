@@ -1,6 +1,8 @@
-package com.mq.wx.vo;
+package com.mq.wx.vo.auth;
 
-public class AuthRequest {
+import com.mq.wx.vo.DefaultRequest;
+
+public class AuthRequest extends DefaultRequest {
     /**
      * code             // 临时登录凭证
      * rawData          // 用户非敏感信息
@@ -19,10 +21,7 @@ public class AuthRequest {
     private String encryptedData;
     private String iv;
 
-    private String appid;
-    private String secret;
     private String js_code;
-    private String grant_type;
 
     public String getCode() {
         return code;
@@ -64,35 +63,11 @@ public class AuthRequest {
         this.iv = iv;
     }
 
-    public String getAppid() {
-        return appid;
-    }
-
-    public void setAppid(String appid) {
-        this.appid = appid;
-    }
-
-    public String getSecret() {
-        return secret;
-    }
-
-    public void setSecret(String secret) {
-        this.secret = secret;
-    }
-
     public String getJs_code() {
         return js_code;
     }
 
     public void setJs_code(String js_code) {
         this.js_code = js_code;
-    }
-
-    public String getGrant_type() {
-        return grant_type;
-    }
-
-    public void setGrant_type(String grant_type) {
-        this.grant_type = grant_type;
     }
 }

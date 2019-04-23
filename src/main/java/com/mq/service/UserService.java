@@ -2,8 +2,8 @@ package com.mq.service;
 
 import com.mq.model.User;
 import com.mq.vo.UserVo;
-import com.mq.wx.vo.AuthRequest;
-import com.mq.wx.vo.AuthResult;
+import com.mq.wx.vo.auth.AuthRequest;
+import com.mq.wx.vo.auth.AuthResult;
 
 import java.util.List;
 

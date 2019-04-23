@@ -13,10 +13,35 @@ public class GlobalConstants {
      */
     public static final Map<String, UserVo> USER_CACHE = Maps.newConcurrentMap();
     /**
-     * 微信开发账户信息
+     * 微信基本信息
      */
-    public static final String appId = "wxadfd8d2448611af5";
-    public static final String appSecret = "6f4c76bbe365216e5ec900415274b15d";
+    public static final String APP_ID = "wxadfd8d2448611af5";
+    public static final String APP_SECRET = "6f4c76bbe365216e5ec900415274b15d";
+    public enum GrantType {
+        CLIENT_CREDENTIAL("client_credential"),
+        AUTHORIZATION_CODE("authorization_code"),
+        ;
+        private String key;
+        GrantType(String key) {
+            this.key = key;
+        }
+        public String getKey() {
+            return key;
+        }
+    }
+    /**
+     * Redis
+     */
+    public enum RedisKey {
+        ACCESS_TOKEN_KEY("access_token");
+        private String key;
+        RedisKey(String key) {
+            this.key = key;
+        }
+        public String getKey() {
+            return key;
+        }
+    }
     /**
      * 视频状态
      */
