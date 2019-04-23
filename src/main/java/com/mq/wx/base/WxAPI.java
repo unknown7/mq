@@ -85,7 +85,7 @@ public class WxAPI {
             responseInputStream = result.getInputStream();
             Date now = new Date();
             String name = MD5Util.getEncryption(DateUtil.dateToString(now, DateUtil.DATE_TIME_FORMAT));
-            path = GlobalConstants.IMAGE_PATH.concat(".").concat(name);
+            path = GlobalConstants.IMAGE_PATH.concat(name).concat(".jpg");
             FileOutputStream fos = new FileOutputStream(path);
             byte[] b = new byte[1024];
             int length;

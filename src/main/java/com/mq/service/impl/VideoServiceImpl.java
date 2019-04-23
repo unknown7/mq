@@ -12,7 +12,6 @@ import com.mq.vo.Page;
 import com.mq.vo.UserVo;
 import com.mq.vo.VideoVo;
 import com.mq.wx.base.WxAPI;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -30,8 +29,6 @@ import java.util.UUID;
 public class VideoServiceImpl implements VideoService {
     @Resource
     private VideoMapper videoMapper;
-    @Resource
-    private StringRedisTemplate stringRedisTemplate;
     @Resource
     private WxAPI wxAPI;
 
