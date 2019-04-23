@@ -1,4 +1,4 @@
-package com.mq.wx.vo;
+package com.mq.wx.vo.auth;
 
 public class AuthResponse {
     private String session_key;

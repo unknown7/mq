@@ -1,7 +1,6 @@
 package com.mq.service.impl;
 
 import com.github.pagehelper.PageHelper;
-import com.google.common.collect.Lists;
 import com.mq.base.GlobalConstants;
 import com.mq.mapper.VideoMapper;
 import com.mq.model.Video;
@@ -12,6 +11,8 @@ import com.mq.util.PageUtil;
 import com.mq.vo.Page;
 import com.mq.vo.UserVo;
 import com.mq.vo.VideoVo;
+import com.mq.wx.base.WxAPI;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -29,6 +30,10 @@ import java.util.UUID;
 public class VideoServiceImpl implements VideoService {
     @Resource
     private VideoMapper videoMapper;
+    @Resource
+    private StringRedisTemplate stringRedisTemplate;
+    @Resource
+    private WxAPI wxAPI;
 
     @Override
     public Page<VideoVo> findPage(VideoQuery query) {
@@ -211,5 +216,11 @@ public class VideoServiceImpl implements VideoService {
         query.setOrderBy("classification");
         List<VideoVo> videoVos = videoMapper.selectByQuery(query);
         return videoVos;
+    }
+
+    @Override
+    public void generateWxQrcode(String skey) throws Exception {
+        String accessToken = wxAPI.getAccessToken();
+
     }
 }

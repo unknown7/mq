@@ -21,4 +21,11 @@ public class WxVideoController {
         VideoVo video = videoService.selectOneWithAuthById(id, skey);
         return JSON.toJSONString(video);
     }
+
+    @RequestMapping("/generateWxQrcode")
+    @ResponseBody
+    public String generateWxQrcode(String skey) {
+
+        return null;
+    }
 }
