@@ -57,11 +57,11 @@ $(function () {
                 "data": "id",
                 "class": "text-center",
                 "render": function (data, type, row) {
-                    if (data != 1 || cur == 1)
+                    if (data != 1)
                         return '<span class="btn btn-primary btn-xs ml-5" data-id="' + data + '" onclick="edit(' + data + ')">编辑</span> ' +
                             '<span class="btn btn-warning btn-xs ml-5" data-id="' + data + '" onclick="empower(' + data + ')">赋权</span> ' +
                             '<span class="btn btn-danger btn-xs ml-5" data-id="' + data + '" onclick="remove(' + data + ')">删除</span>';
-                    return "超级管理员";
+                    return "-";
                 }
             }
         ],
