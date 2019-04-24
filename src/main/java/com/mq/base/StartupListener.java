@@ -1,9 +1,10 @@
 package com.mq.base;
 
+import com.google.common.collect.Maps;
 import com.mq.model.User;
 import com.mq.service.UserService;
-import com.mq.util.MD5Util;
 import com.mq.vo.UserVo;
+import org.apache.commons.codec.digest.Md5Crypt;
 import org.springframework.beans.BeanUtils;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -14,6 +15,7 @@ import javax.annotation.Resource;
 import javax.servlet.ServletContext;
 import java.io.File;
 import java.util.List;
+import java.util.Map;
 
 @Component
 public class StartupListener implements ApplicationListener<ContextRefreshedEvent> {
@@ -21,6 +23,8 @@ public class StartupListener implements ApplicationListener<ContextRefreshedEven
     private WebApplicationContext context;
     @Resource
     private UserService userService;
+    @Resource
+    private RedisObjectHolder redisObjectHolder;
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
@@ -44,11 +48,13 @@ public class StartupListener implements ApplicationListener<ContextRefreshedEven
 
     private void initUserCache() {
         List<User> users = userService.findAll();
+        Map<String, UserVo> userVos = Maps.newHashMap();
         for (User user : users) {
             String openId = user.getOpenId();
             UserVo vo = new UserVo();
             BeanUtils.copyProperties(user, vo);
-            GlobalConstants.USER_CACHE.put(MD5Util.getEncryption(openId), vo);
+            userVos.put(openId, vo);
         }
+        redisObjectHolder.setUserInfo(userVos);
     }
 }

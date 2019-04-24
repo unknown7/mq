@@ -4,12 +4,13 @@ import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Maps;
 import com.mq.base.GlobalConstants;
 import com.mq.base.Http;
+import com.mq.base.RedisObjectHolder;
 import com.mq.util.DateUtil;
 import com.mq.util.MD5Util;
 import com.mq.wx.vo.accessToken.AccessTokenResponse;
 import com.mq.wx.vo.auth.AuthResponse;
+import org.apache.commons.codec.digest.Md5Crypt;
 import org.springframework.core.io.Resource;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -18,7 +19,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 /**
  * 微信API调用
@@ -29,7 +29,7 @@ public class WxAPI {
     @javax.annotation.Resource
     private Http http;
     @javax.annotation.Resource
-    private StringRedisTemplate stringRedisTemplate;
+    private RedisObjectHolder redisObjectHolder;
 
     /**
      * 获取access_token，如果缓存中存在，直接返回，如果不存在，调用微信接口，获取token并存入缓存
@@ -37,7 +37,7 @@ public class WxAPI {
      * @return access_token
      */
     public String getAccessToken() {
-        String accessToken = stringRedisTemplate.opsForValue().get(GlobalConstants.RedisKey.ACCESS_TOKEN_KEY.getKey());
+        String accessToken = redisObjectHolder.getAccessToken();
         if (StringUtils.isEmpty(accessToken)) {
             String url = "https://api.weixin.qq.com/cgi-bin/token";
             Map<String, Object> params = Maps.newHashMap();
@@ -49,12 +49,7 @@ public class WxAPI {
                 AccessTokenResponse response = JSONObject.parseObject(result, AccessTokenResponse.class);
                 if (!StringUtils.isEmpty(response.getAccess_token())) {
                     accessToken = response.getAccess_token();
-                    stringRedisTemplate.opsForValue().set(
-                            GlobalConstants.RedisKey.ACCESS_TOKEN_KEY.getKey(),
-                            response.getAccess_token(),
-                            response.getExpires_in(),
-                            TimeUnit.SECONDS
-                    );
+                    redisObjectHolder.setAccessToken(response.getAccess_token(), response.getExpires_in());
                 }
             }
         }
@@ -79,8 +74,7 @@ public class WxAPI {
         InputStream responseInputStream;
         try {
             responseInputStream = result.getInputStream();
-            Date now = new Date();
-            String name = MD5Util.getEncryption(DateUtil.dateToString(now, DateUtil.DATE_TIME_FORMAT));
+            String name = MD5Util.getEncryption(String.valueOf(System.currentTimeMillis()));
             path = GlobalConstants.IMAGE_PATH.concat(name).concat(".jpg");
             FileOutputStream fos = new FileOutputStream(path);
             byte[] b = new byte[1024];

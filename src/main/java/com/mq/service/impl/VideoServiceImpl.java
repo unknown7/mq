@@ -2,6 +2,7 @@ package com.mq.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.mq.base.GlobalConstants;
+import com.mq.base.RedisObjectHolder;
 import com.mq.mapper.VideoMapper;
 import com.mq.model.Video;
 import com.mq.query.VideoQuery;
@@ -31,6 +32,8 @@ public class VideoServiceImpl implements VideoService {
     private VideoMapper videoMapper;
     @Resource
     private WxAPI wxAPI;
+    @Resource
+    private RedisObjectHolder redisObjectHolder;
 
     @Override
     public Page<VideoVo> findPage(VideoQuery query) {
@@ -153,7 +156,7 @@ public class VideoServiceImpl implements VideoService {
 
     @Override
     public VideoVo selectOneWithAuthById(Long id, String skey) {
-        UserVo userVo = GlobalConstants.USER_CACHE.get(skey);
+        UserVo userVo = redisObjectHolder.getUserInfo(skey);
         VideoVo videoVo = videoMapper.selectOneVoWithAuth(id, userVo != null ? userVo.getId() : null);
         return videoVo;
     }

@@ -1,4 +1,4 @@
-package com.mq.util;
+package com.mq.base;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;

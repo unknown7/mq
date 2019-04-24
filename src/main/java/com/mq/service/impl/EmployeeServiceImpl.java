@@ -11,6 +11,7 @@ import com.mq.util.FileUtil;
 import com.mq.util.MD5Util;
 import com.mq.util.PageUtil;
 import com.mq.vo.Page;
+import org.apache.commons.codec.digest.Md5Crypt;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;

@@ -39,17 +39,4 @@ public class WxUserAuthController {
         UserVo userVo = userService.get(skey);
         return JSON.toJSONString(userVo);
     }
-
-    @RequestMapping("/listUserCache")
-    @ResponseBody
-    public String listUserCache() {
-        Map<String, UserVo> userCache = GlobalConstants.USER_CACHE;
-        return JSON.toJSONString(userCache);
-    }
-    @RequestMapping("/clearUserCache")
-    @ResponseBody
-    public String clearUserCache() {
-        GlobalConstants.USER_CACHE.clear();
-        return JSON.toJSONString("success");
-    }
 }
