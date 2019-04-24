@@ -8,11 +8,15 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Configuration
 public class WxSecurityConfig implements WebMvcConfigurer {
+
+    @Resource
+    private RedisObjectHolder redisObjectHolder;
 
     @Bean
     public VideoSecurityInterceptor getVideoSecurityInterceptor() {
@@ -34,7 +38,7 @@ public class WxSecurityConfig implements WebMvcConfigurer {
         @Override
         public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
             String skey = request.getParameter("skey");
-            if (!StringUtils.isEmpty(skey) && GlobalConstants.USER_CACHE.get(skey) != null) {
+            if (!StringUtils.isEmpty(skey) && redisObjectHolder.getUserInfo(skey) != null) {
                 return true;
             }
             return false;

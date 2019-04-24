@@ -1,6 +1,7 @@
 package com.mq.service.impl;
 
 import com.mq.base.GlobalConstants;
+import com.mq.base.RedisObjectHolder;
 import com.mq.mapper.UserMapper;
 import com.mq.model.User;
 import com.mq.query.UserQuery;
@@ -12,6 +13,7 @@ import com.mq.wx.base.WxAPI;
 import com.mq.wx.vo.auth.AuthRequest;
 import com.mq.wx.vo.auth.AuthResponse;
 import com.mq.wx.vo.auth.AuthResult;
+import org.apache.commons.codec.digest.Md5Crypt;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +29,8 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
     @Resource
     private WxAPI wxAPI;
+    @Resource
+    private RedisObjectHolder redisObjectHolder;
 
     @Override
     @Transactional
@@ -57,7 +61,7 @@ public class UserServiceImpl implements UserService {
              */
             UserVo userVo = new UserVo();
             BeanUtils.copyProperties(user, userVo);
-            GlobalConstants.USER_CACHE.put(skey, userVo);
+            redisObjectHolder.setUserInfo(skey, userVo);
         }
         return skey;
     }
@@ -88,7 +92,7 @@ public class UserServiceImpl implements UserService {
                  * 1.1.1 skey与加密后的openid相等，初步认证成功，进一步检测用户是否已注册
                  */
                 if (skey.equals(openIdMD5)) {
-                    UserVo userVo = GlobalConstants.USER_CACHE.get(openIdMD5);
+                    UserVo userVo = redisObjectHolder.getUserInfo(openIdMD5);
                     /**
                      * 1.1.1.1 用户已注册
                      */
@@ -107,7 +111,7 @@ public class UserServiceImpl implements UserService {
                         if (user != null) {
                             // 此时是userVo == null的分支，直接拷贝
                             BeanUtils.copyProperties(user, userVo);
-                            GlobalConstants.USER_CACHE.put(openIdMD5, userVo);
+                            redisObjectHolder.setUserInfo(openIdMD5, userVo);
                             authResult.setSuccess(true);
                             authResult.setUserVo(userVo);
                             authResult.setSkey(openIdMD5);
@@ -127,7 +131,7 @@ public class UserServiceImpl implements UserService {
              * 1.2 没有skey，检测用户是否已注册
              */
             else {
-                UserVo userVo = GlobalConstants.USER_CACHE.get(openIdMD5);
+                UserVo userVo = redisObjectHolder.getUserInfo(openIdMD5);
                 /**
                  * 1.2.1 用户已注册
                  */
@@ -155,7 +159,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserVo get(String skey) {
-        UserVo userVo = GlobalConstants.USER_CACHE.get(skey);
+        UserVo userVo = redisObjectHolder.getUserInfo(skey);
         return userVo;
     }
 }

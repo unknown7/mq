@@ -1,17 +1,8 @@
 package com.mq.base;
 
-import com.google.common.collect.Maps;
-import com.mq.vo.UserVo;
-
-import java.util.Map;
-
 public class GlobalConstants {
     public static String IMAGE_PATH;
     public static String VIDEO_PATH;
-    /**
-     * 用户缓存
-     */
-    public static final Map<String, UserVo> USER_CACHE = Maps.newConcurrentMap();
     /**
      * 微信基本信息
      */
@@ -33,7 +24,9 @@ public class GlobalConstants {
      * Redis
      */
     public enum RedisKey {
-        ACCESS_TOKEN_KEY("access_token");
+        ACCESS_TOKEN_KEY("access_token"),
+        USER_INFO("user_info"),
+        ;
         private String key;
         RedisKey(String key) {
             this.key = key;
