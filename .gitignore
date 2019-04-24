@@ -18,6 +18,7 @@
 *.mvn
 *.cmd
 *.p12
+*.jks
 src/main/webapp/videos/
 mvnw
 

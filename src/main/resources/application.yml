@@ -3,10 +3,10 @@ server:
   servlet:
     context-path: /mq
   ssl:
-    key-store: keystore.p12
+    key-store: www.unknown7.xyz.jks
     key-store-password: 123456
-    key-store-type: PKCS12
-    key-alias: tomcat
+    key-store-type: JKS
+#    key-alias: tomcat
 
 spring:
   mvc:
