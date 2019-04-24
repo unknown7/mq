@@ -50,6 +50,8 @@ pagehelper:
   reasonable: true
   supportMethodsArguments: true
   params: count=countSql
+  offset-as-page-num: true
+  row-bounds-with-count: true
 
 #mybatis log
 logging:
@@ -76,7 +78,7 @@ redis:
   maxWaitMillis: 1000
   #连接的最小空闲时间 默认1800000毫秒(30分钟)
   minEvictableIdleTimeMillis: 300000
-  #每次释放连接的最大数目,默认3
+  #每次释放连接的最大数目,默认3pagehelper-spring-boot-starter
   numTestsPerEvictionRun: 1024
   #逐出扫描的时间间隔(毫秒) 如果为负数,则不运行逐出线程, 默认-1
   timeBetweenEvictionRunsMillis: 30000

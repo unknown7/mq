@@ -1,5 +1,6 @@
 package com.mq;
 
+import com.github.pagehelper.autoconfigure.PageHelperAutoConfiguration;
 import org.apache.catalina.Context;
 import org.apache.catalina.connector.Connector;
 import org.apache.tomcat.util.descriptor.web.SecurityCollection;
@@ -12,7 +13,7 @@ import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactor
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 
-@SpringBootApplication
+@SpringBootApplication(exclude = PageHelperAutoConfiguration.class)
 @MapperScan("com.mq.mapper")
 public class SpringBootStartApplication extends SpringBootServletInitializer {
 
