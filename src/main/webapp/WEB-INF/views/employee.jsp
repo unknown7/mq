@@ -59,8 +59,8 @@
                     <th width="3%" class="min-mobile-l">性别</th>
                     <th width="7%" class="min-mobile-l">生日</th>
                     <th width="3%" class="min-mobile-l">年龄</th>
-                    <%--<th width="8%" class="min-mobile-l">头像</th>--%>
-                    <th width="10%" class="min-mobile-l">用户名</th>
+                    <th width="3%" class="min-mobile-l">头像</th>
+                    <th width="8%" class="min-mobile-l">用户名</th>
                     <th width="5%" class="min-mobile-l">电话</th>
                     <th width="10%" class="min-mobile-l">邮箱</th>
                     <th width="10%" class="min-mobile-l">微信</th>

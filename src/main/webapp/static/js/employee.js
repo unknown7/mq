@@ -30,13 +30,13 @@ $(function () {
                 "data": "age",
                 "class": "text-center"
             },
-            // {
-            //     "data": "avatar",
-            //     "class": "text-center",
-            //     "render": function (data, type, row) {
-            //         return '<img src="' + ctx + data + '" width="20%" height="15%"/>';
-            //     }
-            // },
+            {
+                "data": "avatarRealName",
+                "class": "text-center",
+                "render": function (data, type, row) {
+                    return '<img src="' + image + data + '" width="30" height="30"/>';
+                }
+            },
             {
                 "data": "username",
                 "class": "text-center"
