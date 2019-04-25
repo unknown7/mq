@@ -1,13 +1,10 @@
 package com.mq.base;
 
+import com.alibaba.fastjson.JSON;
 import com.mq.vo.UserVo;
-import org.apache.commons.codec.digest.Md5Crypt;
-import org.apache.tomcat.util.security.MD5Encoder;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
-import sun.security.provider.MD5;
-import sun.security.rsa.RSASignature;
 
 import javax.annotation.Resource;
 import java.util.Map;
@@ -23,18 +20,22 @@ public class RedisObjectHolder {
         stringRedisTemplate.opsForHash().put(
                 GlobalConstants.RedisKey.USER_INFO.getKey(),
                 skey,
-                userVo
+                JSON.toJSONString(userVo)
         );
     }
 
-    public void setUserInfo(Map<String, UserVo> userVos) {
-        assert userVos != null && !userVos.isEmpty();
-        stringRedisTemplate.opsForHash().putAll(GlobalConstants.RedisKey.USER_INFO.getKey(), userVos);
+    public void setUserInfo(Map<String, String> userVos) {
+        if (userVos != null && !userVos.isEmpty()) {
+            stringRedisTemplate.opsForHash().putAll(GlobalConstants.RedisKey.USER_INFO.getKey(), userVos);
+        }
     }
 
     public UserVo getUserInfo(String skey) {
         Object o = stringRedisTemplate.opsForHash().get(GlobalConstants.RedisKey.USER_INFO.getKey(), skey);
-        UserVo userVo = o != null ? (UserVo) o : null;
+        UserVo userVo = null;
+        if (o != null) {
+            userVo = JSON.parseObject(o.toString(), UserVo.class);
+        }
         return userVo;
     }
 
