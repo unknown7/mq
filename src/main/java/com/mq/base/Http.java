@@ -1,6 +1,5 @@
 package com.mq.base;
 
-import org.springframework.core.io.Resource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -8,46 +7,47 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import javax.annotation.Resource;
+import java.net.URI;
 import java.util.Map;
 
 @Component
 public class Http {
-    @javax.annotation.Resource
+    @Resource
     private RestTemplate restTemplate;
 
-    public String post2String(String url, Map<String, Object> params) {
+    public <T> ResponseEntity<T> getForEntity(String domain, Map<String, Object> params, Class<T> entityType) {
+        StringBuffer buff = new StringBuffer(domain);
+        if (params != null && !params.isEmpty()) {
+            buff.append("?");
+        }
+        String map2param = map2param(params);
+        buff.append(map2param);
+        URI uri = URI.create(buff.toString());
+        ResponseEntity<T> responseEntity = restTemplate.getForEntity(uri, entityType);
+        return responseEntity;
+    }
+
+    public <T> ResponseEntity<T> postForEntity(String domain, Map<String, Object> params, Class<T> entityType) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
-        HttpEntity<String> entity = new HttpEntity(params, headers);
-        ResponseEntity<String> responseEntity = restTemplate.postForEntity(url, entity, String.class);
-        return responseEntity.getBody();
+        HttpEntity<T> entity = new HttpEntity(params, headers);
+        ResponseEntity<T> responseEntity = restTemplate.postForEntity(domain, entity, entityType);
+        return responseEntity;
     }
 
-    public Resource post2Resource(String url, Map<String, Object> params) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
-        HttpEntity<String> entity = new HttpEntity(params, headers);
-        ResponseEntity<Resource> responseEntity = restTemplate.postForEntity(url, entity, Resource.class);
-        return responseEntity.getBody();
+    public String map2param(Map<String, Object> params) {
+        return map2param(params, "&");
     }
 
-    public String get(String url, Map<String, Object> params) {
-        ResponseEntity<String> responseEntity = restTemplate.getForEntity(url, String.class, params);
-        return responseEntity.getBody();
-    }
-
-    public String map2str(Map<String, Object> map) {
-        return map2str(map, "&");
-    }
-
-    public String map2str(Map<String, Object> map, String delimiter) {
+    public String map2param(Map<String, Object> params, String delimiter) {
         String result = "";
-        if (map != null && !map.isEmpty()) {
+        if (params != null && !params.isEmpty()) {
             StringBuffer buffer = new StringBuffer();
             int index = 0;
-            for (Map.Entry<String, Object> entry : map.entrySet()) {
+            for (Map.Entry<String, Object> entry : params.entrySet()) {
                 buffer.append(entry.getKey()).append("=").append(entry.getValue());
-                if (++index != map.size()) {
+                if (++index != params.size()) {
                     buffer.append(delimiter);
                 }
             }

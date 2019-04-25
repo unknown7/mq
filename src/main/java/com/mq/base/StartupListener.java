@@ -1,8 +1,10 @@
 package com.mq.base;
 
+import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Maps;
 import com.mq.model.User;
 import com.mq.service.UserService;
+import com.mq.util.MD5Util;
 import com.mq.vo.UserVo;
 import org.apache.commons.codec.digest.Md5Crypt;
 import org.springframework.beans.BeanUtils;
@@ -48,12 +50,13 @@ public class StartupListener implements ApplicationListener<ContextRefreshedEven
 
     private void initUserCache() {
         List<User> users = userService.findAll();
-        Map<String, UserVo> userVos = Maps.newHashMap();
+        Map<String, String> userVos = Maps.newHashMap();
         for (User user : users) {
-            String openId = user.getOpenId();
+            String skey = MD5Util.getEncryption(user.getOpenId());
             UserVo vo = new UserVo();
             BeanUtils.copyProperties(user, vo);
-            userVos.put(openId, vo);
+            String serializable = JSON.toJSONString(vo);
+            userVos.put(skey, serializable);
         }
         redisObjectHolder.setUserInfo(userVos);
     }

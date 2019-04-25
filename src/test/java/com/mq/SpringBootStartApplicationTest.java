@@ -3,12 +3,14 @@ package com.mq;
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Maps;
 import com.mq.base.GlobalConstants;
+import com.mq.base.RedisObjectHolder;
 import com.mq.mapper.MenuMapper;
 import com.mq.model.User;
 import com.mq.service.MenuService;
 import com.mq.vo.MenuTree;
 import com.mq.vo.UserVo;
 import com.mq.wx.base.WxAPI;
+import com.mq.wx.vo.auth.AuthResponse;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mybatis.spring.annotation.MapperScan;
@@ -42,6 +44,8 @@ public class SpringBootStartApplicationTest {
     private StringRedisTemplate stringRedisTemplate;
     @Resource
     private WxAPI wxAPI;
+    @Resource
+    private RedisObjectHolder redisObjectHolder;
 
     @Test
     public void contextLoads() {
@@ -76,13 +80,8 @@ public class SpringBootStartApplicationTest {
 
     @Test
     public void redis() {
-        UserVo userVo = new UserVo();
-        userVo.setAvatarUrl("https://www.google.com");
-        userVo.setId(1L);
-        userVo.setGender(1);
-        stringRedisTemplate.opsForValue().set("user", JSON.toJSONString(userVo), 10, TimeUnit.SECONDS);
-        String value = stringRedisTemplate.opsForValue().get("user");
-        System.err.println(value);
+        Object user_info = stringRedisTemplate.opsForHash().get("user_info", "oTt2W5DiQU-M7w8LD7EskU-9IjXk");
+        System.err.println(JSON.toJSONString(user_info));
     }
 
     @Test
@@ -93,6 +92,45 @@ public class SpringBootStartApplicationTest {
         scene.put("userId", 1L);
         scene.put("videoId", 1L);
         wxAPI.getUnlimited(page, scene);
+    }
+
+    @Test
+    public void getForEntry() {
+        AuthResponse authResponse = wxAPI.jscode2session("071GNxaM17ks681arv9M19okaM1GNxa4");
+        System.err.println(JSON.toJSONString(authResponse));
+    }
+
+    @Test
+    public void redisMap() {
+        UserVo userVo = new UserVo();
+        userVo.setId(1L);
+        userVo.setGender(1);
+        userVo.setAvatarUrl("image");
+        userVo.setCity("weifang");
+        userVo.setCountry("china");
+        userVo.setDelFlag(0);
+        redisObjectHolder.setUserInfo("abc", userVo);
+    }
+
+    @Test
+    public void jscode2session() {
+        StringBuffer uri = new StringBuffer();
+        uri.append("https://api.weixin.qq.com/sns/jscode2session")
+                .append("?appid=").append(GlobalConstants.APP_ID)
+                .append("&secret=").append(GlobalConstants.APP_SECRET)
+                .append("&grant_type=").append(GlobalConstants.GrantType.AUTHORIZATION_CODE.getKey())
+                .append("&js_code=").append("071GNxaM17ks681arv9M19okaM1GNxa4")
+        ;
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+        HttpEntity<String> entity = new HttpEntity(headers);
+        String result = restTemplate.exchange(
+                uri.toString(),
+                HttpMethod.GET,
+                entity,
+                String.class
+        ).getBody();
+        System.err.println(result);
     }
 
 }

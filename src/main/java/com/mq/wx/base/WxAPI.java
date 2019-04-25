@@ -5,19 +5,17 @@ import com.google.common.collect.Maps;
 import com.mq.base.GlobalConstants;
 import com.mq.base.Http;
 import com.mq.base.RedisObjectHolder;
-import com.mq.util.DateUtil;
 import com.mq.util.MD5Util;
 import com.mq.wx.vo.accessToken.AccessTokenResponse;
 import com.mq.wx.vo.auth.AuthResponse;
-import org.apache.commons.codec.digest.Md5Crypt;
 import org.springframework.core.io.Resource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Date;
 import java.util.Map;
 
 /**
@@ -39,12 +37,13 @@ public class WxAPI {
     public String getAccessToken() {
         String accessToken = redisObjectHolder.getAccessToken();
         if (StringUtils.isEmpty(accessToken)) {
-            String url = "https://api.weixin.qq.com/cgi-bin/token";
+            String domain = "https://api.weixin.qq.com/cgi-bin/token";
             Map<String, Object> params = Maps.newHashMap();
-            params.put("grant_type", GlobalConstants.GrantType.CLIENT_CREDENTIAL.getKey());
             params.put("appid", GlobalConstants.APP_ID);
             params.put("secret", GlobalConstants.APP_SECRET);
-            String result = http.get(url, params);
+            params.put("grant_type", GlobalConstants.GrantType.CLIENT_CREDENTIAL.getKey());
+            ResponseEntity<String> responseEntity = http.getForEntity(domain, params, String.class);
+            String result = responseEntity.getBody();
             if (!StringUtils.isEmpty(result)) {
                 AccessTokenResponse response = JSONObject.parseObject(result, AccessTokenResponse.class);
                 if (!StringUtils.isEmpty(response.getAccess_token())) {
@@ -65,11 +64,13 @@ public class WxAPI {
      */
     public String getUnlimited(String page, Map<String, Object> scene) {
         String accessToken = getAccessToken();
-        String url = "https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=" + accessToken;
+        StringBuffer domain = new StringBuffer("https://api.weixin.qq.com/wxa/getwxacodeunlimit");
+        domain.append("?access_token=").append(accessToken);
         Map<String, Object> params = Maps.newHashMap();
         params.put("page", page);
-        params.put("scene", http.map2str(scene));
-        Resource result = http.post2Resource(url, params);
+        params.put("scene", http.map2param(scene));
+        ResponseEntity<Resource> responseEntity = http.postForEntity(domain.toString(), params, Resource.class);
+        Resource result = responseEntity.getBody();
         String path;
         InputStream responseInputStream;
         try {
@@ -96,14 +97,14 @@ public class WxAPI {
      * @return
      */
     public AuthResponse jscode2session(String code) {
-        String url = "https://api.weixin.qq.com/sns/jscode2session";
+        String domain = "https://api.weixin.qq.com/sns/jscode2session";
         Map<String, Object> params = Maps.newHashMap();
-        params.put("grant_type", GlobalConstants.GrantType.AUTHORIZATION_CODE.getKey());
         params.put("appid", GlobalConstants.APP_ID);
         params.put("secret", GlobalConstants.APP_SECRET);
+        params.put("grant_type", GlobalConstants.GrantType.AUTHORIZATION_CODE.getKey());
         params.put("js_code", code);
-        String result = http.get(url, params);
-        AuthResponse authResponse = JSONObject.parseObject(result, AuthResponse.class);
+        ResponseEntity<String> responseEntity = http.getForEntity(domain, params, String.class);
+        AuthResponse authResponse = JSONObject.parseObject(responseEntity.getBody(), AuthResponse.class);
         return authResponse;
     }
 }
