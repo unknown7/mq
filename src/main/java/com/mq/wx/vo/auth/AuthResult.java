@@ -7,6 +7,10 @@ public class AuthResult {
     private String skey;
     private UserVo userVo;
 
+    public AuthResult (boolean success) {
+        this.setSuccess(success);
+    }
+
     public boolean isSuccess() {
         return success;
     }

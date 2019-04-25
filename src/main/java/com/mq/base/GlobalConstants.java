@@ -26,6 +26,7 @@ public class GlobalConstants {
     public enum RedisKey {
         ACCESS_TOKEN_KEY("access_token"),
         USER_INFO("user_info"),
+        TEMPORARY_USER("temporary_user"),
         ;
         private String key;
         RedisKey(String key) {

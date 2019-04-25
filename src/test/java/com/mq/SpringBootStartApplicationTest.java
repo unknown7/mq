@@ -133,5 +133,13 @@ public class SpringBootStartApplicationTest {
         System.err.println(result);
     }
 
+    @Test
+    public void redisList() {
+        for (int i = 0; i < 5; i++) {
+            stringRedisTemplate.opsForList().leftPush("test", i + "");
+        }
+        stringRedisTemplate.opsForList().rightPop("test");
+    }
+
 }
 
