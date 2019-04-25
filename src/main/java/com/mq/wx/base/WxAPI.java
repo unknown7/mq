@@ -9,6 +9,7 @@ import com.mq.util.MD5Util;
 import com.mq.wx.vo.accessToken.AccessTokenResponse;
 import com.mq.wx.vo.auth.AuthResponse;
 import org.springframework.core.io.Resource;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -67,26 +68,32 @@ public class WxAPI {
         StringBuffer domain = new StringBuffer("https://api.weixin.qq.com/wxa/getwxacodeunlimit");
         domain.append("?access_token=").append(accessToken);
         Map<String, Object> params = Maps.newHashMap();
-        params.put("page", page);
+//        params.put("page", page);
         params.put("scene", http.map2param(scene));
         ResponseEntity<Resource> responseEntity = http.postForEntity(domain.toString(), params, Resource.class);
-        Resource result = responseEntity.getBody();
-        String path;
-        InputStream responseInputStream;
-        try {
-            responseInputStream = result.getInputStream();
-            String name = MD5Util.getEncryption(String.valueOf(System.currentTimeMillis()));
-            path = GlobalConstants.IMAGE_PATH.concat(name).concat(".jpg");
-            FileOutputStream fos = new FileOutputStream(path);
-            byte[] b = new byte[1024];
-            int length;
-            while ((length = responseInputStream.read(b)) > 0) {
-                fos.write(b, 0, length);
+        MediaType contentType = responseEntity.getHeaders().getContentType();
+        System.err.println(contentType);
+        String path = null;
+        /**
+         * 成功的contentType为image/jpeg
+         * 失败的contentType为application/json
+         */
+        if (MediaType.IMAGE_JPEG.equals(contentType)) {
+            try {
+                InputStream is = responseEntity.getBody().getInputStream();
+                String name = MD5Util.getEncryption(String.valueOf(System.currentTimeMillis()));
+                path = GlobalConstants.IMAGE_PATH.concat(name).concat(".jpg");
+                FileOutputStream fos = new FileOutputStream(path);
+                byte[] b = new byte[1024];
+                int length;
+                while ((length = is.read(b)) != -1) {
+                    fos.write(b, 0, length);
+                }
+                is.close();
+                fos.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
-            responseInputStream.close();
-            fos.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
         return path;
     }

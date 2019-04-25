@@ -1,6 +1,7 @@
 package com.mq.service.impl;
 
 import com.github.pagehelper.PageHelper;
+import com.google.common.collect.Maps;
 import com.mq.base.GlobalConstants;
 import com.mq.base.RedisObjectHolder;
 import com.mq.mapper.VideoMapper;
@@ -24,6 +25,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -219,8 +221,12 @@ public class VideoServiceImpl implements VideoService {
     }
 
     @Override
-    public void generateWxQrcode(String skey) throws Exception {
-        String accessToken = wxAPI.getAccessToken();
-
+    public String generateWxQrcode(String videoId, String skey) {
+        String page = "pages/index/index";
+        Map<String, Object> scene = Maps.newHashMap();
+        scene.put("skey", skey);
+        scene.put("videoId", videoId);
+        String qrcodePath = wxAPI.getUnlimited(page, scene);
+        return qrcodePath;
     }
 }

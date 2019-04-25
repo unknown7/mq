@@ -37,5 +37,5 @@ public interface VideoService {
 
     List<VideoVo> findReleaseds();
 
-    void generateWxQrcode(String skey) throws Exception;
+    String generateWxQrcode(String videoId, String skey);
 }

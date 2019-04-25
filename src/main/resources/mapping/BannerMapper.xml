@@ -38,6 +38,9 @@
       #{bName,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.mq.model.Banner" >
+    <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into t_banner
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
