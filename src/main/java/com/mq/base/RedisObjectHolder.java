@@ -53,4 +53,17 @@ public class RedisObjectHolder {
         String accessToken = stringRedisTemplate.opsForValue().get(GlobalConstants.RedisKey.ACCESS_TOKEN_KEY.getKey());
         return accessToken;
     }
+
+    public void setTemporaryUser(String skey) {
+        assert !StringUtils.isEmpty(skey);
+        stringRedisTemplate.opsForHash().put(GlobalConstants.RedisKey.TEMPORARY_USER.getKey(), skey, "");
+    }
+
+    public boolean isTemporaryUser(String skey) {
+        return stringRedisTemplate.opsForHash().hasKey(GlobalConstants.RedisKey.TEMPORARY_USER.getKey(), skey);
+    }
+
+    public void delTemporaryUser(String skey) {
+        stringRedisTemplate.opsForHash().delete(GlobalConstants.RedisKey.TEMPORARY_USER.getKey(), skey);
+    }
 }
