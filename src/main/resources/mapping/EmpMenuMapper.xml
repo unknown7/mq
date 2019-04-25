@@ -29,6 +29,9 @@
       #{updateTime,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.mq.model.EmpMenu" >
+    <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into t_emp_menu
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >

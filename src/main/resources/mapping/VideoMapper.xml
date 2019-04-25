@@ -76,6 +76,9 @@
       #{videoName,jdbcType=VARCHAR}), #{freeWatchTime,jdbcType=INTEGER}
   </insert>
   <insert id="insertSelective" parameterType="com.mq.model.Video" >
+    <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into t_video
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >

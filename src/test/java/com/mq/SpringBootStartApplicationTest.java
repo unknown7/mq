@@ -5,6 +5,7 @@ import com.google.common.collect.Maps;
 import com.mq.base.GlobalConstants;
 import com.mq.base.RedisObjectHolder;
 import com.mq.mapper.MenuMapper;
+import com.mq.model.Menu;
 import com.mq.model.User;
 import com.mq.service.MenuService;
 import com.mq.vo.MenuTree;
@@ -16,11 +17,9 @@ import org.junit.runner.RunWith;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
+import org.springframework.http.*;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
@@ -36,8 +35,6 @@ import java.util.concurrent.TimeUnit;
 public class SpringBootStartApplicationTest {
     @Resource
     private MenuMapper menuMapper;
-    @Resource
-    private MenuService menuService;
     @Resource
     private RestTemplate restTemplate;
     @Resource
@@ -139,6 +136,36 @@ public class SpringBootStartApplicationTest {
             stringRedisTemplate.opsForList().leftPush("test", i + "");
         }
         stringRedisTemplate.opsForList().rightPop("test");
+    }
+
+    @Test
+    public void generateQrcode() {
+//        String url = "https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=20_pIO2oULM73oOchBOs44Ojh7l0Lf6SsffOklTlyOTip9vpL9plYyJ02uMUM9SQ6wTU1S2aLS3aYASSCpr5K2FsXJTqNUOaeUXiigRgzoyY5zcK2Gz15ciTSfOCheG4uOsDk83bnS6Hi7zVAuZDPUiAFAKWB";
+//        Map<String, Object> params = Maps.newHashMap();
+//        params.put("page", "pages/index/index");
+//        params.put("scene", "userId=1&videoId=1");
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+//        HttpEntity<String> entity = new HttpEntity(params, headers);
+//        ResponseEntity<String> exchange = restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
+//        System.err.println(exchange.getBody());
+
+
+        Map<String, Object> scene = Maps.newHashMap();
+        scene.put("skey", "995d28909F6a68a33f1bbd4348e61490");
+        scene.put("videoId", "16");
+        String qrcodePath = wxAPI.getUnlimited("pages/index/index", scene);
+        System.err.println(qrcodePath);
+    }
+
+    @Test
+    public void insert() {
+        Menu menu = new Menu();
+        menu.setmName("test");
+        menu.setPid(111L);
+        menu.setDelFlag(0);
+        menuMapper.insertSelective(menu);
+        System.err.println(JSON.toJSONString(menu));
     }
 
 }

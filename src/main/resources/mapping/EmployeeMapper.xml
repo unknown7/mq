@@ -45,6 +45,9 @@
       #{mobile,jdbcType=VARCHAR}, #{wechat,jdbcType=VARCHAR}, #{avatarName,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.mq.model.Employee" >
+    <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into t_employee
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
