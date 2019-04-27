@@ -84,11 +84,11 @@ public class VideoController extends BaseController {
         }
     }
 
-    @RequestMapping("/pulloff")
+    @RequestMapping("/shelve")
     @ResponseBody
-    public String pulloff(Long id) {
+    public String shelve(Long id) {
         try {
-            videoService.pulloff(id);
+            videoService.shelve(id);
             return success("视频已下架");
         } catch (Exception e) {
             e.printStackTrace();

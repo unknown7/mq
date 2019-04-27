@@ -179,7 +179,7 @@ public class VideoServiceImpl implements VideoService {
 
     @Override
     @Transactional
-    public void pulloff(Long id) {
+    public void shelve(Long id) {
         Video video = videoMapper.selectByPrimaryKey(id);
         video.setStatus(GlobalConstants.VideoStatus.UN_RELEASED.getKey());
         video.setUpdateTime(new Date());
@@ -211,7 +211,7 @@ public class VideoServiceImpl implements VideoService {
     }
 
     @Override
-    public List<VideoVo> findReleaseds() {
+    public List<VideoVo> findReleases() {
         VideoQuery query = new VideoQuery();
         query.setDelFlag(0);
         query.setStatus(GlobalConstants.VideoStatus.RELEASED.getKey());
@@ -221,12 +221,12 @@ public class VideoServiceImpl implements VideoService {
     }
 
     @Override
-    public String generateWxQrcode(String videoId, String skey) {
+    public String generateMiniProgramCode(String videoId, String skey) {
         String page = "pages/index/index";
         Map<String, Object> scene = Maps.newHashMap();
         scene.put("skey", skey);
         scene.put("videoId", videoId);
-        String qrcodePath = wxAPI.getUnlimited(page, scene);
-        return qrcodePath;
+        String miniProgramCode = wxAPI.getUnlimited(page, scene);
+        return miniProgramCode;
     }
 }

@@ -38,7 +38,7 @@ public class IndexController {
     @RequestMapping("/getVideos")
     @ResponseBody
     public String getVideos() {
-        List<VideoVo> videoVos = videoService.findReleaseds();
+        List<VideoVo> videoVos = videoService.findReleases();
         return JSON.toJSONString(videoVos);
     }
 
