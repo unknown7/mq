@@ -13,7 +13,7 @@
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="del_flag" property="delFlag" jdbcType="INTEGER" />
     <result column="classification" property="classification" jdbcType="BIGINT" />
-    <result column="share_commission" property="shareCommission" jdbcType="DECIMAL" />
+    <result column="profit_share" property="profitShare" jdbcType="DECIMAL" />
     <result column="status" property="status" jdbcType="VARCHAR" />
     <result column="cover_name" property="coverName" jdbcType="VARCHAR" />
     <result column="description_name" property="descriptionName" jdbcType="VARCHAR" />
@@ -35,7 +35,7 @@
     <result column="del_flag" property="delFlag" jdbcType="INTEGER" />
     <result column="classification" property="classification" jdbcType="BIGINT" />
     <result column="classification_name" property="classificationName" jdbcType="VARCHAR" />
-    <result column="share_commission" property="shareCommission" jdbcType="DECIMAL" />
+    <result column="profit_share" property="profitShare" jdbcType="DECIMAL" />
     <result column="accessed" property="accessed" jdbcType="INTEGER" />
     <result column="status" property="status" jdbcType="VARCHAR" />
     <result column="cover_name" property="coverName" jdbcType="VARCHAR" />
@@ -46,7 +46,7 @@
   </resultMap>
   <sql id="Base_Column_List" >
     id, title, subtitle, price, cover_real_name, description_real_name,
-    video_real_name, create_time, update_time, del_flag, classification, share_commission, 
+    video_real_name, create_time, update_time, del_flag, classification, profit_share,
     status, cover_name, description_name, video_name, free_watch_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
@@ -64,14 +64,14 @@
       price,
       cover_real_name, description_real_name, video_real_name, 
       create_time, update_time, del_flag, 
-      classification, share_commission,
+      classification, profit_share,
       status, cover_name, description_name, 
       video_name, free_watch_time)
     values (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{subtitle,jdbcType=VARCHAR}, 
       #{price,jdbcType=DECIMAL},
       #{coverRealName,jdbcType=VARCHAR}, #{descriptionRealName,jdbcType=VARCHAR}, #{videoRealName,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=INTEGER}, 
-      #{classification,jdbcType=BIGINT}, #{shareCommission,jdbcType=DECIMAL},
+      #{classification,jdbcType=BIGINT}, #{profitShare,jdbcType=DECIMAL},
       #{status,jdbcType=VARCHAR}, #{coverName,jdbcType=VARCHAR}, #{descriptionName,jdbcType=VARCHAR}, 
       #{videoName,jdbcType=VARCHAR}), #{freeWatchTime,jdbcType=INTEGER}
   </insert>
@@ -114,8 +114,8 @@
       <if test="classification != null" >
         classification,
       </if>
-      <if test="shareCommission != null" >
-        share_commission,
+      <if test="profitShare != null" >
+        profit_share,
       </if>
       <if test="status != null" >
         status,
@@ -167,8 +167,8 @@
       <if test="classification != null" >
         #{classification,jdbcType=BIGINT},
       </if>
-      <if test="shareCommission != null" >
-        #{shareCommission,jdbcType=DECIMAL},
+      <if test="profitShare != null" >
+        #{profitShare,jdbcType=DECIMAL},
       </if>
       <if test="status != null" >
         #{status,jdbcType=VARCHAR},
@@ -220,8 +220,8 @@
       <if test="classification != null" >
         classification = #{classification,jdbcType=BIGINT},
       </if>
-      <if test="shareCommission != null" >
-        share_commission = #{shareCommission,jdbcType=DECIMAL},
+      <if test="profitShare != null" >
+        profit_share = #{profitShare,jdbcType=DECIMAL},
       </if>
       <if test="status != null" >
         status = #{status,jdbcType=VARCHAR},
@@ -253,7 +253,7 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       del_flag = #{delFlag,jdbcType=INTEGER},
       classification = #{classification,jdbcType=BIGINT},
-      share_commission = #{shareCommission,jdbcType=DECIMAL},
+      profit_share = #{profitShare,jdbcType=DECIMAL},
       status = #{status,jdbcType=VARCHAR},
       cover_name = #{coverName,jdbcType=VARCHAR},
       description_name = #{descriptionName,jdbcType=VARCHAR},
@@ -265,7 +265,7 @@
   <select id="selectByQuery" parameterType="com.mq.query.VideoQuery" resultMap="VoResultMap">
     select
     v.id, v.title, v.subtitle, v.price, v.cover_real_name, v.description_real_name, v.video_real_name,
-    v.create_time, v.update_time, v.del_flag, v.classification, v.share_commission, v.status, v.cover_name,
+    v.create_time, v.update_time, v.del_flag, v.classification, v.profit_share, v.status, v.cover_name,
     v.description_name, v.video_name, v.free_watch_time,
     vc.v_name as classification_name,
     (select count(1) from t_statistics s where s.statistics_type = '003003' and s.business_id = v.id) as watched,
@@ -316,8 +316,8 @@
     <if test="classification != null" >
       and v.classification = #{classification,jdbcType=BIGINT}
     </if>
-    <if test="shareCommission != null" >
-      and v.share_commission = #{shareCommission,jdbcType=DECIMAL}
+    <if test="profitShare != null" >
+      and v.profit_share = #{profitShare,jdbcType=DECIMAL}
     </if>
     <if test="status != null" >
       and v.status = #{status,jdbcType=VARCHAR}
@@ -383,8 +383,8 @@
     <if test="classification != null" >
       and classification = #{classification,jdbcType=BIGINT}
     </if>
-    <if test="shareCommission != null" >
-      and share_commission = #{shareCommission,jdbcType=DECIMAL}
+    <if test="profitShare != null" >
+      and profit_share = #{profitShare,jdbcType=DECIMAL}
     </if>
     <if test="status != null" >
       and status = #{status,jdbcType=VARCHAR}
@@ -406,7 +406,7 @@
   <select id="selectVoByPrimaryKey" parameterType="java.lang.Long" resultType="com.mq.vo.VideoVo">
     select
     v.id, v.title, v.subtitle, v.price, v.cover_real_name, v.description_real_name, v.video_real_name,
-    v.create_time, v.update_time, v.del_flag, v.classification, v.share_commission, v.status, v.cover_name,
+    v.create_time, v.update_time, v.del_flag, v.classification, v.profit_share, v.status, v.cover_name,
     v.description_name, v.video_name, v.free_watch_time,
     vc.v_name as classification_name,
     (select count(1) from t_statistics s where s.statistics_type = '003003' and s.business_id = v.id) as watched,
@@ -420,7 +420,7 @@
   <select id="selectOneVoWithAuth" resultMap="VoResultMap">
     select
     v.id, v.title, v.subtitle, v.price, v.cover_real_name, v.description_real_name, v.video_real_name,
-    v.create_time, v.update_time, v.del_flag, v.classification, v.share_commission, v.status, v.cover_name,
+    v.create_time, v.update_time, v.del_flag, v.classification, v.profit_share, v.status, v.cover_name,
     v.description_name, v.video_name, v.free_watch_time,
     vc.v_name as classification_name,
     (select count(1) from t_statistics s where s.statistics_type = '003003' and s.business_id = v.id) as watched,

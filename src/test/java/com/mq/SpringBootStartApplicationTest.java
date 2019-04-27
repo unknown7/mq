@@ -168,5 +168,10 @@ public class SpringBootStartApplicationTest {
         System.err.println(JSON.toJSONString(menu));
     }
 
+    @Test
+    public void redisExpire() {
+        stringRedisTemplate.opsForValue().set("a", "a", 10, TimeUnit.SECONDS);
+    }
+
 }
 

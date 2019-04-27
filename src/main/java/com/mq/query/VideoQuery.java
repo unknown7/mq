@@ -45,7 +45,7 @@ public class VideoQuery extends DefaultQuery {
 
     private Long classification;
 
-    private BigDecimal shareCommission;
+    private BigDecimal profitShare;
 
     private Integer accessed;
 
@@ -213,12 +213,12 @@ public class VideoQuery extends DefaultQuery {
         this.classification = classification;
     }
 
-    public BigDecimal getShareCommission() {
-        return shareCommission;
+    public BigDecimal getProfitShare() {
+        return profitShare;
     }
 
-    public void setShareCommission(BigDecimal shareCommission) {
-        this.shareCommission = shareCommission;
+    public void setProfitShare(BigDecimal profitShare) {
+        this.profitShare = profitShare;
     }
 
     public Integer getAccessed() {

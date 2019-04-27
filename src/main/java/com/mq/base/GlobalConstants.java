@@ -89,7 +89,7 @@ public class GlobalConstants {
         VIDEO_PURCHASED("003004", "视频购买量"),
         VIDEO_ACCESSED("003005", "视频访问量"),
         GOODS_PURCHASED("003006", "商品购买量"),
-        GOODS_ACCESSED("003006", "商品访问量"),
+        GOODS_ACCESSED("003007", "商品访问量"),
         ;
         private String key;
         private String value;

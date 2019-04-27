@@ -55,13 +55,13 @@ public class VideoServiceImpl implements VideoService {
                      String subtitle,
                      String classification,
                      String price,
-                     String shareCommission,
+                     String profitShare,
                      String freeWatchTime,
                      MultipartFile cover,
                      MultipartFile description) throws IOException {
         Video video = new Video();
         this
-        .handleVideo(id, title, subtitle, classification, price, shareCommission, freeWatchTime, video)
+        .handleVideo(id, title, subtitle, classification, price, profitShare, freeWatchTime, video)
         .handleImage(video, cover, description)
         .executeSave(video, cover, description);
     }
@@ -71,12 +71,12 @@ public class VideoServiceImpl implements VideoService {
                                          String subtitle,
                                          String classification,
                                          String price,
-                                         String shareCommission,
+                                         String profitShare,
                                          String freeWatchTime,
                                          Video video) {
         Date now = new Date();
-        if (!StringUtils.isEmpty(shareCommission)) {
-            video.setShareCommission(new BigDecimal(shareCommission).divide(new BigDecimal("100")));
+        if (!StringUtils.isEmpty(profitShare)) {
+            video.setProfitShare(new BigDecimal(profitShare).divide(new BigDecimal("100")));
         }
         if (!StringUtils.isEmpty(freeWatchTime)) {
             video.setFreeWatchTime(Integer.valueOf(freeWatchTime));

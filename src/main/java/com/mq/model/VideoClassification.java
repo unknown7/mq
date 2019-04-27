@@ -18,7 +18,7 @@ public class VideoClassification {
 
     private String desc;
 
-    private BigDecimal defaultShareCommission;
+    private BigDecimal defaultProfitShare;
 
     private Integer defaultFreeWatchTime;
 
@@ -78,12 +78,12 @@ public class VideoClassification {
         this.desc = desc == null ? null : desc.trim();
     }
 
-    public BigDecimal getDefaultShareCommission() {
-        return defaultShareCommission;
+    public BigDecimal getDefaultProfitShare() {
+        return defaultProfitShare;
     }
 
-    public void setDefaultShareCommission(BigDecimal defaultShareCommission) {
-        this.defaultShareCommission = defaultShareCommission;
+    public void setDefaultProfitShare(BigDecimal defaultProfitShare) {
+        this.defaultProfitShare = defaultProfitShare;
     }
 
     public Integer getDefaultFreeWatchTime() {
