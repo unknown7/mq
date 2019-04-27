@@ -29,13 +29,13 @@ public interface VideoService {
 
     void remove(Long id);
 
-    void pulloff(Long id);
+    void shelve(Long id);
 
     void release(Long id);
 
     void upload(String id, MultipartFile video) throws IOException;
 
-    List<VideoVo> findReleaseds();
+    List<VideoVo> findReleases();
 
-    String generateWxQrcode(String videoId, String skey);
+    String generateMiniProgramCode(String videoId, String skey);
 }

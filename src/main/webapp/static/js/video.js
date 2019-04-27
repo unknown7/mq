@@ -106,7 +106,7 @@ $(function () {
                      * 已发布
                      */
                     else {
-                        result = '<span class="btn btn-danger btn-xs ml-5" data-id="' + data + '" onclick="pulloff(' + data + ')">下架</span> ' +
+                        result = '<span class="btn btn-danger btn-xs ml-5" data-id="' + data + '" onclick="shelve(' + data + ')">下架</span> ' +
                             '<span class="btn btn-primary btn-xs ml-5" data-id="' + data + '" onclick="view(' + data + ')">查看</span> ';
                     }
                     return result;
@@ -511,7 +511,7 @@ var remove = function (id) {
         }
     });
 }
-var pulloff = function (id) {
+var shelve = function (id) {
     bootbox.confirm({
         message: '您确定要下架这个视频吗？',
         buttons: {
@@ -528,7 +528,7 @@ var pulloff = function (id) {
                 $.ajax({
                     type: "POST",
                     dataType: "json",
-                    url: ctx + "/video/pulloff",
+                    url: ctx + "/video/shelve",
                     data: {
                         id: id
                     },

@@ -152,7 +152,7 @@ public class SpringBootStartApplicationTest {
 
 
         Map<String, Object> scene = Maps.newHashMap();
-        scene.put("skey", "995d28909F6a68a33f1bbd4348e61490");
+        scene.put("skey", "1");
         scene.put("videoId", "16");
         String qrcodePath = wxAPI.getUnlimited("pages/index/index", scene);
         System.err.println(qrcodePath);

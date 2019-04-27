@@ -24,13 +24,13 @@ public class WxVideoController {
         return JSON.toJSONString(video);
     }
 
-    @RequestMapping("/generateWxQrcode")
+    @RequestMapping("/generateMiniProgramCode")
     @ResponseBody
-    public String generateWxQrcode(String videoId, String skey) {
-        String qrcodePath = videoService.generateWxQrcode(videoId, skey);
+    public String generateMiniProgramCode(String videoId, String skey) {
+        String miniProgramCode = videoService.generateMiniProgramCode(videoId, skey);
         DefaultResponse response = new DefaultResponse(
-                !StringUtils.isEmpty(qrcodePath),
-                qrcodePath
+                !StringUtils.isEmpty(miniProgramCode),
+                miniProgramCode
         );
         return JSON.toJSONString(response);
     }
