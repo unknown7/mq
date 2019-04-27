@@ -26,7 +26,7 @@ public class Video {
 
     private Long classification;
 
-    private BigDecimal shareCommission;
+    private BigDecimal profitShare;
 
     private String status;
 
@@ -126,12 +126,12 @@ public class Video {
         this.classification = classification;
     }
 
-    public BigDecimal getShareCommission() {
-        return shareCommission;
+    public BigDecimal getProfitShare() {
+        return profitShare;
     }
 
-    public void setShareCommission(BigDecimal shareCommission) {
-        this.shareCommission = shareCommission;
+    public void setProfitShare(BigDecimal profitShare) {
+        this.profitShare = profitShare;
     }
 
     public String getStatus() {

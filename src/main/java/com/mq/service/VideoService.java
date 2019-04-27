@@ -17,7 +17,7 @@ public interface VideoService {
               String subtitle,
               String classification,
               String price,
-              String shareCommission,
+              String profitShare,
               String freeWatchTime,
               MultipartFile cover,
               MultipartFile description

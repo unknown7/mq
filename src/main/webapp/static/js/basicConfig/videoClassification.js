@@ -19,7 +19,7 @@ $(function () {
                 }
             },
             {
-                "data": "defaultShareCommission",
+                "data": "defaultProfitShare",
                 "class": "text-center",
                 "render": function (data, type, row) {
                     return (Math.format(data * 100, 2)) + "%";
@@ -117,13 +117,13 @@ $(function () {
         range: "min",
         animate: true,
         slide: function (event, handle) {
-            // $('#defaultShareCommissionValue').val(handle.value);
+            // $('#defaultProfitShareValue').val(handle.value);
             $(this).prev().prev().val(handle.value);
         },
         change: function (event, handle) {
             $(this).prev().prev().val(handle.value);
-            // $('#defaultShareCommissionValue').val(handle.value);
-            // $('#defaultShareCommissionValue').val(handle.value);
+            // $('#defaultProfitShareValue').val(handle.value);
+            // $('#defaultProfitShareValue').val(handle.value);
         }
     });
 
@@ -174,7 +174,7 @@ $(function () {
         },
         invalidHandler: function (form, e) {
             var shakes = $(e.currentElements).not('.valid');
-            _shake($(shakes).not("#defaultShareCommissionValue, #defaultFreeWatchTimeValue").closest('.form-group'));
+            _shake($(shakes).not("#defaultProfitShareValue, #defaultFreeWatchTimeValue").closest('.form-group'));
         }
     });
 
@@ -265,7 +265,7 @@ var editClassification = function (id) {
                 var that = $(this);
                 var value = result[that.attr('name')];
                 if (that.attr('type') == 'number') {
-                    if (that.attr('name') == 'defaultShareCommission') {
+                    if (that.attr('name') == 'defaultProfitShare') {
                         value = Math.format(value * 100, 2);
                     }
                     that.val(value).keyup();

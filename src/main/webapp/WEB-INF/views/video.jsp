@@ -108,17 +108,17 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-2 control-label no-padding-right" for="shareCommission"> 分享提成 </label>
+                                <label class="col-sm-2 control-label no-padding-right" for="profitShare"> 分享提成 </label>
 
                                 <div class="col-sm-9">
                                     <input class="value-input" type="number" max="100" min="0" value="0"
-                                           id="shareCommissionValue"
-                                           name="shareCommission"
+                                           id="profitShareValue"
+                                           name="profitShare"
                                            style="width: 10%;float: left;"
                                            onfocus="$(this).select();"
-                                           onkeyup="$('#shareCommission').slider({value: $(this).val()});">
+                                           onkeyup="$('#profitShare').slider({value: $(this).val()});">
                                     <span style="width: 3%;padding-left: 5px;padding-top: 10px;font-size: 16px;">%</span>
-                                    <span id="shareCommission" class="ui-slider-simple ui-slider-orange value-slider"></span>
+                                    <span id="profitShare" class="ui-slider-simple ui-slider-orange value-slider"></span>
                                 </div>
                             </div>
 

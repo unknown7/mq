@@ -56,7 +56,7 @@ $(function () {
                 "class": "text-center"
             },
             {
-                "data": "shareCommission",
+                "data": "profitShare",
                 "class": "text-center",
                 "render": function (data, type, row) {
                     return (Math.format(data * 100, 2)) + "%";
@@ -181,7 +181,7 @@ $(function () {
         success: function (result) {
             $.each(result, function (i, item) {
                 $('#search_form select[name=classification]').append('<option value="' + item.id + '">' + item.vName + '</option>');
-                $('#videoForm select[name=classification]').append('<option value="' + item.id + '" data-default-share-commission="' + item.defaultShareCommission + '" data-default-free-watch-time="' + item.defaultFreeWatchTime + '">' + item.vName + '</option>');
+                $('#videoForm select[name=classification]').append('<option value="' + item.id + '" data-default-profit-share="' + item.defaultProfitShare + '" data-default-free-watch-time="' + item.defaultFreeWatchTime + '">' + item.vName + '</option>');
             });
         }
     });
@@ -340,7 +340,7 @@ $(function () {
         },
         invalidHandler: function (form, e) {
             var shakes = $(e.currentElements).not('.valid');
-            _shake($(shakes).not('#cover_success, #description_success, #shareCommissionValue, #freeWatchTimeValue').closest('.form-group'));
+            _shake($(shakes).not('#cover_success, #description_success, #profitShareValue, #freeWatchTimeValue').closest('.form-group'));
             if ($('#cover_success').val() == '') {
                 _shake($('#cover_success').parent());
             }
@@ -404,19 +404,19 @@ $(function () {
 
     $("#videoForm select[name=classification]").on("change", function () {
         var $selected = $(this).find("option:selected");
-        var defaultShareCommision = 0;
+        var defaultProfitShare = 0;
         var defaultFreeWatchTime = 0;
         if ($selected.val()) {
-            defaultShareCommision = $selected.attr("data-default-share-commission");
-            defaultShareCommision = Math.format(defaultShareCommision * 100, 2);
+            defaultProfitShare = $selected.attr("data-default-profit-share");
+            defaultProfitShare = Math.format(defaultProfitShare * 100, 2);
             defaultFreeWatchTime = $selected.attr("data-default-free-watch-time");
         } else {
             $(this).removeClass('valid');
         }
-        $("#shareCommission ").slider({
-            value: defaultShareCommision
+        $("#profitShare ").slider({
+            value: defaultProfitShare
         });
-        $("#shareCommissionValue").val(defaultShareCommision);
+        $("#profitShareValue").val(defaultProfitShare);
         $("#freeWatchTime ").slider({
             value: defaultFreeWatchTime
         });
@@ -437,7 +437,7 @@ var edit = function (id) {
                 var that = $(this);
                 var value = result[that.attr('name')];
                 if (that.attr('type') == 'number') {
-                    if (that.attr('name') == 'shareCommission') {
+                    if (that.attr('name') == 'profitShare') {
                         value = Math.format(value * 100, 2);
                     }
                     that.val(value).keyup();
@@ -653,7 +653,7 @@ var view = function(id) {
                 var that = $(this);
                 var value = result[that.attr('name')];
                 if (that.attr('type') == 'number') {
-                    if (that.attr('name') == 'shareCommission') {
+                    if (that.attr('name') == 'profitShare') {
                         value = Math.format(value * 100, 2);
                     }
                     that.val(value).keyup();
@@ -695,7 +695,7 @@ var viewStatus = function() {
     $('#videoForm').find("input[type=file], select").attr("disabled", "disabled");
     $("#price").prev().css("display", "none");
     $("#price").next().css("display", "none");
-    $("#shareCommissionValue").next().next().attr("hidden", "hidden");
+    $("#profitShareValue").next().next().attr("hidden", "hidden");
     $("#freeWatchTimeValue").next().next().attr("hidden", "hidden");
     $("#cover").next().next().css("display", "none");
     $("#description").next().next().css("display", "none");
@@ -706,7 +706,7 @@ var editStatus = function() {
     $('#videoForm').find("input[type=file], select").removeAttr("disabled");
     $("#price").prev().removeAttr("style");
     $("#price").next().removeAttr("style");
-    $("#shareCommissionValue").next().next().removeAttr("hidden");
+    $("#profitShareValue").next().next().removeAttr("hidden");
     $("#freeWatchTimeValue").next().next().removeAttr("hidden");
     $("#cover").next().next().removeAttr("style");
     $("#description").next().next().removeAttr("style");

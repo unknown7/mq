@@ -48,9 +48,9 @@ public class BasicConfigServiceImpl implements BasicConfigService {
     @Transactional
     public void saveClassification(VideoClassification videoClassification) {
         Date now = new Date();
-        if (videoClassification.getDefaultShareCommission() != null) {
-            videoClassification.setDefaultShareCommission(
-                    videoClassification.getDefaultShareCommission().divide(
+        if (videoClassification.getDefaultProfitShare() != null) {
+            videoClassification.setDefaultProfitShare(
+                    videoClassification.getDefaultProfitShare().divide(
                             new BigDecimal("100")
                     )
             );
