@@ -69,8 +69,7 @@ public class WxAPI {
         domain.append("?access_token=").append(accessToken);
         Map<String, Object> params = Maps.newHashMap();
 //        params.put("page", page);
-//        params.put("scene", http.map2param(scene));
-        params.put("scene", "skey=1&videoId=1");
+        params.put("scene", http.map2param(scene));
         ResponseEntity<Resource> responseEntity = http.postForEntity(domain.toString(), params, Resource.class);
         MediaType contentType = responseEntity.getHeaders().getContentType();
         System.err.println(contentType);

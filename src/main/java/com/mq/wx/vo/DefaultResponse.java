@@ -5,9 +5,39 @@ public class DefaultResponse {
     private String data;
     private String msg;
 
-    public DefaultResponse(boolean success, String data) {
-        this.success = success;
-        this.data = data;
+    public static DefaultResponse create(boolean success, String data) {
+        return create(success, data, null);
+    }
+
+    public static DefaultResponse create(boolean success, String data, String msg) {
+        DefaultResponse response = new DefaultResponse();
+        response.setSuccess(success);
+        response.setData(data);
+        response.setMsg(msg);
+        return response;
+    }
+
+    public static DefaultResponse success(String data) {
+        return success(data, null);
+    }
+
+    public static DefaultResponse success(String data, String msg) {
+        DefaultResponse response = new DefaultResponse();
+        response.setSuccess(true);
+        response.setData(data);
+        response.setMsg(msg);
+        return response;
+    }
+
+    public static DefaultResponse fail() {
+        return fail(null);
+    }
+
+    public static DefaultResponse fail(String msg) {
+        DefaultResponse response = new DefaultResponse();
+        response.setSuccess(false);
+        response.setMsg(msg);
+        return response;
     }
 
     public boolean isSuccess() {

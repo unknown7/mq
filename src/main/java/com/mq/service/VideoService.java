@@ -38,4 +38,6 @@ public interface VideoService {
     List<VideoVo> findReleases();
 
     String generateMiniProgramCode(String videoId, String skey);
+
+    String saveShareCard(MultipartFile file, String skey, String videoId) throws Exception;
 }

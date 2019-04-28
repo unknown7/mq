@@ -44,6 +44,10 @@ public class VideoVo {
 
     private Integer freeWatchTime;
 
+    private Long userId;
+
+    private String shareCard;
+
     public Long getId() {
         return id;
     }
@@ -218,5 +222,21 @@ public class VideoVo {
 
     public void setFreeWatchTime(Integer freeWatchTime) {
         this.freeWatchTime = freeWatchTime;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public String getShareCard() {
+        return shareCard;
+    }
+
+    public void setShareCard(String shareCard) {
+        this.shareCard = shareCard;
     }
 }

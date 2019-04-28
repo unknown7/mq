@@ -2,16 +2,18 @@ package com.mq.model;
 
 import java.util.Date;
 
-public class Statistics {
+public class ShareCard {
     private Long id;
-
-    private String statisticsType;
-
-    private Long businessId;
 
     private Long userId;
 
     private String skey;
+
+    private String shareCardRealName;
+
+    private Long goodsId;
+
+    private String goodsType;
 
     private Date createTime;
 
@@ -25,22 +27,6 @@ public class Statistics {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getStatisticsType() {
-        return statisticsType;
-    }
-
-    public void setStatisticsType(String statisticsType) {
-        this.statisticsType = statisticsType == null ? null : statisticsType.trim();
-    }
-
-    public Long getBusinessId() {
-        return businessId;
-    }
-
-    public void setBusinessId(Long businessId) {
-        this.businessId = businessId;
     }
 
     public Long getUserId() {
@@ -57,6 +43,30 @@ public class Statistics {
 
     public void setSkey(String skey) {
         this.skey = skey == null ? null : skey.trim();
+    }
+
+    public String getShareCardRealName() {
+        return shareCardRealName;
+    }
+
+    public void setShareCardRealName(String shareCardRealName) {
+        this.shareCardRealName = shareCardRealName == null ? null : shareCardRealName.trim();
+    }
+
+    public Long getGoodsId() {
+        return goodsId;
+    }
+
+    public void setGoodsId(Long goodsId) {
+        this.goodsId = goodsId;
+    }
+
+    public String getGoodsType() {
+        return goodsType;
+    }
+
+    public void setGoodsType(String goodsType) {
+        this.goodsType = goodsType == null ? null : goodsType.trim();
     }
 
     public Date getCreateTime() {
