@@ -31,8 +31,8 @@ public class RedisObjectHolder {
     }
 
     public UserVo getUserInfo(String skey) {
-        Object o = stringRedisTemplate.opsForHash().get(GlobalConstants.RedisKey.USER_INFO.getKey(), skey);
         UserVo userVo = null;
+        Object o = stringRedisTemplate.opsForHash().get(GlobalConstants.RedisKey.USER_INFO.getKey(), skey);
         if (o != null) {
             userVo = JSON.parseObject(o.toString(), UserVo.class);
         }

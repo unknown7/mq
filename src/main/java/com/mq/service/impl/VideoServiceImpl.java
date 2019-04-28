@@ -4,7 +4,9 @@ import com.github.pagehelper.PageHelper;
 import com.google.common.collect.Maps;
 import com.mq.base.GlobalConstants;
 import com.mq.base.RedisObjectHolder;
+import com.mq.mapper.ShareCardMapper;
 import com.mq.mapper.VideoMapper;
+import com.mq.model.ShareCard;
 import com.mq.model.Video;
 import com.mq.query.VideoQuery;
 import com.mq.service.VideoService;
@@ -36,6 +38,8 @@ public class VideoServiceImpl implements VideoService {
     private WxAPI wxAPI;
     @Resource
     private RedisObjectHolder redisObjectHolder;
+    @Resource
+    private ShareCardMapper shareCardMapper;
 
     @Override
     public Page<VideoVo> findPage(VideoQuery query) {
@@ -221,12 +225,44 @@ public class VideoServiceImpl implements VideoService {
     }
 
     @Override
+    @Transactional
     public String generateMiniProgramCode(String videoId, String skey) {
-        String page = "pages/index/index";
-        Map<String, Object> scene = Maps.newHashMap();
-        scene.put("skey", skey);
-        scene.put("videoId", videoId);
-        String miniProgramCode = wxAPI.getUnlimited(page, scene);
+        String miniProgramCode = null;
+        UserVo userVo = redisObjectHolder.getUserInfo(skey);
+        if (userVo != null) {
+            Date now = new Date();
+            ShareCard shareCard = new ShareCard();
+            shareCard.setGoodsId(Long.valueOf(videoId));
+            shareCard.setGoodsType(GlobalConstants.PurchaseType.VIDEO.getKey());
+            shareCard.setSkey(skey);
+            shareCard.setUserId(userVo.getId());
+            shareCard.setCreateTime(now);
+            shareCard.setUpdateTime(now);
+            shareCard.setDelFlag(0);
+            shareCardMapper.insertSelective(shareCard);
+            String page = "pages/video/index";
+            Map<String, Object> scene = Maps.newHashMap();
+            scene.put("videoId", videoId);
+            scene.put("shareCardId", shareCard.getId());
+            miniProgramCode = wxAPI.getUnlimited(page, scene);
+        }
         return miniProgramCode;
+    }
+
+    @Override
+    @Transactional
+    public String saveShareCard(MultipartFile file, String skey, String videoId) throws Exception {
+        UserVo userVo = redisObjectHolder.getUserInfo(skey);
+        ShareCard shareCard = shareCardMapper.selectOneByUserIdAndGoodsId(userVo.getId(), Long.valueOf(videoId), GlobalConstants.PurchaseType.VIDEO.getKey());
+        String realName = UUID.randomUUID().toString().concat(".png");
+        try {
+            FileUtil.persistFile(file, realName, GlobalConstants.IMAGE_PATH);
+            shareCard.setShareCardRealName(realName);
+            shareCardMapper.updateByPrimaryKeySelective(shareCard);
+        } catch (Exception e) {
+            FileUtil.removeFile(realName);
+            throw e;
+        }
+        return realName;
     }
 }

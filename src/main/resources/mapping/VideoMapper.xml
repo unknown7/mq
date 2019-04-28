@@ -43,6 +43,8 @@
     <result column="video_name" property="videoName" jdbcType="VARCHAR" />
     <result column="is_purchased" property="isPurchased" jdbcType="BOOLEAN" />
     <result column="free_watch_time" property="freeWatchTime" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="share_card" property="shareCard" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, title, subtitle, price, cover_real_name, description_real_name,
@@ -428,6 +430,8 @@
     (select count(1) from t_statistics s where s.statistics_type = '003005' and s.business_id = v.id) as accessed
     <if test="userId != null">
       ,(case when o.id is null then false else true end) as is_purchased
+      ,o.user_id
+      ,sc.share_card_real_name as share_card
     </if>
     <if test="userId == null">
       ,false as is_purchased
@@ -436,6 +440,7 @@
     left join t_video_classification vc on v.classification = vc.id
     <if test="userId != null">
       left join t_order o on v.id = o.goods_id and o.user_id = #{userId,jdbcType=BIGINT}
+      left join t_share_card sc on v.id = sc.goods_id and sc.goods_type = '002001' and sc.user_id = #{userId,jdbcType=BIGINT}
     </if>
     where v.id = #{videoId,jdbcType=BIGINT}
   </select>
