@@ -3,11 +3,15 @@ package com.mq.base;
 public class GlobalConstants {
     public static String IMAGE_PATH;
     public static String VIDEO_PATH;
+    public static final Long ORDERS_LIMIT_PER_DAY = 1000000L;
     /**
      * 微信基本信息
      */
     public static final String APP_ID = "wxadfd8d2448611af5";
     public static final String APP_SECRET = "6f4c76bbe365216e5ec900415274b15d";
+    /**
+     * 微信api类型
+     */
     public enum GrantType {
         CLIENT_CREDENTIAL("client_credential"),
         AUTHORIZATION_CODE("authorization_code"),
@@ -27,6 +31,7 @@ public class GlobalConstants {
         ACCESS_TOKEN_KEY("access_token"),
         USER_INFO("user_info"),
         TEMPORARY_USER("temporary_user"),
+        ORDER_NUM_TODAY("order_num_today"),
         ;
         private String key;
         RedisKey(String key) {

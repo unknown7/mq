@@ -3,30 +3,38 @@ package com.mq;
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Maps;
 import com.mq.base.GlobalConstants;
+import com.mq.base.Http;
+import com.mq.base.OrderNoGenerator;
 import com.mq.base.RedisObjectHolder;
 import com.mq.mapper.MenuMapper;
 import com.mq.model.Menu;
-import com.mq.model.User;
-import com.mq.service.MenuService;
+import com.mq.util.MD5Util;
 import com.mq.vo.MenuTree;
 import com.mq.vo.UserVo;
 import com.mq.wx.base.WxAPI;
 import com.mq.wx.vo.auth.AuthResponse;
+import org.dom4j.Document;
+import org.dom4j.DocumentHelper;
+import org.dom4j.Element;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
-import java.time.Duration;
-import java.time.temporal.TemporalUnit;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
+import java.util.UUID;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 @RunWith(SpringRunner.class)
@@ -43,6 +51,10 @@ public class SpringBootStartApplicationTest {
     private WxAPI wxAPI;
     @Resource
     private RedisObjectHolder redisObjectHolder;
+    @Resource
+    private Http http;
+    @Resource
+    private OrderNoGenerator generator;
 
     @Test
     public void contextLoads() {
@@ -171,6 +183,92 @@ public class SpringBootStartApplicationTest {
     @Test
     public void redisExpire() {
         stringRedisTemplate.opsForValue().set("a", "a", 10, TimeUnit.SECONDS);
+    }
+
+    @Test
+    public void unifiedorder() {
+        String domain = "https://api.mch.weixin.qq.com/pay/unifiedorder";
+        Document doc = DocumentHelper.createDocument();
+        Element xml = doc.addElement("xml");
+        /**
+         * appid
+         */
+        Element appid = xml.addElement("appid");
+        appid.setData("wx153c1bb866bfece8");
+        /**
+         * mch_id
+         */
+        Element mch_id = xml.addElement("mch_id");
+        mch_id.setData("1533502711");
+        /**
+         * nonce_str
+         */
+        Element nonce_str = xml.addElement("nonce_str");
+        nonce_str.setData(MD5Util.getEncryption(UUID.randomUUID().toString()));
+        /**
+         * body
+         */
+        Element body = xml.addElement("body");
+        body.setData("木荃孕产-产后系列-产后恢复");
+        /**
+         * out_trade_no
+         */
+        Element out_trade_no = xml.addElement("out_trade_no");
+        out_trade_no.setData(generator.next());
+        /**
+         * total_fee
+         */
+        Element total_fee = xml.addElement("total_fee");
+        total_fee.setData(1);
+        /**
+         * spbill_create_ip
+         */
+        Element spbill_create_ip = xml.addElement("spbill_create_ip");
+        spbill_create_ip.setData("182.33.197.227");
+        /**
+         * notify_url
+         */
+        Element notify_url = xml.addElement("notify_url");
+        notify_url.setData("https://www.unknown7.xyz");
+        /**
+         * trade_type
+         */
+        Element trade_type = xml.addElement("trade_type");
+        trade_type.setData("");
+        /**
+         * sign
+         */
+        Element sign = xml.addElement("sign");
+        Map<String, Object> signData = Maps.newHashMap();
+        signData.put("appid", appid.getStringValue());
+        signData.put("body", body.getStringValue());
+        signData.put("mch_id", mch_id.getStringValue());
+        signData.put("nonceStr", nonce_str.getStringValue());
+        signData.put("notify_url", notify_url.getStringValue());
+        signData.put("out_trade_no", out_trade_no.getStringValue());
+        signData.put("spbill_create_ip", spbill_create_ip.getStringValue());
+        signData.put("total_fee", total_fee.getStringValue());
+        signData.put("trade_type", trade_type.getStringValue());
+        sign.setData("");
+    }
+
+    @Test
+    public void generate() {
+        ExecutorService exec = Executors.newFixedThreadPool(10);
+        for (int i = 0; i < 10; i++) {
+            exec.execute(new Runnable() {
+                @Override
+                public void run() {
+                    System.err.println(generator.next());
+                }
+            });
+        }
+
+        try {
+            Thread.sleep(1000000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 }
