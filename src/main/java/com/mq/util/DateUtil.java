@@ -320,6 +320,43 @@ public class DateUtil {
     }
 
     /**
+     * 计算 fromDate 到 toDate 相差多少秒
+     *
+     * @param fromDate
+     * @param toDate
+     * @return 天数
+     */
+    public static long getSecondByMinusDate(Object fromDate, Object toDate) {
+
+        Date f = DateUtil.chgObject(fromDate);
+
+        Date t = DateUtil.chgObject(toDate);
+
+        long fd = f.getTime();
+        long td = t.getTime();
+
+        return (td - fd) / 1000L;
+    }
+
+    /**
+     * 计算当前时间到0点的秒数
+     *
+     * @return
+     */
+    public static long getTomorrowZeroSeconds() {
+        long current = System.currentTimeMillis();// 当前时间毫秒数
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_MONTH, 1);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        long tomorrowzero = calendar.getTimeInMillis();
+        long tomorrowzeroSeconds = (tomorrowzero- current) / 1000;
+        return tomorrowzeroSeconds;
+    }
+
+    /**
      * 计算年龄
      *
      * @param birthday 生日日期

@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSON;
 import com.mq.service.VideoService;
 import com.mq.vo.VideoVo;
 import com.mq.wx.vo.DefaultResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 @RequestMapping("/wx/video")
 public class WxVideoController {
+    protected static final Logger logger = LoggerFactory.getLogger(WxVideoController.class);
     @Resource
     private VideoService videoService;
 
@@ -48,7 +51,7 @@ public class WxVideoController {
             String path = videoService.saveShareCard(shareCard, skey, videoId);
             response = DefaultResponse.success(path);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             response = DefaultResponse.fail();
         }
         return JSON.toJSONString(response);
