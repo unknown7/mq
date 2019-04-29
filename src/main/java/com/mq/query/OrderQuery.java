@@ -8,6 +8,10 @@ import java.util.Date;
 public class OrderQuery {
     private Long id;
 
+    private String orderNo;
+
+    private String orderStatus;
+
     private Long goodsId;
 
     private String goodsType;
@@ -15,6 +19,8 @@ public class OrderQuery {
     private BigDecimal goodsPrice;
 
     private Long userId;
+
+    private BigDecimal totalAmount;
 
     private BigDecimal accountBalanceAmount;
 
@@ -42,6 +48,22 @@ public class OrderQuery {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(String orderNo) {
+        this.orderNo = orderNo;
+    }
+
+    public String getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(String orderStatus) {
+        this.orderStatus = orderStatus;
     }
 
     public Long getGoodsId() {
@@ -74,6 +96,14 @@ public class OrderQuery {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public BigDecimal getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(BigDecimal totalAmount) {
+        this.totalAmount = totalAmount;
     }
 
     public BigDecimal getAccountBalanceAmount() {

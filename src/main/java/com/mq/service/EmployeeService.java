@@ -11,7 +11,16 @@ public interface EmployeeService {
 
     Page<Employee> findPageByQuery(EmployeeQuery query);
 
-    void save(String id, String username, String password, String eName, String birth, String gender, String mobile, String email, String wechat, MultipartFile avatar) throws IOException;
+    void save(String id,
+              String username,
+              String password,
+              String eName,
+              String birth,
+              String gender,
+              String mobile,
+              String email,
+              String wechat,
+              MultipartFile avatar) throws Exception;
 
     void remove(Long id);
 

@@ -6,6 +6,8 @@ import com.mq.base.WebSecurityConfig;
 import com.mq.service.LoginService;
 import com.mq.service.MenuService;
 import com.mq.vo.MenuTree;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -16,6 +18,7 @@ import java.util.List;
 
 @Controller
 public class LoginController extends BaseController {
+    protected static final Logger logger = LoggerFactory.getLogger(LoginController.class);
     @Resource
     private LoginService loginService;
     @Resource
@@ -40,8 +43,12 @@ public class LoginController extends BaseController {
     @RequestMapping("/loginAuth")
     @ResponseBody
     public String loginAuth(String username, String password, HttpSession session) {
-        if (loginService.loginAuth(username, password, session)) {
-            return success();
+        try {
+            if (loginService.loginAuth(username, password, session)) {
+                return success();
+            }
+        } catch (Exception e) {
+            logger.error(e.getMessage());
         }
         return error("请输入正确的用户名或密码");
     }

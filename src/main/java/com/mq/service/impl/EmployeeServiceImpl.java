@@ -6,10 +6,7 @@ import com.mq.mapper.EmployeeMapper;
 import com.mq.model.Employee;
 import com.mq.query.EmployeeQuery;
 import com.mq.service.EmployeeService;
-import com.mq.util.DateUtil;
-import com.mq.util.FileUtil;
-import com.mq.util.MD5Util;
-import com.mq.util.PageUtil;
+import com.mq.util.*;
 import com.mq.vo.Page;
 import org.apache.commons.codec.digest.Md5Crypt;
 import org.springframework.stereotype.Service;
@@ -51,7 +48,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                      String email,
                      String wechat,
                      MultipartFile avatar
-    ) throws IOException {
+    ) throws Exception {
         Employee employee = new Employee();
         this
         .handleEmployee(id, username, password, eName, birth, gender, mobile, email, wechat, employee)
@@ -59,7 +56,17 @@ public class EmployeeServiceImpl implements EmployeeService {
         .executeSave(employee, avatar);
     }
 
-    private EmployeeServiceImpl handleEmployee(String id, String username, String password, String eName, String birth, String gender, String mobile, String email, String wechat, Employee employee) {
+    private EmployeeServiceImpl handleEmployee(String id,
+                                               String username,
+                                               String password,
+                                               String eName,
+                                               String birth,
+                                               String gender,
+                                               String mobile,
+                                               String email,
+                                               String wechat,
+                                               Employee employee
+    ) throws Exception {
         Date now = new Date();
         employee.setBirth(DateUtil.stringToDate(birth));
         employee.setAge(DateUtil.calcAge(employee.getBirth(), now));
@@ -71,14 +78,14 @@ public class EmployeeServiceImpl implements EmployeeService {
         employee.setWechat(wechat);
         employee.setUpdateTime(now);
         if (StringUtils.isEmpty(id)) {
-            employee.setPassword(MD5Util.getEncryption(password));
+            employee.setPassword(MD5.generate(password));
             employee.setCreateTime(now);
             employee.setDelFlag(0);
         } else {
             employee.setId(Long.valueOf(id));
             Employee byPrimaryKey = employeeMapper.selectByPrimaryKey(employee.getId());
             if (!byPrimaryKey.getPassword().equals(password)) {
-                employee.setPassword(MD5Util.getEncryption(password));
+                employee.setPassword(MD5.generate(password));
             }
         }
         return this;

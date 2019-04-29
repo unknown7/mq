@@ -262,7 +262,7 @@
     </if>
   </select>
 
-  <select id="selectNums" parameterType="com.mq.query.OrderQuery" resultType="java.lang.Long">
+  <select id="selectNums" parameterType="com.mq.query.UserQuery" resultType="java.lang.Long">
     select count(1)
     from t_user where del_flag = 0
     <if test="country != null" >

@@ -5,6 +5,7 @@ import com.mq.mapper.UserMapper;
 import com.mq.model.User;
 import com.mq.query.UserQuery;
 import com.mq.service.UserService;
+import com.mq.util.MD5;
 import com.mq.util.MD5Util;
 import com.mq.util.WxDecrptUtil;
 import com.mq.vo.UserVo;
@@ -32,7 +33,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public String save(AuthRequest request) {
+    public String save(AuthRequest request) throws Exception {
         String code = request.getCode();
         String encryptedData = request.getEncryptedData();
         String iv = request.getIv();
@@ -46,7 +47,7 @@ public class UserServiceImpl implements UserService {
             /**
              * 注册用户
              */
-            skey = MD5Util.getEncryption(authResponse.getOpenid());
+            skey = MD5.generate(authResponse.getOpenid());
             Date now = new Date();
             user.setCreateTime(now);
             user.setDelFlag(0);
@@ -77,14 +78,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public AuthResult auth(String code, String skey) {
+    public AuthResult auth(String code, String skey) throws Exception {
         AuthResponse authResponse = wxAPI.jscode2session(code);
         AuthResult authResult = new AuthResult(true);
         /**
          * 1 微信登录成功
          */
         if (!StringUtils.isEmpty(authResponse.getSession_key())) {
-            String openIdMD5 = MD5Util.getEncryption(authResponse.getOpenid());
+            String openIdMD5 = MD5.generate(authResponse.getOpenid());
             /**
              * 1.1 有skey，小程序判断用户操作超时
              */

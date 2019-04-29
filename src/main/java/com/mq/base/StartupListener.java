@@ -4,9 +4,12 @@ import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Maps;
 import com.mq.model.User;
 import com.mq.service.UserService;
+import com.mq.util.MD5;
 import com.mq.util.MD5Util;
 import com.mq.vo.UserVo;
 import org.apache.commons.codec.digest.Md5Crypt;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -21,6 +24,7 @@ import java.util.Map;
 
 @Component
 public class StartupListener implements ApplicationListener<ContextRefreshedEvent> {
+    protected static final Logger logger = LoggerFactory.getLogger(StartupListener.class);
     @Resource
     private WebApplicationContext context;
     @Resource
@@ -49,15 +53,20 @@ public class StartupListener implements ApplicationListener<ContextRefreshedEven
     }
 
     private void initUserCache() {
-        List<User> users = userService.findAll();
-        Map<String, String> userVos = Maps.newHashMap();
-        for (User user : users) {
-            String skey = MD5Util.getEncryption(user.getOpenId());
-            UserVo vo = new UserVo();
-            BeanUtils.copyProperties(user, vo);
-            String serializable = JSON.toJSONString(vo);
-            userVos.put(skey, serializable);
+        try {
+            List<User> users = userService.findAll();
+            Map<String, String> userVos = Maps.newHashMap();
+            for (User user : users) {
+                String skey = MD5.generate(user.getOpenId());
+                UserVo vo = new UserVo();
+                BeanUtils.copyProperties(user, vo);
+                String serializable = JSON.toJSONString(vo);
+                userVos.put(skey, serializable);
+            }
+            redisObjectHolder.setUserInfo(userVos);
+        } catch (Exception e) {
+            logger.error("初始化用户信息失败！");
+            logger.error(e.getMessage());
         }
-        redisObjectHolder.setUserInfo(userVos);
     }
 }

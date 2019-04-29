@@ -4,5 +4,5 @@ import javax.servlet.http.HttpSession;
 
 public interface LoginService {
 
-    boolean loginAuth(String username, String password, HttpSession session);
+    boolean loginAuth(String username, String password, HttpSession session) throws Exception;
 }

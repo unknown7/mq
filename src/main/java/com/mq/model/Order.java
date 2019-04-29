@@ -6,6 +6,10 @@ import java.util.Date;
 public class Order {
     private Long id;
 
+    private String orderNo;
+
+    private String orderStatus;
+
     private Long goodsId;
 
     private String goodsType;
@@ -13,6 +17,8 @@ public class Order {
     private BigDecimal goodsPrice;
 
     private Long userId;
+
+    private BigDecimal totalAmount;
 
     private BigDecimal accountBalanceAmount;
 
@@ -30,6 +36,22 @@ public class Order {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(String orderNo) {
+        this.orderNo = orderNo == null ? null : orderNo.trim();
+    }
+
+    public String getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(String orderStatus) {
+        this.orderStatus = orderStatus == null ? null : orderStatus.trim();
     }
 
     public Long getGoodsId() {
@@ -62,6 +84,14 @@ public class Order {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public BigDecimal getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(BigDecimal totalAmount) {
+        this.totalAmount = totalAmount;
     }
 
     public BigDecimal getAccountBalanceAmount() {
