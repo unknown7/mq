@@ -3,10 +3,13 @@
 <mapper namespace="com.mq.mapper.OrderMapper" >
   <resultMap id="BaseResultMap" type="com.mq.model.Order" >
     <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+    <result column="order_status" property="orderStatus" jdbcType="VARCHAR" />
     <result column="goods_id" property="goodsId" jdbcType="BIGINT" />
     <result column="goods_type" property="goodsType" jdbcType="VARCHAR" />
     <result column="goods_price" property="goodsPrice" jdbcType="DECIMAL" />
     <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="total_amount" property="totalAmount" jdbcType="DECIMAL" />
     <result column="account_balance_amount" property="accountBalanceAmount" jdbcType="DECIMAL" />
     <result column="wx_amount" property="wxAmount" jdbcType="DECIMAL" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
@@ -14,8 +17,8 @@
     <result column="del_flag" property="delFlag" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, goods_id, goods_type, goods_price, user_id, account_balance_amount, wx_amount, 
-    create_time, update_time, del_flag
+    id, order_no, order_status, goods_id, goods_type, goods_price, user_id, total_amount, 
+    account_balance_amount, wx_amount, create_time, update_time, del_flag
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -28,23 +31,28 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.mq.model.Order" >
-    insert into t_order (id, goods_id, goods_type, 
-      goods_price, user_id, account_balance_amount, 
+    insert into t_order (id, order_no, order_status, 
+      goods_id, goods_type, goods_price, 
+      user_id, total_amount, account_balance_amount, 
       wx_amount, create_time, update_time, 
       del_flag)
-    values (#{id,jdbcType=BIGINT}, #{goodsId,jdbcType=BIGINT}, #{goodsType,jdbcType=VARCHAR}, 
-      #{goodsPrice,jdbcType=DECIMAL}, #{userId,jdbcType=BIGINT}, #{accountBalanceAmount,jdbcType=DECIMAL}, 
+    values (#{id,jdbcType=BIGINT}, #{orderNo,jdbcType=VARCHAR}, #{orderStatus,jdbcType=VARCHAR}, 
+      #{goodsId,jdbcType=BIGINT}, #{goodsType,jdbcType=VARCHAR}, #{goodsPrice,jdbcType=DECIMAL}, 
+      #{userId,jdbcType=BIGINT}, #{totalAmount,jdbcType=DECIMAL}, #{accountBalanceAmount,jdbcType=DECIMAL}, 
       #{wxAmount,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
       #{delFlag,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.mq.model.Order" >
-    <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
     insert into t_order
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
+      </if>
+      <if test="orderNo != null" >
+        order_no,
+      </if>
+      <if test="orderStatus != null" >
+        order_status,
       </if>
       <if test="goodsId != null" >
         goods_id,
@@ -57,6 +65,9 @@
       </if>
       <if test="userId != null" >
         user_id,
+      </if>
+      <if test="totalAmount != null" >
+        total_amount,
       </if>
       <if test="accountBalanceAmount != null" >
         account_balance_amount,
@@ -78,6 +89,12 @@
       <if test="id != null" >
         #{id,jdbcType=BIGINT},
       </if>
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderStatus != null" >
+        #{orderStatus,jdbcType=VARCHAR},
+      </if>
       <if test="goodsId != null" >
         #{goodsId,jdbcType=BIGINT},
       </if>
@@ -89,6 +106,9 @@
       </if>
       <if test="userId != null" >
         #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="totalAmount != null" >
+        #{totalAmount,jdbcType=DECIMAL},
       </if>
       <if test="accountBalanceAmount != null" >
         #{accountBalanceAmount,jdbcType=DECIMAL},
@@ -110,6 +130,12 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.mq.model.Order" >
     update t_order
     <set >
+      <if test="orderNo != null" >
+        order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderStatus != null" >
+        order_status = #{orderStatus,jdbcType=VARCHAR},
+      </if>
       <if test="goodsId != null" >
         goods_id = #{goodsId,jdbcType=BIGINT},
       </if>
@@ -121,6 +147,9 @@
       </if>
       <if test="userId != null" >
         user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="totalAmount != null" >
+        total_amount = #{totalAmount,jdbcType=DECIMAL},
       </if>
       <if test="accountBalanceAmount != null" >
         account_balance_amount = #{accountBalanceAmount,jdbcType=DECIMAL},
@@ -142,10 +171,13 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.mq.model.Order" >
     update t_order
-    set goods_id = #{goodsId,jdbcType=BIGINT},
+    set order_no = #{orderNo,jdbcType=VARCHAR},
+      order_status = #{orderStatus,jdbcType=VARCHAR},
+      goods_id = #{goodsId,jdbcType=BIGINT},
       goods_type = #{goodsType,jdbcType=VARCHAR},
       goods_price = #{goodsPrice,jdbcType=DECIMAL},
       user_id = #{userId,jdbcType=BIGINT},
+      total_amount = #{totalAmount,jdbcType=DECIMAL},
       account_balance_amount = #{accountBalanceAmount,jdbcType=DECIMAL},
       wx_amount = #{wxAmount,jdbcType=DECIMAL},
       create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -158,6 +190,12 @@
     select
     <include refid="Base_Column_List" />
     from t_order where del_flag = 0
+    <if test="orderNo != null" >
+      and order_no = #{orderNo,jdbcType=VARCHAR}
+    </if>
+    <if test="orderStatus != null" >
+      and order_status = #{orderStatus,jdbcType=VARCHAR}
+    </if>
     <if test="goodsId != null" >
       and goods_id = #{goodsId,jdbcType=BIGINT}
     </if>
@@ -169,6 +207,9 @@
     </if>
     <if test="userId != null" >
       and user_id = #{userId,jdbcType=BIGINT}
+    </if>
+    <if test="totalAmount != null" >
+      and total_amount = #{totalAmount,jdbcType=DECIMAL}
     </if>
     <if test="accountBalanceAmount != null" >
       and account_balance_amount = #{accountBalanceAmount,jdbcType=DECIMAL}
@@ -199,6 +240,12 @@
   <select id="selectNums" parameterType="com.mq.query.OrderQuery" resultType="java.lang.Long">
     select count(1)
     from t_order where del_flag = 0
+    <if test="orderNo != null" >
+      and order_no = #{orderNo,jdbcType=VARCHAR}
+    </if>
+    <if test="orderStatus != null" >
+      and order_status = #{orderStatus,jdbcType=VARCHAR}
+    </if>
     <if test="goodsId != null" >
       and goods_id = #{goodsId,jdbcType=BIGINT}
     </if>
@@ -210,6 +257,9 @@
     </if>
     <if test="userId != null" >
       and user_id = #{userId,jdbcType=BIGINT}
+    </if>
+    <if test="totalAmount != null" >
+      and total_amount = #{totalAmount,jdbcType=DECIMAL}
     </if>
     <if test="accountBalanceAmount != null" >
       and account_balance_amount = #{accountBalanceAmount,jdbcType=DECIMAL}

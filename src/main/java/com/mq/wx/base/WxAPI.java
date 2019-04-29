@@ -71,7 +71,7 @@ public class WxAPI {
 //        params.put("page", page);
         params.put("scene", http.map2param(scene));
         params.put("is_hyaline", true);
-        ResponseEntity<Resource> responseEntity = http.postForEntity(domain.toString(), params, Resource.class);
+        ResponseEntity<Resource> responseEntity = http.postForEntity(domain.toString(), params, Resource.class, MediaType.APPLICATION_JSON_UTF8);
         MediaType contentType = responseEntity.getHeaders().getContentType();
         System.err.println(contentType);
         String miniProgramCode = null;

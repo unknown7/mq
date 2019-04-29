@@ -28,9 +28,9 @@ public class Http {
         return responseEntity;
     }
 
-    public <T> ResponseEntity<T> postForEntity(String domain, Map<String, Object> params, Class<T> entityType) {
+    public <T> ResponseEntity<T> postForEntity(String domain, Object params, Class<T> entityType, MediaType mediaType) {
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+        headers.setContentType(mediaType);
         HttpEntity<String> entity = new HttpEntity(params, headers);
         ResponseEntity<T> responseEntity = restTemplate.postForEntity(domain, entity, entityType);
         return responseEntity;

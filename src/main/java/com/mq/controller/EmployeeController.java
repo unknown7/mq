@@ -7,6 +7,8 @@ import com.mq.query.EmployeeQuery;
 import com.mq.service.EmployeeService;
 import com.mq.service.MenuService;
 import com.mq.vo.Page;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,6 +23,7 @@ import java.util.Map;
 @Controller
 @RequestMapping("/employee")
 public class EmployeeController extends BaseController {
+    protected static final Logger logger = LoggerFactory.getLogger(EmployeeController.class);
     @Resource
     private EmployeeService employeeService;
     @Resource
@@ -54,7 +57,7 @@ public class EmployeeController extends BaseController {
             employeeService.save(id, username, password, eName, birth, gender, mobile, email, wechat, avatar);
             return success("员工信息已保存");
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             return error("员工信息保存时出现问题");
         }
     }

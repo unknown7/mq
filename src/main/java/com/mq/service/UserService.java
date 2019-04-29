@@ -16,7 +16,7 @@ public interface UserService {
      * @param request->iv                解密向量
      * @return skey                      生成的服务器skey
      */
-    String save(AuthRequest request);
+    String save(AuthRequest request) throws Exception;
 
     List<User> findAll();
 
@@ -43,7 +43,7 @@ public interface UserService {
      * @param skey              用户openid，用于检测当前拥有skey的小程序用户是否为已注册用户
      * @return
      */
-    AuthResult auth(String code, String skey);
+    AuthResult auth(String code, String skey) throws Exception;
 
     /**
      * 通过openid获取用户信息
