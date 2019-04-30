@@ -40,4 +40,6 @@ public interface VideoService {
     String generateMiniProgramCode(String videoId, String skey);
 
     String saveShareCard(MultipartFile file, String skey, String videoId) throws Exception;
+
+    void purchase(String skey, Long videoId, String remoteAddr) throws Exception;
 }

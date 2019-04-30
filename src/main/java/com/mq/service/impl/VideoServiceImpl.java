@@ -5,9 +5,12 @@ import com.google.common.collect.Maps;
 import com.mq.base.GlobalConstants;
 import com.mq.base.RedisObjectHolder;
 import com.mq.mapper.ShareCardMapper;
+import com.mq.mapper.UserMapper;
 import com.mq.mapper.VideoMapper;
 import com.mq.model.ShareCard;
+import com.mq.model.User;
 import com.mq.model.Video;
+import com.mq.query.UserQuery;
 import com.mq.query.VideoQuery;
 import com.mq.service.VideoService;
 import com.mq.util.FileUtil;
@@ -16,6 +19,8 @@ import com.mq.vo.Page;
 import com.mq.vo.UserVo;
 import com.mq.vo.VideoVo;
 import com.mq.wx.base.WxAPI;
+import com.mq.wx.vo.unifiedorder.UnifiedOrderRequest;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -40,6 +45,8 @@ public class VideoServiceImpl implements VideoService {
     private RedisObjectHolder redisObjectHolder;
     @Resource
     private ShareCardMapper shareCardMapper;
+    @Resource
+    private UserMapper userMapper;
 
     @Override
     public Page<VideoVo> findPage(VideoQuery query) {
@@ -264,5 +271,39 @@ public class VideoServiceImpl implements VideoService {
             throw e;
         }
         return realName;
+    }
+
+    @Override
+    @Transactional
+    public void purchase(String skey, Long videoId, String remoteAddr) throws Exception {
+        assert !StringUtils.isEmpty(skey);
+        assert videoId != null;
+        User user = getUser(skey);
+        VideoVo videoVo = videoMapper.selectVoByPrimaryKey(Long.valueOf(videoId));
+        UnifiedOrderRequest request = new UnifiedOrderRequest();
+        request.setBody("木荃孕产-" + videoVo.getClassificationName() + "-" + videoVo.getTitle());
+        request.setOpenid(user.getOpenId());
+        request.setTotal_fee(videoVo.getPrice().multiply(new BigDecimal("100")).setScale(0, BigDecimal.ROUND_HALF_UP).toString());
+        request.setSpbill_create_ip(remoteAddr);
+        wxAPI.unifiedOrder(request);
+    }
+
+    private User getUser(String skey) throws Exception {
+        UserVo userVo = redisObjectHolder.getUserInfo(skey);
+        if (userVo == null) {
+            UserQuery query = new UserQuery();
+            query.setSkey(skey);
+            query.setDelFlag(0);
+            List<User> users = userMapper.selectByQuery(query);
+            if (users.size() == 1) {
+                User user = users.get(0);
+                BeanUtils.copyProperties(user, userVo);
+                redisObjectHolder.setUserInfo(skey, userVo);
+            } else {
+                throw new Exception("用户信息校验失败，请检查网络");
+            }
+        }
+        User user = userMapper.selectByPrimaryKey(userVo.getId());
+        return user;
     }
 }

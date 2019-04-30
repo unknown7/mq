@@ -405,7 +405,7 @@
     </if>
   </select>
 
-  <select id="selectVoByPrimaryKey" parameterType="java.lang.Long" resultType="com.mq.vo.VideoVo">
+  <select id="selectVoByPrimaryKey" parameterType="java.lang.Long" resultMap="VoResultMap">
     select
     v.id, v.title, v.subtitle, v.price, v.cover_real_name, v.description_real_name, v.video_real_name,
     v.create_time, v.update_time, v.del_flag, v.classification, v.profit_share, v.status, v.cover_name,
@@ -416,7 +416,7 @@
     (select count(1) from t_statistics s where s.statistics_type = '003005' and s.business_id = v.id) as accessed
     from t_video v
     left join t_video_classification vc on v.classification = vc.id
-    where id = #{id,jdbcType=BIGINT}
+    where v.id = #{id,jdbcType=BIGINT}
   </select>
 
   <select id="selectOneVoWithAuth" resultMap="VoResultMap">

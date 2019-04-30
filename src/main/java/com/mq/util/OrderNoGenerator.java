@@ -1,6 +1,6 @@
-package com.mq.base;
+package com.mq.util;
 
-import com.mq.util.DateUtil;
+import com.mq.base.GlobalConstants;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
