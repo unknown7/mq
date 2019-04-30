@@ -5,10 +5,19 @@ public class GlobalConstants {
     public static String VIDEO_PATH;
     public static final Long ORDERS_LIMIT_PER_DAY = 1000000L;
     /**
-     * 微信基本信息
+     * 微信基本信息-魏峰
      */
-    public static final String APP_ID = "wxadfd8d2448611af5";
-    public static final String APP_SECRET = "6f4c76bbe365216e5ec900415274b15d";
+//    public static final String APP_ID = "wxadfd8d2448611af5";
+//    public static final String APP_SECRET = "6f4c76bbe365216e5ec900415274b15d";
+    /**
+     * 微信基本信息-木荃孕产
+     */
+    public static final String APP_ID = "wx153c1bb866bfece8";
+    public static final String APP_SECRET = "4688af737cf288429c8180d3db6ae21e";
+    public static final String MCH_ID = "1533502711";
+    public static final String API_KEY = "a02ec5baf0987e3857dd1980c5602252";
+    public static final String NOTIFY_URL = "https://www.mqyoga.cn/mq/wx/";
+    public static final String TRADE_TYPE = "JSAPI";
     /**
      * 微信api类型
      */

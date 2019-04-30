@@ -56,4 +56,18 @@ public class WxVideoController {
         }
         return JSON.toJSONString(response);
     }
+
+    @RequestMapping("/purchase")
+    @ResponseBody
+    public String purchase(String skey, Long videoId, HttpServletRequest request) {
+        try {
+            String remoteAddr = request.getRemoteAddr();
+            videoService.purchase(skey, videoId, remoteAddr);
+            return JSON.toJSONString(DefaultResponse.success("支付成功"));
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            return JSON.toJSONString(DefaultResponse.fail("支付失败"));
+        }
+
+    }
 }
