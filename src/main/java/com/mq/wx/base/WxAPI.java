@@ -203,7 +203,6 @@ public class WxAPI {
         signData.put("total_fee", total_fee.getStringValue());
         signData.put("trade_type", trade_type.getStringValue());
         signData.put("key", GlobalConstants.API_KEY);
-        System.err.println(http.map2param(signData));
         String signStr = MD5.generate(http.map2param(signData)).toUpperCase();
         sign.setText(signStr);
         OutputFormat format = OutputFormat.createCompactFormat();
@@ -212,7 +211,6 @@ public class WxAPI {
         output.write(doc);
         writer.close();
         output.close();
-        System.err.println(writer.toString());
         ResponseEntity<String> responseEntity = http.postForEntity(domain, writer.toString(), String.class, MediaType.APPLICATION_XML);
         System.err.println(responseEntity.getBody());
     }
