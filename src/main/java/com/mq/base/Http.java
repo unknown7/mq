@@ -1,5 +1,6 @@
 package com.mq.base;
 
+import com.mq.util.MapUtil;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -21,7 +22,7 @@ public class Http {
         if (params != null && !params.isEmpty()) {
             buff.append("?");
         }
-        String map2param = map2param(params);
+        String map2param = MapUtil.map2param(params);
         buff.append(map2param);
         URI uri = URI.create(buff.toString());
         ResponseEntity<T> responseEntity = restTemplate.getForEntity(uri, entityType);
@@ -34,25 +35,5 @@ public class Http {
         HttpEntity<String> entity = new HttpEntity(params, headers);
         ResponseEntity<T> responseEntity = restTemplate.postForEntity(domain, entity, entityType);
         return responseEntity;
-    }
-
-    public String map2param(Map<String, Object> params) {
-        return map2param(params, "&");
-    }
-
-    public String map2param(Map<String, Object> params, String delimiter) {
-        String result = "";
-        if (params != null && !params.isEmpty()) {
-            StringBuffer buffer = new StringBuffer();
-            int index = 0;
-            for (Map.Entry<String, Object> entry : params.entrySet()) {
-                buffer.append(entry.getKey()).append("=").append(entry.getValue());
-                if (++index != params.size()) {
-                    buffer.append(delimiter);
-                }
-            }
-            result = buffer.toString();
-        }
-        return result;
     }
 }

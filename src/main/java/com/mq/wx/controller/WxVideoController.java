@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.mq.service.VideoService;
 import com.mq.vo.VideoVo;
 import com.mq.wx.vo.DefaultResponse;
+import com.mq.wx.vo.unifiedOrder.UnifiedOrderVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -60,14 +61,15 @@ public class WxVideoController {
     @RequestMapping("/purchase")
     @ResponseBody
     public String purchase(String skey, Long videoId, HttpServletRequest request) {
+        DefaultResponse response;
         try {
             String remoteAddr = request.getRemoteAddr();
-            videoService.purchase(skey, videoId, remoteAddr);
-            return JSON.toJSONString(DefaultResponse.success("支付成功"));
+            UnifiedOrderVo unifiedOrderVo = videoService.purchase(skey, videoId, remoteAddr);
+            response = DefaultResponse.success(unifiedOrderVo);
         } catch (Exception e) {
             logger.error(e.getMessage());
-            return JSON.toJSONString(DefaultResponse.fail("支付失败"));
+            response = DefaultResponse.fail("支付失败");
         }
-
+        return JSON.toJSONString(response);
     }
 }

@@ -8,7 +8,7 @@ import com.mq.base.RedisObjectHolder;
 import com.mq.model.UnifiedOrderRequest;
 import com.mq.model.UnifiedOrderResponse;
 import com.mq.util.MD5;
-import com.mq.util.OrderNoGenerator;
+import com.mq.util.MapUtil;
 import com.mq.wx.vo.accessToken.AccessTokenResponse;
 import com.mq.wx.vo.auth.AuthResponse;
 import org.dom4j.Document;
@@ -16,6 +16,8 @@ import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.dom4j.io.OutputFormat;
 import org.dom4j.io.XMLWriter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +28,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
-import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -36,6 +38,7 @@ import java.util.UUID;
 
 @Component
 public class WxAPI {
+    protected static final Logger logger = LoggerFactory.getLogger(WxAPI.class);
     @javax.annotation.Resource
     private Http http;
     @javax.annotation.Resource
@@ -80,7 +83,7 @@ public class WxAPI {
         domain.append("?access_token=").append(accessToken);
         Map<String, Object> params = Maps.newHashMap();
 //        params.put("page", page);
-        params.put("scene", http.map2param(scene));
+        params.put("scene", MapUtil.map2param(scene));
         params.put("is_hyaline", true);
         ResponseEntity<Resource> responseEntity = http.postForEntity(domain.toString(), params, Resource.class, MediaType.APPLICATION_JSON_UTF8);
         MediaType contentType = responseEntity.getHeaders().getContentType();
@@ -203,22 +206,46 @@ public class WxAPI {
         signData.put("total_fee", total_fee.getStringValue());
         signData.put("trade_type", trade_type.getStringValue());
         signData.put("key", GlobalConstants.API_KEY);
-        String signStr = MD5.generate(http.map2param(signData)).toUpperCase();
+        String signStr = MD5.generate(MapUtil.map2param(signData)).toUpperCase();
         sign.setText(signStr);
         OutputFormat format = OutputFormat.createCompactFormat();
-        StringWriter writer = new StringWriter();
-        XMLWriter output = new XMLWriter(writer, format);
+        StringWriter requestString = new StringWriter();
+        XMLWriter output = new XMLWriter(requestString, format);
         output.write(doc);
-        writer.close();
+        requestString.close();
         output.close();
-        ResponseEntity<String> responseEntity = http.postForEntity(domain, writer.toString(), String.class, MediaType.APPLICATION_XML);
-        String response = responseEntity.getBody();
-        doc = DocumentHelper.parseText(response);
+        ResponseEntity<String> responseEntity = http.postForEntity(domain, requestString.toString(), String.class, MediaType.APPLICATION_XML);
+        logger.info("用户：" + request.getOpenid() + "统一下单，request：" + requestString);
+        String responseString = responseEntity.getBody();
+        logger.info("用户：" + request.getOpenid() + "统一下单，response：" + responseString);
+        doc = DocumentHelper.parseText(responseString);
         Element root = doc.getRootElement();
-        Iterator<Element> iter = root.elementIterator("head");
-        while (iter.hasNext()) {
-            Element element = iter.next();
-            System.err.println(element.getStringValue());
+        Element r_return_code = root.element("return_code");
+        Element r_return_msg = root.element("return_msg");
+        Element r_appid = root.element("appid");
+        Element r_mch_id = root.element("mch_id");
+        Element r_nonce_str = root.element("nonce_str");
+        Element r_sign = root.element("sign");
+        Element r_result_code = root.element("result_code");
+        Element r_prepay_id = root.element("prepay_id");
+        Element r_trade_type = root.element("trade_type");
+        Element r_err_code = root.element("err_code");
+        Element r_err_code_des = root.element("err_code_des");
+        UnifiedOrderResponse response = new UnifiedOrderResponse();
+        response.setReturnCode(r_return_code.getStringValue());
+        response.setReturnMsg(r_return_msg.getStringValue());
+        response.setAppid(r_appid.getStringValue());
+        response.setMchId(r_mch_id.getStringValue());
+        response.setNonceStr(r_nonce_str.getStringValue());
+        response.setResultCode(r_result_code.getStringValue());
+        if (r_err_code == null) {
+            response.setSign(r_sign.getStringValue());
+            response.setPrepayId(r_prepay_id.getStringValue());
+            response.setTradeType(r_trade_type.getStringValue());
+        } else {
+            response.setErrCode(r_err_code.getStringValue());
+            response.setErrCodeDes(r_err_code_des.getStringValue());
         }
+        return response;
     }
 }
