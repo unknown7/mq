@@ -118,4 +118,25 @@ public class GlobalConstants {
             return value;
         }
     }
+
+    /**
+     * 订单状态
+     */
+    public enum OrderStatus {
+        UNPAID("004001", "待付款"),
+        PAID("004002", "已付款"),
+        ;
+        private String key;
+        private String value;
+        OrderStatus(String key, String value) {
+            this.key = key;
+            this.value = value;
+        }
+        public String getKey() {
+            return key;
+        }
+        public String getValue() {
+            return value;
+        }
+    }
 }

@@ -4,22 +4,20 @@ import com.github.pagehelper.PageHelper;
 import com.google.common.collect.Maps;
 import com.mq.base.GlobalConstants;
 import com.mq.base.RedisObjectHolder;
-import com.mq.mapper.ShareCardMapper;
-import com.mq.mapper.UserMapper;
-import com.mq.mapper.VideoMapper;
-import com.mq.model.ShareCard;
-import com.mq.model.User;
-import com.mq.model.Video;
+import com.mq.mapper.*;
+import com.mq.model.*;
 import com.mq.query.UserQuery;
 import com.mq.query.VideoQuery;
 import com.mq.service.VideoService;
 import com.mq.util.FileUtil;
+import com.mq.util.MD5;
+import com.mq.util.OrderNoGenerator;
 import com.mq.util.PageUtil;
 import com.mq.vo.Page;
 import com.mq.vo.UserVo;
 import com.mq.vo.VideoVo;
 import com.mq.wx.base.WxAPI;
-import com.mq.wx.vo.unifiedorder.UnifiedOrderRequest;
+import jdk.nashorn.internal.objects.Global;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,6 +45,12 @@ public class VideoServiceImpl implements VideoService {
     private ShareCardMapper shareCardMapper;
     @Resource
     private UserMapper userMapper;
+    @Resource
+    private OrderNoGenerator generator;
+    @Resource
+    private OrderMapper orderMapper;
+    @Resource
+    private UnifiedOrderRequestMapper unifiedOrderRequestMapper;
 
     @Override
     public Page<VideoVo> findPage(VideoQuery query) {
@@ -280,11 +284,36 @@ public class VideoServiceImpl implements VideoService {
         assert videoId != null;
         User user = getUser(skey);
         VideoVo videoVo = videoMapper.selectVoByPrimaryKey(Long.valueOf(videoId));
+        Date now = new Date();
+
+        Order order = new Order();
+        order.setOrderNo(generator.next());
+        order.setOrderStatus(GlobalConstants.OrderStatus.UNPAID.getKey());
+        order.setGoodsId(videoId);
+        order.setGoodsType(GlobalConstants.PurchaseType.VIDEO.getKey());
+        order.setGoodsPrice(videoVo.getPrice());
+        order.setUserId(user.getId());
+        order.setTotalAmount(videoVo.getPrice());
+        order.setWxAmount(videoVo.getPrice());
+        order.setAccountBalanceAmount(BigDecimal.ZERO);
+        order.setCreateTime(now);
+        order.setUpdateTime(now);
+        order.setDelFlag(0);
+        orderMapper.insertSelective(order);
+
         UnifiedOrderRequest request = new UnifiedOrderRequest();
+        request.setAppid(GlobalConstants.APP_ID);
+        request.setMchId(GlobalConstants.MCH_ID);
+        request.setNonceStr(MD5.generate(UUID.randomUUID().toString()));
+        request.setNotifyUrl(GlobalConstants.NOTIFY_URL);
+        request.setOutTradeNo(order.getOrderNo());
+        request.setTradeType(GlobalConstants.TRADE_TYPE);
         request.setBody("木荃孕产-" + videoVo.getClassificationName() + "-" + videoVo.getTitle());
         request.setOpenid(user.getOpenId());
-        request.setTotal_fee(videoVo.getPrice().multiply(new BigDecimal("100")).setScale(0, BigDecimal.ROUND_HALF_UP).toString());
-        request.setSpbill_create_ip(remoteAddr);
+        request.setTotalFee(Integer.valueOf(videoVo.getPrice().multiply(new BigDecimal("100")).setScale(0, BigDecimal.ROUND_HALF_UP).toString()));
+        request.setSpbillCreateIp(remoteAddr);
+        unifiedOrderRequestMapper.insertSelective(request);
+
         wxAPI.unifiedOrder(request);
     }
 
