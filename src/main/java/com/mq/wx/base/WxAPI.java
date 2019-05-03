@@ -4,12 +4,13 @@ import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Maps;
 import com.mq.base.GlobalConstants;
 import com.mq.base.Http;
-import com.mq.util.OrderNoGenerator;
 import com.mq.base.RedisObjectHolder;
+import com.mq.model.UnifiedOrderRequest;
+import com.mq.model.UnifiedOrderResponse;
 import com.mq.util.MD5;
+import com.mq.util.OrderNoGenerator;
 import com.mq.wx.vo.accessToken.AccessTokenResponse;
 import com.mq.wx.vo.auth.AuthResponse;
-import com.mq.wx.vo.unifiedorder.UnifiedOrderRequest;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
@@ -25,6 +26,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.UUID;
 
@@ -38,8 +40,6 @@ public class WxAPI {
     private Http http;
     @javax.annotation.Resource
     private RedisObjectHolder redisObjectHolder;
-    @javax.annotation.Resource
-    private OrderNoGenerator generator;
 
     /**
      * 获取access_token，如果缓存中存在，直接返回，如果不存在，调用微信接口，获取token并存入缓存
@@ -133,7 +133,7 @@ public class WxAPI {
      * @param request
      * @throws Exception
      */
-    public void unifiedOrder(UnifiedOrderRequest request) throws Exception {
+    public UnifiedOrderResponse unifiedOrder(UnifiedOrderRequest request) throws Exception {
         String domain = "https://api.mch.weixin.qq.com/pay/unifiedorder";
         Document doc = DocumentHelper.createDocument();
         Element xml = doc.addElement("xml");
@@ -141,17 +141,17 @@ public class WxAPI {
          * appid
          */
         Element appid = xml.addElement("appid");
-        appid.setText(GlobalConstants.APP_ID);
+        appid.setText(request.getAppid());
         /**
          * mch_id
          */
         Element mch_id = xml.addElement("mch_id");
-        mch_id.setText(GlobalConstants.MCH_ID);
+        mch_id.setText(request.getMchId());
         /**
          * nonce_str
          */
         Element nonce_str = xml.addElement("nonce_str");
-        nonce_str.setText(MD5.generate(UUID.randomUUID().toString()));
+        nonce_str.setText(request.getNonceStr());
         /**
          * body
          */
@@ -161,27 +161,27 @@ public class WxAPI {
          * out_trade_no
          */
         Element out_trade_no = xml.addElement("out_trade_no");
-        out_trade_no.setText(generator.next());
+        out_trade_no.setText(request.getOutTradeNo());
         /**
          * total_fee
          */
         Element total_fee = xml.addElement("total_fee");
-        total_fee.setText(request.getTotal_fee());
+        total_fee.setText(request.getTotalFee().toString());
         /**
          * spbill_create_ip
          */
         Element spbill_create_ip = xml.addElement("spbill_create_ip");
-        spbill_create_ip.setText(request.getSpbill_create_ip());
+        spbill_create_ip.setText(request.getSpbillCreateIp());
         /**
          * notify_url
          */
         Element notify_url = xml.addElement("notify_url");
-        notify_url.setText(GlobalConstants.NOTIFY_URL);
+        notify_url.setText(request.getNotifyUrl());
         /**
          * trade_type
          */
         Element trade_type = xml.addElement("trade_type");
-        trade_type.setText(GlobalConstants.TRADE_TYPE);
+        trade_type.setText(request.getTradeType());
         /**
          * openid
          */
@@ -212,6 +212,13 @@ public class WxAPI {
         writer.close();
         output.close();
         ResponseEntity<String> responseEntity = http.postForEntity(domain, writer.toString(), String.class, MediaType.APPLICATION_XML);
-        System.err.println(responseEntity.getBody());
+        String response = responseEntity.getBody();
+        doc = DocumentHelper.parseText(response);
+        Element root = doc.getRootElement();
+        Iterator<Element> iter = root.elementIterator("head");
+        while (iter.hasNext()) {
+            Element element = iter.next();
+            System.err.println(element.getStringValue());
+        }
     }
 }

@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mq.mapper.UnifiedOrderResponseMapper" >
+  <resultMap id="BaseResultMap" type="com.mq.model.UnifiedOrderResponse" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="return_code" property="returnCode" jdbcType="VARCHAR" />
+    <result column="return_msg" property="returnMsg" jdbcType="VARCHAR" />
+    <result column="appid" property="appid" jdbcType="VARCHAR" />
+    <result column="mch_id" property="mchId" jdbcType="VARCHAR" />
+    <result column="nonce_str" property="nonceStr" jdbcType="VARCHAR" />
+    <result column="sign" property="sign" jdbcType="VARCHAR" />
+    <result column="result_code" property="resultCode" jdbcType="VARCHAR" />
+    <result column="prepay_id" property="prepayId" jdbcType="VARCHAR" />
+    <result column="trade_type" property="tradeType" jdbcType="VARCHAR" />
+    <result column="err_code" property="errCode" jdbcType="VARCHAR" />
+    <result column="err_code_des" property="errCodeDes" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, return_code, return_msg, appid, mch_id, nonce_str, sign, result_code, prepay_id, 
+    trade_type, err_code, err_code_des
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_unified_order_response
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_unified_order_response
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.mq.model.UnifiedOrderResponse" >
+    insert into t_unified_order_response (id, return_code, return_msg, 
+      appid, mch_id, nonce_str, 
+      sign, result_code, prepay_id, 
+      trade_type, err_code, err_code_des
+      )
+    values (#{id,jdbcType=BIGINT}, #{returnCode,jdbcType=VARCHAR}, #{returnMsg,jdbcType=VARCHAR}, 
+      #{appid,jdbcType=VARCHAR}, #{mchId,jdbcType=VARCHAR}, #{nonceStr,jdbcType=VARCHAR}, 
+      #{sign,jdbcType=VARCHAR}, #{resultCode,jdbcType=VARCHAR}, #{prepayId,jdbcType=VARCHAR}, 
+      #{tradeType,jdbcType=VARCHAR}, #{errCode,jdbcType=VARCHAR}, #{errCodeDes,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.mq.model.UnifiedOrderResponse" >
+    <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_unified_order_response
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="returnCode != null" >
+        return_code,
+      </if>
+      <if test="returnMsg != null" >
+        return_msg,
+      </if>
+      <if test="appid != null" >
+        appid,
+      </if>
+      <if test="mchId != null" >
+        mch_id,
+      </if>
+      <if test="nonceStr != null" >
+        nonce_str,
+      </if>
+      <if test="sign != null" >
+        sign,
+      </if>
+      <if test="resultCode != null" >
+        result_code,
+      </if>
+      <if test="prepayId != null" >
+        prepay_id,
+      </if>
+      <if test="tradeType != null" >
+        trade_type,
+      </if>
+      <if test="errCode != null" >
+        err_code,
+      </if>
+      <if test="errCodeDes != null" >
+        err_code_des,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="returnCode != null" >
+        #{returnCode,jdbcType=VARCHAR},
+      </if>
+      <if test="returnMsg != null" >
+        #{returnMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="appid != null" >
+        #{appid,jdbcType=VARCHAR},
+      </if>
+      <if test="mchId != null" >
+        #{mchId,jdbcType=VARCHAR},
+      </if>
+      <if test="nonceStr != null" >
+        #{nonceStr,jdbcType=VARCHAR},
+      </if>
+      <if test="sign != null" >
+        #{sign,jdbcType=VARCHAR},
+      </if>
+      <if test="resultCode != null" >
+        #{resultCode,jdbcType=VARCHAR},
+      </if>
+      <if test="prepayId != null" >
+        #{prepayId,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeType != null" >
+        #{tradeType,jdbcType=VARCHAR},
+      </if>
+      <if test="errCode != null" >
+        #{errCode,jdbcType=VARCHAR},
+      </if>
+      <if test="errCodeDes != null" >
+        #{errCodeDes,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mq.model.UnifiedOrderResponse" >
+    update t_unified_order_response
+    <set >
+      <if test="returnCode != null" >
+        return_code = #{returnCode,jdbcType=VARCHAR},
+      </if>
+      <if test="returnMsg != null" >
+        return_msg = #{returnMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="appid != null" >
+        appid = #{appid,jdbcType=VARCHAR},
+      </if>
+      <if test="mchId != null" >
+        mch_id = #{mchId,jdbcType=VARCHAR},
+      </if>
+      <if test="nonceStr != null" >
+        nonce_str = #{nonceStr,jdbcType=VARCHAR},
+      </if>
+      <if test="sign != null" >
+        sign = #{sign,jdbcType=VARCHAR},
+      </if>
+      <if test="resultCode != null" >
+        result_code = #{resultCode,jdbcType=VARCHAR},
+      </if>
+      <if test="prepayId != null" >
+        prepay_id = #{prepayId,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeType != null" >
+        trade_type = #{tradeType,jdbcType=VARCHAR},
+      </if>
+      <if test="errCode != null" >
+        err_code = #{errCode,jdbcType=VARCHAR},
+      </if>
+      <if test="errCodeDes != null" >
+        err_code_des = #{errCodeDes,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mq.model.UnifiedOrderResponse" >
+    update t_unified_order_response
+    set return_code = #{returnCode,jdbcType=VARCHAR},
+      return_msg = #{returnMsg,jdbcType=VARCHAR},
+      appid = #{appid,jdbcType=VARCHAR},
+      mch_id = #{mchId,jdbcType=VARCHAR},
+      nonce_str = #{nonceStr,jdbcType=VARCHAR},
+      sign = #{sign,jdbcType=VARCHAR},
+      result_code = #{resultCode,jdbcType=VARCHAR},
+      prepay_id = #{prepayId,jdbcType=VARCHAR},
+      trade_type = #{tradeType,jdbcType=VARCHAR},
+      err_code = #{errCode,jdbcType=VARCHAR},
+      err_code_des = #{errCodeDes,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
