@@ -2,14 +2,14 @@ package com.mq.wx.vo;
 
 public class DefaultResponse {
     private boolean success;
-    private String data;
+    private Object data;
     private String msg;
 
-    public static DefaultResponse create(boolean success, String data) {
+    public static DefaultResponse create(boolean success, Object data) {
         return create(success, data, null);
     }
 
-    public static DefaultResponse create(boolean success, String data, String msg) {
+    public static DefaultResponse create(boolean success, Object data, String msg) {
         DefaultResponse response = new DefaultResponse();
         response.setSuccess(success);
         response.setData(data);
@@ -17,11 +17,11 @@ public class DefaultResponse {
         return response;
     }
 
-    public static DefaultResponse success(String data) {
+    public static DefaultResponse success(Object data) {
         return success(data, null);
     }
 
-    public static DefaultResponse success(String data, String msg) {
+    public static DefaultResponse success(Object data, String msg) {
         DefaultResponse response = new DefaultResponse();
         response.setSuccess(true);
         response.setData(data);
@@ -48,11 +48,11 @@ public class DefaultResponse {
         this.success = success;
     }
 
-    public String getData() {
+    public Object getData() {
         return data;
     }
 
-    public void setData(String data) {
+    public void setData(Object data) {
         this.data = data;
     }
 

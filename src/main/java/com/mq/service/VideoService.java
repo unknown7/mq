@@ -4,6 +4,7 @@ import com.mq.model.Video;
 import com.mq.query.VideoQuery;
 import com.mq.vo.Page;
 import com.mq.vo.VideoVo;
+import com.mq.wx.vo.unifiedOrder.UnifiedOrderVo;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -41,5 +42,5 @@ public interface VideoService {
 
     String saveShareCard(MultipartFile file, String skey, String videoId) throws Exception;
 
-    void purchase(String skey, Long videoId, String remoteAddr) throws Exception;
+    UnifiedOrderVo purchase(String skey, Long videoId, String remoteAddr) throws Exception;
 }

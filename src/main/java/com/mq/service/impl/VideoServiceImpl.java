@@ -9,15 +9,12 @@ import com.mq.model.*;
 import com.mq.query.UserQuery;
 import com.mq.query.VideoQuery;
 import com.mq.service.VideoService;
-import com.mq.util.FileUtil;
-import com.mq.util.MD5;
-import com.mq.util.OrderNoGenerator;
-import com.mq.util.PageUtil;
+import com.mq.util.*;
 import com.mq.vo.Page;
 import com.mq.vo.UserVo;
 import com.mq.vo.VideoVo;
 import com.mq.wx.base.WxAPI;
-import jdk.nashorn.internal.objects.Global;
+import com.mq.wx.vo.unifiedOrder.UnifiedOrderVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -51,6 +48,8 @@ public class VideoServiceImpl implements VideoService {
     private OrderMapper orderMapper;
     @Resource
     private UnifiedOrderRequestMapper unifiedOrderRequestMapper;
+    @Resource
+    private UnifiedOrderResponseMapper unifiedOrderResponseMapper;
 
     @Override
     public Page<VideoVo> findPage(VideoQuery query) {
@@ -279,7 +278,7 @@ public class VideoServiceImpl implements VideoService {
 
     @Override
     @Transactional
-    public void purchase(String skey, Long videoId, String remoteAddr) throws Exception {
+    public UnifiedOrderVo purchase(String skey, Long videoId, String remoteAddr) throws Exception {
         assert !StringUtils.isEmpty(skey);
         assert videoId != null;
         User user = getUser(skey);
@@ -314,7 +313,24 @@ public class VideoServiceImpl implements VideoService {
         request.setSpbillCreateIp(remoteAddr);
         unifiedOrderRequestMapper.insertSelective(request);
 
-        wxAPI.unifiedOrder(request);
+        UnifiedOrderResponse unifiedOrderResponse = wxAPI.unifiedOrder(request);
+        unifiedOrderResponseMapper.insertSelective(unifiedOrderResponse);
+
+        Map<String, Object> signData = Maps.newLinkedHashMap();
+        signData.put("appId", GlobalConstants.APP_ID);
+        signData.put("nonceStr", MD5.generate(UUID.randomUUID().toString()));
+        signData.put("package", "prepay_id=" + unifiedOrderResponse.getPrepayId());
+        signData.put("signType", "MD5");
+        signData.put("timeStamp", System.currentTimeMillis() / 1000);
+        signData.put("key", GlobalConstants.API_KEY);
+        String paySign = MD5.generate(MapUtil.map2param(signData)).toUpperCase();
+        UnifiedOrderVo unifiedOrderVo = new UnifiedOrderVo();
+        unifiedOrderVo.setNonceStr(signData.get("nonceStr").toString());
+        unifiedOrderVo.set_package(signData.get("package").toString());
+        unifiedOrderVo.setPaySign(paySign);
+        unifiedOrderVo.setSignType(signData.get("signType").toString());
+        unifiedOrderVo.setTimeStamp(signData.get("timeStamp").toString());
+        return unifiedOrderVo;
     }
 
     private User getUser(String skey) throws Exception {

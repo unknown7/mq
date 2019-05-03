@@ -439,7 +439,7 @@
     from t_video v
     left join t_video_classification vc on v.classification = vc.id
     <if test="userId != null">
-      left join t_order o on v.id = o.goods_id and o.user_id = #{userId,jdbcType=BIGINT}
+      left join t_order o on v.id = o.goods_id and o.order_status = '004002' and o.user_id = #{userId,jdbcType=BIGINT}
       left join t_share_card sc on v.id = sc.goods_id and sc.goods_type = '002001' and sc.user_id = #{userId,jdbcType=BIGINT}
     </if>
     where v.id = #{videoId,jdbcType=BIGINT}
