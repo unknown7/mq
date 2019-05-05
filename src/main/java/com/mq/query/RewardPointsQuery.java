@@ -5,28 +5,18 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class OrderQuery {
+public class RewardPointsQuery {
     private Long id;
-
-    private String orderNo;
-
-    private String orderStatus;
-
-    private Long goodsId;
-
-    private String goodsType;
-
-    private BigDecimal goodsPrice;
 
     private Long userId;
 
-    private BigDecimal totalAmount;
+    private BigDecimal points;
 
-    private BigDecimal accountBalanceAmount;
+    private String rewardType;
 
-    private BigDecimal wxAmount;
+    private Long rewardId;
 
-    private Long referrer;
+    private Long profitFrom;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
@@ -52,46 +42,6 @@ public class OrderQuery {
         this.id = id;
     }
 
-    public String getOrderNo() {
-        return orderNo;
-    }
-
-    public void setOrderNo(String orderNo) {
-        this.orderNo = orderNo;
-    }
-
-    public String getOrderStatus() {
-        return orderStatus;
-    }
-
-    public void setOrderStatus(String orderStatus) {
-        this.orderStatus = orderStatus;
-    }
-
-    public Long getGoodsId() {
-        return goodsId;
-    }
-
-    public void setGoodsId(Long goodsId) {
-        this.goodsId = goodsId;
-    }
-
-    public String getGoodsType() {
-        return goodsType;
-    }
-
-    public void setGoodsType(String goodsType) {
-        this.goodsType = goodsType;
-    }
-
-    public BigDecimal getGoodsPrice() {
-        return goodsPrice;
-    }
-
-    public void setGoodsPrice(BigDecimal goodsPrice) {
-        this.goodsPrice = goodsPrice;
-    }
-
     public Long getUserId() {
         return userId;
     }
@@ -100,36 +50,36 @@ public class OrderQuery {
         this.userId = userId;
     }
 
-    public BigDecimal getTotalAmount() {
-        return totalAmount;
+    public BigDecimal getPoints() {
+        return points;
     }
 
-    public void setTotalAmount(BigDecimal totalAmount) {
-        this.totalAmount = totalAmount;
+    public void setPoints(BigDecimal points) {
+        this.points = points;
     }
 
-    public BigDecimal getAccountBalanceAmount() {
-        return accountBalanceAmount;
+    public String getRewardType() {
+        return rewardType;
     }
 
-    public void setAccountBalanceAmount(BigDecimal accountBalanceAmount) {
-        this.accountBalanceAmount = accountBalanceAmount;
+    public void setRewardType(String rewardType) {
+        this.rewardType = rewardType;
     }
 
-    public BigDecimal getWxAmount() {
-        return wxAmount;
+    public Long getRewardId() {
+        return rewardId;
     }
 
-    public void setWxAmount(BigDecimal wxAmount) {
-        this.wxAmount = wxAmount;
+    public void setRewardId(Long rewardId) {
+        this.rewardId = rewardId;
     }
 
-    public Long getReferrer() {
-        return referrer;
+    public Long getProfitFrom() {
+        return profitFrom;
     }
 
-    public void setReferrer(Long referrer) {
-        this.referrer = referrer;
+    public void setProfitFrom(Long profitFrom) {
+        this.profitFrom = profitFrom;
     }
 
     public Date getCreateTime() {

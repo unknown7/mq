@@ -42,5 +42,5 @@ public interface VideoService {
 
     String saveShareCard(MultipartFile file, String skey, String videoId) throws Exception;
 
-    UnifiedOrderVo purchase(String skey, Long videoId, String remoteAddr) throws Exception;
+    UnifiedOrderVo purchase(String skey, Long videoId, String scene, String remoteAddr) throws Exception;
 }

@@ -29,8 +29,7 @@ public class WxUserAuthController {
             AuthResult authResult = userService.auth(code, skey);
             return JSON.toJSONString(authResult);
         } catch (Exception e) {
-            logger.error("用户授权失败！skey=" + skey);
-            logger.error(e.getMessage());
+            logger.error("用户授权失败！skey=" + skey, e);
             return null;
         }
     }
@@ -42,8 +41,7 @@ public class WxUserAuthController {
         try {
             authResult = userService.save(request);
         } catch (Exception e) {
-            logger.error("用户保存失败！request=" + JSON.toJSONString(request));
-            logger.error(e.getMessage());
+            logger.error("用户保存失败！request=" + JSON.toJSONString(request), e);
             authResult = new AuthResult(false);
         }
         return JSON.toJSONString(authResult);
@@ -52,7 +50,7 @@ public class WxUserAuthController {
     @RequestMapping("/getUser")
     @ResponseBody
     public String getUser(String skey) {
-        UserVo userVo = userService.get(skey);
+        UserVo userVo = userService.getVoBySkey(skey);
         return JSON.toJSONString(userVo);
     }
 }

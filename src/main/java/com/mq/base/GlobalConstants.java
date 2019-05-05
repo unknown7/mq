@@ -16,7 +16,7 @@ public class GlobalConstants {
     public static final String APP_SECRET = "4688af737cf288429c8180d3db6ae21e";
     public static final String MCH_ID = "1533502711";
     public static final String API_KEY = "a02ec5baf0987e3857dd1980c5602252";
-    public static final String NOTIFY_URL = "https://www.mqyoga.cn/mq/wx/";
+    public static final String NOTIFY_URL = "https://www.mqyoga.cn/mq/wx/tradeResult";
     public static final String TRADE_TYPE = "JSAPI";
     /**
      * 微信api类型
@@ -129,6 +129,26 @@ public class GlobalConstants {
         private String key;
         private String value;
         OrderStatus(String key, String value) {
+            this.key = key;
+            this.value = value;
+        }
+        public String getKey() {
+            return key;
+        }
+        public String getValue() {
+            return value;
+        }
+    }
+
+    /**
+     * 奖励类型
+     */
+    public enum RewardType {
+        SHARE("005001", "分享奖励"),
+        ;
+        private String key;
+        private String value;
+        RewardType(String key, String value) {
             this.key = key;
             this.value = value;
         }

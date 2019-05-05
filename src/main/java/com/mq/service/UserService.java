@@ -51,5 +51,7 @@ public interface UserService {
      * @param skey              加密的openid，由小程序缓存提供
      * @return
      */
-    UserVo get(String skey);
+    UserVo getVoBySkey(String skey);
+
+    User getBySkey(String skey);
 }

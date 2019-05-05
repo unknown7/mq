@@ -1,6 +1,9 @@
 package com.mq.mapper;
 
 import com.mq.model.Order;
+import com.mq.query.OrderQuery;
+
+import java.util.List;
 
 public interface OrderMapper {
     int deleteByPrimaryKey(Long id);
@@ -14,4 +17,8 @@ public interface OrderMapper {
     int updateByPrimaryKeySelective(Order record);
 
     int updateByPrimaryKey(Order record);
+
+    List<Order> selectByQuery(OrderQuery query);
+
+    Long selectNums(OrderQuery query);
 }

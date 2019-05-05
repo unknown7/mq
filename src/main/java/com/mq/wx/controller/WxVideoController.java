@@ -52,7 +52,7 @@ public class WxVideoController {
             String path = videoService.saveShareCard(shareCard, skey, videoId);
             response = DefaultResponse.success(path);
         } catch (Exception e) {
-            logger.error(e.getMessage());
+            logger.error("保存分享卡失败！", e);
             response = DefaultResponse.fail();
         }
         return JSON.toJSONString(response);
@@ -60,14 +60,15 @@ public class WxVideoController {
 
     @RequestMapping("/purchase")
     @ResponseBody
-    public String purchase(String skey, Long videoId, HttpServletRequest request) {
+    public String purchase(String skey, Long videoId, String scene, HttpServletRequest request) {
         DefaultResponse response;
         try {
             String remoteAddr = request.getRemoteAddr();
-            UnifiedOrderVo unifiedOrderVo = videoService.purchase(skey, videoId, remoteAddr);
+            logger.info("用户：" + skey + "购买商品：" + videoId + "，请求统一下单，scene=" + scene);
+            UnifiedOrderVo unifiedOrderVo = videoService.purchase(skey, videoId, scene, remoteAddr);
             response = DefaultResponse.success(unifiedOrderVo);
         } catch (Exception e) {
-            logger.error(e.getMessage());
+            logger.error("支付失败，skey=" + skey, e);
             response = DefaultResponse.fail("支付失败");
         }
         return JSON.toJSONString(response);

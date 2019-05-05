@@ -1,5 +1,6 @@
 package com.mq.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.mq.base.RedisObjectHolder;
 import com.mq.mapper.ShareCardMapper;
 import com.mq.mapper.UserMapper;
@@ -8,7 +9,6 @@ import com.mq.model.User;
 import com.mq.query.UserQuery;
 import com.mq.service.UserService;
 import com.mq.util.MD5;
-import com.mq.util.MD5Util;
 import com.mq.util.MapUtil;
 import com.mq.util.WxDecrptUtil;
 import com.mq.vo.UserVo;
@@ -16,6 +16,8 @@ import com.mq.wx.base.WxAPI;
 import com.mq.wx.vo.auth.AuthRequest;
 import com.mq.wx.vo.auth.AuthResponse;
 import com.mq.wx.vo.auth.AuthResult;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +30,7 @@ import java.util.Map;
 
 @Service
 public class UserServiceImpl implements UserService {
+    protected static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
     @Resource
     private UserMapper userMapper;
     @Resource
@@ -44,6 +47,7 @@ public class UserServiceImpl implements UserService {
         String encryptedData = request.getEncryptedData();
         String iv = request.getIv();
         AuthResponse authResponse = wxAPI.jscode2session(code);
+        logger.info("临时登录凭证：" + request.getCode() + "，微信鉴权结果：" + JSON.toJSONString(authResponse));
         AuthResult authResult = new AuthResult(true);
         /**
          * 微信鉴权成功
@@ -203,8 +207,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserVo get(String skey) {
+    public UserVo getVoBySkey(String skey) {
         UserVo userVo = redisObjectHolder.getUserInfo(skey);
+        if (userVo == null) {
+            User user = userMapper.selectBySkey(skey);
+            if (user != null) {
+                userVo = new UserVo();
+                BeanUtils.copyProperties(user, userVo);
+                redisObjectHolder.setUserInfo(skey, userVo);
+            }
+        }
         return userVo;
+    }
+
+    @Override
+    public User getBySkey(String skey) {
+        return userMapper.selectBySkey(skey);
     }
 }

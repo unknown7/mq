@@ -1,5 +1,6 @@
 package com.mq.model;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class ShareCard {
@@ -14,6 +15,10 @@ public class ShareCard {
     private Long goodsId;
 
     private String goodsType;
+
+    private BigDecimal goodsPrice;
+
+    private BigDecimal profitShare;
 
     private Date createTime;
 
@@ -67,6 +72,22 @@ public class ShareCard {
 
     public void setGoodsType(String goodsType) {
         this.goodsType = goodsType == null ? null : goodsType.trim();
+    }
+
+    public BigDecimal getGoodsPrice() {
+        return goodsPrice;
+    }
+
+    public void setGoodsPrice(BigDecimal goodsPrice) {
+        this.goodsPrice = goodsPrice;
+    }
+
+    public BigDecimal getProfitShare() {
+        return profitShare;
+    }
+
+    public void setProfitShare(BigDecimal profitShare) {
+        this.profitShare = profitShare;
     }
 
     public Date getCreateTime() {

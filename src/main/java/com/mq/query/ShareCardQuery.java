@@ -2,6 +2,7 @@ package com.mq.query;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class ShareCardQuery {
@@ -16,6 +17,10 @@ public class ShareCardQuery {
     private Long goodsId;
 
     private String goodsType;
+
+    private BigDecimal goodsPrice;
+
+    private BigDecimal profitShare;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
@@ -79,6 +84,22 @@ public class ShareCardQuery {
 
     public void setGoodsType(String goodsType) {
         this.goodsType = goodsType;
+    }
+
+    public BigDecimal getGoodsPrice() {
+        return goodsPrice;
+    }
+
+    public void setGoodsPrice(BigDecimal goodsPrice) {
+        this.goodsPrice = goodsPrice;
+    }
+
+    public BigDecimal getProfitShare() {
+        return profitShare;
+    }
+
+    public void setProfitShare(BigDecimal profitShare) {
+        this.profitShare = profitShare;
     }
 
     public Date getCreateTime() {

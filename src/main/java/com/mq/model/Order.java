@@ -24,6 +24,8 @@ public class Order {
 
     private BigDecimal wxAmount;
 
+    private Long referrer;
+
     private Date createTime;
 
     private Date updateTime;
@@ -108,6 +110,14 @@ public class Order {
 
     public void setWxAmount(BigDecimal wxAmount) {
         this.wxAmount = wxAmount;
+    }
+
+    public Long getReferrer() {
+        return referrer;
+    }
+
+    public void setReferrer(Long referrer) {
+        this.referrer = referrer;
     }
 
     public Date getCreateTime() {
