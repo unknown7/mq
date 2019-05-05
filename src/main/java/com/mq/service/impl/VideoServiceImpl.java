@@ -252,7 +252,6 @@ public class VideoServiceImpl implements VideoService {
             shareCardMapper.insertSelective(shareCard);
             String page = "pages/video/index";
             Map<String, Object> scene = Maps.newHashMap();
-            scene.put("videoId", videoId);
             scene.put("shareCardId", shareCard.getId());
             miniProgramCode = wxAPI.getUnlimited(page, scene);
         }

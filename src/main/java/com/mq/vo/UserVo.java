@@ -19,6 +19,8 @@ public class UserVo {
 
     private String language;
 
+    private Long referrer;
+
     private Date createTime;
 
     private Date updateTime;
@@ -87,6 +89,14 @@ public class UserVo {
 
     public void setLanguage(String language) {
         this.language = language;
+    }
+
+    public Long getReferrer() {
+        return referrer;
+    }
+
+    public void setReferrer(Long referrer) {
+        this.referrer = referrer;
     }
 
     public Date getCreateTime() {

@@ -14,9 +14,9 @@ public interface UserService {
      * @param request->code              用户登录临时凭证，由小程序下发
      * @param request->encryptedData     用户敏感信息（加密数据）
      * @param request->iv                解密向量
-     * @return skey                      生成的服务器skey
+     * @return AuthResult                生成的服务器skey与userVo
      */
-    String save(AuthRequest request) throws Exception;
+    AuthResult save(AuthRequest request) throws Exception;
 
     List<User> findAll();
 

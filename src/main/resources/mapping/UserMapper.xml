@@ -13,13 +13,14 @@
     <result column="language" property="language" jdbcType="VARCHAR" />
     <result column="session_key" property="sessionKey" jdbcType="VARCHAR" />
     <result column="skey" property="skey" jdbcType="VARCHAR" />
+    <result column="referrer" property="referrer" jdbcType="BIGINT" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="del_flag" property="delFlag" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, country, gender, province, city, avatar_url, open_id, nick_name, `language`, session_key,
-    skey, create_time, update_time, del_flag
+    skey, referrer, create_time, update_time, del_flag
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -35,13 +36,13 @@
     insert into t_user (id, country, gender, 
       province, city, avatar_url, 
       open_id, nick_name, `language`,
-      session_key, skey, create_time, 
+      session_key, skey, referrer, create_time,
       update_time, del_flag)
     values (#{id,jdbcType=BIGINT}, #{country,jdbcType=VARCHAR}, #{gender,jdbcType=INTEGER}, 
       #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{avatarUrl,jdbcType=VARCHAR}, 
       #{openId,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, #{language,jdbcType=VARCHAR}, 
-      #{sessionKey,jdbcType=VARCHAR}, #{skey,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=INTEGER})
+      #{sessionKey,jdbcType=VARCHAR}, #{skey,jdbcType=VARCHAR}, #{referrer,jdbcType=BIGINT},
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.mq.model.User" >
     <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
@@ -81,6 +82,9 @@
       </if>
       <if test="skey != null" >
         skey,
+      </if>
+      <if test="referrer != null" >
+        referrer,
       </if>
       <if test="createTime != null" >
         create_time,
@@ -126,6 +130,9 @@
       <if test="skey != null" >
         #{skey,jdbcType=VARCHAR},
       </if>
+      <if test="referrer != null" >
+        #{referrer,jdbcType=BIGINT},
+      </if>
       <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
       </if>
@@ -170,6 +177,9 @@
       <if test="skey != null" >
         skey = #{skey,jdbcType=VARCHAR},
       </if>
+      <if test="referrer != null" >
+        referrer = #{referrer,jdbcType=BIGINT},
+      </if>
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
@@ -194,6 +204,7 @@
       `language` = #{language,jdbcType=VARCHAR},
       session_key = #{sessionKey,jdbcType=VARCHAR},
       skey = #{skey,jdbcType=VARCHAR},
+      referrer = #{referrer,jdbcType=BIGINT},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       del_flag = #{delFlag,jdbcType=INTEGER}
@@ -241,6 +252,9 @@
     </if>
     <if test="skey != null" >
       and skey = #{skey,jdbcType=VARCHAR}
+    </if>
+    <if test="referrer != null" >
+      and referrer = #{referrer,jdbcType=BIGINT}
     </if>
     <if test="createTime != null" >
       and create_time = #{createTime,jdbcType=TIMESTAMP}
@@ -294,6 +308,9 @@
     </if>
     <if test="skey != null" >
       and skey = #{skey,jdbcType=VARCHAR}
+    </if>
+    <if test="referrer != null" >
+      and referrer = #{referrer,jdbcType=BIGINT}
     </if>
     <if test="createTime != null" >
       and create_time = #{createTime,jdbcType=TIMESTAMP}

@@ -27,6 +27,8 @@ public class UserQuery {
 
     private String skey;
 
+    private Long referrer;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -129,6 +131,14 @@ public class UserQuery {
 
     public void setSkey(String skey) {
         this.skey = skey;
+    }
+
+    public Long getReferrer() {
+        return referrer;
+    }
+
+    public void setReferrer(Long referrer) {
+        this.referrer = referrer;
     }
 
     public Date getCreateTime() {

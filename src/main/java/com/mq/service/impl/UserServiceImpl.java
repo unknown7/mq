@@ -1,12 +1,15 @@
 package com.mq.service.impl;
 
 import com.mq.base.RedisObjectHolder;
+import com.mq.mapper.ShareCardMapper;
 import com.mq.mapper.UserMapper;
+import com.mq.model.ShareCard;
 import com.mq.model.User;
 import com.mq.query.UserQuery;
 import com.mq.service.UserService;
 import com.mq.util.MD5;
 import com.mq.util.MD5Util;
+import com.mq.util.MapUtil;
 import com.mq.util.WxDecrptUtil;
 import com.mq.vo.UserVo;
 import com.mq.wx.base.WxAPI;
@@ -21,6 +24,7 @@ import org.springframework.util.StringUtils;
 import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -30,15 +34,17 @@ public class UserServiceImpl implements UserService {
     private WxAPI wxAPI;
     @Resource
     private RedisObjectHolder redisObjectHolder;
+    @Resource
+    private ShareCardMapper shareCardMapper;
 
     @Override
     @Transactional
-    public String save(AuthRequest request) throws Exception {
+    public AuthResult save(AuthRequest request) throws Exception {
         String code = request.getCode();
         String encryptedData = request.getEncryptedData();
         String iv = request.getIv();
         AuthResponse authResponse = wxAPI.jscode2session(code);
-        String skey = null;
+        AuthResult authResult = new AuthResult(true);
         /**
          * 微信鉴权成功
          */
@@ -47,13 +53,23 @@ public class UserServiceImpl implements UserService {
             /**
              * 注册用户
              */
-            skey = MD5.generate(authResponse.getOpenid());
+            String skey = MD5.generate(authResponse.getOpenid());
             Date now = new Date();
             user.setCreateTime(now);
             user.setDelFlag(0);
             user.setSessionKey(authResponse.getSession_key());
             user.setSkey(skey);
             user.setUpdateTime(now);
+            /**
+             * 推荐人
+             */
+            String scene = request.getScene();
+            if (!StringUtils.isEmpty(scene)) {
+                Map<String, Object> sceneMap = MapUtil.param2map(scene);
+                ShareCard shareCard = shareCardMapper.selectByPrimaryKey(Long.valueOf(sceneMap.get("shareCardId").toString()));
+                Long referrer = shareCard.getUserId();
+                user.setReferrer(referrer);
+            }
             userMapper.insertSelective(user);
             /**
              * 存入缓存
@@ -65,8 +81,15 @@ public class UserServiceImpl implements UserService {
              * 删除临时用户缓存
              */
             redisObjectHolder.delTemporaryUser(skey);
+            /**
+             * 保存用户结果参数
+             */
+            authResult.setSkey(skey);
+            authResult.setUserVo(userVo);
+        } else {
+            authResult.setSuccess(false);
         }
-        return skey;
+        return authResult;
     }
 
     @Override

@@ -25,6 +25,8 @@ public class User {
 
     private String skey;
 
+    private Long referrer;
+
     private Date createTime;
 
     private Date updateTime;
@@ -117,6 +119,14 @@ public class User {
 
     public void setSkey(String skey) {
         this.skey = skey == null ? null : skey.trim();
+    }
+
+    public Long getReferrer() {
+        return referrer;
+    }
+
+    public void setReferrer(Long referrer) {
+        this.referrer = referrer;
     }
 
     public Date getCreateTime() {
