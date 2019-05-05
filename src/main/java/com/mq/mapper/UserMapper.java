@@ -23,4 +23,6 @@ public interface UserMapper {
     List<User> selectByQuery(UserQuery query);
 
     Long selectNums(UserQuery query);
+
+    User selectBySkey(String skey);
 }

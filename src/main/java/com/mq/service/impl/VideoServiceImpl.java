@@ -8,6 +8,7 @@ import com.mq.mapper.*;
 import com.mq.model.*;
 import com.mq.query.UserQuery;
 import com.mq.query.VideoQuery;
+import com.mq.service.UserService;
 import com.mq.service.VideoService;
 import com.mq.util.*;
 import com.mq.vo.Page;
@@ -41,7 +42,7 @@ public class VideoServiceImpl implements VideoService {
     @Resource
     private ShareCardMapper shareCardMapper;
     @Resource
-    private UserMapper userMapper;
+    private UserService userService;
     @Resource
     private OrderNoGenerator generator;
     @Resource
@@ -239,11 +240,14 @@ public class VideoServiceImpl implements VideoService {
     public String generateMiniProgramCode(String videoId, String skey) {
         String miniProgramCode = null;
         UserVo userVo = redisObjectHolder.getUserInfo(skey);
+        VideoVo videoVo = videoMapper.selectVoByPrimaryKey(Long.valueOf(videoId));
         if (userVo != null) {
             Date now = new Date();
             ShareCard shareCard = new ShareCard();
-            shareCard.setGoodsId(Long.valueOf(videoId));
+            shareCard.setGoodsId(videoVo.getId());
             shareCard.setGoodsType(GlobalConstants.PurchaseType.VIDEO.getKey());
+            shareCard.setGoodsPrice(videoVo.getPrice());
+            shareCard.setProfitShare(videoVo.getProfitShare());
             shareCard.setSkey(skey);
             shareCard.setUserId(userVo.getId());
             shareCard.setCreateTime(now);
@@ -277,10 +281,10 @@ public class VideoServiceImpl implements VideoService {
 
     @Override
     @Transactional
-    public UnifiedOrderVo purchase(String skey, Long videoId, String remoteAddr) throws Exception {
+    public UnifiedOrderVo purchase(String skey, Long videoId, String scene, String remoteAddr) throws Exception {
         assert !StringUtils.isEmpty(skey);
         assert videoId != null;
-        User user = getUser(skey);
+        User user = userService.getBySkey(skey);
         VideoVo videoVo = videoMapper.selectVoByPrimaryKey(Long.valueOf(videoId));
         Date now = new Date();
 
@@ -294,6 +298,12 @@ public class VideoServiceImpl implements VideoService {
         order.setTotalAmount(videoVo.getPrice());
         order.setWxAmount(videoVo.getPrice());
         order.setAccountBalanceAmount(BigDecimal.ZERO);
+        if (!StringUtils.isEmpty(scene)) {
+            Map<String, Object> sceneMap = MapUtil.param2map(scene);
+            ShareCard shareCard = shareCardMapper.selectByPrimaryKey(Long.valueOf(sceneMap.get("shareCardId").toString()));
+            Long referrer = shareCard.getUserId();
+            order.setReferrer(referrer);
+        }
         order.setCreateTime(now);
         order.setUpdateTime(now);
         order.setDelFlag(0);
@@ -330,24 +340,5 @@ public class VideoServiceImpl implements VideoService {
         unifiedOrderVo.setSignType(signData.get("signType").toString());
         unifiedOrderVo.setTimeStamp(signData.get("timeStamp").toString());
         return unifiedOrderVo;
-    }
-
-    private User getUser(String skey) throws Exception {
-        UserVo userVo = redisObjectHolder.getUserInfo(skey);
-        if (userVo == null) {
-            UserQuery query = new UserQuery();
-            query.setSkey(skey);
-            query.setDelFlag(0);
-            List<User> users = userMapper.selectByQuery(query);
-            if (users.size() == 1) {
-                User user = users.get(0);
-                BeanUtils.copyProperties(user, userVo);
-                redisObjectHolder.setUserInfo(skey, userVo);
-            } else {
-                throw new Exception("用户信息校验失败，请检查网络");
-            }
-        }
-        User user = userMapper.selectByPrimaryKey(userVo.getId());
-        return user;
     }
 }

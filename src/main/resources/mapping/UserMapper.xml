@@ -331,4 +331,12 @@
       and update_time &lt;= #{updateTimeEnd,jdbcType=TIMESTAMP}
     </if>
   </select>
+
+  <select id="selectBySkey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from t_user
+    where skey = #{skey,jdbcType=VARCHAR}
+    and del_flag = 0
+  </select>
 </mapper>

@@ -12,13 +12,14 @@
     <result column="total_amount" property="totalAmount" jdbcType="DECIMAL" />
     <result column="account_balance_amount" property="accountBalanceAmount" jdbcType="DECIMAL" />
     <result column="wx_amount" property="wxAmount" jdbcType="DECIMAL" />
+    <result column="referrer" property="referrer" jdbcType="BIGINT" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="del_flag" property="delFlag" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, order_no, order_status, goods_id, goods_type, goods_price, user_id, total_amount, 
-    account_balance_amount, wx_amount, create_time, update_time, del_flag
+    account_balance_amount, wx_amount, referrer, create_time, update_time, del_flag
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -34,18 +35,15 @@
     insert into t_order (id, order_no, order_status, 
       goods_id, goods_type, goods_price, 
       user_id, total_amount, account_balance_amount, 
-      wx_amount, create_time, update_time, 
-      del_flag)
+      wx_amount, referrer, create_time, 
+      update_time, del_flag)
     values (#{id,jdbcType=BIGINT}, #{orderNo,jdbcType=VARCHAR}, #{orderStatus,jdbcType=VARCHAR}, 
       #{goodsId,jdbcType=BIGINT}, #{goodsType,jdbcType=VARCHAR}, #{goodsPrice,jdbcType=DECIMAL}, 
       #{userId,jdbcType=BIGINT}, #{totalAmount,jdbcType=DECIMAL}, #{accountBalanceAmount,jdbcType=DECIMAL}, 
-      #{wxAmount,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{delFlag,jdbcType=INTEGER})
+      #{wxAmount,jdbcType=DECIMAL}, #{referrer,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.mq.model.Order" >
-    <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
     insert into t_order
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -77,6 +75,9 @@
       </if>
       <if test="wxAmount != null" >
         wx_amount,
+      </if>
+      <if test="referrer != null" >
+        referrer,
       </if>
       <if test="createTime != null" >
         create_time,
@@ -119,6 +120,9 @@
       <if test="wxAmount != null" >
         #{wxAmount,jdbcType=DECIMAL},
       </if>
+      <if test="referrer != null" >
+        #{referrer,jdbcType=BIGINT},
+      </if>
       <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
       </if>
@@ -160,6 +164,9 @@
       <if test="wxAmount != null" >
         wx_amount = #{wxAmount,jdbcType=DECIMAL},
       </if>
+      <if test="referrer != null" >
+        referrer = #{referrer,jdbcType=BIGINT},
+      </if>
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
@@ -183,6 +190,7 @@
       total_amount = #{totalAmount,jdbcType=DECIMAL},
       account_balance_amount = #{accountBalanceAmount,jdbcType=DECIMAL},
       wx_amount = #{wxAmount,jdbcType=DECIMAL},
+      referrer = #{referrer,jdbcType=BIGINT},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       del_flag = #{delFlag,jdbcType=INTEGER}
@@ -219,6 +227,9 @@
     </if>
     <if test="wxAmount != null" >
       and wx_amount = #{wxAmount,jdbcType=DECIMAL}
+    </if>
+    <if test="referrer != null" >
+      and referrer = #{referrer,jdbcType=BIGINT}
     </if>
     <if test="createTime != null" >
       and create_time = #{createTime,jdbcType=TIMESTAMP}
@@ -269,6 +280,9 @@
     </if>
     <if test="wxAmount != null" >
       and wx_amount = #{wxAmount,jdbcType=DECIMAL}
+    </if>
+    <if test="referrer != null" >
+      and referrer = #{referrer,jdbcType=BIGINT}
     </if>
     <if test="createTime != null" >
       and create_time = #{createTime,jdbcType=TIMESTAMP}
