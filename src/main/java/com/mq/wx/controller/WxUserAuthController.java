@@ -38,14 +38,15 @@ public class WxUserAuthController {
     @RequestMapping("/saveUser")
     @ResponseBody
     public String saveUser(AuthRequest request) {
+        AuthResult authResult;
         try {
-            String skey = userService.save(request);
-            return JSON.toJSONString(skey);
+            authResult = userService.save(request);
         } catch (Exception e) {
-            logger.error("用户保存失败！requeste=" + JSON.toJSONString(request));
+            logger.error("用户保存失败！request=" + JSON.toJSONString(request));
             logger.error(e.getMessage());
-            return null;
+            authResult = new AuthResult(false);
         }
+        return JSON.toJSONString(authResult);
     }
 
     @RequestMapping("/getUser")

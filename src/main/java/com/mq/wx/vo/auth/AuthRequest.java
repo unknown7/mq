@@ -22,6 +22,7 @@ public class AuthRequest extends DefaultRequest {
     private String iv;
 
     private String js_code;
+    private String scene;
 
     public String getCode() {
         return code;
@@ -69,5 +70,13 @@ public class AuthRequest extends DefaultRequest {
 
     public void setJs_code(String js_code) {
         this.js_code = js_code;
+    }
+
+    public String getScene() {
+        return scene;
+    }
+
+    public void setScene(String scene) {
+        this.scene = scene;
     }
 }
