@@ -1,6 +1,7 @@
 package com.mq.wx.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.mq.service.PaymentService;
 import com.mq.service.VideoService;
 import com.mq.vo.VideoVo;
 import com.mq.wx.vo.DefaultResponse;
@@ -23,6 +24,8 @@ public class WxVideoController {
     protected static final Logger logger = LoggerFactory.getLogger(WxVideoController.class);
     @Resource
     private VideoService videoService;
+    @Resource
+    private PaymentService paymentService;
 
     @RequestMapping("/getVideo")
     @ResponseBody
@@ -65,10 +68,10 @@ public class WxVideoController {
         try {
             String remoteAddr = request.getRemoteAddr();
             logger.info("用户：" + skey + "购买商品：" + videoId + "，请求统一下单，scene=" + scene);
-            UnifiedOrderVo unifiedOrderVo = videoService.purchase(skey, videoId, scene, remoteAddr);
+            UnifiedOrderVo unifiedOrderVo = paymentService.unifiedOrder(skey, videoId, scene, remoteAddr);
             response = DefaultResponse.success(unifiedOrderVo);
         } catch (Exception e) {
-            logger.error("支付失败，skey=" + skey, e);
+            logger.error("统一下单失败，skey=" + skey, e);
             response = DefaultResponse.fail("支付失败");
         }
         return JSON.toJSONString(response);

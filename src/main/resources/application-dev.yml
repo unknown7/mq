@@ -1,0 +1,76 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /mq
+
+spring:
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password:
+    timeout: 10000
+    maxIdle: 300
+    maxTotal: 1000
+    maxWaitMillis: 1000
+    minEvictableIdleTimeMillis: 300000
+    numTestsPerEvictionRun: 1024
+    timeBetweenEvictionRunsMillis: 30000
+    testOnBorrow: true
+    testWhileIdle: true
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+  servlet:
+    multipart:
+      max-file-size: 2048MB
+      max-request-size: 4096MB
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/mq?characterEncoding=UTF-8&serverTimezone=GMT&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    filters: stat
+    maxActive: 20
+    initialSize: 1
+    maxWait: 60000
+    minIdle: 1
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxOpenPreparedStatements: 20
+  profiles:
+    active: dev
+
+mybatis:
+  mapper-locations: classpath:mapping/*.xml
+  type-aliases-package: com.mq.model
+
+#pagehelper分页插件
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+  offset-as-page-num: true
+  row-bounds-with-count: true
+
+#mybatis log
+logging:
+  level:
+    com.mq: debug
+    com.mq.mapper: debug
+
+constants:
+  orders-limit-per-day: 1000000
+  app-id: wxadfd8d2448611af5
+  app-secret: 6f4c76bbe365216e5ec900415274b15d
+  mch-id: 1101101101
+  api-key: 11011011011011011011011011011011
+  notify-url: https://www.mqyoga.cn/mq/wx/paymentResult
+  trade-type: JSAPI
