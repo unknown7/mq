@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
@@ -18,24 +17,30 @@ import java.io.InputStreamReader;
 @RequestMapping("/wx")
 public class PaymentResultController {
     protected static final Logger logger = LoggerFactory.getLogger(PaymentResultController.class);
+    private static final String success = "<xml><return_code>SUCCESS</return_code><return_msg>OK</return_msg></xml>";
+    private static final String fail = "<xml><return_code>FAIL</return_code><return_msg>FAIL</return_msg></xml>";
+
     @Resource
     private PaymentService paymentService;
 
     @RequestMapping(value = "/paymentResult", method = RequestMethod.POST)
     @ResponseBody
-    public String paymentResult(HttpServletRequest request, HttpServletResponse response) {
+    public String paymentResult(HttpServletRequest request) {
+        String resp;
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
             String line;
             StringBuilder builder = new StringBuilder();
-            while((line = br.readLine())!=null) {
+            while ((line = br.readLine()) != null) {
                 builder.append(line);
             }
             logger.info("支付结果通知，接收xml报文：" + builder);
             paymentService.paymentResultNotice(builder.toString());
+            resp = success;
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("支付结果处理失败", e);
+            resp = fail;
         }
-        return null;
+        return resp;
     }
 }

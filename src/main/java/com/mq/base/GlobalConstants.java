@@ -49,7 +49,7 @@ public class GlobalConstants {
     public static Long ORDERS_LIMIT_PER_DAY;
     @Value("${constants.orders-limit-per-day}")
     public static void setOrdersLimitPerDay(String ordersLimitPerDay) {
-        APP_ID = ordersLimitPerDay;
+        ORDERS_LIMIT_PER_DAY = Long.valueOf(ordersLimitPerDay);
     }
 
     /**

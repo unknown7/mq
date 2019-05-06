@@ -31,6 +31,8 @@ public class PaymentServiceImpl implements PaymentService {
     @Resource
     private UserService userService;
     @Resource
+    private UserMapper userMapper;
+    @Resource
     private VideoMapper videoMapper;
     @Resource
     private OrderNoGenerator generator;
@@ -46,6 +48,8 @@ public class PaymentServiceImpl implements PaymentService {
     private WxAPI wxAPI;
     @Resource
     private PaymentResultMapper paymentResultMapper;
+    @Resource
+    private RewardPointsMapper rewardPointsMapper;
 
     @Override
     @Transactional
@@ -149,5 +153,30 @@ public class PaymentServiceImpl implements PaymentService {
         paymentResult.setTradeType(tradeType.getStringValue());
         paymentResult.setTransactionId(transactionId.getStringValue());
         paymentResultMapper.insertSelective(paymentResult);
+        if ("SUCCESS".equals(paymentResult.getReturnCode())) {
+            if ("SUCCESS".equals(paymentResult.getResultCode())) {
+                Order order = orderMapper.selectByOrderNo(paymentResult.getOutTradeNo());
+                order.setOrderStatus(GlobalConstants.OrderStatus.PAID.getKey());
+                orderMapper.updateByPrimaryKeySelective(order);
+                if (order.getReferrer() != null) {
+                    User user = userMapper.selectByPrimaryKey(order.getReferrer());
+                    ShareCard shareCard = shareCardMapper.selectOneByUserIdAndGoodsId(user.getId(), order.getGoodsId(), order.getGoodsType());
+                    BigDecimal goodsPrice = shareCard.getGoodsPrice();
+                    BigDecimal profitShare = shareCard.getProfitShare();
+                    BigDecimal points = goodsPrice.multiply(profitShare);
+                    RewardPoints rewardPoints = new RewardPoints();
+                    rewardPoints.setPoints(points);
+                    rewardPoints.setProfitFrom(order.getUserId());
+                    rewardPoints.setRewardId(shareCard.getId());
+                    rewardPoints.setRewardType(GlobalConstants.RewardType.SHARE.getKey());
+                    rewardPoints.setUserId(user.getId());
+                    Date now = new Date();
+                    rewardPoints.setCreateTime(now);
+                    rewardPoints.setUpdateTime(now);
+                    rewardPoints.setDelFlag(0);
+                    rewardPointsMapper.insertSelective(rewardPoints);
+                }
+            }
+        }
     }
 }
