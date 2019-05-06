@@ -1,23 +1,57 @@
 package com.mq.base;
 
+import org.springframework.beans.factory.annotation.Value;
+
 public class GlobalConstants {
+    /**
+     * 静态资源路径
+     */
     public static String IMAGE_PATH;
     public static String VIDEO_PATH;
-    public static final Long ORDERS_LIMIT_PER_DAY = 1000000L;
+
     /**
-     * 微信基本信息-魏峰
+     * 微信基本信息
      */
-//    public static final String APP_ID = "wxadfd8d2448611af5";
-//    public static final String APP_SECRET = "6f4c76bbe365216e5ec900415274b15d";
+    public static String APP_ID;
+    public static String APP_SECRET;
+    public static String MCH_ID;
+    public static String API_KEY;
+    public static String NOTIFY_URL;
+    public static String TRADE_TYPE;
+    @Value("${constants.app-id}")
+    public static void setAppId(String appId) {
+        APP_ID = appId;
+    }
+    @Value("${constants.app-secret}")
+    public static void setAppSecret(String appSecret) {
+        APP_SECRET = appSecret;
+    }
+    @Value("${constants.mch-id}")
+    public static void setMchId(String mchId) {
+        MCH_ID = mchId;
+    }
+    @Value("${constants.api-key}")
+    public static void setApiKey(String apiKey) {
+        API_KEY = apiKey;
+    }
+    @Value("${constants.notify-url}")
+    public static void setNotifyUrl(String notifyUrl) {
+        NOTIFY_URL = notifyUrl;
+    }
+    @Value("${constants.trade-type}")
+    public static void setTradeType(String tradeType) {
+        TRADE_TYPE = tradeType;
+    }
+
     /**
-     * 微信基本信息-木荃孕产
+     * 订单号生成器信息
      */
-    public static final String APP_ID = "wx153c1bb866bfece8";
-    public static final String APP_SECRET = "4688af737cf288429c8180d3db6ae21e";
-    public static final String MCH_ID = "1533502711";
-    public static final String API_KEY = "a02ec5baf0987e3857dd1980c5602252";
-    public static final String NOTIFY_URL = "https://www.mqyoga.cn/mq/wx/tradeResult";
-    public static final String TRADE_TYPE = "JSAPI";
+    public static Long ORDERS_LIMIT_PER_DAY;
+    @Value("${constants.orders-limit-per-day}")
+    public static void setOrdersLimitPerDay(String ordersLimitPerDay) {
+        APP_ID = ordersLimitPerDay;
+    }
+
     /**
      * 微信api类型
      */
@@ -33,8 +67,9 @@ public class GlobalConstants {
             return key;
         }
     }
+
     /**
-     * Redis
+     * Redis Key
      */
     public enum RedisKey {
         ACCESS_TOKEN_KEY("access_token"),
@@ -50,6 +85,7 @@ public class GlobalConstants {
             return key;
         }
     }
+
     /**
      * 视频状态
      */

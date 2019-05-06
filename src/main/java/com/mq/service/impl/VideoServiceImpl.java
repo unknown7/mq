@@ -4,19 +4,18 @@ import com.github.pagehelper.PageHelper;
 import com.google.common.collect.Maps;
 import com.mq.base.GlobalConstants;
 import com.mq.base.RedisObjectHolder;
-import com.mq.mapper.*;
-import com.mq.model.*;
-import com.mq.query.UserQuery;
+import com.mq.mapper.ShareCardMapper;
+import com.mq.mapper.VideoMapper;
+import com.mq.model.ShareCard;
+import com.mq.model.Video;
 import com.mq.query.VideoQuery;
-import com.mq.service.UserService;
 import com.mq.service.VideoService;
-import com.mq.util.*;
+import com.mq.util.FileUtil;
+import com.mq.util.PageUtil;
 import com.mq.vo.Page;
 import com.mq.vo.UserVo;
 import com.mq.vo.VideoVo;
 import com.mq.wx.base.WxAPI;
-import com.mq.wx.vo.unifiedOrder.UnifiedOrderVo;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -41,16 +40,6 @@ public class VideoServiceImpl implements VideoService {
     private RedisObjectHolder redisObjectHolder;
     @Resource
     private ShareCardMapper shareCardMapper;
-    @Resource
-    private UserService userService;
-    @Resource
-    private OrderNoGenerator generator;
-    @Resource
-    private OrderMapper orderMapper;
-    @Resource
-    private UnifiedOrderRequestMapper unifiedOrderRequestMapper;
-    @Resource
-    private UnifiedOrderResponseMapper unifiedOrderResponseMapper;
 
     @Override
     public Page<VideoVo> findPage(VideoQuery query) {
@@ -277,68 +266,5 @@ public class VideoServiceImpl implements VideoService {
             throw e;
         }
         return realName;
-    }
-
-    @Override
-    @Transactional
-    public UnifiedOrderVo purchase(String skey, Long videoId, String scene, String remoteAddr) throws Exception {
-        assert !StringUtils.isEmpty(skey);
-        assert videoId != null;
-        User user = userService.getBySkey(skey);
-        VideoVo videoVo = videoMapper.selectVoByPrimaryKey(Long.valueOf(videoId));
-        Date now = new Date();
-
-        Order order = new Order();
-        order.setOrderNo(generator.next());
-        order.setOrderStatus(GlobalConstants.OrderStatus.UNPAID.getKey());
-        order.setGoodsId(videoId);
-        order.setGoodsType(GlobalConstants.PurchaseType.VIDEO.getKey());
-        order.setGoodsPrice(videoVo.getPrice());
-        order.setUserId(user.getId());
-        order.setTotalAmount(videoVo.getPrice());
-        order.setWxAmount(videoVo.getPrice());
-        order.setAccountBalanceAmount(BigDecimal.ZERO);
-        if (!StringUtils.isEmpty(scene)) {
-            Map<String, Object> sceneMap = MapUtil.param2map(scene);
-            ShareCard shareCard = shareCardMapper.selectByPrimaryKey(Long.valueOf(sceneMap.get("shareCardId").toString()));
-            Long referrer = shareCard.getUserId();
-            order.setReferrer(referrer);
-        }
-        order.setCreateTime(now);
-        order.setUpdateTime(now);
-        order.setDelFlag(0);
-        orderMapper.insertSelective(order);
-
-        UnifiedOrderRequest request = new UnifiedOrderRequest();
-        request.setAppid(GlobalConstants.APP_ID);
-        request.setMchId(GlobalConstants.MCH_ID);
-        request.setNonceStr(MD5.generate(UUID.randomUUID().toString()));
-        request.setNotifyUrl(GlobalConstants.NOTIFY_URL);
-        request.setOutTradeNo(order.getOrderNo());
-        request.setTradeType(GlobalConstants.TRADE_TYPE);
-        request.setBody("木荃孕产-" + videoVo.getClassificationName() + "-" + videoVo.getTitle());
-        request.setOpenid(user.getOpenId());
-        request.setTotalFee(Integer.valueOf(videoVo.getPrice().multiply(new BigDecimal("100")).setScale(0, BigDecimal.ROUND_HALF_UP).toString()));
-        request.setSpbillCreateIp(remoteAddr);
-        unifiedOrderRequestMapper.insertSelective(request);
-
-        UnifiedOrderResponse unifiedOrderResponse = wxAPI.unifiedOrder(request);
-        unifiedOrderResponseMapper.insertSelective(unifiedOrderResponse);
-
-        Map<String, Object> signData = Maps.newLinkedHashMap();
-        signData.put("appId", GlobalConstants.APP_ID);
-        signData.put("nonceStr", MD5.generate(UUID.randomUUID().toString()));
-        signData.put("package", "prepay_id=" + unifiedOrderResponse.getPrepayId());
-        signData.put("signType", "MD5");
-        signData.put("timeStamp", System.currentTimeMillis() / 1000);
-        signData.put("key", GlobalConstants.API_KEY);
-        String paySign = MD5.generate(MapUtil.map2param(signData)).toUpperCase();
-        UnifiedOrderVo unifiedOrderVo = new UnifiedOrderVo();
-        unifiedOrderVo.setNonceStr(signData.get("nonceStr").toString());
-        unifiedOrderVo.set_package(signData.get("package").toString());
-        unifiedOrderVo.setPaySign(paySign);
-        unifiedOrderVo.setSignType(signData.get("signType").toString());
-        unifiedOrderVo.setTimeStamp(signData.get("timeStamp").toString());
-        return unifiedOrderVo;
     }
 }

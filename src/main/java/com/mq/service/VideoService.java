@@ -4,7 +4,6 @@ import com.mq.model.Video;
 import com.mq.query.VideoQuery;
 import com.mq.vo.Page;
 import com.mq.vo.VideoVo;
-import com.mq.wx.vo.unifiedOrder.UnifiedOrderVo;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -41,6 +40,4 @@ public interface VideoService {
     String generateMiniProgramCode(String videoId, String skey);
 
     String saveShareCard(MultipartFile file, String skey, String videoId) throws Exception;
-
-    UnifiedOrderVo purchase(String skey, Long videoId, String scene, String remoteAddr) throws Exception;
 }

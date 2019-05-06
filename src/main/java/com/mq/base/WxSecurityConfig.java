@@ -28,7 +28,7 @@ public class WxSecurityConfig implements WebMvcConfigurer {
         addInterceptor.excludePathPatterns("/wx/index/**")
                         .excludePathPatterns("/wx/auth")
                         .excludePathPatterns("/wx/saveUser")
-                        .excludePathPatterns("/wx/tradeResult")
+                        .excludePathPatterns("/wx/paymentResult")
                         .excludePathPatterns("/wx/video/getVideo")
                         .addPathPatterns("/wx/**");
     }
