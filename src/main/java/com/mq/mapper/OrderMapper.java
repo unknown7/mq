@@ -21,4 +21,6 @@ public interface OrderMapper {
     List<Order> selectByQuery(OrderQuery query);
 
     Long selectNums(OrderQuery query);
+
+    Order selectByOrderNo(String orderNo);
 }
