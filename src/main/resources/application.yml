@@ -1,0 +1,30 @@
+spring:
+  profiles:
+    active: dev
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+  servlet:
+    multipart:
+      max-file-size: 2048MB
+      max-request-size: 4096MB
+
+mybatis:
+  mapper-locations: classpath:mapping/*.xml
+  type-aliases-package: com.mq.model
+
+#pagehelper分页插件
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+  offset-as-page-num: true
+  row-bounds-with-count: true
+
+#mybatis log
+logging:
+  level:
+    com.mq: debug
+    com.mq.mapper: debug

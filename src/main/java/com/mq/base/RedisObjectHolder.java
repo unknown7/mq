@@ -18,7 +18,7 @@ public class RedisObjectHolder {
     public void setUserInfo(String skey, UserVo userVo) {
         assert userVo != null;
         stringRedisTemplate.opsForHash().put(
-                GlobalConstants.RedisKey.USER_INFO.getKey(),
+                Enums.RedisKey.USER_INFO.getKey(),
                 skey,
                 JSON.toJSONString(userVo)
         );
@@ -26,13 +26,13 @@ public class RedisObjectHolder {
 
     public void setUserInfo(Map<String, String> userVos) {
         if (userVos != null && !userVos.isEmpty()) {
-            stringRedisTemplate.opsForHash().putAll(GlobalConstants.RedisKey.USER_INFO.getKey(), userVos);
+            stringRedisTemplate.opsForHash().putAll(Enums.RedisKey.USER_INFO.getKey(), userVos);
         }
     }
 
     public UserVo getUserInfo(String skey) {
         UserVo userVo = null;
-        Object o = stringRedisTemplate.opsForHash().get(GlobalConstants.RedisKey.USER_INFO.getKey(), skey);
+        Object o = stringRedisTemplate.opsForHash().get(Enums.RedisKey.USER_INFO.getKey(), skey);
         if (o != null) {
             userVo = JSON.parseObject(o.toString(), UserVo.class);
         }
@@ -42,7 +42,7 @@ public class RedisObjectHolder {
     public void setAccessToken(String accessToken, Integer expiresIn) {
         assert !StringUtils.isEmpty(accessToken);
         stringRedisTemplate.opsForValue().set(
-                GlobalConstants.RedisKey.ACCESS_TOKEN_KEY.getKey(),
+                Enums.RedisKey.ACCESS_TOKEN_KEY.getKey(),
                 accessToken,
                 expiresIn,
                 TimeUnit.SECONDS
@@ -50,20 +50,20 @@ public class RedisObjectHolder {
     }
 
     public String getAccessToken() {
-        String accessToken = stringRedisTemplate.opsForValue().get(GlobalConstants.RedisKey.ACCESS_TOKEN_KEY.getKey());
+        String accessToken = stringRedisTemplate.opsForValue().get(Enums.RedisKey.ACCESS_TOKEN_KEY.getKey());
         return accessToken;
     }
 
     public void setTemporaryUser(String skey) {
         assert !StringUtils.isEmpty(skey);
-        stringRedisTemplate.opsForHash().put(GlobalConstants.RedisKey.TEMPORARY_USER.getKey(), skey, "");
+        stringRedisTemplate.opsForHash().put(Enums.RedisKey.TEMPORARY_USER.getKey(), skey, "");
     }
 
     public boolean isTemporaryUser(String skey) {
-        return stringRedisTemplate.opsForHash().hasKey(GlobalConstants.RedisKey.TEMPORARY_USER.getKey(), skey);
+        return stringRedisTemplate.opsForHash().hasKey(Enums.RedisKey.TEMPORARY_USER.getKey(), skey);
     }
 
     public void delTemporaryUser(String skey) {
-        stringRedisTemplate.opsForHash().delete(GlobalConstants.RedisKey.TEMPORARY_USER.getKey(), skey);
+        stringRedisTemplate.opsForHash().delete(Enums.RedisKey.TEMPORARY_USER.getKey(), skey);
     }
 }

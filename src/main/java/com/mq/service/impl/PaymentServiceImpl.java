@@ -1,6 +1,7 @@
 package com.mq.service.impl;
 
 import com.google.common.collect.Maps;
+import com.mq.base.Enums;
 import com.mq.base.GlobalConstants;
 import com.mq.mapper.*;
 import com.mq.model.*;
@@ -13,6 +14,7 @@ import com.mq.util.OrderNoGenerator;
 import com.mq.vo.VideoVo;
 import com.mq.wx.base.WxAPI;
 import com.mq.wx.vo.unifiedOrder.UnifiedOrderVo;
+import jdk.nashorn.internal.objects.Global;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
@@ -50,6 +52,8 @@ public class PaymentServiceImpl implements PaymentService {
     private PaymentResultMapper paymentResultMapper;
     @Resource
     private RewardPointsMapper rewardPointsMapper;
+    @Resource
+    private GlobalConstants globalConstants;
 
     @Override
     @Transactional
@@ -62,9 +66,9 @@ public class PaymentServiceImpl implements PaymentService {
 
         Order order = new Order();
         order.setOrderNo(generator.next());
-        order.setOrderStatus(GlobalConstants.OrderStatus.UNPAID.getKey());
+        order.setOrderStatus(Enums.OrderStatus.UNPAID.getKey());
         order.setGoodsId(videoId);
-        order.setGoodsType(GlobalConstants.PurchaseType.VIDEO.getKey());
+        order.setGoodsType(Enums.PurchaseType.VIDEO.getKey());
         order.setGoodsPrice(videoVo.getPrice());
         order.setUserId(user.getId());
         order.setTotalAmount(videoVo.getPrice());
@@ -82,12 +86,12 @@ public class PaymentServiceImpl implements PaymentService {
         orderMapper.insertSelective(order);
 
         UnifiedOrderRequest request = new UnifiedOrderRequest();
-        request.setAppid(GlobalConstants.APP_ID);
-        request.setMchId(GlobalConstants.MCH_ID);
+        request.setAppid(globalConstants.getAppId());
+        request.setMchId(globalConstants.getMchId());
         request.setNonceStr(MD5.generate(UUID.randomUUID().toString()));
-        request.setNotifyUrl(GlobalConstants.NOTIFY_URL);
+        request.setNotifyUrl(globalConstants.getNotifyUrl());
         request.setOutTradeNo(order.getOrderNo());
-        request.setTradeType(GlobalConstants.TRADE_TYPE);
+        request.setTradeType(globalConstants.getTradeType());
         request.setBody("木荃孕产-" + videoVo.getClassificationName() + "-" + videoVo.getTitle());
         request.setOpenid(user.getOpenId());
         request.setTotalFee(Integer.valueOf(videoVo.getPrice().multiply(new BigDecimal("100")).setScale(0, BigDecimal.ROUND_HALF_UP).toString()));
@@ -98,12 +102,12 @@ public class PaymentServiceImpl implements PaymentService {
         unifiedOrderResponseMapper.insertSelective(unifiedOrderResponse);
 
         Map<String, Object> signData = Maps.newLinkedHashMap();
-        signData.put("appId", GlobalConstants.APP_ID);
+        signData.put("appId", globalConstants.getAppId());
         signData.put("nonceStr", MD5.generate(UUID.randomUUID().toString()));
         signData.put("package", "prepay_id=" + unifiedOrderResponse.getPrepayId());
         signData.put("signType", "MD5");
         signData.put("timeStamp", System.currentTimeMillis() / 1000);
-        signData.put("key", GlobalConstants.API_KEY);
+        signData.put("key", globalConstants.getApiKey());
         String paySign = MD5.generate(MapUtil.map2param(signData)).toUpperCase();
         UnifiedOrderVo unifiedOrderVo = new UnifiedOrderVo();
         unifiedOrderVo.setNonceStr(signData.get("nonceStr").toString());
@@ -156,7 +160,7 @@ public class PaymentServiceImpl implements PaymentService {
         if ("SUCCESS".equals(paymentResult.getReturnCode())) {
             if ("SUCCESS".equals(paymentResult.getResultCode())) {
                 Order order = orderMapper.selectByOrderNo(paymentResult.getOutTradeNo());
-                order.setOrderStatus(GlobalConstants.OrderStatus.PAID.getKey());
+                order.setOrderStatus(Enums.OrderStatus.PAID.getKey());
                 orderMapper.updateByPrimaryKeySelective(order);
                 if (order.getReferrer() != null) {
                     User user = userMapper.selectByPrimaryKey(order.getReferrer());
@@ -168,7 +172,7 @@ public class PaymentServiceImpl implements PaymentService {
                     rewardPoints.setPoints(points);
                     rewardPoints.setProfitFrom(order.getUserId());
                     rewardPoints.setRewardId(shareCard.getId());
-                    rewardPoints.setRewardType(GlobalConstants.RewardType.SHARE.getKey());
+                    rewardPoints.setRewardType(Enums.RewardType.SHARE.getKey());
                     rewardPoints.setUserId(user.getId());
                     Date now = new Date();
                     rewardPoints.setCreateTime(now);

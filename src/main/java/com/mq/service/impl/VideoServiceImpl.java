@@ -2,6 +2,7 @@ package com.mq.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.google.common.collect.Maps;
+import com.mq.base.Enums;
 import com.mq.base.GlobalConstants;
 import com.mq.base.RedisObjectHolder;
 import com.mq.mapper.ShareCardMapper;
@@ -90,7 +91,7 @@ public class VideoServiceImpl implements VideoService {
         video.setClassification(Long.valueOf(classification));
         video.setPrice(new BigDecimal(price));
         if (StringUtils.isEmpty(id)) {
-            video.setStatus(GlobalConstants.VideoStatus.UN_UPLOADED.getKey());
+            video.setStatus(Enums.VideoStatus.UN_UPLOADED.getKey());
             video.setCreateTime(now);
             video.setUpdateTime(now);
             video.setDelFlag(0);
@@ -185,7 +186,7 @@ public class VideoServiceImpl implements VideoService {
     @Transactional
     public void shelve(Long id) {
         Video video = videoMapper.selectByPrimaryKey(id);
-        video.setStatus(GlobalConstants.VideoStatus.UN_RELEASED.getKey());
+        video.setStatus(Enums.VideoStatus.UN_RELEASED.getKey());
         video.setUpdateTime(new Date());
         videoMapper.updateByPrimaryKeySelective(video);
     }
@@ -194,7 +195,7 @@ public class VideoServiceImpl implements VideoService {
     @Transactional
     public void release(Long id) {
         Video video = videoMapper.selectByPrimaryKey(id);
-        video.setStatus(GlobalConstants.VideoStatus.RELEASED.getKey());
+        video.setStatus(Enums.VideoStatus.RELEASED.getKey());
         video.setUpdateTime(new Date());
         videoMapper.updateByPrimaryKeySelective(video);
     }
@@ -209,7 +210,7 @@ public class VideoServiceImpl implements VideoService {
         byPrimaryKey.setVideoName(videoName);
         byPrimaryKey.setVideoRealName(UUID.randomUUID().toString().concat(fileSuffix));
         byPrimaryKey.setUpdateTime(new Date());
-        byPrimaryKey.setStatus(GlobalConstants.VideoStatus.UN_RELEASED.getKey());
+        byPrimaryKey.setStatus(Enums.VideoStatus.UN_RELEASED.getKey());
         videoMapper.updateByPrimaryKeySelective(byPrimaryKey);
         FileUtil.persistFile(video, byPrimaryKey.getVideoRealName(), GlobalConstants.VIDEO_PATH);
     }
@@ -218,7 +219,7 @@ public class VideoServiceImpl implements VideoService {
     public List<VideoVo> findReleases() {
         VideoQuery query = new VideoQuery();
         query.setDelFlag(0);
-        query.setStatus(GlobalConstants.VideoStatus.RELEASED.getKey());
+        query.setStatus(Enums.VideoStatus.RELEASED.getKey());
         query.setOrderBy("classification");
         List<VideoVo> videoVos = videoMapper.selectByQuery(query);
         return videoVos;
@@ -234,7 +235,7 @@ public class VideoServiceImpl implements VideoService {
             Date now = new Date();
             ShareCard shareCard = new ShareCard();
             shareCard.setGoodsId(videoVo.getId());
-            shareCard.setGoodsType(GlobalConstants.PurchaseType.VIDEO.getKey());
+            shareCard.setGoodsType(Enums.PurchaseType.VIDEO.getKey());
             shareCard.setGoodsPrice(videoVo.getPrice());
             shareCard.setProfitShare(videoVo.getProfitShare());
             shareCard.setSkey(skey);
@@ -255,7 +256,7 @@ public class VideoServiceImpl implements VideoService {
     @Transactional
     public String saveShareCard(MultipartFile file, String skey, String videoId) throws Exception {
         UserVo userVo = redisObjectHolder.getUserInfo(skey);
-        ShareCard shareCard = shareCardMapper.selectOneByUserIdAndGoodsId(userVo.getId(), Long.valueOf(videoId), GlobalConstants.PurchaseType.VIDEO.getKey());
+        ShareCard shareCard = shareCardMapper.selectOneByUserIdAndGoodsId(userVo.getId(), Long.valueOf(videoId), Enums.PurchaseType.VIDEO.getKey());
         String realName = UUID.randomUUID().toString().concat(".png");
         try {
             FileUtil.persistFile(file, realName, GlobalConstants.IMAGE_PATH);

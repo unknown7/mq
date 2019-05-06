@@ -2,6 +2,7 @@ package com.mq.wx.base;
 
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Maps;
+import com.mq.base.Enums;
 import com.mq.base.GlobalConstants;
 import com.mq.base.Http;
 import com.mq.base.RedisObjectHolder;
@@ -11,6 +12,7 @@ import com.mq.util.MD5;
 import com.mq.util.MapUtil;
 import com.mq.wx.vo.accessToken.AccessTokenResponse;
 import com.mq.wx.vo.auth.AuthResponse;
+import jdk.nashorn.internal.objects.Global;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
@@ -42,6 +44,8 @@ public class WxAPI {
     private Http http;
     @javax.annotation.Resource
     private RedisObjectHolder redisObjectHolder;
+    @javax.annotation.Resource
+    private GlobalConstants globalConstants;
 
     /**
      * 获取access_token，如果缓存中存在，直接返回，如果不存在，调用微信接口，获取token并存入缓存
@@ -53,9 +57,9 @@ public class WxAPI {
         if (StringUtils.isEmpty(accessToken)) {
             String domain = "https://api.weixin.qq.com/cgi-bin/token";
             Map<String, Object> params = Maps.newHashMap();
-            params.put("appid", GlobalConstants.APP_ID);
-            params.put("secret", GlobalConstants.APP_SECRET);
-            params.put("grant_type", GlobalConstants.GrantType.CLIENT_CREDENTIAL.getKey());
+            params.put("appid", globalConstants.getAppId());
+            params.put("secret", globalConstants.getAppSecret());
+            params.put("grant_type", Enums.GrantType.CLIENT_CREDENTIAL.getKey());
             ResponseEntity<String> responseEntity = http.getForEntity(domain, params, String.class);
             String result = responseEntity.getBody();
             if (!StringUtils.isEmpty(result)) {
@@ -120,9 +124,9 @@ public class WxAPI {
     public AuthResponse jscode2session(String code) {
         String domain = "https://api.weixin.qq.com/sns/jscode2session";
         Map<String, Object> params = Maps.newHashMap();
-        params.put("appid", GlobalConstants.APP_ID);
-        params.put("secret", GlobalConstants.APP_SECRET);
-        params.put("grant_type", GlobalConstants.GrantType.AUTHORIZATION_CODE.getKey());
+        params.put("appid", globalConstants.getAppId());
+        params.put("secret", globalConstants.getAppSecret());
+        params.put("grant_type", Enums.GrantType.AUTHORIZATION_CODE.getKey());
         params.put("js_code", code);
         ResponseEntity<String> responseEntity = http.getForEntity(domain, params, String.class);
         AuthResponse authResponse = JSONObject.parseObject(responseEntity.getBody(), AuthResponse.class);
@@ -204,7 +208,7 @@ public class WxAPI {
         signData.put("spbill_create_ip", spbill_create_ip.getStringValue());
         signData.put("total_fee", total_fee.getStringValue());
         signData.put("trade_type", trade_type.getStringValue());
-        signData.put("key", GlobalConstants.API_KEY);
+        signData.put("key", globalConstants.getApiKey());
         String signStr = MD5.generate(MapUtil.map2param(signData)).toUpperCase();
         sign.setText(signStr);
         OutputFormat format = OutputFormat.createCompactFormat();

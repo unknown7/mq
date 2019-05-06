@@ -18,6 +18,8 @@ public class RewardPointsQuery {
 
     private Long profitFrom;
 
+    private String pointsStatus;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -80,6 +82,14 @@ public class RewardPointsQuery {
 
     public void setProfitFrom(Long profitFrom) {
         this.profitFrom = profitFrom;
+    }
+
+    public String getPointsStatus() {
+        return pointsStatus;
+    }
+
+    public void setPointsStatus(String pointsStatus) {
+        this.pointsStatus = pointsStatus;
     }
 
     public Date getCreateTime() {

@@ -16,6 +16,8 @@ public class RewardPoints {
 
     private Long profitFrom;
 
+    private String pointsStatus;
+
     private Date createTime;
 
     private Date updateTime;
@@ -68,6 +70,14 @@ public class RewardPoints {
 
     public void setProfitFrom(Long profitFrom) {
         this.profitFrom = profitFrom;
+    }
+
+    public String getPointsStatus() {
+        return pointsStatus;
+    }
+
+    public void setPointsStatus(String pointsStatus) {
+        this.pointsStatus = pointsStatus == null ? null : pointsStatus.trim();
     }
 
     public Date getCreateTime() {
