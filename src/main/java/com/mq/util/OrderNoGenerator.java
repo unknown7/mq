@@ -1,5 +1,6 @@
 package com.mq.util;
 
+import com.mq.base.Enums;
 import com.mq.base.GlobalConstants;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
@@ -14,10 +15,12 @@ public class OrderNoGenerator {
     private static final Object ORDER_NO_LOCK = "orderNoLock";
     @Resource
     private StringRedisTemplate stringRedisTemplate;
+    @Resource
+    private GlobalConstants globalConstants;
 
     public String next() {
         synchronized (ORDER_NO_LOCK) {
-            String key = GlobalConstants.RedisKey.ORDER_NUM_TODAY.getKey();
+            String key = Enums.RedisKey.ORDER_NUM_TODAY.getKey();
             String num = stringRedisTemplate.opsForValue().get(key);
             long incr;
             if (!StringUtils.isEmpty(num)) {
@@ -31,7 +34,7 @@ public class OrderNoGenerator {
             String curr = DateUtil.dateToString(new Date(), "yyyyMMddHHmmss");
             builder.append(curr);
             long t = (incr << 1) + (incr << 3);
-            long m = GlobalConstants.ORDERS_LIMIT_PER_DAY;
+            long m = globalConstants.getOrdersLimitPerDay();
             while (t < m) {
                 t = (t << 1) + (t << 3);
                 builder.append("0");
