@@ -118,7 +118,7 @@ public class PaymentServiceImpl implements PaymentService {
          */
         if (whetherUsePoints) {
             Map<String, String> params = Maps.newHashMap();
-            params.put("points_query_time", DateUtil.dateToString(now, "yyyyMMddHHmmss"));
+            params.put("unifiedOrderTime", DateUtil.dateToString(now, "yyyyMMddHHmmss"));
             request.setAttach(JSON.toJSONString(params));
         }
         unifiedOrderRequestMapper.insertSelective(request);
@@ -159,8 +159,10 @@ public class PaymentServiceImpl implements PaymentService {
                 signData.put(next.getName(), next.getStringValue());
             }
         }
+        String s = MapUtil.map2param(signData);
+        s = s + "&key=" + globalConstants.getApiKey();
         Element sign = root.element("sign");
-        Assert.isTrue(MD5.generate(MapUtil.map2param(signData)).toUpperCase().equals(sign.getStringValue()), "验签失败");
+        Assert.isTrue(MD5.generate(s).toUpperCase().equals(sign.getStringValue()), "验签失败");
 
         Element appid = root.element("appid");
         Element attach = root.element("attach");
@@ -180,7 +182,7 @@ public class PaymentServiceImpl implements PaymentService {
         Element transactionId = root.element("transaction_id");
         PaymentResult paymentResult = new PaymentResult();
         paymentResult.setAppid(appid.getStringValue());
-        paymentResult.setAttach(attach.getStringValue());
+        paymentResult.setAttach(attach != null ? attach.getStringValue() : null);
         paymentResult.setBankType(bankType.getStringValue());
         paymentResult.setCashFee(Integer.valueOf(cashFee.getStringValue()));
         paymentResult.setFeeType(feeType.getStringValue());
@@ -232,7 +234,8 @@ public class PaymentServiceImpl implements PaymentService {
                          * 扣取积分
                          */
                         if (!StringUtils.isEmpty(paymentResult.getAttach())) {
-                            String unifiedOrderTimeStr = JSON.parseObject(paymentResult.getAttach(), String.class);
+                            Map<String, String> attachMap = JSON.parseObject(paymentResult.getAttach(), Map.class);
+                            String unifiedOrderTimeStr = attachMap.get("unifiedOrderTime");
                             Date unifiedOrderTime = DateUtil.stringToDate(unifiedOrderTimeStr, "yyyyMMddHHmmss");
                             List<Long> ids = rewardPointsMapper.getUnusedPointsBefore(order.getUserId(), unifiedOrderTime);
                             rewardPointsMapper.batchUpdateStatus(ids, Enums.PointsStatus.USED.getKey());
@@ -259,13 +262,13 @@ public class PaymentServiceImpl implements PaymentService {
                                       BigDecimal price,
                                       BigDecimal originPrice)
     {
-        Assert.isTrue(videoVo.getPrice().equals(originPrice), "price");
+        Assert.isTrue(videoVo.getPrice().equals(originPrice), "invalid_param_price");
         if (whetherUsePoints) {
-            Assert.isTrue(usedPoints.equals(points), "points");
-            Assert.isTrue(originPrice.subtract(usedPoints).equals(price), "price");
-            Assert.isTrue(videoVo.getPrice().subtract(points).equals(price), "price");
+            Assert.isTrue(usedPoints.equals(points), "invalid_param_points");
+            Assert.isTrue(originPrice.subtract(usedPoints).equals(price), "invalid_param_price");
+            Assert.isTrue(videoVo.getPrice().subtract(points).equals(price), "invalid_param_price");
         } else {
-            Assert.isTrue(videoVo.getPrice().equals(price), "price");
+            Assert.isTrue(videoVo.getPrice().equals(price), "invalid_param_price");
         }
     }
 }

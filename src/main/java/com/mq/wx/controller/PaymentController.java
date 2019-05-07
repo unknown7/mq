@@ -9,21 +9,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.math.BigDecimal;
 
 @Controller
 @RequestMapping("/wx/payment")
 public class PaymentController {
     protected static final Logger logger = LoggerFactory.getLogger(PaymentController.class);
-    private static final String success = "<xml><return_code>SUCCESS</return_code><return_msg>OK</return_msg></xml>";
-    private static final String fail = "<xml><return_code>FAIL</return_code><return_msg>FAIL</return_msg></xml>";
     @Resource
     private PaymentService paymentService;
     @Resource
@@ -58,6 +53,9 @@ public class PaymentController {
         } catch (Exception e) {
             logger.error("统一下单失败，skey=" + skey, e);
             response = DefaultResponse.fail("支付失败");
+            if ("invalid_param_points".equals(e.getMessage()) || "invalid_param_price".equals(e.getMessage())) {
+                response = DefaultResponse.create(false, e.getMessage());
+            }
         }
         return JSON.toJSONString(response);
     }
@@ -68,26 +66,5 @@ public class PaymentController {
         BigDecimal points = rewardPointsService.getPoints(skey);
         logger.info("用户：" + skey + "，积分：" + points);
         return JSON.toJSONString(points);
-    }
-
-    @RequestMapping(value = "/notify", method = RequestMethod.POST)
-    @ResponseBody
-    public String paymentResult(HttpServletRequest request) {
-        String resp;
-        try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
-            String line;
-            StringBuilder builder = new StringBuilder();
-            while ((line = br.readLine()) != null) {
-                builder.append(line);
-            }
-            logger.info("支付结果通知，接收xml报文：" + builder);
-            paymentService.paymentResultNotice(builder.toString());
-            resp = success;
-        } catch (Exception e) {
-            logger.error("支付结果处理失败", e);
-            resp = fail;
-        }
-        return resp;
     }
 }
