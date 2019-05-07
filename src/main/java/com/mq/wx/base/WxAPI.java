@@ -149,6 +149,13 @@ public class WxAPI {
         Element appid = xml.addElement("appid");
         appid.setText(request.getAppid());
         /**
+         * attach
+         */
+        if (!StringUtils.isEmpty(request.getAttach())) {
+            Element attach = xml.addElement("attach");
+            attach.setText(request.getAttach());
+        }
+        /**
          * mch_id
          */
         Element mch_id = xml.addElement("mch_id");
@@ -199,6 +206,9 @@ public class WxAPI {
         Element sign = xml.addElement("sign");
         Map<String, Object> signData = Maps.newLinkedHashMap();
         signData.put("appid", appid.getStringValue());
+        if (!StringUtils.isEmpty(request.getAttach())) {
+            signData.put("attach", request.getAttach());
+        }
         signData.put("body", body.getStringValue());
         signData.put("mch_id", mch_id.getStringValue());
         signData.put("nonce_str", nonce_str.getStringValue());

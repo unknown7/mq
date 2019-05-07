@@ -13,10 +13,11 @@
     <result column="spbill_create_ip" property="spbillCreateIp" jdbcType="VARCHAR" />
     <result column="total_fee" property="totalFee" jdbcType="INTEGER" />
     <result column="trade_type" property="tradeType" jdbcType="VARCHAR" />
+    <result column="attach" property="attach" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, appid, body, mch_id, nonce_str, notify_url, openid, out_trade_no, spbill_create_ip, 
-    total_fee, trade_type
+    total_fee, trade_type, attach
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -32,11 +33,11 @@
     insert into t_unified_order_request (id, appid, body, 
       mch_id, nonce_str, notify_url, 
       openid, out_trade_no, spbill_create_ip, 
-      total_fee, trade_type)
+      total_fee, trade_type, attach)
     values (#{id,jdbcType=BIGINT}, #{appid,jdbcType=VARCHAR}, #{body,jdbcType=VARCHAR}, 
       #{mchId,jdbcType=VARCHAR}, #{nonceStr,jdbcType=VARCHAR}, #{notifyUrl,jdbcType=VARCHAR}, 
       #{openid,jdbcType=VARCHAR}, #{outTradeNo,jdbcType=VARCHAR}, #{spbillCreateIp,jdbcType=VARCHAR}, 
-      #{totalFee,jdbcType=INTEGER}, #{tradeType,jdbcType=VARCHAR})
+      #{totalFee,jdbcType=INTEGER}, #{tradeType,jdbcType=VARCHAR}, #{attach,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.mq.model.UnifiedOrderRequest" >
     <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
@@ -77,6 +78,9 @@
       <if test="tradeType != null" >
         trade_type,
       </if>
+      <if test="attach != null" >
+        attach,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -111,6 +115,9 @@
       </if>
       <if test="tradeType != null" >
         #{tradeType,jdbcType=VARCHAR},
+      </if>
+      <if test="attach != null" >
+        #{attach,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -147,6 +154,9 @@
       <if test="tradeType != null" >
         trade_type = #{tradeType,jdbcType=VARCHAR},
       </if>
+      <if test="attach != null" >
+        attach = #{attach,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -161,7 +171,8 @@
       out_trade_no = #{outTradeNo,jdbcType=VARCHAR},
       spbill_create_ip = #{spbillCreateIp,jdbcType=VARCHAR},
       total_fee = #{totalFee,jdbcType=INTEGER},
-      trade_type = #{tradeType,jdbcType=VARCHAR}
+      trade_type = #{tradeType,jdbcType=VARCHAR},
+      attach = #{attach,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

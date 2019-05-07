@@ -23,6 +23,8 @@ public class UnifiedOrderRequest {
 
     private String tradeType;
 
+    private String attach;
+
     public Long getId() {
         return id;
     }
@@ -109,5 +111,13 @@ public class UnifiedOrderRequest {
 
     public void setTradeType(String tradeType) {
         this.tradeType = tradeType == null ? null : tradeType.trim();
+    }
+
+    public String getAttach() {
+        return attach;
+    }
+
+    public void setAttach(String attach) {
+        this.attach = attach;
     }
 }

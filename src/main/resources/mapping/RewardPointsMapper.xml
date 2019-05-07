@@ -241,4 +241,22 @@
     and del_flag = 0
     and points_status = '006001'
   </select>
+
+  <select id="getUnusedPointsBefore" resultType="java.util.List">
+    select id from t_reward_points
+    where
+    user_id = #{userId,jdbcType=BIGINT}
+    and del_flag = 0
+    and points_status = '006001'
+    and create_time &lt;= #{unifiedOrderTime,jdbcType=TIMESTAMP}
+  </select>
+
+  <update id="batchUpdateStatus" >
+    update t_reward_points
+    set points_status = #{status,jdbcType=VARCHAR}
+    where id in
+    <foreach collection="list" item="id" index="index" open="(" close=")" separator=",">
+      #{id}
+    </foreach>
+  </update>
 </mapper>
