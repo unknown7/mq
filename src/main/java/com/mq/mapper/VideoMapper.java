@@ -26,4 +26,6 @@ public interface VideoMapper {
     VideoVo selectVoByPrimaryKey(Long id);
 
     VideoVo selectOneVoWithAuth(Long videoId, Long userId);
+
+    List<VideoVo> findPurchases(Long userId);
 }

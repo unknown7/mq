@@ -5,11 +5,11 @@ import com.google.common.collect.Maps;
 import java.util.Map;
 
 public class MapUtil {
-    public static String map2param(Map<String, Object> params) {
-        return map2param(params, "&");
+    public static String map2str(Map<String, Object> params) {
+        return map2str(params, "&");
     }
 
-    public static String map2param(Map<String, Object> params, String delimiter) {
+    public static String map2str(Map<String, Object> params, String delimiter) {
         String result = "";
         if (params != null && !params.isEmpty()) {
             StringBuffer buffer = new StringBuffer();
@@ -25,11 +25,11 @@ public class MapUtil {
         return result;
     }
 
-    public static Map<String, Object> param2map(String params) {
-        return param2map(params, "&");
+    public static Map<String, Object> str2map(String params) {
+        return str2map(params, "&");
     }
 
-    public static Map<String, Object> param2map(String params, String delimiter) {
+    public static Map<String, Object> str2map(String params, String delimiter) {
         Map<String, Object> result = Maps.newHashMap();
         String[] split = params.split(delimiter);
         for (String s : split) {

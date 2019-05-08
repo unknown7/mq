@@ -22,8 +22,8 @@ public class Http {
         if (params != null && !params.isEmpty()) {
             buff.append("?");
         }
-        String map2param = MapUtil.map2param(params);
-        buff.append(map2param);
+        String map2str = MapUtil.map2str(params);
+        buff.append(map2str);
         URI uri = URI.create(buff.toString());
         ResponseEntity<T> responseEntity = restTemplate.getForEntity(uri, entityType);
         return responseEntity;

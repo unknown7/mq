@@ -86,7 +86,7 @@ public class WxAPI {
         domain.append("?access_token=").append(accessToken);
         Map<String, Object> params = Maps.newHashMap();
 //        params.put("page", page);
-        params.put("scene", MapUtil.map2param(scene));
+        params.put("scene", MapUtil.map2str(scene));
         params.put("is_hyaline", true);
         ResponseEntity<Resource> responseEntity = http.postForEntity(domain.toString(), params, Resource.class, MediaType.APPLICATION_JSON_UTF8);
         MediaType contentType = responseEntity.getHeaders().getContentType();
@@ -219,7 +219,7 @@ public class WxAPI {
         signData.put("total_fee", total_fee.getStringValue());
         signData.put("trade_type", trade_type.getStringValue());
         signData.put("key", globalConstants.getApiKey());
-        String signStr = MD5.generate(MapUtil.map2param(signData)).toUpperCase();
+        String signStr = MD5.generate(MapUtil.map2str(signData)).toUpperCase();
         sign.setText(signStr);
         OutputFormat format = OutputFormat.createCompactFormat();
         StringWriter requestString = new StringWriter();

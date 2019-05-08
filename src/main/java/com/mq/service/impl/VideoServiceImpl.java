@@ -268,4 +268,11 @@ public class VideoServiceImpl implements VideoService {
         }
         return realName;
     }
+
+    @Override
+    public List<VideoVo> findPurchases(String skey) {
+        UserVo userVo = redisObjectHolder.getUserInfo(skey);
+        List<VideoVo> purchases = videoMapper.findPurchases(userVo.getId());
+        return purchases;
+    }
 }
