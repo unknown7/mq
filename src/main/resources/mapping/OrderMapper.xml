@@ -10,7 +10,7 @@
     <result column="goods_price" property="goodsPrice" jdbcType="DECIMAL" />
     <result column="user_id" property="userId" jdbcType="BIGINT" />
     <result column="total_amount" property="totalAmount" jdbcType="DECIMAL" />
-    <result column="account_balance_amount" property="accountBalanceAmount" jdbcType="DECIMAL" />
+    <result column="points" property="points" jdbcType="DECIMAL" />
     <result column="wx_amount" property="wxAmount" jdbcType="DECIMAL" />
     <result column="referrer" property="referrer" jdbcType="BIGINT" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
@@ -19,7 +19,7 @@
   </resultMap>
   <sql id="Base_Column_List" >
     id, order_no, order_status, goods_id, goods_type, goods_price, user_id, total_amount, 
-    account_balance_amount, wx_amount, referrer, create_time, update_time, del_flag
+    points, wx_amount, referrer, create_time, update_time, del_flag
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -34,12 +34,12 @@
   <insert id="insert" parameterType="com.mq.model.Order" >
     insert into t_order (id, order_no, order_status, 
       goods_id, goods_type, goods_price, 
-      user_id, total_amount, account_balance_amount, 
+      user_id, total_amount, points,
       wx_amount, referrer, create_time, 
       update_time, del_flag)
     values (#{id,jdbcType=BIGINT}, #{orderNo,jdbcType=VARCHAR}, #{orderStatus,jdbcType=VARCHAR}, 
       #{goodsId,jdbcType=BIGINT}, #{goodsType,jdbcType=VARCHAR}, #{goodsPrice,jdbcType=DECIMAL}, 
-      #{userId,jdbcType=BIGINT}, #{totalAmount,jdbcType=DECIMAL}, #{accountBalanceAmount,jdbcType=DECIMAL}, 
+      #{userId,jdbcType=BIGINT}, #{totalAmount,jdbcType=DECIMAL}, #{points,jdbcType=DECIMAL},
       #{wxAmount,jdbcType=DECIMAL}, #{referrer,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, 
       #{updateTime,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=INTEGER})
   </insert>
@@ -73,8 +73,8 @@
       <if test="totalAmount != null" >
         total_amount,
       </if>
-      <if test="accountBalanceAmount != null" >
-        account_balance_amount,
+      <if test="points != null" >
+        points,
       </if>
       <if test="wxAmount != null" >
         wx_amount,
@@ -117,8 +117,8 @@
       <if test="totalAmount != null" >
         #{totalAmount,jdbcType=DECIMAL},
       </if>
-      <if test="accountBalanceAmount != null" >
-        #{accountBalanceAmount,jdbcType=DECIMAL},
+      <if test="points != null" >
+        #{points,jdbcType=DECIMAL},
       </if>
       <if test="wxAmount != null" >
         #{wxAmount,jdbcType=DECIMAL},
@@ -161,8 +161,8 @@
       <if test="totalAmount != null" >
         total_amount = #{totalAmount,jdbcType=DECIMAL},
       </if>
-      <if test="accountBalanceAmount != null" >
-        account_balance_amount = #{accountBalanceAmount,jdbcType=DECIMAL},
+      <if test="points != null" >
+        points = #{points,jdbcType=DECIMAL},
       </if>
       <if test="wxAmount != null" >
         wx_amount = #{wxAmount,jdbcType=DECIMAL},
@@ -191,7 +191,7 @@
       goods_price = #{goodsPrice,jdbcType=DECIMAL},
       user_id = #{userId,jdbcType=BIGINT},
       total_amount = #{totalAmount,jdbcType=DECIMAL},
-      account_balance_amount = #{accountBalanceAmount,jdbcType=DECIMAL},
+      points = #{points,jdbcType=DECIMAL},
       wx_amount = #{wxAmount,jdbcType=DECIMAL},
       referrer = #{referrer,jdbcType=BIGINT},
       create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -225,8 +225,8 @@
     <if test="totalAmount != null" >
       and total_amount = #{totalAmount,jdbcType=DECIMAL}
     </if>
-    <if test="accountBalanceAmount != null" >
-      and account_balance_amount = #{accountBalanceAmount,jdbcType=DECIMAL}
+    <if test="points != null" >
+      and points = #{points,jdbcType=DECIMAL}
     </if>
     <if test="wxAmount != null" >
       and wx_amount = #{wxAmount,jdbcType=DECIMAL}
@@ -278,8 +278,8 @@
     <if test="totalAmount != null" >
       and total_amount = #{totalAmount,jdbcType=DECIMAL}
     </if>
-    <if test="accountBalanceAmount != null" >
-      and account_balance_amount = #{accountBalanceAmount,jdbcType=DECIMAL}
+    <if test="points != null" >
+      and points = #{points,jdbcType=DECIMAL}
     </if>
     <if test="wxAmount != null" >
       and wx_amount = #{wxAmount,jdbcType=DECIMAL}

@@ -83,16 +83,18 @@ public class PaymentServiceImpl implements PaymentService {
          * 是否使用积分抵扣
          */
         if (whetherUsePoints) {
-            order.setGoodsPrice(videoVo.getPrice().subtract(points));
+            order.setTotalAmount(videoVo.getPrice());
+            order.setWxAmount(videoVo.getPrice().subtract(points));
+            order.setPoints(points);
         } else {
-            order.setGoodsPrice(videoVo.getPrice());
+            order.setTotalAmount(videoVo.getPrice());
+            order.setWxAmount(videoVo.getPrice());
+            order.setPoints(BigDecimal.ZERO);
         }
+        order.setGoodsPrice(videoVo.getPrice());
         order.setUserId(user.getId());
-        order.setTotalAmount(videoVo.getPrice());
-        order.setWxAmount(videoVo.getPrice());
-        order.setAccountBalanceAmount(BigDecimal.ZERO);
         if (!StringUtils.isEmpty(scene)) {
-            Map<String, Object> sceneMap = MapUtil.param2map(scene);
+            Map<String, Object> sceneMap = MapUtil.str2map(scene);
             ShareCard shareCard = shareCardMapper.selectByPrimaryKey(Long.valueOf(sceneMap.get("shareCardId").toString()));
             Long referrer = shareCard.getUserId();
             order.setReferrer(referrer);
@@ -111,7 +113,7 @@ public class PaymentServiceImpl implements PaymentService {
         request.setTradeType(globalConstants.getTradeType());
         request.setBody("木荃瑜伽-" + videoVo.getClassificationName() + "-" + videoVo.getTitle());
         request.setOpenid(user.getOpenId());
-        request.setTotalFee(Integer.valueOf(order.getGoodsPrice().multiply(new BigDecimal("100")).setScale(0, BigDecimal.ROUND_HALF_UP).toString()));
+        request.setTotalFee(Integer.valueOf(order.getWxAmount().multiply(new BigDecimal("100")).setScale(0, BigDecimal.ROUND_HALF_UP).toString()));
         request.setSpbillCreateIp(remoteAddr);
         /**
          * 是否使用积分抵扣
@@ -133,7 +135,7 @@ public class PaymentServiceImpl implements PaymentService {
         signData.put("signType", "MD5");
         signData.put("timeStamp", System.currentTimeMillis() / 1000);
         signData.put("key", globalConstants.getApiKey());
-        String paySign = MD5.generate(MapUtil.map2param(signData)).toUpperCase();
+        String paySign = MD5.generate(MapUtil.map2str(signData)).toUpperCase();
         UnifiedOrderVo unifiedOrderVo = new UnifiedOrderVo();
         unifiedOrderVo.setNonceStr(signData.get("nonceStr").toString());
         unifiedOrderVo.set_package(signData.get("package").toString());
@@ -159,7 +161,7 @@ public class PaymentServiceImpl implements PaymentService {
                 signData.put(next.getName(), next.getStringValue());
             }
         }
-        String s = MapUtil.map2param(signData);
+        String s = MapUtil.map2str(signData);
         s = s + "&key=" + globalConstants.getApiKey();
         Element sign = root.element("sign");
         Assert.isTrue(MD5.generate(s).toUpperCase().equals(sign.getStringValue()), "验签失败");
@@ -208,6 +210,7 @@ public class PaymentServiceImpl implements PaymentService {
                     Order order = orderMapper.selectByOrderNo(paymentResult.getOutTradeNo());
                     if (Enums.OrderStatus.UNPAID.getKey().equals(order.getOrderStatus())) {
                         order.setOrderStatus(Enums.OrderStatus.PAID.getKey());
+                        order.setUpdateTime(new Date());
                         orderMapper.updateByPrimaryKeySelective(order);
                         /**
                          * 推荐人奖励
@@ -220,6 +223,7 @@ public class PaymentServiceImpl implements PaymentService {
                             BigDecimal points = goodsPrice.multiply(profitShare);
                             RewardPoints rewardPoints = new RewardPoints();
                             rewardPoints.setPoints(points);
+                            rewardPoints.setPointsStatus(Enums.PointsStatus.UNUSED.getKey());
                             rewardPoints.setProfitFrom(order.getUserId());
                             rewardPoints.setRewardId(shareCard.getId());
                             rewardPoints.setRewardType(Enums.RewardType.SHARE.getKey());
@@ -262,13 +266,13 @@ public class PaymentServiceImpl implements PaymentService {
                                       BigDecimal price,
                                       BigDecimal originPrice)
     {
-        Assert.isTrue(videoVo.getPrice().equals(originPrice), "invalid_param_price");
+        Assert.isTrue(videoVo.getPrice().compareTo(originPrice) == 0, "invalid_param_price");
         if (whetherUsePoints) {
-            Assert.isTrue(usedPoints.equals(points), "invalid_param_points");
-            Assert.isTrue(originPrice.subtract(usedPoints).equals(price), "invalid_param_price");
-            Assert.isTrue(videoVo.getPrice().subtract(points).equals(price), "invalid_param_price");
+            Assert.isTrue(usedPoints.compareTo(points) == 0, "invalid_param_points");
+            Assert.isTrue(originPrice.subtract(usedPoints).compareTo(price) == 0, "invalid_param_price");
+            Assert.isTrue(videoVo.getPrice().subtract(points).compareTo(price) == 0, "invalid_param_price");
         } else {
-            Assert.isTrue(videoVo.getPrice().equals(price), "invalid_param_price");
+            Assert.isTrue(videoVo.getPrice().compareTo(price) == 0, "invalid_param_price");
         }
     }
 }

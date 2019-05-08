@@ -444,4 +444,25 @@
     </if>
     where v.id = #{videoId,jdbcType=BIGINT}
   </select>
+
+  <select id="findPurchases" resultMap="VoResultMap">
+    select
+      v.id, v.title, v.subtitle, v.price, v.cover_real_name, v.description_real_name, v.video_real_name,
+      v.create_time, v.update_time, v.del_flag, v.classification, v.profit_share, v.status, v.cover_name,
+      v.description_name, v.video_name, v.free_watch_time,
+      vc.v_name as classification_name,
+      (select count(1) from t_statistics s where s.statistics_type = '003003' and s.business_id = v.id and s.user_id = #{userId,jdbcType=BIGINT}) as watched,
+      (select count(1) from t_statistics s where s.statistics_type = '003004' and s.business_id = v.id and s.user_id = #{userId,jdbcType=BIGINT}) as purchased,
+      (select count(1) from t_statistics s where s.statistics_type = '003005' and s.business_id = v.id and s.user_id = #{userId,jdbcType=BIGINT}) as accessed
+      ,(case when o.id is null then false else true end) as is_purchased
+      ,o.user_id
+      ,sc.share_card_real_name as share_card
+    from t_video v
+    left join t_video_classification vc on v.classification = vc.id
+    join t_order o on v.id = o.goods_id and o.order_status = '004002' and o.user_id = #{userId,jdbcType=BIGINT}
+    left join t_share_card sc on v.id = sc.goods_id and sc.goods_type = '002001' and sc.user_id = #{userId,jdbcType=BIGINT}
+    where v.del_flag = 0
+    and v.status = '001003'
+    and o.user_id =  #{userId,jdbcType=BIGINT}
+  </select>
 </mapper>

@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 @RequestMapping("/wx/video")
@@ -57,5 +58,10 @@ public class WxVideoController {
         return JSON.toJSONString(response);
     }
 
-
+    @RequestMapping("/findPurchases")
+    @ResponseBody
+    public String findPurchases(String skey) {
+        List<VideoVo> purchases = videoService.findPurchases(skey);
+        return JSON.toJSONString(purchases);
+    }
 }

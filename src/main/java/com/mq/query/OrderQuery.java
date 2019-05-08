@@ -22,7 +22,7 @@ public class OrderQuery {
 
     private BigDecimal totalAmount;
 
-    private BigDecimal accountBalanceAmount;
+    private BigDecimal points;
 
     private BigDecimal wxAmount;
 
@@ -108,12 +108,12 @@ public class OrderQuery {
         this.totalAmount = totalAmount;
     }
 
-    public BigDecimal getAccountBalanceAmount() {
-        return accountBalanceAmount;
+    public BigDecimal getPoints() {
+        return points;
     }
 
-    public void setAccountBalanceAmount(BigDecimal accountBalanceAmount) {
-        this.accountBalanceAmount = accountBalanceAmount;
+    public void setPoints(BigDecimal points) {
+        this.points = points;
     }
 
     public BigDecimal getWxAmount() {
