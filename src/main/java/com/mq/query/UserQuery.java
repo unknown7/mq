@@ -4,7 +4,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
-public class UserQuery {
+public class UserQuery extends DefaultQuery {
     private Long id;
 
     private String country;

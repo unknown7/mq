@@ -1,6 +1,7 @@
 package com.mq.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.github.pagehelper.PageHelper;
 import com.mq.base.RedisObjectHolder;
 import com.mq.mapper.ShareCardMapper;
 import com.mq.mapper.UserMapper;
@@ -10,7 +11,9 @@ import com.mq.query.UserQuery;
 import com.mq.service.UserService;
 import com.mq.util.MD5;
 import com.mq.util.MapUtil;
+import com.mq.util.PageUtil;
 import com.mq.util.WxDecrptUtil;
+import com.mq.vo.Page;
 import com.mq.vo.UserVo;
 import com.mq.wx.base.WxAPI;
 import com.mq.wx.vo.auth.AuthRequest;
@@ -223,5 +226,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getBySkey(String skey) {
         return userMapper.selectBySkey(skey);
+    }
+
+    @Override
+    public Page<User> findPage(UserQuery query) {
+        PageHelper.startPage(query.getPage(), query.getLength());
+        Page<User> page = PageUtil.generatePage(
+                userMapper.selectByQuery(query),
+                userMapper.selectNums(query),
+                query
+        );
+        return page;
     }
 }

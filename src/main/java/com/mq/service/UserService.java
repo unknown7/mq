@@ -1,6 +1,8 @@
 package com.mq.service;
 
 import com.mq.model.User;
+import com.mq.query.UserQuery;
+import com.mq.vo.Page;
 import com.mq.vo.UserVo;
 import com.mq.wx.vo.auth.AuthRequest;
 import com.mq.wx.vo.auth.AuthResult;
@@ -54,4 +56,6 @@ public interface UserService {
     UserVo getVoBySkey(String skey);
 
     User getBySkey(String skey);
+
+    Page<User> findPage(UserQuery query);
 }
