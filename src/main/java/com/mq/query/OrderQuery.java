@@ -20,6 +20,8 @@ public class OrderQuery extends DefaultQuery {
 
     private Long userId;
 
+    private String skey;
+
     private BigDecimal totalAmount;
 
     private BigDecimal points;
@@ -98,6 +100,14 @@ public class OrderQuery extends DefaultQuery {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public String getSkey() {
+        return skey;
+    }
+
+    public void setSkey(String skey) {
+        this.skey = skey;
     }
 
     public BigDecimal getTotalAmount() {

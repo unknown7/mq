@@ -6,8 +6,8 @@ import com.mq.base.Enums;
 import com.mq.base.GlobalConstants;
 import com.mq.mapper.*;
 import com.mq.model.*;
-import com.mq.query.RewardPointsQuery;
 import com.mq.service.PaymentService;
+import com.mq.service.StatisticsService;
 import com.mq.service.UserService;
 import com.mq.util.DateUtil;
 import com.mq.util.MD5;
@@ -54,6 +54,8 @@ public class PaymentServiceImpl implements PaymentService {
     private RewardPointsMapper rewardPointsMapper;
     @Resource
     private GlobalConstants globalConstants;
+    @Resource
+    private StatisticsService statisticsService;
 
     @Override
     @Transactional
@@ -93,6 +95,7 @@ public class PaymentServiceImpl implements PaymentService {
         }
         order.setGoodsPrice(videoVo.getPrice());
         order.setUserId(user.getId());
+        order.setSkey(skey);
         if (!StringUtils.isEmpty(scene)) {
             Map<String, Object> sceneMap = MapUtil.str2map(scene);
             ShareCard shareCard = shareCardMapper.selectByPrimaryKey(Long.valueOf(sceneMap.get("shareCardId").toString()));
@@ -212,6 +215,10 @@ public class PaymentServiceImpl implements PaymentService {
                         order.setOrderStatus(Enums.OrderStatus.PAID.getKey());
                         order.setUpdateTime(new Date());
                         orderMapper.updateByPrimaryKeySelective(order);
+                        /**
+                         * 统计已购买
+                         */
+                        statisticsService.purchaseVideo(order.getSkey(), order.getGoodsId());
                         /**
                          * 推荐人奖励
                          */

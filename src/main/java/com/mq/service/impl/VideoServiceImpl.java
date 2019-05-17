@@ -170,6 +170,13 @@ public class VideoServiceImpl implements VideoService {
     }
 
     @Override
+    public boolean isPurchased(Long id, String skey) {
+        UserVo userVo = redisObjectHolder.getUserInfo(skey);
+        Boolean isPurchased = videoMapper.isPurchased(id, userVo != null ? userVo.getId() : null);
+        return isPurchased;
+    }
+
+    @Override
     @Transactional
     public void remove(Long id) {
         Video video = videoMapper.selectByPrimaryKey(id);

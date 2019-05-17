@@ -22,25 +22,31 @@ public class StatisticsServiceImpl implements StatisticsService {
     @Override
     @Transactional
     public void watchVideo(String skey, Long id) {
-        Statistics statistics = build(skey, id);
-        statistics.setStatisticsType(Enums.StatisticsType.VIDEO_WATCHED.getKey());
-        statisticsMapper.insertSelective(statistics);
+        if (!redisObjectHolder.isWhiteUser(skey)) {
+            Statistics statistics = build(skey, id);
+            statistics.setStatisticsType(Enums.StatisticsType.VIDEO_WATCHED.getKey());
+            statisticsMapper.insertSelective(statistics);
+        }
     }
 
     @Override
     @Transactional
     public void purchaseVideo(String skey, Long id) {
-        Statistics statistics = build(skey, id);
-        statistics.setStatisticsType(Enums.StatisticsType.VIDEO_PURCHASED.getKey());
-        statisticsMapper.insertSelective(statistics);
+        if (!redisObjectHolder.isWhiteUser(skey)) {
+            Statistics statistics = build(skey, id);
+            statistics.setStatisticsType(Enums.StatisticsType.VIDEO_PURCHASED.getKey());
+            statisticsMapper.insertSelective(statistics);
+        }
     }
 
     @Override
     @Transactional
     public void accessVideo(String skey, Long id) {
-        Statistics statistics = build(skey, id);
-        statistics.setStatisticsType(Enums.StatisticsType.VIDEO_ACCESSED.getKey());
-        statisticsMapper.insertSelective(statistics);
+        if (!redisObjectHolder.isWhiteUser(skey)) {
+            Statistics statistics = build(skey, id);
+            statistics.setStatisticsType(Enums.StatisticsType.VIDEO_ACCESSED.getKey());
+            statisticsMapper.insertSelective(statistics);
+        }
     }
 
     private Statistics build(String skey, Long id) {

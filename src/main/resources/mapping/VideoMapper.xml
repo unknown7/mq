@@ -445,6 +445,13 @@
     where v.id = #{videoId,jdbcType=BIGINT}
   </select>
 
+  <select id="isPurchased" resultType="java.lang.Boolean">
+    select case when o.id is null then false else true end
+    from t_video v
+    left join t_order o on v.id = o.goods_id and o.order_status = '004002' and o.user_id = #{userId,jdbcType=BIGINT}
+    where v.id = #{videoId,jdbcType=BIGINT}
+  </select>
+
   <select id="findPurchases" resultMap="VoResultMap">
     select
       v.id, v.title, v.subtitle, v.price, v.cover_real_name, v.description_real_name, v.video_real_name,

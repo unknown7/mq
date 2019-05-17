@@ -27,6 +27,8 @@ public interface VideoService {
 
     VideoVo selectOneWithAuthById(Long id, String skey);
 
+    boolean isPurchased(Long id, String skey);
+
     void remove(Long id);
 
     void shelve(Long id);
