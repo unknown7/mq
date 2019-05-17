@@ -18,6 +18,8 @@ public class Order {
 
     private Long userId;
 
+    private String skey;
+
     private BigDecimal totalAmount;
 
     private BigDecimal points;
@@ -86,6 +88,14 @@ public class Order {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public String getSkey() {
+        return skey;
+    }
+
+    public void setSkey(String skey) {
+        this.skey = skey;
     }
 
     public BigDecimal getTotalAmount() {

@@ -9,6 +9,7 @@
     <result column="goods_type" property="goodsType" jdbcType="VARCHAR" />
     <result column="goods_price" property="goodsPrice" jdbcType="DECIMAL" />
     <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="skey" property="skey" jdbcType="VARCHAR" />
     <result column="total_amount" property="totalAmount" jdbcType="DECIMAL" />
     <result column="points" property="points" jdbcType="DECIMAL" />
     <result column="wx_amount" property="wxAmount" jdbcType="DECIMAL" />
@@ -18,7 +19,7 @@
     <result column="del_flag" property="delFlag" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, order_no, order_status, goods_id, goods_type, goods_price, user_id, total_amount, 
+    id, order_no, order_status, goods_id, goods_type, goods_price, user_id, skey, total_amount,
     points, wx_amount, referrer, create_time, update_time, del_flag
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
@@ -34,12 +35,12 @@
   <insert id="insert" parameterType="com.mq.model.Order" >
     insert into t_order (id, order_no, order_status, 
       goods_id, goods_type, goods_price, 
-      user_id, total_amount, points,
+      user_id, skey, total_amount, points,
       wx_amount, referrer, create_time, 
       update_time, del_flag)
     values (#{id,jdbcType=BIGINT}, #{orderNo,jdbcType=VARCHAR}, #{orderStatus,jdbcType=VARCHAR}, 
       #{goodsId,jdbcType=BIGINT}, #{goodsType,jdbcType=VARCHAR}, #{goodsPrice,jdbcType=DECIMAL}, 
-      #{userId,jdbcType=BIGINT}, #{totalAmount,jdbcType=DECIMAL}, #{points,jdbcType=DECIMAL},
+      #{userId,jdbcType=BIGINT}, #{skey,jdbcType=VARCHAR}, #{totalAmount,jdbcType=DECIMAL}, #{points,jdbcType=DECIMAL},
       #{wxAmount,jdbcType=DECIMAL}, #{referrer,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, 
       #{updateTime,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=INTEGER})
   </insert>
@@ -69,6 +70,9 @@
       </if>
       <if test="userId != null" >
         user_id,
+      </if>
+      <if test="skey != null" >
+        skey,
       </if>
       <if test="totalAmount != null" >
         total_amount,
@@ -114,6 +118,9 @@
       <if test="userId != null" >
         #{userId,jdbcType=BIGINT},
       </if>
+      <if test="skey != null" >
+        #{skey,jdbcType=VARCHAR},
+      </if>
       <if test="totalAmount != null" >
         #{totalAmount,jdbcType=DECIMAL},
       </if>
@@ -158,6 +165,9 @@
       <if test="userId != null" >
         user_id = #{userId,jdbcType=BIGINT},
       </if>
+      <if test="skey != null" >
+        skey = #{skey,jdbcType=VARCHAR},
+      </if>
       <if test="totalAmount != null" >
         total_amount = #{totalAmount,jdbcType=DECIMAL},
       </if>
@@ -190,6 +200,7 @@
       goods_type = #{goodsType,jdbcType=VARCHAR},
       goods_price = #{goodsPrice,jdbcType=DECIMAL},
       user_id = #{userId,jdbcType=BIGINT},
+      skey = #{skey,jdbcType=VARCHAR},
       total_amount = #{totalAmount,jdbcType=DECIMAL},
       points = #{points,jdbcType=DECIMAL},
       wx_amount = #{wxAmount,jdbcType=DECIMAL},
@@ -221,6 +232,9 @@
     </if>
     <if test="userId != null" >
       and user_id = #{userId,jdbcType=BIGINT}
+    </if>
+    <if test="skey != null" >
+      and skey = #{skey,jdbcType=VARCHAR}
     </if>
     <if test="totalAmount != null" >
       and total_amount = #{totalAmount,jdbcType=DECIMAL}
@@ -274,6 +288,9 @@
     </if>
     <if test="userId != null" >
       and user_id = #{userId,jdbcType=BIGINT}
+    </if>
+    <if test="skey != null" >
+      and skey = #{skey,jdbcType=VARCHAR}
     </if>
     <if test="totalAmount != null" >
       and total_amount = #{totalAmount,jdbcType=DECIMAL}

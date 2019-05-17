@@ -27,5 +27,7 @@ public interface VideoMapper {
 
     VideoVo selectOneVoWithAuth(Long videoId, Long userId);
 
+    Boolean isPurchased(Long videoId, Long userId);
+
     List<VideoVo> findPurchases(Long userId);
 }

@@ -1,6 +1,7 @@
 package com.mq.wx.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.mq.service.StatisticsService;
 import com.mq.service.VideoService;
 import com.mq.vo.VideoVo;
 import com.mq.wx.vo.DefaultResponse;
@@ -23,12 +24,22 @@ public class WxVideoController {
     protected static final Logger logger = LoggerFactory.getLogger(WxVideoController.class);
     @Resource
     private VideoService videoService;
+    @Resource
+    private StatisticsService statisticsService;
 
     @RequestMapping("/getVideo")
     @ResponseBody
     public String getVideo(Long id, String skey) {
         VideoVo video = videoService.selectOneWithAuthById(id, skey);
+        statisticsService.accessVideo(skey, video.getId());
         return JSON.toJSONString(video);
+    }
+
+    @RequestMapping("/isPurchased")
+    @ResponseBody
+    public String isPurchased(Long id, String skey) {
+        boolean isPurchased = videoService.isPurchased(id, skey);
+        return JSON.toJSONString(isPurchased);
     }
 
     @RequestMapping("/generateMiniProgramCode")
@@ -63,5 +74,19 @@ public class WxVideoController {
     public String findPurchases(String skey) {
         List<VideoVo> purchases = videoService.findPurchases(skey);
         return JSON.toJSONString(purchases);
+    }
+
+    @RequestMapping("/watchVideoStatistics")
+    @ResponseBody
+    public String watchVideoStatistics(String skey, Long id) {
+        DefaultResponse response;
+        try {
+            statisticsService.watchVideo(skey, id);
+            response = DefaultResponse.create(true, null, null);
+        } catch (Exception e) {
+            logger.error("统计播放量失败！", e);
+            response = DefaultResponse.fail();
+        }
+        return JSON.toJSONString(response);
     }
 }
