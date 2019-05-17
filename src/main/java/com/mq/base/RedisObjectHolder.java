@@ -66,4 +66,14 @@ public class RedisObjectHolder {
     public void delTemporaryUser(String skey) {
         stringRedisTemplate.opsForHash().delete(Enums.RedisKey.TEMPORARY_USER.getKey(), skey);
     }
+
+    public void setWhiteList(Map<String, String> whiteList) {
+        if (whiteList != null && !whiteList.isEmpty()) {
+            stringRedisTemplate.opsForHash().putAll(Enums.RedisKey.WHITE_LIST.getKey(), whiteList);
+        }
+    }
+
+    public boolean isWhiteUser(String skey) {
+        return stringRedisTemplate.opsForHash().hasKey(Enums.RedisKey.WHITE_LIST.getKey(), skey);
+    }
 }

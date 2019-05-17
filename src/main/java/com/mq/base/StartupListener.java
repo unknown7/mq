@@ -3,7 +3,9 @@ package com.mq.base;
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Maps;
 import com.mq.model.User;
+import com.mq.model.WhiteList;
 import com.mq.service.UserService;
+import com.mq.service.WhiteListService;
 import com.mq.util.MD5;
 import com.mq.util.MD5Util;
 import com.mq.vo.UserVo;
@@ -30,21 +32,30 @@ public class StartupListener implements ApplicationListener<ContextRefreshedEven
     @Resource
     private UserService userService;
     @Resource
+    private WhiteListService whiteListService;
+    @Resource
     private RedisObjectHolder redisObjectHolder;
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
         /**
-         * 初始化静态资源
+         * 静态资源
          */
         initStaticResources();
         /**
-         * 初始化用户缓存
+         * 用户缓存
          */
         initUserCache();
+        /**
+         * 白名单
+         */
+        initWhiteList();
+
+        logger.info("初始化信息完成!");
     }
 
     private void initStaticResources() {
+        logger.info("初始化静态资源..");
         ServletContext servletContext = context.getServletContext();
         String imagesPath = servletContext.getRealPath("images");
         String videoPath = servletContext.getRealPath("videos");
@@ -54,6 +65,7 @@ public class StartupListener implements ApplicationListener<ContextRefreshedEven
 
     private void initUserCache() {
         try {
+            logger.info("初始化用户缓存..");
             List<User> users = userService.findAll();
             Map<String, String> userVos = Maps.newHashMap();
             for (User user : users) {
@@ -68,5 +80,17 @@ public class StartupListener implements ApplicationListener<ContextRefreshedEven
             logger.error("初始化用户信息失败！");
             logger.error(e.getMessage());
         }
+    }
+
+    private void initWhiteList() {
+        logger.info("初始化白名单..");
+        List<WhiteList> all = whiteListService.findAll();
+        Map<String, String> whiteList = Maps.newHashMap();
+        for (WhiteList whiteUser : all) {
+            String skey = whiteUser.getSkey();
+            String serializable = JSON.toJSONString(whiteUser);
+            whiteList.put(skey, serializable);
+        }
+        redisObjectHolder.setWhiteList(whiteList);
     }
 }

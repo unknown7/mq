@@ -25,6 +25,7 @@ public class Enums {
         USER_INFO("user_info"),
         TEMPORARY_USER("temporary_user"),
         ORDER_NUM_TODAY("order_num_today"),
+        WHITE_LIST("white_list"),
         ;
         private String key;
         RedisKey(String key) {
