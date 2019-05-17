@@ -229,10 +229,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<User> findPage(UserQuery query) {
+    public Page<UserVo> findPage(UserQuery query) {
         PageHelper.startPage(query.getPage(), query.getLength());
-        Page<User> page = PageUtil.generatePage(
-                userMapper.selectByQuery(query),
+        Page<UserVo> page = PageUtil.generatePage(
+                userMapper.selectVoByQuery(query),
                 userMapper.selectNums(query),
                 query
         );

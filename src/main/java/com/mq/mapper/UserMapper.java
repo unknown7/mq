@@ -2,6 +2,7 @@ package com.mq.mapper;
 
 import com.mq.model.User;
 import com.mq.query.UserQuery;
+import com.mq.vo.UserVo;
 
 import java.util.List;
 
@@ -21,6 +22,8 @@ public interface UserMapper {
     User selectByOpenId(String openId);
 
     List<User> selectByQuery(UserQuery query);
+
+    List<UserVo> selectVoByQuery(UserQuery query);
 
     Long selectNums(UserQuery query);
 

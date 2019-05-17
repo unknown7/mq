@@ -18,6 +18,21 @@
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="del_flag" property="delFlag" jdbcType="INTEGER" />
   </resultMap>
+  <resultMap id="VoResultMap" type="com.mq.vo.UserVo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="country" property="country" jdbcType="VARCHAR" />
+    <result column="gender" property="gender" jdbcType="INTEGER" />
+    <result column="province" property="province" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="avatar_url" property="avatarUrl" jdbcType="VARCHAR" />
+    <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
+    <result column="language" property="language" jdbcType="VARCHAR" />
+    <result column="referrer" property="referrer" jdbcType="BIGINT" />
+    <result column="referrer_name" property="referrerName" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="del_flag" property="delFlag" jdbcType="INTEGER" />
+  </resultMap>
   <sql id="Base_Column_List" >
     id, country, gender, province, city, avatar_url, open_id, nick_name, `language`, session_key,
     skey, referrer, create_time, update_time, del_flag
@@ -241,8 +256,8 @@
     <if test="openId != null" >
       and open_id = #{openId,jdbcType=VARCHAR}
     </if>
-    <if test="nickName != null" >
-      and nick_name = #{nickName,jdbcType=VARCHAR}
+    <if test="nickName != null and nickName != ''" >
+      and nick_name like concat(concat("%",#{nickName}),"%")
     </if>
     <if test="language != null" >
       and `language` = #{language,jdbcType=VARCHAR}
@@ -276,6 +291,66 @@
     </if>
   </select>
 
+  <select id="selectVoByQuery" parameterType="com.mq.query.UserQuery" resultMap="VoResultMap">
+    select
+    u1.id, u1.country, u1.gender, u1.province, u1.city, u1.avatar_url, u1.nick_name, u1.language,
+    u1.referrer, u2.nick_name as referrer_name, u1.create_time, u1.update_time, u1.del_flag
+    from t_user u1
+    left join t_user u2 on u1.referrer = u2.id
+    where u1.del_flag = 0
+    <if test="country != null" >
+      and u1.country = #{country,jdbcType=VARCHAR}
+    </if>
+    <if test="gender != null" >
+      and u1.gender = #{gender,jdbcType=INTEGER}
+    </if>
+    <if test="province != null" >
+      and u1.province = #{province,jdbcType=VARCHAR}
+    </if>
+    <if test="city != null" >
+      and u1.city = #{city,jdbcType=VARCHAR}
+    </if>
+    <if test="avatarUrl != null" >
+      and u1.avatar_url = #{avatarUrl,jdbcType=VARCHAR}
+    </if>
+    <if test="openId != null" >
+      and u1.open_id = #{openId,jdbcType=VARCHAR}
+    </if>
+    <if test="nickName != null and nickName != ''" >
+      and u1.nick_name like concat(concat("%",#{nickName}),"%")
+    </if>
+    <if test="language != null" >
+      and u1.language = #{language,jdbcType=VARCHAR}
+    </if>
+    <if test="sessionKey != null" >
+      and u1.session_key = #{sessionKey,jdbcType=VARCHAR}
+    </if>
+    <if test="skey != null" >
+      and u1.skey = #{skey,jdbcType=VARCHAR}
+    </if>
+    <if test="referrer != null" >
+      and u1.referrer = #{referrer,jdbcType=BIGINT}
+    </if>
+    <if test="createTime != null" >
+      and u1.create_time = #{createTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="createTimeBegin != null" >
+      and u1.create_time &gt;= #{createTimeBegin,jdbcType=TIMESTAMP}
+    </if>
+    <if test="createTimeEnd != null" >
+      and u1.create_time &lt;= #{createTimeEnd,jdbcType=TIMESTAMP}
+    </if>
+    <if test="updateTime != null" >
+      and u1.update_time = #{updateTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="updateTimeBegin != null" >
+      and u1.update_time &gt;= #{updateTimeBegin,jdbcType=TIMESTAMP}
+    </if>
+    <if test="updateTimeEnd != null" >
+      and u1.update_time &lt;= #{updateTimeEnd,jdbcType=TIMESTAMP}
+    </if>
+  </select>
+
   <select id="selectNums" parameterType="com.mq.query.UserQuery" resultType="java.lang.Long">
     select count(1)
     from t_user where del_flag = 0
@@ -297,8 +372,8 @@
     <if test="openId != null" >
       and open_id = #{openId,jdbcType=VARCHAR}
     </if>
-    <if test="nickName != null" >
-      and nick_name = #{nickName,jdbcType=VARCHAR}
+    <if test="nickName != null and nickName != ''" >
+      and nick_name like concat(concat("%",#{nickName}),"%")
     </if>
     <if test="language != null" >
       and `language` = #{language,jdbcType=VARCHAR}

@@ -6,6 +6,7 @@ import com.mq.model.User;
 import com.mq.query.UserQuery;
 import com.mq.service.UserService;
 import com.mq.vo.Page;
+import com.mq.vo.UserVo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,7 +27,7 @@ public class UserController extends BaseController {
     @RequestMapping("/find")
     @ResponseBody
     public String find(UserQuery query) {
-        Page<User> result = userService.findPage(query);
+        Page<UserVo> result = userService.findPage(query);
         return JSON.toJSONString(result);
     }
 }

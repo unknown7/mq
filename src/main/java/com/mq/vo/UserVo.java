@@ -20,6 +20,7 @@ public class UserVo {
     private String language;
 
     private Long referrer;
+    private String referrerName;
 
     private Date createTime;
 
@@ -97,6 +98,14 @@ public class UserVo {
 
     public void setReferrer(Long referrer) {
         this.referrer = referrer;
+    }
+
+    public String getReferrerName() {
+        return referrerName;
+    }
+
+    public void setReferrerName(String referrerName) {
+        this.referrerName = referrerName;
     }
 
     public Date getCreateTime() {
