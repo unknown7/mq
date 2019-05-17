@@ -57,5 +57,5 @@ public interface UserService {
 
     User getBySkey(String skey);
 
-    Page<User> findPage(UserQuery query);
+    Page<UserVo> findPage(UserQuery query);
 }

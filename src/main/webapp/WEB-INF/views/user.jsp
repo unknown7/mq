@@ -13,12 +13,27 @@
     <div class="row">
         <form class="form-inline col-sm-11" id="search_form">
             <div class="input-group">
-                <input class="form-control" placeholder="视频标题" name="title">
+                <input class="form-control" placeholder="昵称" name="nickName">
             </div>
             <div class="input-group">
-                <select class="form-control" name="classification" style="width: 200px;">
-                    <option value="">分类</option>
+                <select class="form-control" name="gender">
+                    <option value="">性别</option>
+                    <option value="1">男</option>
+                    <option value="2">女</option>
                 </select>
+            </div>
+            <div class="input-group">
+                <input type="text"
+                       class="datepicker form-control"
+                       data-date-format="yyyy-mm-dd" name="createTimeBegin"
+                       placeholder="注册时间从"/>
+                <span class="input-group-addon">
+                    <i class="fa fa-exchange"></i>
+                </span>
+                <input type="text"
+                       class="datepicker form-control"
+                       data-date-format="yyyy-mm-dd" name="createTimeEnd"
+                       placeholder="至"/>
             </div>
             <button type="button" id="query" class="btn btn-sm btn-success">
                 <i class="ace-icon fa fa-search"></i>
@@ -27,10 +42,6 @@
             <button type="button" id="clear" class="btn btn-sm btn-light">
                 <i class="ace-icon fa fa-undo"></i>
                 清空
-            </button>
-            <button type="button" id="add" class="btn btn-sm btn-info" data-target="#detail-form" data-toggle="modal">
-                <i class="ace-icon fa fa-plus"></i>
-                新建
             </button>
         </form>
     </div>
@@ -41,18 +52,15 @@
                    width="100%">
                 <thead>
                 <tr>
-                    <th width="9%" class="min-mobile-l">标题</th>
-                    <th width="12%" class="min-mobile-l">介绍</th>
-                    <th width="3%" class="min-mobile-l">价格</th>
-                    <th width="3%" class="min-mobile-l">封面</th>
-                    <th width="3%" class="min-mobile-l">详情</th>
-                    <th width="4%" class="min-mobile-l">分类</th>
-                    <th width="4%" class="min-mobile-l">分享提成</th>
-                    <th width="6%" class="min-mobile-l">免费观看时长</th>
-                    <th width="3%" class="min-mobile-l">访问量</th>
-                    <th width="3%" class="min-mobile-l">观看量</th>
-                    <th width="4%" class="min-mobile-l">已购人数</th>
-                    <th width="8%" class="min-mobile-l">操作</th>
+                    <th width="7%" class="min-mobile-l">昵称</th>
+                    <th width="3%" class="min-mobile-l">头像</th>
+                    <th width="3%" class="min-mobile-l">性别</th>
+                    <th width="6%" class="min-mobile-l">国家</th>
+                    <th width="6%" class="min-mobile-l">省份</th>
+                    <th width="6%" class="min-mobile-l">城市</th>
+                    <th width="7%" class="min-mobile-l">推荐人</th>
+                    <th width="8%" class="min-mobile-l">注册时间</th>
+                    <th width="3%" class="min-mobile-l">操作</th>
                 </tr>
                 </thead>
             </table>
@@ -169,51 +177,6 @@
             </div>
         </div>
     </div>
-
-    <div id="video-upload-form" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="blue bigger">视频</h4>
-                </div>
-
-                <form class="form-horizontal" id="videoUploadForm" name="videoUploadForm">
-                    <div class="modal-body">
-                        <div class="row">
-
-                            <div class="form-group">
-                                <div id="videoDiv" class="col-sm-10 col-sm-offset-1">
-                                    <input type="hidden" name="id"/>
-                                    <input type="file" id="video" name="video"/>
-                                    <input type="hidden" id="video_success" name="video_success"/>
-                                </div>
-                            </div>
-
-                            <div id="progressForm" class="form-group hide">
-                                <div class="col-sm-10 col-sm-offset-1">
-                                    <div id="progressbar"><div class="progress-label"></div></div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </form>
-
-                <div class="modal-footer">
-                    <button class="btn btn-sm" data-dismiss="modal">
-                        <i class="ace-icon fa fa-times"></i>
-                        取消
-                    </button>
-
-                    <button class="btn btn-sm btn-primary" id="upload">
-                        <i class="ace-icon fa fa-check"></i>
-                        上传
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
 </body>
 <script type="text/javascript">
@@ -222,5 +185,5 @@
     var video = "${video}";
     var cur = "${curEmp.id}";
 </script>
-<script src="${ctx }/static/js/video.js"></script>
+<script src="${ctx }/static/js/user.js"></script>
 </html>
