@@ -29,7 +29,7 @@
                 <th width="10%" class="min-mobile-l">名称</th>
                 <th width="3%" class="min-mobile-l">排序</th>
                 <th width="6%" class="min-mobile-l">轮播图片</th>
-                <th width="20%" class="min-mobile-l">跳转地址</th>
+                <th width="10%" class="min-mobile-l">跳转视频</th>
                 <th width="10%" class="min-mobile-l">最后修改时间</th>
                 <th width="20%" class="min-mobile-l">描述</th>
                 <th width="6%" class="min-mobile-l">操作</th>
@@ -78,10 +78,12 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-2 control-label no-padding-right" for="jumpTo"> 跳转地址 </label>
+                            <label class="col-sm-2 control-label no-padding-right" for="jumpTo"> 跳转视频 </label>
 
                             <div class="col-sm-9">
-                                <input type="text" id="jumpTo" name="jumpTo" placeholder="请填写跳转地址" class="form-control"/>
+                                <select class="form-control" id="jumpTo" name="jumpTo">
+                                    <option value="">-</option>
+                                </select>
                             </div>
                         </div>
 

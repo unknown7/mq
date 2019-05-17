@@ -4,6 +4,7 @@ import com.mq.model.Banner;
 import com.mq.model.VideoClassification;
 import com.mq.query.BannerQuery;
 import com.mq.query.VideoClassificationQuery;
+import com.mq.vo.BannerVo;
 import com.mq.vo.Page;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,7 +22,7 @@ public interface BasicConfigService {
 
     List<VideoClassification> findClassification(VideoClassificationQuery query);
 
-    Page<Banner> findBannerPageByQuery(BannerQuery query);
+    Page<BannerVo> findBannerPage(BannerQuery query);
 
     void saveBanner(MultipartFile image, String id, String bName, String sort, String jumpTo, String desc) throws IOException;
 

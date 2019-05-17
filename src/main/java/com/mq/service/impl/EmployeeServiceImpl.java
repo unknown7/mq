@@ -26,7 +26,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     private EmployeeMapper employeeMapper;
 
     @Override
-    public Page<Employee> findPageByQuery(EmployeeQuery query) {
+    public Page<Employee> findPage(EmployeeQuery query) {
         PageHelper.startPage(query.getPage(), query.getLength());
         Page<Employee> page = PageUtil.generatePage(
                 employeeMapper.selectByQuery(query),

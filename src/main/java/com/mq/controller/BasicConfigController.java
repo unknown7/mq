@@ -7,6 +7,7 @@ import com.mq.model.VideoClassification;
 import com.mq.query.BannerQuery;
 import com.mq.query.VideoClassificationQuery;
 import com.mq.service.BasicConfigService;
+import com.mq.vo.BannerVo;
 import com.mq.vo.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -66,10 +67,10 @@ public class BasicConfigController extends BaseController {
         return JSON.toJSONString(classification);
     }
 
-    @RequestMapping("/findBanner")
+    @RequestMapping("/findBannerPage")
     @ResponseBody
-    public String findBanner(HttpServletRequest request, BannerQuery query) {
-        Page<Banner> page = basicConfigService.findBannerPageByQuery(query);
+    public String findBannerPage(HttpServletRequest request, BannerQuery query) {
+        Page<BannerVo> page = basicConfigService.findBannerPage(query);
         return JSON.toJSONString(page);
     }
 

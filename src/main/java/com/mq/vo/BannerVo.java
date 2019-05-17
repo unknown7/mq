@@ -1,8 +1,8 @@
-package com.mq.model;
+package com.mq.vo;
 
 import java.util.Date;
 
-public class Banner {
+public class BannerVo {
     private Long id;
 
     private String imageName;
@@ -10,6 +10,7 @@ public class Banner {
     private Integer sort;
 
     private Long jumpTo;
+    private String jumpToName;
 
     private Integer delFlag;
 
@@ -36,7 +37,7 @@ public class Banner {
     }
 
     public void setImageName(String imageName) {
-        this.imageName = imageName == null ? null : imageName.trim();
+        this.imageName = imageName;
     }
 
     public Integer getSort() {
@@ -53,6 +54,14 @@ public class Banner {
 
     public void setJumpTo(Long jumpTo) {
         this.jumpTo = jumpTo;
+    }
+
+    public String getJumpToName() {
+        return jumpToName;
+    }
+
+    public void setJumpToName(String jumpToName) {
+        this.jumpToName = jumpToName;
     }
 
     public Integer getDelFlag() {
@@ -84,7 +93,7 @@ public class Banner {
     }
 
     public void setDesc(String desc) {
-        this.desc = desc == null ? null : desc.trim();
+        this.desc = desc;
     }
 
     public String getImageRealName() {
@@ -92,7 +101,7 @@ public class Banner {
     }
 
     public void setImageRealName(String imageRealName) {
-        this.imageRealName = imageRealName == null ? null : imageRealName.trim();
+        this.imageRealName = imageRealName;
     }
 
     public String getbName() {
@@ -100,6 +109,6 @@ public class Banner {
     }
 
     public void setbName(String bName) {
-        this.bName = bName == null ? null : bName.trim();
+        this.bName = bName;
     }
 }

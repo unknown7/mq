@@ -9,7 +9,7 @@ public class BannerQuery extends DefaultQuery {
 
     private Integer sort;
 
-    private String jumpTo;
+    private Long jumpTo;
 
     private Integer delFlag;
 
@@ -51,11 +51,11 @@ public class BannerQuery extends DefaultQuery {
         this.sort = sort;
     }
 
-    public String getJumpTo() {
+    public Long getJumpTo() {
         return jumpTo;
     }
 
-    public void setJumpTo(String jumpTo) {
+    public void setJumpTo(Long jumpTo) {
         this.jumpTo = jumpTo;
     }
 

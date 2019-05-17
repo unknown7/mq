@@ -9,7 +9,7 @@ import java.io.IOException;
 
 public interface EmployeeService {
 
-    Page<Employee> findPageByQuery(EmployeeQuery query);
+    Page<Employee> findPage(EmployeeQuery query);
 
     void save(String id,
               String username,
