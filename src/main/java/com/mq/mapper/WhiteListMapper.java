@@ -2,6 +2,8 @@ package com.mq.mapper;
 
 import com.mq.model.WhiteList;
 
+import java.util.List;
+
 public interface WhiteListMapper {
     int deleteByPrimaryKey(Long id);
 
@@ -14,4 +16,6 @@ public interface WhiteListMapper {
     int updateByPrimaryKeySelective(WhiteList record);
 
     int updateByPrimaryKey(WhiteList record);
+
+    List<WhiteList> findAll();
 }
