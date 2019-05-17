@@ -34,10 +34,10 @@ public class EmployeeController extends BaseController {
         return "employee";
     }
 
-    @RequestMapping("/find")
+    @RequestMapping("/findPage")
     @ResponseBody
     public String find(HttpServletRequest request, EmployeeQuery query) {
-        Page<Employee> page = employeeService.findPageByQuery(query);
+        Page<Employee> page = employeeService.findPage(query);
         return JSON.toJSONString(page);
     }
 

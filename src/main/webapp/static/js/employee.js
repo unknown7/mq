@@ -76,7 +76,7 @@ $(function () {
             });
             $.ajax({
                 type: "POST",
-                url: ctx + "/employee/find",
+                url: ctx + "/employee/findPage",
                 cache: false,  //禁用缓存
                 data: param,  //传入组装的参数
                 dataType: "json",

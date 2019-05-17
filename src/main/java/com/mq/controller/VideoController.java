@@ -32,9 +32,9 @@ public class VideoController extends BaseController {
         return "video";
     }
 
-    @RequestMapping("/find")
+    @RequestMapping("/findPage")
     @ResponseBody
-    public String find(VideoQuery query) {
+    public String findPage(VideoQuery query) {
         Page<VideoVo> result = videoService.findPage(query);
         return JSON.toJSONString(result);
     }
@@ -119,5 +119,12 @@ public class VideoController extends BaseController {
             e.printStackTrace();
             return error("视频上传时出现问题");
         }
+    }
+
+    @RequestMapping("/findAll")
+    @ResponseBody
+    public String findAll() {
+        List<VideoVo> result = videoService.findAll();
+        return JSON.toJSONString(result);
     }
 }

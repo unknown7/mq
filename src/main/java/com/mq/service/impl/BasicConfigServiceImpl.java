@@ -12,6 +12,7 @@ import com.mq.query.VideoClassificationQuery;
 import com.mq.service.BasicConfigService;
 import com.mq.util.FileUtil;
 import com.mq.util.PageUtil;
+import com.mq.vo.BannerVo;
 import com.mq.vo.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -91,10 +92,10 @@ public class BasicConfigServiceImpl implements BasicConfigService {
     }
 
     @Override
-    public Page<Banner> findBannerPageByQuery(BannerQuery query) {
+    public Page<BannerVo> findBannerPage(BannerQuery query) {
         PageHelper.startPage(query.getPage(), query.getLength());
-        Page<Banner> page = PageUtil.generatePage(
-                bannerMapper.selectByQuery(query),
+        Page<BannerVo> page = PageUtil.generatePage(
+                bannerMapper.selectVoByQuery(query),
                 bannerMapper.selectNums(query),
                 query
         );
@@ -121,7 +122,7 @@ public class BasicConfigServiceImpl implements BasicConfigService {
         Date now = new Date();
         banner.setbName(bName);
         banner.setDesc(desc);
-        banner.setJumpTo(jumpTo);
+        banner.setJumpTo(StringUtils.isEmpty(jumpTo) ? null : Long.valueOf(jumpTo));
         banner.setSort(Integer.valueOf(sort));
         banner.setUpdateTime(now);
         if (StringUtils.isEmpty(id)) {

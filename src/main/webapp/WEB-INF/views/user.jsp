@@ -111,9 +111,14 @@
                                     <label for="createTime">注册时间</label>
 
                                     <div>
-                                        <input type="text"
-                                               id="createTime"
-                                               name="createTime"/>
+                                        <input type="text" id="createTime" name="createTime"/>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="openId">微信唯一标识</label>
+                                    <div>
+                                        <input type="text" id="openId" name="openId"/>
                                     </div>
                                 </div>
                             </div>
@@ -138,6 +143,13 @@
                                     <label for="city">城市</label>
                                     <div>
                                         <input type="text" id="city" name="city"/>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="language">语言</label>
+                                    <div>
+                                        <input type="text" id="language" name="language"/>
                                     </div>
                                 </div>
                             </div>

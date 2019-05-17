@@ -42,4 +42,6 @@ public interface VideoService {
     String saveShareCard(MultipartFile file, String skey, String videoId) throws Exception;
 
     List<VideoVo> findPurchases(String skey);
+
+    List<VideoVo> findAll();
 }

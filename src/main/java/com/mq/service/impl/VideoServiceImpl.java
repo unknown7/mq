@@ -9,6 +9,7 @@ import com.mq.mapper.ShareCardMapper;
 import com.mq.mapper.VideoMapper;
 import com.mq.model.ShareCard;
 import com.mq.model.Video;
+import com.mq.query.DefaultQuery;
 import com.mq.query.VideoQuery;
 import com.mq.service.VideoService;
 import com.mq.util.FileUtil;
@@ -274,5 +275,13 @@ public class VideoServiceImpl implements VideoService {
         UserVo userVo = redisObjectHolder.getUserInfo(skey);
         List<VideoVo> purchases = videoMapper.findPurchases(userVo.getId());
         return purchases;
+    }
+
+    @Override
+    public List<VideoVo> findAll() {
+        VideoQuery query = new VideoQuery();
+        query.setDelFlag(0);
+        List<VideoVo> videoVos = videoMapper.selectByQuery(query);
+        return videoVos;
     }
 }

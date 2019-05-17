@@ -29,6 +29,9 @@ $(function () {
                 "data": "jumpTo",
                 "class": "text-center",
                 "render": function (data, type, row) {
+                    if (data && row.jumpToName) {
+                        return row.jumpToName;
+                    }
                     return data;
                 }
             },
@@ -63,7 +66,7 @@ $(function () {
             });
             $.ajax({
                 type: "POST",
-                url: ctx + "/basicConfig/findBanner",
+                url: ctx + "/basicConfig/findBannerPage",
                 cache: false,  //禁用缓存
                 data: param,  //传入组装的参数
                 dataType: "json",
@@ -231,6 +234,18 @@ $(function () {
     $('#fileDiv .remove').on('click', function () {
         $('#success').val('');
     });
+
+    $.ajax({
+        type: "POST",
+        dataType: "json",
+        url: ctx + "/video/findAll",
+        cache: false,
+        success: function (result) {
+            $.each(result, function (i, item) {
+                $("#jumpTo").append('<option value="' + item.id + '">' + item.title + '</option>');
+            });
+        }
+    });
 });
 var removeBanner = function (id) {
     bootbox.confirm({
@@ -278,9 +293,10 @@ var editBanner = function (id) {
         },
         dataType: "json",
         success: function (result) {
-            $('#banner-detail-form').find('input, textarea').each(function () {
-                var value = result[$(this).attr('name')];
-                $(this).val(value);
+            $('#banner-detail-form').find('input, textarea, select').each(function () {
+                var $this = $(this);
+                var value = result[$this.attr('name')];
+                $this.val(value);
             });
 
             var data = [
