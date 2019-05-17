@@ -67,113 +67,83 @@
         </div>
     </div>
 
-    <div id="video-detail-form" class="modal fade" tabindex="-1">
+    <div id="user-detail-form" class="modal fade" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="blue bigger">视频信息</h4>
+                    <h4 class="blue bigger">用户信息</h4>
                 </div>
 
-                <form class="form-horizontal" id="videoForm" name="videoForm">
+                <form class="form-horizontal" id="userForm" name="userForm" enctype="multipart/form-data">
                     <div class="modal-body">
                         <div class="row">
                             <input name="id" type="hidden"/>
 
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label no-padding-right" for="title"> 标题 </label>
+                            <div id="fileDiv" class="col-xs-12 col-sm-4">
+                                <div class="space"></div>
 
-                                <div class="col-sm-9">
-                                    <input type="text" id="title" name="title" placeholder="请填写标题" class="form-control"/>
+                                <input type="file" id="avatar" name="avatar"/>
+                                <input type="hidden" id="success" name="success"/>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-4">
+                                <div class="form-group">
+                                    <label for="nickName">昵称</label>
+                                    <div>
+                                        <input type="text" id="nickName" name="nickName"/>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="gender">性别</label>
+
+                                    <div>
+                                        <select class="form-control" name="gender" id="gender" style="width: 86%">
+                                            <option value="">-</option>
+                                            <option value="1">男</option>
+                                            <option value="2">女</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="createTime">注册时间</label>
+
+                                    <div>
+                                        <input type="text"
+                                               id="createTime"
+                                               name="createTime"/>
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label no-padding-right" for="subtitle"> 介绍 </label>
+                            <div class="col-xs-12 col-sm-4">
+                                <div class="form-group">
+                                    <label for="country">国家</label>
 
-                                <div class="col-sm-9">
-                                    <input type="text" id="subtitle" name="subtitle" placeholder="请填写介绍" class="form-control"/>
+                                    <div>
+                                        <input type="text" id="country" name="country"/>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="province">省份</label>
+                                    <div>
+                                        <input type="text" id="province" name="province"/>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="city">城市</label>
+                                    <div>
+                                        <input type="text" id="city" name="city"/>
+                                    </div>
                                 </div>
                             </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label no-padding-right" for="classification"> 分类 </label>
-
-                                <div class="col-sm-9">
-                                    <select class="form-control" name="classification" id="classification">
-                                        <option value="">-</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label no-padding-right" for="price"> 价格 </label>
-
-                                <div class="col-sm-9">
-                                    <input type="text" id="price" name="price" class="form-control" onfocus="$(this).select();"/>
-                                    <span style="width: 3%;padding-left: 5px;padding-top: 10px;font-size: 16px;">元</span>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label no-padding-right" for="profitShare"> 分享提成 </label>
-
-                                <div class="col-sm-9">
-                                    <input class="value-input" type="number" max="100" min="0" value="0"
-                                           id="profitShareValue"
-                                           name="profitShare"
-                                           style="width: 10%;float: left;"
-                                           onfocus="$(this).select();"
-                                           onkeyup="$('#profitShare').slider({value: $(this).val()});">
-                                    <span style="width: 3%;padding-left: 5px;padding-top: 10px;font-size: 16px;">%</span>
-                                    <span id="profitShare" class="ui-slider-simple ui-slider-orange value-slider"></span>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label no-padding-right" for="freeWatchTime"> 免费观看时长 </label>
-
-                                <div class="col-sm-9">
-                                    <input class="value-input" type="number" max="1000" min="0" value="0"
-                                           id="freeWatchTimeValue"
-                                           name="freeWatchTime"
-                                           style="width: 10%;float: left;"
-                                           onfocus="$(this).select();"
-                                           onkeyup="$('#freeWatchTime').slider({value: $(this).val()});">
-                                    <span style="width: 3%;padding-left: 5px;padding-top: 10px;font-size: 16px;">秒</span>
-                                    <span id="freeWatchTime" class="ui-slider-simple ui-slider-orange value-slider"></span>
-                                </div>
-                            </div>
-
-                            <div id="fileDiv" class="form-group">
-                                <div id="cover-group" class="col-sm-5 col-sm-offset-1">
-                                    <input type="file" id="cover" name="cover"/>
-                                    <input type="hidden" id="cover_success" name="cover_success"/>
-                                </div>
-
-                                <div id="desc-group" class="col-sm-5">
-                                    <input type="file" id="description" name="description"/>
-                                    <input type="hidden" id="description_success" name="description_success"/>
-                                </div>
-                            </div>
-
-
-
                         </div>
                     </div>
                 </form>
-
-                <div class="modal-footer">
-                    <button class="btn btn-sm" data-dismiss="modal">
-                        <i class="ace-icon fa fa-times"></i>
-                        取消
-                    </button>
-
-                    <button class="btn btn-sm btn-primary" id="save">
-                        <i class="ace-icon fa fa-check"></i>
-                        保存
-                    </button>
-                </div>
             </div>
         </div>
     </div>

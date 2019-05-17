@@ -58,4 +58,6 @@ public interface UserService {
     User getBySkey(String skey);
 
     Page<UserVo> findPage(UserQuery query);
+
+    User getById(Long id);
 }

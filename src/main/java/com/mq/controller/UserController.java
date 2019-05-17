@@ -30,4 +30,11 @@ public class UserController extends BaseController {
         Page<UserVo> result = userService.findPage(query);
         return JSON.toJSONString(result);
     }
+
+    @RequestMapping("/selectOne")
+    @ResponseBody
+    public String selectOne(Long id) {
+        User user = userService.getById(id);
+        return JSON.toJSONString(user);
+    }
 }
