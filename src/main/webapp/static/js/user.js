@@ -121,4 +121,88 @@ $(function () {
         }]
     }).on('click', 'a[row-index]', function () {
     });
+
+    $('#query').on('click', function (e) {
+        $('#table').DataTable().ajax.reload();
+    });
+    $('#clear').on('click', function (e) {
+        $("#search_form")[0].reset();
+    });
+
+    $('.datepicker').datepicker({
+        language: 'zh-CN',
+        autoclose: true
+    }).on('hide', function (e) {
+        e.stopPropagation();
+    });
+
+    $('#avatar').ace_file_input({
+        style: 'well',
+        btn_choose: '请上传用户头像',
+        btn_change: null,
+        no_icon: 'ace-icon fa fa-picture-o',
+        droppable: true,
+        thumbnail: 'large',
+        allowExt: ["jpeg", "jpg", "png", "gif", "bmp"],
+        allowMime: ["image/jpg", "image/jpeg", "image/png", "image/gif", "image/bmp"],
+        maxFileSize: 10,
+        before_change: function (files, dropped) {
+            //选择文件 展示之前的事件
+            //return true 保留当前文件; return false 不保留文件；return -1 重置文件框
+            //需要同步等待返回结果
+            $('#success').val('success');
+            return true;
+        }
+    }).on('file.error.ace', function (e, info) {
+        _alert('info', '请上传图片类型的文件作为头像', '错误的文件格式');
+        _shake($('#fileDiv'));
+        $('#success').val('');
+    });
 });
+var view = function(id) {
+    $.ajax({
+        type: "POST",
+        url: ctx + "/user/selectOne",
+        cache: false,  //禁用缓存
+        data: {
+            id: id
+        },
+        dataType: "json",
+        success: function (result) {
+            $('#userForm').find('input, select').each(function () {
+                var that = $(this);
+                var value = result[that.attr('name')];
+                if (that.attr('name') == 'createTime') {
+                    value = new Date(value).Format("yyyy-MM-dd hh:mm:ss");
+                }
+                that.val(value);
+            });
+            var data = [
+                {
+                    'id': 'cover',
+                    'oldTile': "请上传用户头像",
+                    'newTile': "用户头像",
+                    'url': result.avatarUrl
+                }
+            ];
+            $.each(data, function (i, item) {
+                var span = $('span[data-title=' + item.oldTile + ']');
+                $(span).addClass('hide-placeholder selected');
+                $(span).children()
+                    .attr('data-title', item.newTile)
+                    .addClass('large')
+                    .prepend("<img class='middle'" +
+                        "style='backgroud-image: url(" + item.url + ");width: 150px;height: 112px;'" +
+                        "src='" + item.url + "'>")
+                    .children().attr('class', ' ace-icon fa fa-picture-o file-image');
+            });
+            viewStatus();
+            $('#user-detail-form').modal('show');
+        }
+    });
+}
+var viewStatus = function() {
+    $('#userForm').find("input[type=text], input[type=number]").attr("readonly", "readonly");
+    $('#userForm').find("input[type=file], select").attr("disabled", "disabled");
+    $("#avatar").next().next().css("display", "none");
+}

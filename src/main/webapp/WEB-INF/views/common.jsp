@@ -63,6 +63,7 @@
 <script src="${ctx}/static/assets/js/moment.js"></script>
 <script src="${ctx}/static/assets/js/bootstrap-datepicker.min.js"></script>
 <script src="${ctx}/static/assets/js/bootstrap-datepicker.zh-CN.js"></script>
+<script src="${ctx}/static/assets/js/bootstrap-datetimepicker.min.js"></script>
 <script src="${ctx}/static/assets/js/jquery.gritter.min.js"></script>
 <script src="${ctx}/static/assets/js/jquery.dm-uploader.js"></script>
 <script src="${ctx}/static/js/common.js"></script>

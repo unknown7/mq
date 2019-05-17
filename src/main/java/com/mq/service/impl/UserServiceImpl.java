@@ -238,4 +238,9 @@ public class UserServiceImpl implements UserService {
         );
         return page;
     }
+
+    @Override
+    public User getById(Long id) {
+        return userMapper.selectByPrimaryKey(id);
+    }
 }
