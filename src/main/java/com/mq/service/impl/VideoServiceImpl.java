@@ -164,8 +164,13 @@ public class VideoServiceImpl implements VideoService {
 
     @Override
     public VideoVo selectOneWithAuthById(Long id, String skey) {
+        VideoVo videoVo;
         UserVo userVo = redisObjectHolder.getUserInfo(skey);
-        VideoVo videoVo = videoMapper.selectOneVoWithAuth(id, userVo != null ? userVo.getId() : null);
+        if (redisObjectHolder.isWhiteUser(skey)) {
+            videoVo = videoMapper.selectOneVoWithWhiteUser(id, userVo.getId());
+        } else {
+            videoVo = videoMapper.selectOneVoWithAuth(id, userVo != null ? userVo.getId() : null);
+        }
         return videoVo;
     }
 
@@ -280,7 +285,12 @@ public class VideoServiceImpl implements VideoService {
     @Override
     public List<VideoVo> findPurchases(String skey) {
         UserVo userVo = redisObjectHolder.getUserInfo(skey);
-        List<VideoVo> purchases = videoMapper.findPurchases(userVo.getId());
+        List<VideoVo> purchases;
+        if (redisObjectHolder.isWhiteUser(skey)) {
+            purchases = videoMapper.findPurchasesWithWhiteUser(userVo.getId());
+        } else {
+            purchases = videoMapper.findPurchases(userVo.getId());
+        }
         return purchases;
     }
 
