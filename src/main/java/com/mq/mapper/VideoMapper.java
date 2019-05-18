@@ -27,11 +27,11 @@ public interface VideoMapper {
 
     VideoVo selectOneVoWithAuth(Long videoId, Long userId);
 
-    VideoVo selectOneVoWithWhiteUser(Long videoId, Long userId);
+    VideoVo selectOneVoWithWhiteUser(Long videoId);
 
     Boolean isPurchased(Long videoId, Long userId);
 
     List<VideoVo> findPurchases(Long userId);
 
-    List<VideoVo> findPurchasesWithWhiteUser(Long userId);
+    List<VideoVo> findPurchasesWithWhiteUser();
 }

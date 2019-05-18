@@ -167,7 +167,7 @@ public class VideoServiceImpl implements VideoService {
         VideoVo videoVo;
         UserVo userVo = redisObjectHolder.getUserInfo(skey);
         if (redisObjectHolder.isWhiteUser(skey)) {
-            videoVo = videoMapper.selectOneVoWithWhiteUser(id, userVo.getId());
+            videoVo = videoMapper.selectOneVoWithWhiteUser(id);
         } else {
             videoVo = videoMapper.selectOneVoWithAuth(id, userVo != null ? userVo.getId() : null);
         }
@@ -287,7 +287,7 @@ public class VideoServiceImpl implements VideoService {
         UserVo userVo = redisObjectHolder.getUserInfo(skey);
         List<VideoVo> purchases;
         if (redisObjectHolder.isWhiteUser(skey)) {
-            purchases = videoMapper.findPurchasesWithWhiteUser(userVo.getId());
+            purchases = videoMapper.findPurchasesWithWhiteUser();
         } else {
             purchases = videoMapper.findPurchases(userVo.getId());
         }
