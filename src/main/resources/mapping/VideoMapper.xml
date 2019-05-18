@@ -45,6 +45,7 @@
     <result column="free_watch_time" property="freeWatchTime" jdbcType="INTEGER" />
     <result column="user_id" property="userId" jdbcType="BIGINT" />
     <result column="share_card" property="shareCard" jdbcType="VARCHAR" />
+    <result column="is_white_user" property="isWhiteUser" jdbcType="BOOLEAN" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, title, subtitle, price, cover_real_name, description_real_name,
@@ -480,7 +481,8 @@
     (select count(1) from t_statistics s where s.statistics_type = '003003' and s.business_id = v.id) as watched,
     (select count(1) from t_statistics s where s.statistics_type = '003004' and s.business_id = v.id) as purchased,
     (select count(1) from t_statistics s where s.statistics_type = '003005' and s.business_id = v.id) as accessed,
-    true as is_purchased
+    true as is_purchased,
+    true as is_white_user
     from t_video v
     left join t_video_classification vc on v.classification = vc.id
     where v.id = #{videoId,jdbcType=BIGINT}
@@ -492,10 +494,10 @@
       v.create_time, v.update_time, v.del_flag, v.classification, v.profit_share, v.status, v.cover_name,
       v.description_name, v.video_name, v.free_watch_time,
       vc.v_name as classification_name,
-      (select count(1) from t_statistics s where s.statistics_type = '003003' and s.business_id = v.id and s.user_id = #{userId,jdbcType=BIGINT}) as watched,
-      (select count(1) from t_statistics s where s.statistics_type = '003004' and s.business_id = v.id and s.user_id = #{userId,jdbcType=BIGINT}) as purchased,
-      (select count(1) from t_statistics s where s.statistics_type = '003005' and s.business_id = v.id and s.user_id = #{userId,jdbcType=BIGINT}) as accessed
-      ,true as is_purchased
+      0 as watched,
+      0 as purchased,
+      0 as accessed,
+      true as is_purchased
     from t_video v
     left join t_video_classification vc on v.classification = vc.id
     where v.del_flag = 0

@@ -48,6 +48,8 @@ public class VideoVo {
 
     private String shareCard;
 
+    private boolean isWhiteUser;
+
     public Long getId() {
         return id;
     }
@@ -238,5 +240,13 @@ public class VideoVo {
 
     public void setShareCard(String shareCard) {
         this.shareCard = shareCard;
+    }
+
+    public boolean getIsWhiteUser() {
+        return isWhiteUser;
+    }
+
+    public void setIsWhiteUser(boolean isWhiteUser) {
+        this.isWhiteUser = isWhiteUser;
     }
 }
