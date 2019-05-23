@@ -11,11 +11,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.Map;
 
-@Controller
+@RestController
 @RequestMapping("/wx")
 public class WxUserAuthController {
     protected static final Logger logger = LoggerFactory.getLogger(WxUserAuthController.class);
@@ -23,7 +24,6 @@ public class WxUserAuthController {
     private UserService userService;
 
     @RequestMapping("/auth")
-    @ResponseBody
     public String auth(String code, String skey) {
         try {
             AuthResult authResult = userService.auth(code, skey);
@@ -35,7 +35,6 @@ public class WxUserAuthController {
     }
 
     @RequestMapping("/saveUser")
-    @ResponseBody
     public String saveUser(AuthRequest request) {
         AuthResult authResult;
         try {
@@ -48,7 +47,6 @@ public class WxUserAuthController {
     }
 
     @RequestMapping("/getUser")
-    @ResponseBody
     public String getUser(String skey) {
         UserVo userVo = userService.getVoBySkey(skey);
         return JSON.toJSONString(userVo);

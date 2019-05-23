@@ -1,24 +1,20 @@
 package com.mq.wx.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.mq.base.GlobalConstants;
 import com.mq.model.Banner;
-import com.mq.model.Video;
 import com.mq.model.VideoClassification;
 import com.mq.query.BannerQuery;
 import com.mq.query.VideoClassificationQuery;
-import com.mq.query.VideoQuery;
 import com.mq.service.BasicConfigService;
 import com.mq.service.VideoService;
 import com.mq.vo.VideoVo;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/wx/index")
 public class IndexController {
     @Resource
@@ -27,7 +23,6 @@ public class IndexController {
     private VideoService videoService;
 
     @RequestMapping("/getClassifications")
-    @ResponseBody
     public String getClassifications() {
         VideoClassificationQuery query = new VideoClassificationQuery();
         query.setDelFlag(0);
@@ -36,14 +31,12 @@ public class IndexController {
     }
 
     @RequestMapping("/getVideos")
-    @ResponseBody
     public String getVideos() {
         List<VideoVo> videoVos = videoService.findReleases();
         return JSON.toJSONString(videoVos);
     }
 
     @RequestMapping("/getBanners")
-    @ResponseBody
     public String getBanners() {
         BannerQuery query = new BannerQuery();
         query.setDelFlag(0);
