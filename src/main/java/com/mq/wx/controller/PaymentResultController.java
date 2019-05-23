@@ -7,13 +7,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
-@Controller
+@RestController
 @RequestMapping("/wx")
 public class PaymentResultController {
     protected static final Logger logger = LoggerFactory.getLogger(PaymentResultController.class);
@@ -24,7 +25,6 @@ public class PaymentResultController {
 
 
     @RequestMapping(value = "/paymentResult", method = RequestMethod.POST)
-    @ResponseBody
     public String paymentResult(HttpServletRequest request) {
         String resp;
         try {
