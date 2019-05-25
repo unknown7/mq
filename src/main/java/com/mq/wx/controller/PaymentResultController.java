@@ -18,8 +18,8 @@ import java.io.InputStreamReader;
 @RequestMapping("/wx")
 public class PaymentResultController {
     protected static final Logger logger = LoggerFactory.getLogger(PaymentResultController.class);
-    private static final String success = "<xml><return_code>SUCCESS</return_code><return_msg>OK</return_msg></xml>";
-    private static final String fail = "<xml><return_code>FAIL</return_code><return_msg>FAIL</return_msg></xml>";
+    private static final String SUCCESS = "<xml><return_code>SUCCESS</return_code><return_msg>OK</return_msg></xml>";
+    private static final String FAIL = "<xml><return_code>FAIL</return_code><return_msg>FAIL</return_msg></xml>";
     @Resource
     private PaymentService paymentService;
 
@@ -36,10 +36,10 @@ public class PaymentResultController {
             }
             logger.info("支付结果通知，接收xml报文：" + builder);
             paymentService.paymentResultNotice(builder.toString());
-            resp = success;
+            resp = SUCCESS;
         } catch (Exception e) {
             logger.error("支付结果处理失败", e);
-            resp = fail;
+            resp = FAIL;
         }
         return resp;
     }
