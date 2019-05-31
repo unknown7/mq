@@ -8,6 +8,9 @@ import com.mq.query.VideoClassificationQuery;
 import com.mq.service.BasicConfigService;
 import com.mq.service.VideoService;
 import com.mq.vo.VideoVo;
+import com.mq.wx.vo.DefaultResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,6 +20,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/wx/index")
 public class IndexController {
+    protected static final Logger logger = LoggerFactory.getLogger(IndexController.class);
     @Resource
     private BasicConfigService basicConfigService;
     @Resource
@@ -42,5 +46,11 @@ public class IndexController {
         query.setDelFlag(0);
         List<Banner> banners = basicConfigService.findBanner(query);
         return JSON.toJSONString(banners);
+    }
+
+    @RequestMapping("/scene")
+    public String scene(String scene) {
+        logger.info("scene:" + scene);
+        return JSON.toJSONString(DefaultResponse.success(scene));
     }
 }

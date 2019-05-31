@@ -4,7 +4,6 @@ import com.mq.wx.vo.DefaultRequest;
 
 public class AuthRequest extends DefaultRequest {
     /**
-     * code             // 临时登录凭证
      * rawData          // 用户非敏感信息
      * signature        // 签名
      * encryptedData    // 用户敏感信息
@@ -12,24 +11,21 @@ public class AuthRequest extends DefaultRequest {
      *
      * appid            // appid
      * secret           // appsecret
-     * js_code          // 临时登录凭证（对应code）
      * grant_type       // 微信默认authorization_code
      */
-    private String code;
+    private String skey;
     private String rawData;
     private String signature;
     private String encryptedData;
     private String iv;
-
-    private String js_code;
     private String scene;
 
-    public String getCode() {
-        return code;
+    public String getSkey() {
+        return skey;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setSkey(String skey) {
+        this.skey = skey;
     }
 
     public String getRawData() {
@@ -62,14 +58,6 @@ public class AuthRequest extends DefaultRequest {
 
     public void setIv(String iv) {
         this.iv = iv;
-    }
-
-    public String getJs_code() {
-        return js_code;
-    }
-
-    public void setJs_code(String js_code) {
-        this.js_code = js_code;
     }
 
     public String getScene() {

@@ -54,7 +54,7 @@ public class StatisticsServiceImpl implements StatisticsService {
         Date now = new Date();
         Statistics statistics = new Statistics();
         statistics.setBusinessId(id);
-        statistics.setUserId(userVo.getId());
+        statistics.setUserId(userVo != null ? userVo.getId() : null);
         statistics.setSkey(skey);
         statistics.setCreateTime(now);
         statistics.setUpdateTime(now);
