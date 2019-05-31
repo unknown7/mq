@@ -8,28 +8,28 @@ $(function () {
                 "data": "title",
                 "class": "text-center"
             },
-            {
-                "data": "subtitle",
-                "class": "text-center",
-                "render": function (data, type, row) {
-                    var length = 0;
-                    var result = data;
-                    var i;
-                    if (data.length > 30) {
-                        for (i = 0; length < 60 && i < data.length; i++) {
-                            if (data.charCodeAt(i) > 127 || data.charCodeAt(i) == 94) {
-                                length += 2;
-                            } else {
-                                length += 1;
-                            }
-                        }
-                        if (length >= 60) {
-                            result = data.substring(0, i - 1) + "...";
-                        }
-                    }
-                    return result;
-                }
-            },
+            // {
+            //     "data": "subtitle",
+            //     "class": "text-center",
+            //     "render": function (data, type, row) {
+            //         var length = 0;
+            //         var result = data;
+            //         var i;
+            //         if (data.length > 30) {
+            //             for (i = 0; length < 60 && i < data.length; i++) {
+            //                 if (data.charCodeAt(i) > 127 || data.charCodeAt(i) == 94) {
+            //                     length += 2;
+            //                 } else {
+            //                     length += 1;
+            //                 }
+            //             }
+            //             if (length >= 60) {
+            //                 result = data.substring(0, i - 1) + "...";
+            //             }
+            //         }
+            //         return result;
+            //     }
+            // },
             {
                 "data": "price",
                 "class": "text-center",
@@ -44,13 +44,13 @@ $(function () {
                     return '<img class="tooltipa" src="' + image + data + '" width="30" height="30">';
                 }
             },
-            {
-                "data": "descriptionRealName",
-                "class": "text-center",
-                "render": function (data, type, row) {
-                    return '<img class="tooltipa" src="' + image + data + '" width="30" height="30">';
-                }
-            },
+            // {
+            //     "data": "descriptionRealName",
+            //     "class": "text-center",
+            //     "render": function (data, type, row) {
+            //         return '<img class="tooltipa" src="' + image + data + '" width="30" height="30">';
+            //     }
+            // },
             {
                 "data": "classificationName",
                 "class": "text-center"

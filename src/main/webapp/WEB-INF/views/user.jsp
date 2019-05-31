@@ -8,7 +8,7 @@
 <head>
     <jsp:include page="common.jsp"/>
 </head>
-<body class="no-skin" style="background:transparent;">
+<body class="no-skin" style="background:transparent;width: 99%;">
 <div id="page-wrapper">
     <div class="row">
         <form class="form-inline col-sm-11" id="search_form">

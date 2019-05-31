@@ -41,7 +41,25 @@ $(function () {
             },
             {
                 "data": "desc",
-                "class": "text-center"
+                "class": "text-center",
+                "render": function(data, type, row) {
+                    var length = 0;
+                    var result = data;
+                    var i;
+                    if (data.length > 50) {
+                        for (i = 0; length < 100 && i < data.length; i++) {
+                            if (data.charCodeAt(i) > 127 || data.charCodeAt(i) == 94) {
+                                length += 2;
+                            } else {
+                                length += 1;
+                            }
+                        }
+                        if (length >= 100) {
+                            result = data.substring(0, i - 1) + "...";
+                        }
+                    }
+                    return result;
+                }
             },
             {
                 "data": "id",

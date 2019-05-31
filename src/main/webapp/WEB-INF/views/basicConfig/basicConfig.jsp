@@ -7,7 +7,7 @@
 <head>
     <jsp:include page="../common.jsp"/>
 </head>
-<body class="no-skin" style="background:transparent;">
+<body class="no-skin" style="background:transparent;width: 99%;">
 <div class="main-container">
     <div class="main-content">
         <div class="row col-sm-12">
