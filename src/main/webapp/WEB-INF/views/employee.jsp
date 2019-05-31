@@ -8,7 +8,7 @@
 <head>
     <jsp:include page="common.jsp"/>
 </head>
-<body class="no-skin" style="background:transparent;">
+<body class="no-skin" style="background:transparent;width: 99%;">
 <div id="page-wrapper">
     <div class="row">
         <form class="form-inline col-sm-11" id="search_form">
@@ -64,7 +64,7 @@
                     <th width="5%" class="min-mobile-l">电话</th>
                     <th width="10%" class="min-mobile-l">邮箱</th>
                     <th width="10%" class="min-mobile-l">微信</th>
-                    <th width="8%" class="min-mobile-l">操作</th>
+                    <th width="10%" class="min-mobile-l">操作</th>
                 </tr>
                 </thead>
             </table>

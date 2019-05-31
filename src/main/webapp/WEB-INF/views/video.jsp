@@ -8,7 +8,7 @@
 <head>
     <jsp:include page="common.jsp"/>
 </head>
-<body class="no-skin" style="background:transparent;">
+<body class="no-skin" style="background:transparent;width: 99%;">
 <div id="page-wrapper">
     <div class="row">
         <form class="form-inline col-sm-11" id="search_form">
@@ -42,17 +42,17 @@
                 <thead>
                 <tr>
                     <th width="9%" class="min-mobile-l">标题</th>
-                    <th width="12%" class="min-mobile-l">介绍</th>
+                    <%--<th width="12%" class="min-mobile-l">介绍</th>--%>
                     <th width="3%" class="min-mobile-l">价格</th>
                     <th width="3%" class="min-mobile-l">封面</th>
-                    <th width="3%" class="min-mobile-l">详情</th>
-                    <th width="4%" class="min-mobile-l">分类</th>
+                    <%--<th width="3%" class="min-mobile-l">详情</th>--%>
+                    <th width="6%" class="min-mobile-l">分类</th>
                     <th width="4%" class="min-mobile-l">分享提成</th>
                     <th width="6%" class="min-mobile-l">免费观看时长</th>
-                    <th width="3%" class="min-mobile-l">访问量</th>
-                    <th width="3%" class="min-mobile-l">观看量</th>
-                    <th width="4%" class="min-mobile-l">已购人数</th>
-                    <th width="8%" class="min-mobile-l">操作</th>
+                    <th width="7%" class="min-mobile-l">访问量</th>
+                    <th width="7%" class="min-mobile-l">观看量</th>
+                    <th width="7%" class="min-mobile-l">已购人数</th>
+                    <th width="7%" class="min-mobile-l">操作</th>
                 </tr>
                 </thead>
             </table>
