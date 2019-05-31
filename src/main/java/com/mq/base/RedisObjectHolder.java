@@ -2,6 +2,7 @@ package com.mq.base;
 
 import com.alibaba.fastjson.JSON;
 import com.mq.vo.UserVo;
+import com.mq.wx.vo.auth.TemporaryUser;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -54,9 +55,20 @@ public class RedisObjectHolder {
         return accessToken;
     }
 
-    public void setTemporaryUser(String skey) {
+    public void setTemporaryUser(String skey, String sessionKey) {
         assert !StringUtils.isEmpty(skey);
-        stringRedisTemplate.opsForHash().put(Enums.RedisKey.TEMPORARY_USER.getKey(), skey, "");
+        stringRedisTemplate.opsForHash().put(Enums.RedisKey.TEMPORARY_USER.getKey(), skey, sessionKey);
+    }
+
+    public TemporaryUser getTemporaryUser(String skey) {
+        TemporaryUser temporaryUser;
+        Object o = stringRedisTemplate.opsForHash().get(Enums.RedisKey.TEMPORARY_USER.getKey(), skey);
+        if (o != null) {
+            temporaryUser = JSON.parseObject(String.valueOf(o), TemporaryUser.class);
+        } else {
+            temporaryUser = null;
+        }
+        return temporaryUser;
     }
 
     public boolean isTemporaryUser(String skey) {
