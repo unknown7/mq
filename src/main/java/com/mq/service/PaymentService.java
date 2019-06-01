@@ -11,7 +11,7 @@ public interface PaymentService {
                                 BigDecimal usedPoints,
                                 BigDecimal price,
                                 BigDecimal originPrice,
-                                String scene,
+                                Long shareCardId,
                                 String remoteAddr) throws Exception;
     void paymentResultNotice(String xml) throws Exception;
 }

@@ -1,7 +1,6 @@
 package com.mq.service.impl;
 
 import com.github.pagehelper.PageHelper;
-import com.google.common.collect.Maps;
 import com.mq.base.Enums;
 import com.mq.base.GlobalConstants;
 import com.mq.base.RedisObjectHolder;
@@ -9,7 +8,6 @@ import com.mq.mapper.ShareCardMapper;
 import com.mq.mapper.VideoMapper;
 import com.mq.model.ShareCard;
 import com.mq.model.Video;
-import com.mq.query.DefaultQuery;
 import com.mq.query.VideoQuery;
 import com.mq.service.VideoService;
 import com.mq.util.FileUtil;
@@ -29,7 +27,6 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -258,9 +255,7 @@ public class VideoServiceImpl implements VideoService {
             shareCard.setDelFlag(0);
             shareCardMapper.insertSelective(shareCard);
             String page = "pages/video/index";
-            Map<String, Object> scene = Maps.newHashMap();
-            scene.put("shareCardId", shareCard.getId());
-            miniProgramCode = wxAPI.getUnlimited(page, scene);
+            miniProgramCode = wxAPI.getUnlimited(page, shareCard.getId());
         }
         return miniProgramCode;
     }
@@ -300,5 +295,12 @@ public class VideoServiceImpl implements VideoService {
         query.setDelFlag(0);
         List<VideoVo> videoVos = videoMapper.selectByQuery(query);
         return videoVos;
+    }
+
+    @Override
+    public VideoVo findByShareCardId(Long shareCardId) {
+        ShareCard shareCard = shareCardMapper.selectByPrimaryKey(shareCardId);
+        VideoVo videoVo = videoMapper.selectVoByPrimaryKey(shareCard.getGoodsId());
+        return videoVo;
     }
 }

@@ -46,4 +46,6 @@ public interface VideoService {
     List<VideoVo> findPurchases(String skey);
 
     List<VideoVo> findAll();
+
+    VideoVo findByShareCardId(Long shareCardId);
 }

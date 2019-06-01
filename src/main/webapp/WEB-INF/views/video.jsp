@@ -52,7 +52,7 @@
                     <th width="7%" class="min-mobile-l">访问量</th>
                     <th width="7%" class="min-mobile-l">观看量</th>
                     <th width="7%" class="min-mobile-l">已购人数</th>
-                    <th width="7%" class="min-mobile-l">操作</th>
+                    <th width="9%" class="min-mobile-l">操作</th>
                 </tr>
                 </thead>
             </table>

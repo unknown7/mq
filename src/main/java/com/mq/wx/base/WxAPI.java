@@ -77,16 +77,16 @@ public class WxAPI {
      * 生成小程序码
      *
      * @param page
-     * @param scene
+     * @param shareCardId
      * @return
      */
-    public String getUnlimited(String page, Map<String, Object> scene) {
+    public String getUnlimited(String page, Long shareCardId) {
         String accessToken = getAccessToken();
         StringBuffer domain = new StringBuffer("https://api.weixin.qq.com/wxa/getwxacodeunlimit");
         domain.append("?access_token=").append(accessToken);
         Map<String, Object> params = Maps.newHashMap();
         params.put("page", page);
-        params.put("scene", MapUtil.map2str(scene));
+        params.put("scene", shareCardId);
         params.put("is_hyaline", true);
         ResponseEntity<Resource> responseEntity = http.postForEntity(domain.toString(), params, Resource.class, MediaType.APPLICATION_JSON_UTF8);
         MediaType contentType = responseEntity.getHeaders().getContentType();
