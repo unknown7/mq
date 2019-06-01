@@ -112,7 +112,7 @@ public class SpringBootStartApplicationTest {
         Map<String, Object> scene = Maps.newHashMap();
         scene.put("userId", 1L);
         scene.put("videoId", 1L);
-        wxAPI.getUnlimited(page, scene);
+//        wxAPI.getUnlimited(page, scene);
     }
 
     @Test
@@ -178,8 +178,8 @@ public class SpringBootStartApplicationTest {
         Map<String, Object> scene = Maps.newHashMap();
         scene.put("skey", "1");
         scene.put("videoId", "16");
-        String qrcodePath = wxAPI.getUnlimited("pages/index/index", scene);
-        System.err.println(qrcodePath);
+//        String qrcodePath = wxAPI.getUnlimited("pages/index/index", scene);
+//        System.err.println(qrcodePath);
     }
 
     @Test

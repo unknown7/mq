@@ -30,13 +30,13 @@ public class PaymentController {
                            String usedPoints,
                            String price,
                            String originPrice,
-                           String scene,
+                           Long shareCardId,
                            HttpServletRequest request)
     {
         DefaultResponse response;
         try {
             String remoteAddr = request.getRemoteAddr();
-            logger.info("用户：" + skey + "购买商品：" + videoId + "，请求统一下单，scene=" + scene);
+            logger.info("用户：" + skey + "购买商品：" + videoId + "，请求统一下单，shareCardId=" + shareCardId);
             UnifiedOrderVo unifiedOrderVo = paymentService.unifiedOrder(
                     skey,
                     videoId,
@@ -44,7 +44,7 @@ public class PaymentController {
                     new BigDecimal(usedPoints),
                     new BigDecimal(price),
                     new BigDecimal(originPrice),
-                    scene,
+                    shareCardId,
                     remoteAddr
             );
             response = DefaultResponse.success(unifiedOrderVo);

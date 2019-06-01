@@ -65,7 +65,7 @@ public class PaymentServiceImpl implements PaymentService {
                                        BigDecimal usedPoints,
                                        BigDecimal price,
                                        BigDecimal originPrice,
-                                       String scene,
+                                       Long shareCardId,
                                        String remoteAddr) throws Exception
     {
         assert !StringUtils.isEmpty(skey);
@@ -96,9 +96,8 @@ public class PaymentServiceImpl implements PaymentService {
         order.setGoodsPrice(videoVo.getPrice());
         order.setUserId(user.getId());
         order.setSkey(skey);
-        if (!StringUtils.isEmpty(scene)) {
-            Map<String, Object> sceneMap = MapUtil.str2map(scene);
-            ShareCard shareCard = shareCardMapper.selectByPrimaryKey(Long.valueOf(sceneMap.get("shareCardId").toString()));
+        if (shareCardId != null) {
+            ShareCard shareCard = shareCardMapper.selectByPrimaryKey(shareCardId);
             Long referrer = shareCard.getUserId();
             order.setReferrer(referrer);
         }

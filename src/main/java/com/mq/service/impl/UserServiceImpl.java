@@ -65,10 +65,9 @@ public class UserServiceImpl implements UserService {
         /**
          * 推荐人
          */
-        String scene = request.getScene();
-        if (!StringUtils.isEmpty(scene)) {
-            Map<String, Object> sceneMap = MapUtil.str2map(scene);
-            ShareCard shareCard = shareCardMapper.selectByPrimaryKey(Long.valueOf(sceneMap.get("shareCardId").toString()));
+        Long shareCardId = request.getShareCardId();
+        if (shareCardId != null) {
+            ShareCard shareCard = shareCardMapper.selectByPrimaryKey(shareCardId);
             Long referrer = shareCard.getUserId();
             user.setReferrer(referrer);
         }
