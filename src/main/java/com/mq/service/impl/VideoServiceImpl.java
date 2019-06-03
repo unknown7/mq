@@ -5,8 +5,10 @@ import com.mq.base.Enums;
 import com.mq.base.GlobalConstants;
 import com.mq.base.RedisObjectHolder;
 import com.mq.mapper.ShareCardMapper;
+import com.mq.mapper.VerifySwitchMapper;
 import com.mq.mapper.VideoMapper;
 import com.mq.model.ShareCard;
+import com.mq.model.VerifySwitch;
 import com.mq.model.Video;
 import com.mq.query.VideoQuery;
 import com.mq.service.VideoService;
@@ -39,6 +41,8 @@ public class VideoServiceImpl implements VideoService {
     private RedisObjectHolder redisObjectHolder;
     @Resource
     private ShareCardMapper shareCardMapper;
+    @Resource
+    private VerifySwitchMapper verifySwitchMapper;
 
     @Override
     public Page<VideoVo> findPage(VideoQuery query) {
@@ -280,8 +284,9 @@ public class VideoServiceImpl implements VideoService {
     @Override
     public List<VideoVo> findPurchases(String skey) {
         UserVo userVo = redisObjectHolder.getUserInfo(skey);
+        VerifySwitch verifySwitch = verifySwitchMapper.selectByPrimaryKey(1);
         List<VideoVo> purchases;
-        if (redisObjectHolder.isWhiteUser(skey)) {
+        if (redisObjectHolder.isWhiteUser(skey) || verifySwitch.getVerifySwitch()) {
             purchases = videoMapper.findPurchasesWithWhiteUser();
         } else {
             purchases = videoMapper.findPurchases(userVo.getId());
