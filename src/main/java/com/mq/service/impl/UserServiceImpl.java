@@ -11,10 +11,7 @@ import com.mq.model.User;
 import com.mq.query.UserQuery;
 import com.mq.service.UserService;
 import com.mq.util.MD5;
-import com.mq.util.MapUtil;
-import com.mq.util.PageUtil;
 import com.mq.util.WxDecrptUtil;
-import com.mq.vo.Page;
 import com.mq.vo.UserVo;
 import com.mq.wx.base.WxAPI;
 import com.mq.wx.vo.auth.AuthRequest;
@@ -31,7 +28,6 @@ import org.springframework.util.StringUtils;
 import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class UserServiceImpl implements UserService {

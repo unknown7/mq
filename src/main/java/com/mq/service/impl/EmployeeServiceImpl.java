@@ -8,8 +8,6 @@ import com.mq.model.Employee;
 import com.mq.query.EmployeeQuery;
 import com.mq.service.EmployeeService;
 import com.mq.util.*;
-import com.mq.vo.Page;
-import org.apache.commons.codec.digest.Md5Crypt;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -19,7 +17,6 @@ import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 
 @Service

@@ -3,10 +3,7 @@ package com.mq.service;
 import com.github.pagehelper.PageInfo;
 import com.mq.model.Employee;
 import com.mq.query.EmployeeQuery;
-import com.mq.vo.Page;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
 
 public interface EmployeeService {
 

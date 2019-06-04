@@ -6,7 +6,6 @@ import com.mq.base.BaseController;
 import com.mq.model.User;
 import com.mq.query.UserQuery;
 import com.mq.service.UserService;
-import com.mq.vo.Page;
 import com.mq.vo.UserVo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

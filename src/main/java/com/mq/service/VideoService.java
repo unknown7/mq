@@ -3,7 +3,6 @@ package com.mq.service;
 import com.github.pagehelper.PageInfo;
 import com.mq.model.Video;
 import com.mq.query.VideoQuery;
-import com.mq.vo.Page;
 import com.mq.vo.VideoVo;
 import org.springframework.web.multipart.MultipartFile;
 
