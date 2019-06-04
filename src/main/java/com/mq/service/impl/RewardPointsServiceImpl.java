@@ -10,7 +10,7 @@ import javax.annotation.Resource;
 import java.math.BigDecimal;
 
 @Service
-public class RewardPointsServiceimpl implements RewardPointsService {
+public class RewardPointsServiceImpl implements RewardPointsService {
     @Resource
     private RewardPointsMapper rewardPointsMapper;
     @Resource
