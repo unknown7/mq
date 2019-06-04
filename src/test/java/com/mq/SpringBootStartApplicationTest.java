@@ -1,14 +1,19 @@
 package com.mq;
 
 import com.alibaba.fastjson.JSON;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Maps;
 import com.mq.base.Enums;
 import com.mq.base.GlobalConstants;
 import com.mq.base.Http;
 import com.mq.mapper.OrderMapper;
 import com.mq.mapper.RewardPointsMapper;
+import com.mq.mapper.VideoClassificationMapper;
 import com.mq.model.Order;
 import com.mq.model.ShareCard;
+import com.mq.model.VideoClassification;
+import com.mq.query.VideoClassificationQuery;
 import com.mq.util.DateUtil;
 import com.mq.util.MapUtil;
 import com.mq.util.OrderNoGenerator;
@@ -67,6 +72,8 @@ public class SpringBootStartApplicationTest {
     private RewardPointsMapper rewardPointsMapper;
     @Resource
     private OrderMapper orderMapper;
+    @Resource
+    private VideoClassificationMapper videoClassificationMapper;
 
     @Test
     public void contextLoads() {
@@ -348,6 +355,16 @@ public class SpringBootStartApplicationTest {
         order.setUpdateTime(now);
         order.setDelFlag(0);
         orderMapper.insertSelective(order);
+    }
+
+    @Test
+    public void pagination() {
+        VideoClassificationQuery query = new VideoClassificationQuery();
+        query.setDelFlag(0);
+        PageHelper.startPage(1, 10);
+        List<VideoClassification> videoClassifications = videoClassificationMapper.selectByQuery(query);
+        PageInfo<VideoClassification> pageInfo = new PageInfo<>(videoClassifications);
+        System.err.println(pageInfo);
     }
 
     public static void main(String[] args) throws Exception {

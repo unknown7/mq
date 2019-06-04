@@ -1,5 +1,6 @@
 package com.mq.service;
 
+import com.github.pagehelper.PageInfo;
 import com.mq.model.User;
 import com.mq.query.UserQuery;
 import com.mq.vo.Page;
@@ -57,7 +58,7 @@ public interface UserService {
 
     User getBySkey(String skey);
 
-    Page<UserVo> findPage(UserQuery query);
+    PageInfo<UserVo> findPage(UserQuery query);
 
     User getById(Long id);
 }

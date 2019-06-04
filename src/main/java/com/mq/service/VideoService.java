@@ -1,5 +1,6 @@
 package com.mq.service;
 
+import com.github.pagehelper.PageInfo;
 import com.mq.model.Video;
 import com.mq.query.VideoQuery;
 import com.mq.vo.Page;
@@ -10,7 +11,7 @@ import java.io.IOException;
 import java.util.List;
 
 public interface VideoService {
-    Page<VideoVo> findPage(VideoQuery query);
+    PageInfo<VideoVo> findPage(VideoQuery query);
 
     void save(String id,
               String title,

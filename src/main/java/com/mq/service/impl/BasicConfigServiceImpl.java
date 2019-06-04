@@ -1,6 +1,7 @@
 package com.mq.service.impl;
 
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.mq.base.GlobalConstants;
 import com.mq.mapper.BannerMapper;
 import com.mq.mapper.VideoClassificationMapper;
@@ -35,14 +36,10 @@ public class BasicConfigServiceImpl implements BasicConfigService {
     private BannerMapper bannerMapper;
 
     @Override
-    public Page<VideoClassification> findClassificationPageByQuery(VideoClassificationQuery query) {
+    public PageInfo<VideoClassification> findClassificationPageByQuery(VideoClassificationQuery query) {
         PageHelper.startPage(query.getPage(), query.getLength());
-        Page<VideoClassification> page = PageUtil.generatePage(
-                videoClassificationMapper.selectByQuery(query),
-                videoClassificationMapper.selectNums(query),
-                query
-        );
-        return page;
+        PageInfo<VideoClassification> pageInfo = new PageInfo<>(videoClassificationMapper.selectByQuery(query));
+        return pageInfo;
     }
 
     @Override
@@ -92,14 +89,10 @@ public class BasicConfigServiceImpl implements BasicConfigService {
     }
 
     @Override
-    public Page<BannerVo> findBannerPage(BannerQuery query) {
+    public PageInfo<BannerVo> findBannerPage(BannerQuery query) {
         PageHelper.startPage(query.getPage(), query.getLength());
-        Page<BannerVo> page = PageUtil.generatePage(
-                bannerMapper.selectVoByQuery(query),
-                bannerMapper.selectNums(query),
-                query
-        );
-        return page;
+        PageInfo<BannerVo> pageInfo = new PageInfo<>(bannerMapper.selectVoByQuery(query));
+        return pageInfo;
     }
 
     @Override

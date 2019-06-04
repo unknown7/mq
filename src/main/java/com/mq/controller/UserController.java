@@ -1,6 +1,7 @@
 package com.mq.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.github.pagehelper.PageInfo;
 import com.mq.base.BaseController;
 import com.mq.model.User;
 import com.mq.query.UserQuery;
@@ -27,7 +28,7 @@ public class UserController extends BaseController {
     @RequestMapping("/find")
     @ResponseBody
     public String find(UserQuery query) {
-        Page<UserVo> result = userService.findPage(query);
+        PageInfo<UserVo> result = userService.findPage(query);
         return JSON.toJSONString(result);
     }
 

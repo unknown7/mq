@@ -1,6 +1,7 @@
 package com.mq.service.impl;
 
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.mq.base.GlobalConstants;
 import com.mq.mapper.EmployeeMapper;
 import com.mq.model.Employee;
@@ -18,6 +19,7 @@ import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -26,14 +28,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     private EmployeeMapper employeeMapper;
 
     @Override
-    public Page<Employee> findPage(EmployeeQuery query) {
+    public PageInfo<Employee> findPage(EmployeeQuery query) {
         PageHelper.startPage(query.getPage(), query.getLength());
-        Page<Employee> page = PageUtil.generatePage(
-                employeeMapper.selectByQuery(query),
-                employeeMapper.selectNums(query),
-                query
-        );
-        return page;
+        PageInfo<Employee> pageInfo = new PageInfo<>(employeeMapper.selectByQuery(query));
+        return pageInfo;
     }
 
     @Override

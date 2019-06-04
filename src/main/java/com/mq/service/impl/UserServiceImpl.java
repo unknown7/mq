@@ -2,6 +2,7 @@ package com.mq.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.mq.base.RedisObjectHolder;
 import com.mq.mapper.ShareCardMapper;
 import com.mq.mapper.UserMapper;
@@ -242,14 +243,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<UserVo> findPage(UserQuery query) {
+    public PageInfo<UserVo> findPage(UserQuery query) {
         PageHelper.startPage(query.getPage(), query.getLength());
-        Page<UserVo> page = PageUtil.generatePage(
-                userMapper.selectVoByQuery(query),
-                userMapper.selectNums(query),
-                query
-        );
-        return page;
+        PageInfo<UserVo> pageInfo = new PageInfo<>(userMapper.selectVoByQuery(query));
+        return pageInfo;
     }
 
     @Override

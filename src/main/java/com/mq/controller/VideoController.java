@@ -1,6 +1,7 @@
 package com.mq.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.github.pagehelper.PageInfo;
 import com.mq.base.BaseController;
 import com.mq.model.Video;
 import com.mq.model.VideoClassification;
@@ -35,7 +36,7 @@ public class VideoController extends BaseController {
     @RequestMapping("/findPage")
     @ResponseBody
     public String findPage(VideoQuery query) {
-        Page<VideoVo> result = videoService.findPage(query);
+        PageInfo<VideoVo> result = videoService.findPage(query);
         return JSON.toJSONString(result);
     }
 

@@ -1,6 +1,7 @@
 package com.mq.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.github.pagehelper.PageInfo;
 import com.mq.base.BaseController;
 import com.mq.model.Employee;
 import com.mq.query.EmployeeQuery;
@@ -37,7 +38,7 @@ public class EmployeeController extends BaseController {
     @RequestMapping("/findPage")
     @ResponseBody
     public String find(HttpServletRequest request, EmployeeQuery query) {
-        Page<Employee> page = employeeService.findPage(query);
+        PageInfo<Employee> page = employeeService.findPage(query);
         return JSON.toJSONString(page);
     }
 

@@ -1,6 +1,7 @@
 package com.mq.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.github.pagehelper.PageInfo;
 import com.mq.base.BaseController;
 import com.mq.model.Banner;
 import com.mq.model.VideoClassification;
@@ -32,7 +33,7 @@ public class BasicConfigController extends BaseController {
     @RequestMapping("/findClassification")
     @ResponseBody
     public String findClassification(HttpServletRequest request, VideoClassificationQuery query) {
-        Page<VideoClassification> page = basicConfigService.findClassificationPageByQuery(query);
+        PageInfo<VideoClassification> page = basicConfigService.findClassificationPageByQuery(query);
         return JSON.toJSONString(page);
     }
 
@@ -70,7 +71,7 @@ public class BasicConfigController extends BaseController {
     @RequestMapping("/findBannerPage")
     @ResponseBody
     public String findBannerPage(HttpServletRequest request, BannerQuery query) {
-        Page<BannerVo> page = basicConfigService.findBannerPage(query);
+        PageInfo<BannerVo> page = basicConfigService.findBannerPage(query);
         return JSON.toJSONString(page);
     }
 
