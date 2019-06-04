@@ -1,6 +1,7 @@
 package com.mq.service.impl;
 
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.mq.mapper.OrderMapper;
 import com.mq.model.Order;
 import com.mq.query.OrderQuery;
@@ -10,6 +11,7 @@ import com.mq.vo.Page;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -17,13 +19,9 @@ public class OrderServiceImpl implements OrderService {
     private OrderMapper orderMapper;
 
     @Override
-    public Page<Order> findPage(OrderQuery query) {
+    public PageInfo<Order> findPage(OrderQuery query) {
         PageHelper.startPage(query.getPage(), query.getLength());
-        Page<Order> page = PageUtil.generatePage(
-                orderMapper.selectByQuery(query),
-                orderMapper.selectNums(query),
-                query
-        );
-        return page;
+        PageInfo<Order> pageInfo = new PageInfo<>(orderMapper.selectByQuery(query));
+        return pageInfo;
     }
 }

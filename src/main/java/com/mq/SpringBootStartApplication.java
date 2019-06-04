@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.io.ClassPathResource;
 
-@SpringBootApplication(exclude = PageHelperAutoConfiguration.class)
+@SpringBootApplication
 @MapperScan("com.mq.mapper")
 public class SpringBootStartApplication extends SpringBootServletInitializer {
     public static void main(String[] args) {

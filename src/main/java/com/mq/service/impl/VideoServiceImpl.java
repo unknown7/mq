@@ -1,6 +1,7 @@
 package com.mq.service.impl;
 
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.mq.base.Enums;
 import com.mq.base.GlobalConstants;
 import com.mq.base.RedisObjectHolder;
@@ -45,14 +46,10 @@ public class VideoServiceImpl implements VideoService {
     private VerifySwitchMapper verifySwitchMapper;
 
     @Override
-    public Page<VideoVo> findPage(VideoQuery query) {
+    public PageInfo<VideoVo> findPage(VideoQuery query) {
         PageHelper.startPage(query.getPage(), query.getLength());
-        Page<VideoVo> page = PageUtil.generatePage(
-                videoMapper.selectByQuery(query),
-                videoMapper.selectNums(query),
-                query
-        );
-        return page;
+        PageInfo<VideoVo> pageInfo = new PageInfo<>(videoMapper.selectByQuery(query));
+        return pageInfo;
     }
 
     @Override

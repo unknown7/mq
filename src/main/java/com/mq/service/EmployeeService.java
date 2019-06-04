@@ -1,5 +1,6 @@
 package com.mq.service;
 
+import com.github.pagehelper.PageInfo;
 import com.mq.model.Employee;
 import com.mq.query.EmployeeQuery;
 import com.mq.vo.Page;
@@ -9,7 +10,7 @@ import java.io.IOException;
 
 public interface EmployeeService {
 
-    Page<Employee> findPage(EmployeeQuery query);
+    PageInfo<Employee> findPage(EmployeeQuery query);
 
     void save(String id,
               String username,

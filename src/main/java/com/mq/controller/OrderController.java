@@ -1,6 +1,7 @@
 package com.mq.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.github.pagehelper.PageInfo;
 import com.mq.model.Order;
 import com.mq.query.OrderQuery;
 import com.mq.service.OrderService;
@@ -25,7 +26,7 @@ public class OrderController {
     @RequestMapping("/find")
     @ResponseBody
     public String find(OrderQuery query) {
-        Page<Order> result = orderService.findPage(query);
+        PageInfo<Order> result = orderService.findPage(query);
         return JSON.toJSONString(result);
     }
 }
