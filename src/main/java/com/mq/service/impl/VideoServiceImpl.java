@@ -14,8 +14,6 @@ import com.mq.model.Video;
 import com.mq.query.VideoQuery;
 import com.mq.service.VideoService;
 import com.mq.util.FileUtil;
-import com.mq.util.PageUtil;
-import com.mq.vo.Page;
 import com.mq.vo.UserVo;
 import com.mq.vo.VideoVo;
 import com.mq.wx.base.WxAPI;

@@ -3,7 +3,6 @@ package com.mq.service;
 import com.github.pagehelper.PageInfo;
 import com.mq.model.User;
 import com.mq.query.UserQuery;
-import com.mq.vo.Page;
 import com.mq.vo.UserVo;
 import com.mq.wx.vo.auth.AuthRequest;
 import com.mq.wx.vo.auth.AuthResult;

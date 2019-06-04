@@ -9,7 +9,6 @@ import com.mq.query.VideoClassificationQuery;
 import com.mq.query.VideoQuery;
 import com.mq.service.BasicConfigService;
 import com.mq.service.VideoService;
-import com.mq.vo.Page;
 import com.mq.vo.VideoVo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

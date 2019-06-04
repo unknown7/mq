@@ -9,7 +9,6 @@ import com.mq.query.BannerQuery;
 import com.mq.query.VideoClassificationQuery;
 import com.mq.service.BasicConfigService;
 import com.mq.vo.BannerVo;
-import com.mq.vo.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
