@@ -253,7 +253,7 @@ public class VideoServiceImpl implements VideoService {
             shareCard.setUpdateTime(now);
             shareCard.setDelFlag(0);
             shareCardMapper.insertSelective(shareCard);
-            String page = "pages/video/index";
+            String page = "pages/index/index";
             miniProgramCode = wxAPI.getUnlimited(page, shareCard.getId());
         }
         return miniProgramCode;
