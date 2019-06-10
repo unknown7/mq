@@ -85,7 +85,7 @@ public class WxAPI {
         StringBuffer domain = new StringBuffer("https://api.weixin.qq.com/wxa/getwxacodeunlimit");
         domain.append("?access_token=").append(accessToken);
         Map<String, Object> params = Maps.newHashMap();
-//        params.put("page", page);
+        params.put("page", page);
         params.put("scene", shareCardId);
         params.put("is_hyaline", true);
         ResponseEntity<Resource> responseEntity = http.postForEntity(domain.toString(), params, Resource.class, MediaType.APPLICATION_JSON_UTF8);
