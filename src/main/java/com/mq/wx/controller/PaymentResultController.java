@@ -23,7 +23,6 @@ public class PaymentResultController {
     @Resource
     private PaymentService paymentService;
 
-
     @RequestMapping(value = "/paymentResult", method = RequestMethod.POST)
     public String paymentResult(HttpServletRequest request) {
         String resp;
