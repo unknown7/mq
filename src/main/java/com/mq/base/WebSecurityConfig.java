@@ -34,7 +34,6 @@ public class WebSecurityConfig implements WebMvcConfigurer {
         registry.addViewController("/notFound").setViewName("redirect:/index");
     }
 
-
     @Bean
     public WebServerFactoryCustomizer<ConfigurableServletWebServerFactory> containerCustomizer() {
         return container -> {
