@@ -5,6 +5,7 @@ import com.google.common.collect.Maps;
 import com.mq.mapper.EmpMenuMapper;
 import com.mq.mapper.MenuMapper;
 import com.mq.model.EmpMenu;
+import com.mq.model.Menu;
 import com.mq.service.MenuService;
 import com.mq.vo.MenuTree;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class MenuServiceImpl implements MenuService {
@@ -76,6 +78,21 @@ public class MenuServiceImpl implements MenuService {
                 list.add(empMenu);
             }
             empMenuMapper.insertBatch(list);
+        }
+    }
+
+    @Override
+    @Transactional
+    public void transaction() {
+        Menu menu = new Menu();
+        menu.setId(19L);
+        menu.setmName("test");
+        menuMapper.updateByPrimaryKeySelective(menu);
+        System.err.println("已更新，等待sleep..");
+        try {
+            TimeUnit.SECONDS.sleep(20);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 }

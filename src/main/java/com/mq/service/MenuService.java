@@ -12,4 +12,6 @@ public interface MenuService {
     List<Map<String, Object>> selectTreeView(Long employeeId);
 
     void saveRight(String ids, Long employeeId);
+
+    void transaction();
 }
