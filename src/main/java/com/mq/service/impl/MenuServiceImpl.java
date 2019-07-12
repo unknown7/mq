@@ -83,16 +83,19 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     @Transactional
-    public void transaction() {
+    public void transaction(int i) {
         Menu menu = new Menu();
         menu.setId(19L);
         menu.setmName("test");
         menuMapper.updateByPrimaryKeySelective(menu);
-        System.err.println("已更新，等待sleep..");
-        try {
-            TimeUnit.SECONDS.sleep(20);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        System.err.println(i + "已更新");
+        if (i == 0) {
+            System.err.println(i + "等待sleep..");
+            try {
+                TimeUnit.SECONDS.sleep(20);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

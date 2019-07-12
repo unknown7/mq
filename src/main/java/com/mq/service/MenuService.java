@@ -13,5 +13,5 @@ public interface MenuService {
 
     void saveRight(String ids, Long employeeId);
 
-    void transaction();
+    void transaction(int i);
 }
