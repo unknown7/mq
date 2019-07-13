@@ -98,4 +98,19 @@ public class MenuServiceImpl implements MenuService {
             }
         }
     }
+
+    @Override
+    public void rollback() {
+        r();
+    }
+
+    @Transactional
+    public void r() {
+        Menu menu = new Menu();
+        menu.setPid(-1L);
+        menu.setmName("t");
+        menu.setDelFlag(0);
+        menuMapper.insertSelective(menu);
+        throw new RuntimeException();
+    }
 }
