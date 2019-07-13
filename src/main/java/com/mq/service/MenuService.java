@@ -14,4 +14,6 @@ public interface MenuService {
     void saveRight(String ids, Long employeeId);
 
     void transaction(int i);
+
+    void rollback();
 }
