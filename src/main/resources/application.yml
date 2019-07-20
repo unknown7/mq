@@ -27,4 +27,4 @@ pagehelper:
 logging:
   level:
     com.mq: debug
-    com.mq.mapper: debug
+#    com.mq.mapper: debug
