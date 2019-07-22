@@ -128,7 +128,9 @@ public class PaymentServiceImpl implements PaymentService {
             request.setAttach(JSON.toJSONString(params));
         }
         unifiedOrderRequestMapper.insertSelective(request);
-
+        /**
+         * 统一下单接口
+         */
         UnifiedOrderResponse unifiedOrderResponse = wxAPI.unifiedOrder(request);
         unifiedOrderResponseMapper.insertSelective(unifiedOrderResponse);
 
