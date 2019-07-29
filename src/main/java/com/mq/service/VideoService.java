@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.List;
 
 public interface VideoService {
+
     PageInfo<VideoVo> findPage(VideoQuery query);
 
     void save(String id,
