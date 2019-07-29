@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.List;
 
 public interface BasicConfigService {
+
     PageInfo<VideoClassification> findClassificationPageByQuery(VideoClassificationQuery query);
 
     void saveClassification(VideoClassification videoClassification);
