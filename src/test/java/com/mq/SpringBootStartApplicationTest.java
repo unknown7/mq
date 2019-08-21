@@ -14,6 +14,7 @@ import com.mq.model.Order;
 import com.mq.model.ShareCard;
 import com.mq.model.VideoClassification;
 import com.mq.query.VideoClassificationQuery;
+import com.mq.service.MenuService;
 import com.mq.util.DateUtil;
 import com.mq.util.MapUtil;
 import com.mq.util.OrderNoGenerator;
@@ -74,6 +75,8 @@ public class SpringBootStartApplicationTest {
     private OrderMapper orderMapper;
     @Resource
     private VideoClassificationMapper videoClassificationMapper;
+    @Resource
+    private MenuService menuService;
 
     @Test
     public void contextLoads() {
@@ -365,6 +368,48 @@ public class SpringBootStartApplicationTest {
         List<VideoClassification> videoClassifications = videoClassificationMapper.selectByQuery(query);
         PageInfo<VideoClassification> pageInfo = new PageInfo<>(videoClassifications);
         System.err.println(pageInfo);
+    }
+
+    @Test
+    public void transaction() throws InterruptedException {
+        ExecutorService exec = Executors.newCachedThreadPool();
+        for (int i = 0; i < 10; i++) {
+            final int j = i;
+            exec.execute(new Runnable() {
+                @Override
+                public void run() {
+                    menuService.transaction(j);
+                    System.err.println("任务" + j + "已执行完毕");
+                }
+            });
+        }
+        TimeUnit.SECONDS.sleep(100);
+        exec.shutdown();
+    }
+
+    @Test
+    public void maxActive() throws InterruptedException {
+        ExecutorService exec = Executors.newCachedThreadPool();
+        for (int i = 0; i < 2; i++) {
+            final int j = i;
+            exec.execute(new Runnable() {
+                @Override
+                public void run() {
+                    menuService.maxActive();
+                    System.err.println("任务" + j + "已执行完毕");
+                }
+            });
+        }
+        TimeUnit.SECONDS.sleep(1);
+        menuService.maxActiveSelect();
+        System.err.println("主任务已执行完毕");
+        TimeUnit.SECONDS.sleep(100);
+        exec.shutdown();
+    }
+
+    @Test
+    public void rollback() {
+        menuService.rollback();
     }
 
     public static void main(String[] args) throws Exception {

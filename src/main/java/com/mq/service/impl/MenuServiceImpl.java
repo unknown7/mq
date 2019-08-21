@@ -104,6 +104,26 @@ public class MenuServiceImpl implements MenuService {
         r();
     }
 
+    @Override
+    @Transactional
+    public void maxActive() {
+        Menu menu = new Menu();
+        menu.setId(19L);
+        menu.setmName("test");
+        menuMapper.updateByPrimaryKeySelective(menu);
+        try {
+            TimeUnit.SECONDS.sleep(20);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    @Transactional
+    public void maxActiveSelect() {
+        Menu menu = menuMapper.selectByPrimaryKey(19L);
+    }
+
     @Transactional
     public void r() {
         Menu menu = new Menu();
