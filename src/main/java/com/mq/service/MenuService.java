@@ -16,4 +16,8 @@ public interface MenuService {
     void transaction(int i);
 
     void rollback();
+
+    void maxActive();
+
+    void maxActiveSelect();
 }
