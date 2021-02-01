@@ -6,8 +6,6 @@ import com.mq.mapper.EmployeeMapper;
 import com.mq.model.Employee;
 import com.mq.service.LoginService;
 import com.mq.util.MD5;
-import com.mq.util.MD5Util;
-import org.apache.commons.codec.digest.Md5Crypt;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

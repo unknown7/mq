@@ -1,178 +1,175 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.mq.mapper.ShareCardMapper" >
-  <resultMap id="BaseResultMap" type="com.mq.model.ShareCard" >
-    <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="user_id" property="userId" jdbcType="BIGINT" />
-    <result column="skey" property="skey" jdbcType="VARCHAR" />
-    <result column="share_card_real_name" property="shareCardRealName" jdbcType="VARCHAR" />
-    <result column="goods_id" property="goodsId" jdbcType="BIGINT" />
-    <result column="goods_type" property="goodsType" jdbcType="VARCHAR" />
-    <result column="goods_price" property="goodsPrice" jdbcType="DECIMAL" />
-    <result column="profit_share" property="profitShare" jdbcType="DECIMAL" />
-    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
-    <result column="del_flag" property="delFlag" jdbcType="INTEGER" />
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mq.mapper.ShareCardMapper">
+  <resultMap id="BaseResultMap" type="com.mq.model.ShareCard">
+    <id column="f_id" jdbcType="BIGINT" property="id" />
+    <result column="f_user_id" jdbcType="BIGINT" property="userId" />
+    <result column="f_skey" jdbcType="VARCHAR" property="skey" />
+    <result column="f_share_card_real_name" jdbcType="VARCHAR" property="shareCardRealName" />
+    <result column="f_goods_id" jdbcType="BIGINT" property="goodsId" />
+    <result column="f_goods_type" jdbcType="VARCHAR" property="goodsType" />
+    <result column="f_goods_price" jdbcType="DECIMAL" property="goodsPrice" />
+    <result column="f_profit_share" jdbcType="DECIMAL" property="profitShare" />
+    <result column="f_created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="f_modified_time" jdbcType="TIMESTAMP" property="modifiedTime" />
+    <result column="f_del_flag" jdbcType="BIT" property="delFlag" />
   </resultMap>
-  <sql id="Base_Column_List" >
-    id, user_id, skey, share_card_real_name, goods_id, goods_type, goods_price, profit_share, 
-    create_time, update_time, del_flag
+  <sql id="Base_Column_List">
+    f_id, f_user_id, f_skey, f_share_card_real_name, f_goods_id, f_goods_type, f_goods_price, 
+    f_profit_share, f_created_time, f_modified_time, f_del_flag
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from t_share_card
-    where id = #{id,jdbcType=BIGINT}
+    where f_id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from t_share_card
-    where id = #{id,jdbcType=BIGINT}
+    where f_id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.mq.model.ShareCard" >
-    insert into t_share_card (id, user_id, skey, 
-      share_card_real_name, goods_id, goods_type, 
-      goods_price, profit_share, create_time, 
-      update_time, del_flag)
+  <insert id="insert" parameterType="com.mq.model.ShareCard">
+    insert into t_share_card (f_id, f_user_id, f_skey, 
+      f_share_card_real_name, f_goods_id, f_goods_type, 
+      f_goods_price, f_profit_share, f_created_time, 
+      f_modified_time, f_del_flag)
     values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{skey,jdbcType=VARCHAR}, 
       #{shareCardRealName,jdbcType=VARCHAR}, #{goodsId,jdbcType=BIGINT}, #{goodsType,jdbcType=VARCHAR}, 
-      #{goodsPrice,jdbcType=DECIMAL}, #{profitShare,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=INTEGER})
+      #{goodsPrice,jdbcType=DECIMAL}, #{profitShare,jdbcType=DECIMAL}, #{createdTime,jdbcType=TIMESTAMP}, 
+      #{modifiedTime,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=BIT})
   </insert>
-  <insert id="insertSelective" parameterType="com.mq.model.ShareCard" >
-    <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
+  <insert id="insertSelective" parameterType="com.mq.model.ShareCard">
     insert into t_share_card
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        f_id,
       </if>
-      <if test="userId != null" >
-        user_id,
+      <if test="userId != null">
+        f_user_id,
       </if>
-      <if test="skey != null" >
-        skey,
+      <if test="skey != null">
+        f_skey,
       </if>
-      <if test="shareCardRealName != null" >
-        share_card_real_name,
+      <if test="shareCardRealName != null">
+        f_share_card_real_name,
       </if>
-      <if test="goodsId != null" >
-        goods_id,
+      <if test="goodsId != null">
+        f_goods_id,
       </if>
-      <if test="goodsType != null" >
-        goods_type,
+      <if test="goodsType != null">
+        f_goods_type,
       </if>
-      <if test="goodsPrice != null" >
-        goods_price,
+      <if test="goodsPrice != null">
+        f_goods_price,
       </if>
-      <if test="profitShare != null" >
-        profit_share,
+      <if test="profitShare != null">
+        f_profit_share,
       </if>
-      <if test="createTime != null" >
-        create_time,
+      <if test="createdTime != null">
+        f_created_time,
       </if>
-      <if test="updateTime != null" >
-        update_time,
+      <if test="modifiedTime != null">
+        f_modified_time,
       </if>
-      <if test="delFlag != null" >
-        del_flag,
+      <if test="delFlag != null">
+        f_del_flag,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
         #{id,jdbcType=BIGINT},
       </if>
-      <if test="userId != null" >
+      <if test="userId != null">
         #{userId,jdbcType=BIGINT},
       </if>
-      <if test="skey != null" >
+      <if test="skey != null">
         #{skey,jdbcType=VARCHAR},
       </if>
-      <if test="shareCardRealName != null" >
+      <if test="shareCardRealName != null">
         #{shareCardRealName,jdbcType=VARCHAR},
       </if>
-      <if test="goodsId != null" >
+      <if test="goodsId != null">
         #{goodsId,jdbcType=BIGINT},
       </if>
-      <if test="goodsType != null" >
+      <if test="goodsType != null">
         #{goodsType,jdbcType=VARCHAR},
       </if>
-      <if test="goodsPrice != null" >
+      <if test="goodsPrice != null">
         #{goodsPrice,jdbcType=DECIMAL},
       </if>
-      <if test="profitShare != null" >
+      <if test="profitShare != null">
         #{profitShare,jdbcType=DECIMAL},
       </if>
-      <if test="createTime != null" >
-        #{createTime,jdbcType=TIMESTAMP},
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updateTime != null" >
-        #{updateTime,jdbcType=TIMESTAMP},
+      <if test="modifiedTime != null">
+        #{modifiedTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="delFlag != null" >
-        #{delFlag,jdbcType=INTEGER},
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=BIT},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.mq.model.ShareCard" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.mq.model.ShareCard">
     update t_share_card
-    <set >
-      <if test="userId != null" >
-        user_id = #{userId,jdbcType=BIGINT},
+    <set>
+      <if test="userId != null">
+        f_user_id = #{userId,jdbcType=BIGINT},
       </if>
-      <if test="skey != null" >
-        skey = #{skey,jdbcType=VARCHAR},
+      <if test="skey != null">
+        f_skey = #{skey,jdbcType=VARCHAR},
       </if>
-      <if test="shareCardRealName != null" >
-        share_card_real_name = #{shareCardRealName,jdbcType=VARCHAR},
+      <if test="shareCardRealName != null">
+        f_share_card_real_name = #{shareCardRealName,jdbcType=VARCHAR},
       </if>
-      <if test="goodsId != null" >
-        goods_id = #{goodsId,jdbcType=BIGINT},
+      <if test="goodsId != null">
+        f_goods_id = #{goodsId,jdbcType=BIGINT},
       </if>
-      <if test="goodsType != null" >
-        goods_type = #{goodsType,jdbcType=VARCHAR},
+      <if test="goodsType != null">
+        f_goods_type = #{goodsType,jdbcType=VARCHAR},
       </if>
-      <if test="goodsPrice != null" >
-        goods_price = #{goodsPrice,jdbcType=DECIMAL},
+      <if test="goodsPrice != null">
+        f_goods_price = #{goodsPrice,jdbcType=DECIMAL},
       </if>
-      <if test="profitShare != null" >
-        profit_share = #{profitShare,jdbcType=DECIMAL},
+      <if test="profitShare != null">
+        f_profit_share = #{profitShare,jdbcType=DECIMAL},
       </if>
-      <if test="createTime != null" >
-        create_time = #{createTime,jdbcType=TIMESTAMP},
+      <if test="createdTime != null">
+        f_created_time = #{createdTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updateTime != null" >
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      <if test="modifiedTime != null">
+        f_modified_time = #{modifiedTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="delFlag != null" >
-        del_flag = #{delFlag,jdbcType=INTEGER},
+      <if test="delFlag != null">
+        f_del_flag = #{delFlag,jdbcType=BIT},
       </if>
     </set>
-    where id = #{id,jdbcType=BIGINT}
+    where f_id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.mq.model.ShareCard" >
+  <update id="updateByPrimaryKey" parameterType="com.mq.model.ShareCard">
     update t_share_card
-    set user_id = #{userId,jdbcType=BIGINT},
-      skey = #{skey,jdbcType=VARCHAR},
-      share_card_real_name = #{shareCardRealName,jdbcType=VARCHAR},
-      goods_id = #{goodsId,jdbcType=BIGINT},
-      goods_type = #{goodsType,jdbcType=VARCHAR},
-      goods_price = #{goodsPrice,jdbcType=DECIMAL},
-      profit_share = #{profitShare,jdbcType=DECIMAL},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      del_flag = #{delFlag,jdbcType=INTEGER}
-    where id = #{id,jdbcType=BIGINT}
+    set f_user_id = #{userId,jdbcType=BIGINT},
+      f_skey = #{skey,jdbcType=VARCHAR},
+      f_share_card_real_name = #{shareCardRealName,jdbcType=VARCHAR},
+      f_goods_id = #{goodsId,jdbcType=BIGINT},
+      f_goods_type = #{goodsType,jdbcType=VARCHAR},
+      f_goods_price = #{goodsPrice,jdbcType=DECIMAL},
+      f_profit_share = #{profitShare,jdbcType=DECIMAL},
+      f_created_time = #{createdTime,jdbcType=TIMESTAMP},
+      f_modified_time = #{modifiedTime,jdbcType=TIMESTAMP},
+      f_del_flag = #{delFlag,jdbcType=BIT}
+    where f_id = #{id,jdbcType=BIGINT}
   </update>
 
-  <select id="selectOneByUserIdAndGoodsId" resultMap="BaseResultMap" parameterType="com.mq.query.ShareCardQuery" >
+  <select id="selectOneByUserIdAndGoodsId" parameterType="com.mq.query.ShareCardQuery" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from t_share_card
     where
-    del_flag = 0
-    and user_id = #{userId, jdbcType=BIGINT}
-    and goods_id = #{goodsId, jdbcType=BIGINT}
-    and goods_type = #{goodsType, jdbcType=VARCHAR}
+    f_del_flag = 0
+    and f_user_id = #{userId, jdbcType=BIGINT}
+    and f_goods_id = #{goodsId, jdbcType=BIGINT}
+    and f_goods_type = #{goodsType, jdbcType=VARCHAR}
   </select>
 </mapper>

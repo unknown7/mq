@@ -24,7 +24,7 @@ pagehelper:
   row-bounds-with-count: true
 
 #mybatis log
-logging:
-  level:
-    com.mq: debug
-    com.mq.mapper: debug
+#logging:
+#  level:
+#    com.mq: debug
+#    com.mq.mapper: debug

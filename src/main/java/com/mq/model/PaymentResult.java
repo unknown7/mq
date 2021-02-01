@@ -25,7 +25,7 @@ public class PaymentResult {
 
     private String errCode;
 
-    private String errCodeDes;
+    private String errCodeDesc;
 
     private String openid;
 
@@ -141,12 +141,12 @@ public class PaymentResult {
         this.errCode = errCode == null ? null : errCode.trim();
     }
 
-    public String getErrCodeDes() {
-        return errCodeDes;
+    public String getErrCodeDesc() {
+        return errCodeDesc;
     }
 
-    public void setErrCodeDes(String errCodeDes) {
-        this.errCodeDes = errCodeDes == null ? null : errCodeDes.trim();
+    public void setErrCodeDesc(String errCodeDesc) {
+        this.errCodeDesc = errCodeDesc == null ? null : errCodeDesc.trim();
     }
 
     public String getOpenid() {

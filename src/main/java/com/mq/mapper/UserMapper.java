@@ -19,13 +19,13 @@ public interface UserMapper {
 
     int updateByPrimaryKey(User record);
 
-    User selectByOpenId(String openId);
+	User selectByOpenId(String openId);
 
-    List<User> selectByQuery(UserQuery query);
+	List<User> selectByQuery(UserQuery query);
 
-    List<UserVo> selectVoByQuery(UserQuery query);
+	List<UserVo> selectVoByQuery(UserQuery query);
 
-    Long selectNums(UserQuery query);
+	Long selectNums(UserQuery query);
 
-    User selectBySkey(String skey);
+	User selectBySkey(String skey);
 }

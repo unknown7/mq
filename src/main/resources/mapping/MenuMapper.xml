@@ -1,198 +1,196 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mq.mapper.MenuMapper">
-    <resultMap id="BaseResultMap" type="com.mq.model.Menu">
-        <id column="id" property="id" jdbcType="BIGINT"/>
-        <result column="m_name" property="mName" jdbcType="VARCHAR"/>
-        <result column="pid" property="pid" jdbcType="BIGINT"/>
-        <result column="icon" property="icon" jdbcType="VARCHAR"/>
-        <result column="sort" property="sort" jdbcType="INTEGER"/>
-        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
-        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
-        <result column="del_flag" property="delFlag" jdbcType="INTEGER"/>
-        <result column="url" property="url" jdbcType="VARCHAR"/>
-    </resultMap>
+  <resultMap id="BaseResultMap" type="com.mq.model.Menu">
+    <id column="f_id" jdbcType="BIGINT" property="id" />
+    <result column="f_m_name" jdbcType="VARCHAR" property="mName" />
+    <result column="f_pid" jdbcType="BIGINT" property="pid" />
+    <result column="f_icon" jdbcType="VARCHAR" property="icon" />
+    <result column="f_sort" jdbcType="INTEGER" property="sort" />
+    <result column="f_created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="f_modified_time" jdbcType="TIMESTAMP" property="modifiedTime" />
+    <result column="f_del_flag" jdbcType="BIT" property="delFlag" />
+    <result column="f_url" jdbcType="VARCHAR" property="url" />
+  </resultMap>
     <resultMap id="MenuTree" type="com.mq.vo.MenuTree">
-        <id column="id" property="id" jdbcType="BIGINT"/>
-        <result column="m_name" property="mName" jdbcType="VARCHAR"/>
-        <result column="pid" property="pid" jdbcType="BIGINT"/>
-        <result column="icon" property="icon" jdbcType="VARCHAR"/>
-        <result column="sort" property="sort" jdbcType="INTEGER"/>
-        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
-        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
-        <result column="del_flag" property="delFlag" jdbcType="INTEGER"/>
-        <result column="url" property="url" jdbcType="VARCHAR"/>
-        <result column="eid" property="eid" jdbcType="BIGINT"/>
-        <collection property="child" ofType="com.mq.vo.MenuTree" column="{id=id, eid=eid}" select="findMenuByParentId"/>
+        <id column="f_id" jdbcType="BIGINT" property="id" />
+        <result column="f_m_name" jdbcType="VARCHAR" property="mName" />
+        <result column="f_pid" jdbcType="BIGINT" property="pid" />
+        <result column="f_icon" jdbcType="VARCHAR" property="icon" />
+        <result column="f_sort" jdbcType="INTEGER" property="sort" />
+        <result column="f_created_time" jdbcType="TIMESTAMP" property="createdTime" />
+        <result column="f_modified_time" jdbcType="TIMESTAMP" property="modifiedTime" />
+        <result column="f_del_flag" jdbcType="BIT" property="delFlag" />
+        <result column="f_url" jdbcType="VARCHAR" property="url" />
+        <result column="f_eid" jdbcType="BIGINT" property="eid" />
+        <collection column="{f_id=f_id, f_eid=f_eid}" ofType="com.mq.vo.MenuTree" property="child" select="findMenuByParentId" />
     </resultMap>
-    <sql id="Base_Column_List">
-    id, m_name, pid, icon, sort, create_time, update_time, del_flag, url
+  <sql id="Base_Column_List">
+    f_id, f_m_name, f_pid, f_icon, f_sort, f_created_time, f_modified_time, f_del_flag, 
+    f_url
   </sql>
-    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
-        select
-        <include refid="Base_Column_List"/>
-        from t_menu
-        where id = #{id,jdbcType=BIGINT}
-    </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_menu
+    where f_id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from t_menu
-    where id = #{id,jdbcType=BIGINT}
+    where f_id = #{id,jdbcType=BIGINT}
   </delete>
-    <insert id="insert" parameterType="com.mq.model.Menu">
-    insert into t_menu (id, m_name, pid, 
-      icon, sort, create_time, 
-      update_time, del_flag, url
+  <insert id="insert" parameterType="com.mq.model.Menu">
+    insert into t_menu (f_id, f_m_name, f_pid, 
+      f_icon, f_sort, f_created_time, 
+      f_modified_time, f_del_flag, f_url
       )
     values (#{id,jdbcType=BIGINT}, #{mName,jdbcType=VARCHAR}, #{pid,jdbcType=BIGINT}, 
-      #{icon,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP},
-      #{updateTime,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}
+      #{icon,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}, #{createdTime,jdbcType=TIMESTAMP}, 
+      #{modifiedTime,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=BIT}, #{url,jdbcType=VARCHAR}
       )
   </insert>
-    <insert id="insertSelective" parameterType="com.mq.model.Menu">
-        <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
-            SELECT LAST_INSERT_ID()
-        </selectKey>
-        insert into t_menu
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                id,
-            </if>
-            <if test="mName != null">
-                m_name,
-            </if>
-            <if test="pid != null">
-                pid,
-            </if>
-            <if test="icon != null">
-                icon,
-            </if>
-            <if test="sort != null">
-                sort,
-            </if>
-            <if test="createTime != null">
-                create_time,
-            </if>
-            <if test="updateTime != null">
-                update_time,
-            </if>
-            <if test="delFlag != null">
-                del_flag,
-            </if>
-            <if test="url != null">
-                url,
-            </if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                #{id,jdbcType=BIGINT},
-            </if>
-            <if test="mName != null">
-                #{mName,jdbcType=VARCHAR},
-            </if>
-            <if test="pid != null">
-                #{pid,jdbcType=BIGINT},
-            </if>
-            <if test="icon != null">
-                #{icon,jdbcType=VARCHAR},
-            </if>
-            <if test="sort != null">
-                #{sort,jdbcType=INTEGER},
-            </if>
-            <if test="createTime != null">
-                #{createTime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="updateTime != null">
-                #{updateTime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="delFlag != null">
-                #{delFlag,jdbcType=INTEGER},
-            </if>
-            <if test="url != null">
-                #{url,jdbcType=VARCHAR},
-            </if>
-        </trim>
-    </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.mq.model.Menu">
-        update t_menu
-        <set>
-            <if test="mName != null">
-                m_name = #{mName,jdbcType=VARCHAR},
-            </if>
-            <if test="pid != null">
-                pid = #{pid,jdbcType=BIGINT},
-            </if>
-            <if test="icon != null">
-                icon = #{icon,jdbcType=VARCHAR},
-            </if>
-            <if test="sort != null">
-                sort = #{sort,jdbcType=INTEGER},
-            </if>
-            <if test="createTime != null">
-                create_time = #{createTime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="updateTime != null">
-                update_time = #{updateTime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="delFlag != null">
-                del_flag = #{delFlag,jdbcType=INTEGER},
-            </if>
-            <if test="url != null">
-                url = #{url,jdbcType=VARCHAR},
-            </if>
-        </set>
-        where id = #{id,jdbcType=BIGINT}
-    </update>
-    <update id="updateByPrimaryKey" parameterType="com.mq.model.Menu">
+  <insert id="insertSelective" parameterType="com.mq.model.Menu">
+    insert into t_menu
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        f_id,
+      </if>
+      <if test="mName != null">
+        f_m_name,
+      </if>
+      <if test="pid != null">
+        f_pid,
+      </if>
+      <if test="icon != null">
+        f_icon,
+      </if>
+      <if test="sort != null">
+        f_sort,
+      </if>
+      <if test="createdTime != null">
+        f_created_time,
+      </if>
+      <if test="modifiedTime != null">
+        f_modified_time,
+      </if>
+      <if test="delFlag != null">
+        f_del_flag,
+      </if>
+      <if test="url != null">
+        f_url,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="mName != null">
+        #{mName,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null">
+        #{pid,jdbcType=BIGINT},
+      </if>
+      <if test="icon != null">
+        #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedTime != null">
+        #{modifiedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=BIT},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mq.model.Menu">
     update t_menu
-    set m_name = #{mName,jdbcType=VARCHAR},
-      pid = #{pid,jdbcType=BIGINT},
-      icon = #{icon,jdbcType=VARCHAR},
-      sort = #{sort,jdbcType=INTEGER},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      del_flag = #{delFlag,jdbcType=INTEGER},
-      url = #{url,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=BIGINT}
+    <set>
+      <if test="mName != null">
+        f_m_name = #{mName,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null">
+        f_pid = #{pid,jdbcType=BIGINT},
+      </if>
+      <if test="icon != null">
+        f_icon = #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        f_sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="createdTime != null">
+        f_created_time = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedTime != null">
+        f_modified_time = #{modifiedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delFlag != null">
+        f_del_flag = #{delFlag,jdbcType=BIT},
+      </if>
+      <if test="url != null">
+        f_url = #{url,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where f_id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mq.model.Menu">
+    update t_menu
+    set f_m_name = #{mName,jdbcType=VARCHAR},
+      f_pid = #{pid,jdbcType=BIGINT},
+      f_icon = #{icon,jdbcType=VARCHAR},
+      f_sort = #{sort,jdbcType=INTEGER},
+      f_created_time = #{createdTime,jdbcType=TIMESTAMP},
+      f_modified_time = #{modifiedTime,jdbcType=TIMESTAMP},
+      f_del_flag = #{delFlag,jdbcType=BIT},
+      f_url = #{url,jdbcType=VARCHAR}
+    where f_id = #{id,jdbcType=BIGINT}
   </update>
 
-    <select id="selectMenuTree" resultMap="MenuTree" parameterType="java.lang.Long">
+    <select id="selectMenuTree" parameterType="java.lang.Long" resultMap="MenuTree">
     select
-      m.id, m.m_name, m.pid, m.icon, m.sort, m.create_time, m.update_time, m.del_flag, m.url
+      m.f_id, m.f_m_name, m.f_pid, m.f_icon, m.f_sort, m.f_created_time, m.f_modified_time, m.f_del_flag, m.f_url
         <if test="_parameter != null">
-            , em.eid
+            , em.f_eid
         </if>
         <if test="_parameter == null">
-            , null as eid
+            , null as f_eid
         </if>
     from t_menu m
         <if test="_parameter != null">
-            left join t_emp_menu em on m.id = em.mid
-            where m.pid = 0
-            and em.eid = #{employeeId,jdbcType=BIGINT}
+            left join t_emp_menu em on m.f_id = em.f_mid
+            where m.f_pid = 0
+            and em.f_eid = #{employeeId,jdbcType=BIGINT}
         </if>
         <if test="_parameter == null">
-            where m.pid = 0
+            where m.f_pid = 0
         </if>
-      order by m.sort asc
+      order by m.f_sort asc
   </select>
     <select id="findMenuByParentId" resultMap="MenuTree">
         select
-          m.id, m.m_name, m.pid, m.icon, m.sort, m.create_time, m.update_time, m.del_flag, m.url
+          m.f_id, m.f_m_name, m.f_pid, m.f_icon, m.f_sort, m.f_created_time, m.f_modified_time, m.f_del_flag, m.f_url
             <if test="eid != null">
-                , em.eid
+                , em.f_eid
             </if>
             <if test="eid == null">
-                , null as eid
+                , null as f_eid
             </if>
         from t_menu m
             <if test="eid != null">
-                left join t_emp_menu em on m.id = em.mid
-                where m.pid = #{id, jdbcType=BIGINT}
-                and em.eid = #{eid, jdbcType=BIGINT}
+                left join t_emp_menu em on m.f_id = em.f_mid
+                where m.f_pid = #{id, jdbcType=BIGINT}
+                and em.f_eid = #{eid, jdbcType=BIGINT}
             </if>
             <if test="eid == null">
-                where m.pid = #{id, jdbcType=BIGINT}
+                where m.f_pid = #{id, jdbcType=BIGINT}
             </if>
-          order by m.sort asc
+          order by m.f_sort asc
     </select>
 </mapper>

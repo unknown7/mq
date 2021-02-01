@@ -19,19 +19,19 @@ public interface VideoMapper {
 
     int updateByPrimaryKey(Video record);
 
-    List<VideoVo> selectByQuery(VideoQuery query);
+	List<VideoVo> selectByQuery(VideoQuery query);
 
-    Long selectNums(VideoQuery query);
+	Long selectNums(VideoQuery query);
 
-    VideoVo selectVoByPrimaryKey(Long id);
+	VideoVo selectVoByPrimaryKey(Long id);
 
-    VideoVo selectOneVoWithAuth(Long videoId, Long userId);
+	VideoVo selectOneVoWithAuth(Long videoId, Long userId);
 
-    VideoVo selectOneVoWithWhiteUser(Long videoId);
+	VideoVo selectOneVoWithWhiteUser(Long videoId);
 
-    Boolean isPurchased(Long videoId, Long userId);
+	Boolean isPurchased(Long videoId, Long userId);
 
-    List<VideoVo> findPurchases(Long userId);
+	List<VideoVo> findPurchases(Long userId);
 
-    List<VideoVo> findPurchasesWithWhiteUser();
+	List<VideoVo> findPurchasesWithWhiteUser();
 }

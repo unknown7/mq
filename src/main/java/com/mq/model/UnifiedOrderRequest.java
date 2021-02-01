@@ -118,6 +118,6 @@ public class UnifiedOrderRequest {
     }
 
     public void setAttach(String attach) {
-        this.attach = attach;
+        this.attach = attach == null ? null : attach.trim();
     }
 }

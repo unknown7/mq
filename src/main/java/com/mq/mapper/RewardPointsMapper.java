@@ -20,13 +20,13 @@ public interface RewardPointsMapper {
 
     int updateByPrimaryKey(RewardPoints record);
 
-    List<RewardPoints> selectByQuery(RewardPointsQuery query);
+	List<RewardPoints> selectByQuery(RewardPointsQuery query);
 
-    Long selectNums(RewardPointsQuery query);
+	Long selectNums(RewardPointsQuery query);
 
-    BigDecimal getPoints(Long userId);
+	BigDecimal getPoints(Long userId);
 
-    List<Long> getUnusedPointsBefore(Long userId, Date unifiedOrderTime);
+	List<Long> getUnusedPointsBefore(Long userId, Date unifiedOrderTime);
 
-    int batchUpdateStatus(List<Long> ids, String status);
+	int batchUpdateStatus(List<Long> ids, String status);
 }

@@ -53,16 +53,16 @@ public class BasicConfigServiceImpl implements BasicConfigService {
          * 新增
          */
         if (videoClassification.getId() == null) {
-            videoClassification.setCreateTime(now);
-            videoClassification.setUpdateTime(now);
-            videoClassification.setDelFlag(0);
+            videoClassification.setCreatedTime(now);
+            videoClassification.setModifiedTime(now);
+            videoClassification.setDelFlag(Boolean.FALSE);
             videoClassificationMapper.insertSelective(videoClassification);
         }
         /**
          * 修改
          */
         else {
-            videoClassification.setUpdateTime(now);
+            videoClassification.setModifiedTime(now);
             videoClassificationMapper.updateByPrimaryKeySelective(videoClassification);
         }
     }
@@ -113,10 +113,10 @@ public class BasicConfigServiceImpl implements BasicConfigService {
         banner.setDesc(desc);
         banner.setJumpTo(StringUtils.isEmpty(jumpTo) ? null : Long.valueOf(jumpTo));
         banner.setSort(Integer.valueOf(sort));
-        banner.setUpdateTime(now);
+        banner.setModifiedTime(now);
         if (StringUtils.isEmpty(id)) {
-            banner.setCreateTime(now);
-            banner.setDelFlag(0);
+            banner.setCreatedTime(now);
+            banner.setDelFlag(Boolean.FALSE);
         } else {
             banner.setId(Long.valueOf(id));
         }

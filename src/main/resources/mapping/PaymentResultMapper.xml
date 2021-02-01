@@ -1,333 +1,330 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.mq.mapper.PaymentResultMapper" >
-  <resultMap id="BaseResultMap" type="com.mq.model.PaymentResult" >
-    <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="return_code" property="returnCode" jdbcType="VARCHAR" />
-    <result column="return_msg" property="returnMsg" jdbcType="VARCHAR" />
-    <result column="appid" property="appid" jdbcType="VARCHAR" />
-    <result column="mch_id" property="mchId" jdbcType="VARCHAR" />
-    <result column="device_info" property="deviceInfo" jdbcType="VARCHAR" />
-    <result column="nonce_str" property="nonceStr" jdbcType="VARCHAR" />
-    <result column="sign" property="sign" jdbcType="VARCHAR" />
-    <result column="sign_type" property="signType" jdbcType="VARCHAR" />
-    <result column="result_code" property="resultCode" jdbcType="VARCHAR" />
-    <result column="err_code" property="errCode" jdbcType="VARCHAR" />
-    <result column="err_code_des" property="errCodeDes" jdbcType="VARCHAR" />
-    <result column="openid" property="openid" jdbcType="VARCHAR" />
-    <result column="is_subscribe" property="isSubscribe" jdbcType="VARCHAR" />
-    <result column="trade_type" property="tradeType" jdbcType="VARCHAR" />
-    <result column="bank_type" property="bankType" jdbcType="VARCHAR" />
-    <result column="total_fee" property="totalFee" jdbcType="INTEGER" />
-    <result column="settlement_total_fee" property="settlementTotalFee" jdbcType="INTEGER" />
-    <result column="fee_type" property="feeType" jdbcType="VARCHAR" />
-    <result column="cash_fee" property="cashFee" jdbcType="INTEGER" />
-    <result column="cash_fee_type" property="cashFeeType" jdbcType="VARCHAR" />
-    <result column="transaction_id" property="transactionId" jdbcType="VARCHAR" />
-    <result column="out_trade_no" property="outTradeNo" jdbcType="VARCHAR" />
-    <result column="attach" property="attach" jdbcType="VARCHAR" />
-    <result column="time_end" property="timeEnd" jdbcType="TIMESTAMP" />
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mq.mapper.PaymentResultMapper">
+  <resultMap id="BaseResultMap" type="com.mq.model.PaymentResult">
+    <id column="f_id" jdbcType="BIGINT" property="id" />
+    <result column="f_return_code" jdbcType="VARCHAR" property="returnCode" />
+    <result column="f_return_msg" jdbcType="VARCHAR" property="returnMsg" />
+    <result column="f_appid" jdbcType="VARCHAR" property="appid" />
+    <result column="f_mch_id" jdbcType="VARCHAR" property="mchId" />
+    <result column="f_device_info" jdbcType="VARCHAR" property="deviceInfo" />
+    <result column="f_nonce_str" jdbcType="VARCHAR" property="nonceStr" />
+    <result column="f_sign" jdbcType="VARCHAR" property="sign" />
+    <result column="f_sign_type" jdbcType="VARCHAR" property="signType" />
+    <result column="f_result_code" jdbcType="VARCHAR" property="resultCode" />
+    <result column="f_err_code" jdbcType="VARCHAR" property="errCode" />
+    <result column="f_err_code_desc" jdbcType="VARCHAR" property="errCodeDesc" />
+    <result column="f_openid" jdbcType="VARCHAR" property="openid" />
+    <result column="f_is_subscribe" jdbcType="VARCHAR" property="isSubscribe" />
+    <result column="f_trade_type" jdbcType="VARCHAR" property="tradeType" />
+    <result column="f_bank_type" jdbcType="VARCHAR" property="bankType" />
+    <result column="f_total_fee" jdbcType="INTEGER" property="totalFee" />
+    <result column="f_settlement_total_fee" jdbcType="INTEGER" property="settlementTotalFee" />
+    <result column="f_fee_type" jdbcType="VARCHAR" property="feeType" />
+    <result column="f_cash_fee" jdbcType="INTEGER" property="cashFee" />
+    <result column="f_cash_fee_type" jdbcType="VARCHAR" property="cashFeeType" />
+    <result column="f_transaction_id" jdbcType="VARCHAR" property="transactionId" />
+    <result column="f_out_trade_no" jdbcType="VARCHAR" property="outTradeNo" />
+    <result column="f_attach" jdbcType="VARCHAR" property="attach" />
+    <result column="f_time_end" jdbcType="TIMESTAMP" property="timeEnd" />
   </resultMap>
-  <sql id="Base_Column_List" >
-    id, return_code, return_msg, appid, mch_id, device_info, nonce_str, sign, sign_type, 
-    result_code, err_code, err_code_des, openid, is_subscribe, trade_type, bank_type, 
-    total_fee, settlement_total_fee, fee_type, cash_fee, cash_fee_type, transaction_id, 
-    out_trade_no, attach, time_end
+  <sql id="Base_Column_List">
+    f_id, f_return_code, f_return_msg, f_appid, f_mch_id, f_device_info, f_nonce_str, 
+    f_sign, f_sign_type, f_result_code, f_err_code, f_err_code_desc, f_openid, f_is_subscribe, 
+    f_trade_type, f_bank_type, f_total_fee, f_settlement_total_fee, f_fee_type, f_cash_fee, 
+    f_cash_fee_type, f_transaction_id, f_out_trade_no, f_attach, f_time_end
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from t_payment_result
-    where id = #{id,jdbcType=BIGINT}
+    where f_id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from t_payment_result
-    where id = #{id,jdbcType=BIGINT}
+    where f_id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.mq.model.PaymentResult" >
-    insert into t_payment_result (id, return_code, return_msg,
-      appid, mch_id, device_info, 
-      nonce_str, sign, sign_type, 
-      result_code, err_code, err_code_des, 
-      openid, is_subscribe, trade_type, 
-      bank_type, total_fee, settlement_total_fee, 
-      fee_type, cash_fee, cash_fee_type, 
-      transaction_id, out_trade_no, attach, 
-      time_end)
+  <insert id="insert" parameterType="com.mq.model.PaymentResult">
+    insert into t_payment_result (f_id, f_return_code, f_return_msg, 
+      f_appid, f_mch_id, f_device_info, 
+      f_nonce_str, f_sign, f_sign_type, 
+      f_result_code, f_err_code, f_err_code_desc, 
+      f_openid, f_is_subscribe, f_trade_type, 
+      f_bank_type, f_total_fee, f_settlement_total_fee, 
+      f_fee_type, f_cash_fee, f_cash_fee_type, 
+      f_transaction_id, f_out_trade_no, f_attach, 
+      f_time_end)
     values (#{id,jdbcType=BIGINT}, #{returnCode,jdbcType=VARCHAR}, #{returnMsg,jdbcType=VARCHAR}, 
       #{appid,jdbcType=VARCHAR}, #{mchId,jdbcType=VARCHAR}, #{deviceInfo,jdbcType=VARCHAR}, 
       #{nonceStr,jdbcType=VARCHAR}, #{sign,jdbcType=VARCHAR}, #{signType,jdbcType=VARCHAR}, 
-      #{resultCode,jdbcType=VARCHAR}, #{errCode,jdbcType=VARCHAR}, #{errCodeDes,jdbcType=VARCHAR}, 
+      #{resultCode,jdbcType=VARCHAR}, #{errCode,jdbcType=VARCHAR}, #{errCodeDesc,jdbcType=VARCHAR}, 
       #{openid,jdbcType=VARCHAR}, #{isSubscribe,jdbcType=VARCHAR}, #{tradeType,jdbcType=VARCHAR}, 
       #{bankType,jdbcType=VARCHAR}, #{totalFee,jdbcType=INTEGER}, #{settlementTotalFee,jdbcType=INTEGER}, 
       #{feeType,jdbcType=VARCHAR}, #{cashFee,jdbcType=INTEGER}, #{cashFeeType,jdbcType=VARCHAR}, 
       #{transactionId,jdbcType=VARCHAR}, #{outTradeNo,jdbcType=VARCHAR}, #{attach,jdbcType=VARCHAR}, 
       #{timeEnd,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.mq.model.PaymentResult" >
-    <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
+  <insert id="insertSelective" parameterType="com.mq.model.PaymentResult">
     insert into t_payment_result
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        f_id,
       </if>
-      <if test="returnCode != null" >
-        return_code,
+      <if test="returnCode != null">
+        f_return_code,
       </if>
-      <if test="returnMsg != null" >
-        return_msg,
+      <if test="returnMsg != null">
+        f_return_msg,
       </if>
-      <if test="appid != null" >
-        appid,
+      <if test="appid != null">
+        f_appid,
       </if>
-      <if test="mchId != null" >
-        mch_id,
+      <if test="mchId != null">
+        f_mch_id,
       </if>
-      <if test="deviceInfo != null" >
-        device_info,
+      <if test="deviceInfo != null">
+        f_device_info,
       </if>
-      <if test="nonceStr != null" >
-        nonce_str,
+      <if test="nonceStr != null">
+        f_nonce_str,
       </if>
-      <if test="sign != null" >
-        sign,
+      <if test="sign != null">
+        f_sign,
       </if>
-      <if test="signType != null" >
-        sign_type,
+      <if test="signType != null">
+        f_sign_type,
       </if>
-      <if test="resultCode != null" >
-        result_code,
+      <if test="resultCode != null">
+        f_result_code,
       </if>
-      <if test="errCode != null" >
-        err_code,
+      <if test="errCode != null">
+        f_err_code,
       </if>
-      <if test="errCodeDes != null" >
-        err_code_des,
+      <if test="errCodeDesc != null">
+        f_err_code_desc,
       </if>
-      <if test="openid != null" >
-        openid,
+      <if test="openid != null">
+        f_openid,
       </if>
-      <if test="isSubscribe != null" >
-        is_subscribe,
+      <if test="isSubscribe != null">
+        f_is_subscribe,
       </if>
-      <if test="tradeType != null" >
-        trade_type,
+      <if test="tradeType != null">
+        f_trade_type,
       </if>
-      <if test="bankType != null" >
-        bank_type,
+      <if test="bankType != null">
+        f_bank_type,
       </if>
-      <if test="totalFee != null" >
-        total_fee,
+      <if test="totalFee != null">
+        f_total_fee,
       </if>
-      <if test="settlementTotalFee != null" >
-        settlement_total_fee,
+      <if test="settlementTotalFee != null">
+        f_settlement_total_fee,
       </if>
-      <if test="feeType != null" >
-        fee_type,
+      <if test="feeType != null">
+        f_fee_type,
       </if>
-      <if test="cashFee != null" >
-        cash_fee,
+      <if test="cashFee != null">
+        f_cash_fee,
       </if>
-      <if test="cashFeeType != null" >
-        cash_fee_type,
+      <if test="cashFeeType != null">
+        f_cash_fee_type,
       </if>
-      <if test="transactionId != null" >
-        transaction_id,
+      <if test="transactionId != null">
+        f_transaction_id,
       </if>
-      <if test="outTradeNo != null" >
-        out_trade_no,
+      <if test="outTradeNo != null">
+        f_out_trade_no,
       </if>
-      <if test="attach != null" >
-        attach,
+      <if test="attach != null">
+        f_attach,
       </if>
-      <if test="timeEnd != null" >
-        time_end,
+      <if test="timeEnd != null">
+        f_time_end,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
         #{id,jdbcType=BIGINT},
       </if>
-      <if test="returnCode != null" >
+      <if test="returnCode != null">
         #{returnCode,jdbcType=VARCHAR},
       </if>
-      <if test="returnMsg != null" >
+      <if test="returnMsg != null">
         #{returnMsg,jdbcType=VARCHAR},
       </if>
-      <if test="appid != null" >
+      <if test="appid != null">
         #{appid,jdbcType=VARCHAR},
       </if>
-      <if test="mchId != null" >
+      <if test="mchId != null">
         #{mchId,jdbcType=VARCHAR},
       </if>
-      <if test="deviceInfo != null" >
+      <if test="deviceInfo != null">
         #{deviceInfo,jdbcType=VARCHAR},
       </if>
-      <if test="nonceStr != null" >
+      <if test="nonceStr != null">
         #{nonceStr,jdbcType=VARCHAR},
       </if>
-      <if test="sign != null" >
+      <if test="sign != null">
         #{sign,jdbcType=VARCHAR},
       </if>
-      <if test="signType != null" >
+      <if test="signType != null">
         #{signType,jdbcType=VARCHAR},
       </if>
-      <if test="resultCode != null" >
+      <if test="resultCode != null">
         #{resultCode,jdbcType=VARCHAR},
       </if>
-      <if test="errCode != null" >
+      <if test="errCode != null">
         #{errCode,jdbcType=VARCHAR},
       </if>
-      <if test="errCodeDes != null" >
-        #{errCodeDes,jdbcType=VARCHAR},
+      <if test="errCodeDesc != null">
+        #{errCodeDesc,jdbcType=VARCHAR},
       </if>
-      <if test="openid != null" >
+      <if test="openid != null">
         #{openid,jdbcType=VARCHAR},
       </if>
-      <if test="isSubscribe != null" >
+      <if test="isSubscribe != null">
         #{isSubscribe,jdbcType=VARCHAR},
       </if>
-      <if test="tradeType != null" >
+      <if test="tradeType != null">
         #{tradeType,jdbcType=VARCHAR},
       </if>
-      <if test="bankType != null" >
+      <if test="bankType != null">
         #{bankType,jdbcType=VARCHAR},
       </if>
-      <if test="totalFee != null" >
+      <if test="totalFee != null">
         #{totalFee,jdbcType=INTEGER},
       </if>
-      <if test="settlementTotalFee != null" >
+      <if test="settlementTotalFee != null">
         #{settlementTotalFee,jdbcType=INTEGER},
       </if>
-      <if test="feeType != null" >
+      <if test="feeType != null">
         #{feeType,jdbcType=VARCHAR},
       </if>
-      <if test="cashFee != null" >
+      <if test="cashFee != null">
         #{cashFee,jdbcType=INTEGER},
       </if>
-      <if test="cashFeeType != null" >
+      <if test="cashFeeType != null">
         #{cashFeeType,jdbcType=VARCHAR},
       </if>
-      <if test="transactionId != null" >
+      <if test="transactionId != null">
         #{transactionId,jdbcType=VARCHAR},
       </if>
-      <if test="outTradeNo != null" >
+      <if test="outTradeNo != null">
         #{outTradeNo,jdbcType=VARCHAR},
       </if>
-      <if test="attach != null" >
+      <if test="attach != null">
         #{attach,jdbcType=VARCHAR},
       </if>
-      <if test="timeEnd != null" >
+      <if test="timeEnd != null">
         #{timeEnd,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.mq.model.PaymentResult" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.mq.model.PaymentResult">
     update t_payment_result
-    <set >
-      <if test="returnCode != null" >
-        return_code = #{returnCode,jdbcType=VARCHAR},
+    <set>
+      <if test="returnCode != null">
+        f_return_code = #{returnCode,jdbcType=VARCHAR},
       </if>
-      <if test="returnMsg != null" >
-        return_msg = #{returnMsg,jdbcType=VARCHAR},
+      <if test="returnMsg != null">
+        f_return_msg = #{returnMsg,jdbcType=VARCHAR},
       </if>
-      <if test="appid != null" >
-        appid = #{appid,jdbcType=VARCHAR},
+      <if test="appid != null">
+        f_appid = #{appid,jdbcType=VARCHAR},
       </if>
-      <if test="mchId != null" >
-        mch_id = #{mchId,jdbcType=VARCHAR},
+      <if test="mchId != null">
+        f_mch_id = #{mchId,jdbcType=VARCHAR},
       </if>
-      <if test="deviceInfo != null" >
-        device_info = #{deviceInfo,jdbcType=VARCHAR},
+      <if test="deviceInfo != null">
+        f_device_info = #{deviceInfo,jdbcType=VARCHAR},
       </if>
-      <if test="nonceStr != null" >
-        nonce_str = #{nonceStr,jdbcType=VARCHAR},
+      <if test="nonceStr != null">
+        f_nonce_str = #{nonceStr,jdbcType=VARCHAR},
       </if>
-      <if test="sign != null" >
-        sign = #{sign,jdbcType=VARCHAR},
+      <if test="sign != null">
+        f_sign = #{sign,jdbcType=VARCHAR},
       </if>
-      <if test="signType != null" >
-        sign_type = #{signType,jdbcType=VARCHAR},
+      <if test="signType != null">
+        f_sign_type = #{signType,jdbcType=VARCHAR},
       </if>
-      <if test="resultCode != null" >
-        result_code = #{resultCode,jdbcType=VARCHAR},
+      <if test="resultCode != null">
+        f_result_code = #{resultCode,jdbcType=VARCHAR},
       </if>
-      <if test="errCode != null" >
-        err_code = #{errCode,jdbcType=VARCHAR},
+      <if test="errCode != null">
+        f_err_code = #{errCode,jdbcType=VARCHAR},
       </if>
-      <if test="errCodeDes != null" >
-        err_code_des = #{errCodeDes,jdbcType=VARCHAR},
+      <if test="errCodeDesc != null">
+        f_err_code_desc = #{errCodeDesc,jdbcType=VARCHAR},
       </if>
-      <if test="openid != null" >
-        openid = #{openid,jdbcType=VARCHAR},
+      <if test="openid != null">
+        f_openid = #{openid,jdbcType=VARCHAR},
       </if>
-      <if test="isSubscribe != null" >
-        is_subscribe = #{isSubscribe,jdbcType=VARCHAR},
+      <if test="isSubscribe != null">
+        f_is_subscribe = #{isSubscribe,jdbcType=VARCHAR},
       </if>
-      <if test="tradeType != null" >
-        trade_type = #{tradeType,jdbcType=VARCHAR},
+      <if test="tradeType != null">
+        f_trade_type = #{tradeType,jdbcType=VARCHAR},
       </if>
-      <if test="bankType != null" >
-        bank_type = #{bankType,jdbcType=VARCHAR},
+      <if test="bankType != null">
+        f_bank_type = #{bankType,jdbcType=VARCHAR},
       </if>
-      <if test="totalFee != null" >
-        total_fee = #{totalFee,jdbcType=INTEGER},
+      <if test="totalFee != null">
+        f_total_fee = #{totalFee,jdbcType=INTEGER},
       </if>
-      <if test="settlementTotalFee != null" >
-        settlement_total_fee = #{settlementTotalFee,jdbcType=INTEGER},
+      <if test="settlementTotalFee != null">
+        f_settlement_total_fee = #{settlementTotalFee,jdbcType=INTEGER},
       </if>
-      <if test="feeType != null" >
-        fee_type = #{feeType,jdbcType=VARCHAR},
+      <if test="feeType != null">
+        f_fee_type = #{feeType,jdbcType=VARCHAR},
       </if>
-      <if test="cashFee != null" >
-        cash_fee = #{cashFee,jdbcType=INTEGER},
+      <if test="cashFee != null">
+        f_cash_fee = #{cashFee,jdbcType=INTEGER},
       </if>
-      <if test="cashFeeType != null" >
-        cash_fee_type = #{cashFeeType,jdbcType=VARCHAR},
+      <if test="cashFeeType != null">
+        f_cash_fee_type = #{cashFeeType,jdbcType=VARCHAR},
       </if>
-      <if test="transactionId != null" >
-        transaction_id = #{transactionId,jdbcType=VARCHAR},
+      <if test="transactionId != null">
+        f_transaction_id = #{transactionId,jdbcType=VARCHAR},
       </if>
-      <if test="outTradeNo != null" >
-        out_trade_no = #{outTradeNo,jdbcType=VARCHAR},
+      <if test="outTradeNo != null">
+        f_out_trade_no = #{outTradeNo,jdbcType=VARCHAR},
       </if>
-      <if test="attach != null" >
-        attach = #{attach,jdbcType=VARCHAR},
+      <if test="attach != null">
+        f_attach = #{attach,jdbcType=VARCHAR},
       </if>
-      <if test="timeEnd != null" >
-        time_end = #{timeEnd,jdbcType=TIMESTAMP},
+      <if test="timeEnd != null">
+        f_time_end = #{timeEnd,jdbcType=TIMESTAMP},
       </if>
     </set>
-    where id = #{id,jdbcType=BIGINT}
+    where f_id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.mq.model.PaymentResult" >
+  <update id="updateByPrimaryKey" parameterType="com.mq.model.PaymentResult">
     update t_payment_result
-    set return_code = #{returnCode,jdbcType=VARCHAR},
-      return_msg = #{returnMsg,jdbcType=VARCHAR},
-      appid = #{appid,jdbcType=VARCHAR},
-      mch_id = #{mchId,jdbcType=VARCHAR},
-      device_info = #{deviceInfo,jdbcType=VARCHAR},
-      nonce_str = #{nonceStr,jdbcType=VARCHAR},
-      sign = #{sign,jdbcType=VARCHAR},
-      sign_type = #{signType,jdbcType=VARCHAR},
-      result_code = #{resultCode,jdbcType=VARCHAR},
-      err_code = #{errCode,jdbcType=VARCHAR},
-      err_code_des = #{errCodeDes,jdbcType=VARCHAR},
-      openid = #{openid,jdbcType=VARCHAR},
-      is_subscribe = #{isSubscribe,jdbcType=VARCHAR},
-      trade_type = #{tradeType,jdbcType=VARCHAR},
-      bank_type = #{bankType,jdbcType=VARCHAR},
-      total_fee = #{totalFee,jdbcType=INTEGER},
-      settlement_total_fee = #{settlementTotalFee,jdbcType=INTEGER},
-      fee_type = #{feeType,jdbcType=VARCHAR},
-      cash_fee = #{cashFee,jdbcType=INTEGER},
-      cash_fee_type = #{cashFeeType,jdbcType=VARCHAR},
-      transaction_id = #{transactionId,jdbcType=VARCHAR},
-      out_trade_no = #{outTradeNo,jdbcType=VARCHAR},
-      attach = #{attach,jdbcType=VARCHAR},
-      time_end = #{timeEnd,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=BIGINT}
+    set f_return_code = #{returnCode,jdbcType=VARCHAR},
+      f_return_msg = #{returnMsg,jdbcType=VARCHAR},
+      f_appid = #{appid,jdbcType=VARCHAR},
+      f_mch_id = #{mchId,jdbcType=VARCHAR},
+      f_device_info = #{deviceInfo,jdbcType=VARCHAR},
+      f_nonce_str = #{nonceStr,jdbcType=VARCHAR},
+      f_sign = #{sign,jdbcType=VARCHAR},
+      f_sign_type = #{signType,jdbcType=VARCHAR},
+      f_result_code = #{resultCode,jdbcType=VARCHAR},
+      f_err_code = #{errCode,jdbcType=VARCHAR},
+      f_err_code_desc = #{errCodeDesc,jdbcType=VARCHAR},
+      f_openid = #{openid,jdbcType=VARCHAR},
+      f_is_subscribe = #{isSubscribe,jdbcType=VARCHAR},
+      f_trade_type = #{tradeType,jdbcType=VARCHAR},
+      f_bank_type = #{bankType,jdbcType=VARCHAR},
+      f_total_fee = #{totalFee,jdbcType=INTEGER},
+      f_settlement_total_fee = #{settlementTotalFee,jdbcType=INTEGER},
+      f_fee_type = #{feeType,jdbcType=VARCHAR},
+      f_cash_fee = #{cashFee,jdbcType=INTEGER},
+      f_cash_fee_type = #{cashFeeType,jdbcType=VARCHAR},
+      f_transaction_id = #{transactionId,jdbcType=VARCHAR},
+      f_out_trade_no = #{outTradeNo,jdbcType=VARCHAR},
+      f_attach = #{attach,jdbcType=VARCHAR},
+      f_time_end = #{timeEnd,jdbcType=TIMESTAMP}
+    where f_id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

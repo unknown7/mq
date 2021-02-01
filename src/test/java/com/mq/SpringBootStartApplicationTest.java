@@ -139,7 +139,7 @@ public class SpringBootStartApplicationTest {
         userVo.setAvatarUrl("image");
         userVo.setCity("weifang");
         userVo.setCountry("china");
-        userVo.setDelFlag(0);
+        userVo.setDelFlag(Boolean.FALSE);
         redisObjectHolder.setUserInfo("abc", userVo);
     }
 
@@ -197,7 +197,7 @@ public class SpringBootStartApplicationTest {
         Menu menu = new Menu();
         menu.setmName("test");
         menu.setPid(111L);
-        menu.setDelFlag(0);
+        menu.setDelFlag(Boolean.FALSE);
         menuMapper.insertSelective(menu);
         System.err.println(JSON.toJSONString(menu));
     }
@@ -354,9 +354,9 @@ public class SpringBootStartApplicationTest {
         order.setPoints(BigDecimal.ZERO);
         order.setGoodsPrice(new BigDecimal("0.2"));
         order.setUserId(8L);
-        order.setCreateTime(now);
-        order.setUpdateTime(now);
-        order.setDelFlag(0);
+        order.setCreatedTime(now);
+        order.setModifiedTime(now);
+        order.setDelFlag(Boolean.FALSE);
         orderMapper.insertSelective(order);
     }
 

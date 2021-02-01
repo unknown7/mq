@@ -26,13 +26,13 @@ public class EmployeeQuery extends DefaultQuery {
     private String avatarRealName;
     private String avatarName;
 
-    private Date createTime;
-    private Date createTimeBegin;
-    private Date createTimeEnd;
+    private Date createdTime;
+    private Date createdTimeBegin;
+    private Date createdTimeEnd;
 
-    private Date updateTime;
-    private Date updateTimeBegin;
-    private Date updateTimeEnd;
+    private Date modifiedTime;
+    private Date modifiedTimeBegin;
+    private Date modifiedTimeEnd;
 
     private Integer delFlag;
 
@@ -142,55 +142,55 @@ public class EmployeeQuery extends DefaultQuery {
         this.avatarName = avatarName;
     }
 
-    public Date getCreateTime() {
-        return createTime;
-    }
+	public Date getCreatedTime() {
+		return createdTime;
+	}
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
+	public void setCreatedTime(Date createdTime) {
+		this.createdTime = createdTime;
+	}
 
-    public Date getCreateTimeBegin() {
-        return createTimeBegin;
-    }
+	public Date getCreatedTimeBegin() {
+		return createdTimeBegin;
+	}
 
-    public void setCreateTimeBegin(Date createTimeBegin) {
-        this.createTimeBegin = createTimeBegin;
-    }
+	public void setCreatedTimeBegin(Date createdTimeBegin) {
+		this.createdTimeBegin = createdTimeBegin;
+	}
 
-    public Date getCreateTimeEnd() {
-        return createTimeEnd;
-    }
+	public Date getCreatedTimeEnd() {
+		return createdTimeEnd;
+	}
 
-    public void setCreateTimeEnd(Date createTimeEnd) {
-        this.createTimeEnd = createTimeEnd;
-    }
+	public void setCreatedTimeEnd(Date createdTimeEnd) {
+		this.createdTimeEnd = createdTimeEnd;
+	}
 
-    public Date getUpdateTime() {
-        return updateTime;
-    }
+	public Date getModifiedTime() {
+		return modifiedTime;
+	}
 
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
+	public void setModifiedTime(Date modifiedTime) {
+		this.modifiedTime = modifiedTime;
+	}
 
-    public Date getUpdateTimeBegin() {
-        return updateTimeBegin;
-    }
+	public Date getModifiedTimeBegin() {
+		return modifiedTimeBegin;
+	}
 
-    public void setUpdateTimeBegin(Date updateTimeBegin) {
-        this.updateTimeBegin = updateTimeBegin;
-    }
+	public void setModifiedTimeBegin(Date modifiedTimeBegin) {
+		this.modifiedTimeBegin = modifiedTimeBegin;
+	}
 
-    public Date getUpdateTimeEnd() {
-        return updateTimeEnd;
-    }
+	public Date getModifiedTimeEnd() {
+		return modifiedTimeEnd;
+	}
 
-    public void setUpdateTimeEnd(Date updateTimeEnd) {
-        this.updateTimeEnd = updateTimeEnd;
-    }
+	public void setModifiedTimeEnd(Date modifiedTimeEnd) {
+		this.modifiedTimeEnd = modifiedTimeEnd;
+	}
 
-    public Integer getDelFlag() {
+	public Integer getDelFlag() {
         return delFlag;
     }
 

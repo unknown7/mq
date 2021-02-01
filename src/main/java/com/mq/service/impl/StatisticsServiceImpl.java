@@ -56,9 +56,9 @@ public class StatisticsServiceImpl implements StatisticsService {
         statistics.setBusinessId(id);
         statistics.setUserId(userVo != null ? userVo.getId() : null);
         statistics.setSkey(skey);
-        statistics.setCreateTime(now);
-        statistics.setUpdateTime(now);
-        statistics.setDelFlag(0);
+        statistics.setCreatedTime(now);
+        statistics.setModifiedTime(now);
+        statistics.setDelFlag(Boolean.FALSE);
         return statistics;
     }
 }

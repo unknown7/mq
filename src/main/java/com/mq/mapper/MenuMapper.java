@@ -18,5 +18,5 @@ public interface MenuMapper {
 
     int updateByPrimaryKey(Menu record);
 
-    List<MenuTree> selectMenuTree(Long employeeId);
+	List<MenuTree> selectMenuTree(Long employeeId);
 }

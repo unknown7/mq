@@ -1,5 +1,6 @@
 package com.mq.vo;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class BannerVo {
@@ -10,13 +11,14 @@ public class BannerVo {
     private Integer sort;
 
     private Long jumpTo;
+
     private String jumpToName;
 
-    private Integer delFlag;
+    private Boolean delFlag;
 
-    private Date createTime;
+    private LocalDateTime createdTime;
 
-    private Date updateTime;
+    private LocalDateTime modifiedTime;
 
     private String desc;
 
@@ -64,31 +66,31 @@ public class BannerVo {
         this.jumpToName = jumpToName;
     }
 
-    public Integer getDelFlag() {
-        return delFlag;
-    }
+	public Boolean getDelFlag() {
+		return delFlag;
+	}
 
-    public void setDelFlag(Integer delFlag) {
-        this.delFlag = delFlag;
-    }
+	public void setDelFlag(Boolean delFlag) {
+		this.delFlag = delFlag;
+	}
 
-    public Date getCreateTime() {
-        return createTime;
-    }
+	public LocalDateTime getCreatedTime() {
+		return createdTime;
+	}
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
+	public void setCreatedTime(LocalDateTime createdTime) {
+		this.createdTime = createdTime;
+	}
 
-    public Date getUpdateTime() {
-        return updateTime;
-    }
+	public LocalDateTime getModifiedTime() {
+		return modifiedTime;
+	}
 
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
+	public void setModifiedTime(LocalDateTime modifiedTime) {
+		this.modifiedTime = modifiedTime;
+	}
 
-    public String getDesc() {
+	public String getDesc() {
         return desc;
     }
 

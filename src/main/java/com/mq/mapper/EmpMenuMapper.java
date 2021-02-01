@@ -17,9 +17,9 @@ public interface EmpMenuMapper {
 
     int updateByPrimaryKey(EmpMenu record);
 
-    List<Long> selectMenusByEmpId(Long employeeId);
+	List<Long> selectMenusByEmpId(Long employeeId);
 
-    int deleteByEid(Long eid);
+	int deleteByEid(Long eid);
 
-    int insertBatch(List<EmpMenu> list);
+	int insertBatch(List<EmpMenu> list);
 }

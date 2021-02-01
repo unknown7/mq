@@ -18,9 +18,9 @@ public interface OrderMapper {
 
     int updateByPrimaryKey(Order record);
 
-    List<Order> selectByQuery(OrderQuery query);
+	List<Order> selectByQuery(OrderQuery query);
 
-    Long selectNums(OrderQuery query);
+	Long selectNums(OrderQuery query);
 
-    Order selectByOrderNo(String orderNo);
+	Order selectByOrderNo(String orderNo);
 }

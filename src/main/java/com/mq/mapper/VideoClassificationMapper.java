@@ -18,7 +18,7 @@ public interface VideoClassificationMapper {
 
     int updateByPrimaryKey(VideoClassification record);
 
-    List<VideoClassification> selectByQuery(VideoClassificationQuery query);
+	List<VideoClassification> selectByQuery(VideoClassificationQuery query);
 
-    Long selectNums(VideoClassificationQuery query);
+	Long selectNums(VideoClassificationQuery query);
 }

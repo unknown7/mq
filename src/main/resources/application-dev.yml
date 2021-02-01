@@ -1,8 +1,8 @@
 spring:
   redis:
-    host: 127.0.0.1
+    host: 10.152.4.82
     port: 6379
-    password:
+    password: OWMyOTVmOTJhNzd
     timeout: 10000
     maxIdle: 300
     maxTotal: 1000
@@ -12,10 +12,11 @@ spring:
     timeBetweenEvictionRunsMillis: 30000
     testOnBorrow: true
     testWhileIdle: true
+
   datasource:
-    url: jdbc:mysql://localhost:3306/mq?characterEncoding=UTF-8&serverTimezone=GMT&useSSL=false&allowPublicKeyRetrieval=true
-    username: root
-    password: 123456
+    url: jdbc:mysql://10.152.17.126:3306/promotion_sit?characterEncoding=UTF-8&serverTimezone=GMT&useSSL=false&allowPublicKeyRetrieval=true
+    username: promotion_sit
+    password: Dd^&wG4ij37
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
     filters: stat
@@ -39,8 +40,8 @@ server:
 
 global-constants:
   orders-limit-per-day: 1000000
-  app-id: wxadfd8d2448611af5
-  app-secret: 6f4c76bbe365216e5ec900415274b15d
+  app-id: wxbe1297b725055359
+  app-secret: 5c5083238abcd28a120518c7171c24eb
   mch-id: 1101101101
   api-key: 11011011011011011011011011011011
   notify-url: https://www.unknown7.xyz/mq/wx/paymentResult

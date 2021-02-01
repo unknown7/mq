@@ -18,9 +18,9 @@ public interface EmployeeMapper {
 
     int updateByPrimaryKey(Employee record);
 
-    Employee selectByUsername(String username);
+	Employee selectByUsername(String username);
 
-    List<Employee> selectByQuery(EmployeeQuery query);
+	List<Employee> selectByQuery(EmployeeQuery query);
 
-    Long selectNums(EmployeeQuery query);
+	Long selectNums(EmployeeQuery query);
 }
