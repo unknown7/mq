@@ -17,5 +17,5 @@ public interface WhiteListMapper {
 
     int updateByPrimaryKey(WhiteList record);
 
-    List<WhiteList> findAll();
+	List<WhiteList> findAll();
 }

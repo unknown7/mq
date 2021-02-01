@@ -7,7 +7,7 @@ public class User {
 
     private String country;
 
-    private Integer gender;
+    private Boolean gender;
 
     private String province;
 
@@ -27,11 +27,11 @@ public class User {
 
     private Long referrer;
 
-    private Date createTime;
+    private Date createdTime;
 
-    private Date updateTime;
+    private Date modifiedTime;
 
-    private Integer delFlag;
+    private Boolean delFlag;
 
     public Long getId() {
         return id;
@@ -49,11 +49,11 @@ public class User {
         this.country = country == null ? null : country.trim();
     }
 
-    public Integer getGender() {
+    public Boolean getGender() {
         return gender;
     }
 
-    public void setGender(Integer gender) {
+    public void setGender(Boolean gender) {
         this.gender = gender;
     }
 
@@ -129,27 +129,27 @@ public class User {
         this.referrer = referrer;
     }
 
-    public Date getCreateTime() {
-        return createTime;
+    public Date getCreatedTime() {
+        return createdTime;
     }
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+    public void setCreatedTime(Date createdTime) {
+        this.createdTime = createdTime;
     }
 
-    public Date getUpdateTime() {
-        return updateTime;
+    public Date getModifiedTime() {
+        return modifiedTime;
     }
 
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
+    public void setModifiedTime(Date modifiedTime) {
+        this.modifiedTime = modifiedTime;
     }
 
-    public Integer getDelFlag() {
+    public Boolean getDelFlag() {
         return delFlag;
     }
 
-    public void setDelFlag(Integer delFlag) {
+    public void setDelFlag(Boolean delFlag) {
         this.delFlag = delFlag;
     }
 }

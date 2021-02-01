@@ -15,5 +15,5 @@ public interface ShareCardMapper {
 
     int updateByPrimaryKey(ShareCard record);
 
-    ShareCard selectOneByUserIdAndGoodsId(Long userId, Long goodsId, String goodsType);
+	ShareCard selectOneByUserIdAndGoodsId(Long userId, Long goodsId, String goodsType);
 }

@@ -54,11 +54,11 @@ public class UserServiceImpl implements UserService {
          */
         String skey = MD5.generate(temporaryUser.getOpenId());
         Date now = new Date();
-        user.setCreateTime(now);
-        user.setDelFlag(0);
+        user.setCreatedTime(now);
+        user.setDelFlag(Boolean.FALSE);
         user.setSessionKey(temporaryUser.getSessionKey());
         user.setSkey(skey);
-        user.setUpdateTime(now);
+        user.setModifiedTime(now);
         /**
          * 推荐人
          */
@@ -90,7 +90,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> findAll() {
         UserQuery query = new UserQuery();
-        query.setDelFlag(0);
+        query.setDelFlag(Boolean.FALSE);
         List<User> users = userMapper.selectByQuery(query);
         return users;
     }

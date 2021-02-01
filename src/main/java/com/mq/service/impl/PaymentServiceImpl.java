@@ -103,9 +103,9 @@ public class PaymentServiceImpl implements PaymentService {
                 order.setReferrer(referrer);
             }
         }
-        order.setCreateTime(now);
-        order.setUpdateTime(now);
-        order.setDelFlag(0);
+        order.setCreatedTime(now);
+        order.setModifiedTime(now);
+        order.setDelFlag(Boolean.FALSE);
         orderMapper.insertSelective(order);
 
         UnifiedOrderRequest request = new UnifiedOrderRequest();
@@ -216,7 +216,7 @@ public class PaymentServiceImpl implements PaymentService {
                     Order order = orderMapper.selectByOrderNo(paymentResult.getOutTradeNo());
                     if (Enums.OrderStatus.UNPAID.getKey().equals(order.getOrderStatus())) {
                         order.setOrderStatus(Enums.OrderStatus.PAID.getKey());
-                        order.setUpdateTime(new Date());
+                        order.setModifiedTime(new Date());
                         orderMapper.updateByPrimaryKeySelective(order);
                         /**
                          * 统计已购买
@@ -239,9 +239,9 @@ public class PaymentServiceImpl implements PaymentService {
                             rewardPoints.setRewardType(Enums.RewardType.SHARE.getKey());
                             rewardPoints.setUserId(user.getId());
                             Date now = new Date();
-                            rewardPoints.setCreateTime(now);
-                            rewardPoints.setUpdateTime(now);
-                            rewardPoints.setDelFlag(0);
+                            rewardPoints.setCreatedTime(now);
+                            rewardPoints.setModifiedTime(now);
+                            rewardPoints.setDelFlag(Boolean.FALSE);
                             rewardPointsMapper.insertSelective(rewardPoints);
                         }
                         /**

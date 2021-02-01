@@ -258,7 +258,7 @@ public class WxAPI {
             response.setTradeType(r_trade_type.getStringValue());
         } else {
             response.setErrCode(r_err_code.getStringValue());
-            response.setErrCodeDes(r_err_code_des.getStringValue());
+            response.setErrCodeDesc(r_err_code_des.getStringValue());
         }
         return response;
     }

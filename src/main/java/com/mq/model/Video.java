@@ -18,11 +18,11 @@ public class Video {
 
     private String videoRealName;
 
-    private Date createTime;
+    private Date createdTime;
 
-    private Date updateTime;
+    private Date modifiedTime;
 
-    private Integer delFlag;
+    private Boolean delFlag;
 
     private Long classification;
 
@@ -94,27 +94,27 @@ public class Video {
         this.videoRealName = videoRealName == null ? null : videoRealName.trim();
     }
 
-    public Date getCreateTime() {
-        return createTime;
+    public Date getCreatedTime() {
+        return createdTime;
     }
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+    public void setCreatedTime(Date createdTime) {
+        this.createdTime = createdTime;
     }
 
-    public Date getUpdateTime() {
-        return updateTime;
+    public Date getModifiedTime() {
+        return modifiedTime;
     }
 
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
+    public void setModifiedTime(Date modifiedTime) {
+        this.modifiedTime = modifiedTime;
     }
 
-    public Integer getDelFlag() {
+    public Boolean getDelFlag() {
         return delFlag;
     }
 
-    public void setDelFlag(Integer delFlag) {
+    public void setDelFlag(Boolean delFlag) {
         this.delFlag = delFlag;
     }
 

@@ -1,506 +1,503 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.mq.mapper.VideoMapper" >
-  <resultMap id="BaseResultMap" type="com.mq.model.Video" >
-    <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="title" property="title" jdbcType="VARCHAR" />
-    <result column="subtitle" property="subtitle" jdbcType="VARCHAR" />
-    <result column="price" property="price" jdbcType="DECIMAL" />
-    <result column="cover_real_name" property="coverRealName" jdbcType="VARCHAR" />
-    <result column="description_real_name" property="descriptionRealName" jdbcType="VARCHAR" />
-    <result column="video_real_name" property="videoRealName" jdbcType="VARCHAR" />
-    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
-    <result column="del_flag" property="delFlag" jdbcType="INTEGER" />
-    <result column="classification" property="classification" jdbcType="BIGINT" />
-    <result column="profit_share" property="profitShare" jdbcType="DECIMAL" />
-    <result column="status" property="status" jdbcType="VARCHAR" />
-    <result column="cover_name" property="coverName" jdbcType="VARCHAR" />
-    <result column="description_name" property="descriptionName" jdbcType="VARCHAR" />
-    <result column="video_name" property="videoName" jdbcType="VARCHAR" />
-    <result column="free_watch_time" property="freeWatchTime" jdbcType="INTEGER" />
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mq.mapper.VideoMapper">
+  <resultMap id="BaseResultMap" type="com.mq.model.Video">
+    <id column="f_id" jdbcType="BIGINT" property="id" />
+    <result column="f_title" jdbcType="VARCHAR" property="title" />
+    <result column="f_subtitle" jdbcType="VARCHAR" property="subtitle" />
+    <result column="f_price" jdbcType="DECIMAL" property="price" />
+    <result column="f_cover_real_name" jdbcType="VARCHAR" property="coverRealName" />
+    <result column="f_description_real_name" jdbcType="VARCHAR" property="descriptionRealName" />
+    <result column="f_video_real_name" jdbcType="VARCHAR" property="videoRealName" />
+    <result column="f_created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="f_modified_time" jdbcType="TIMESTAMP" property="modifiedTime" />
+    <result column="f_del_flag" jdbcType="BIT" property="delFlag" />
+    <result column="f_classification" jdbcType="BIGINT" property="classification" />
+    <result column="f_profit_share" jdbcType="DECIMAL" property="profitShare" />
+    <result column="f_status" jdbcType="VARCHAR" property="status" />
+    <result column="f_cover_name" jdbcType="VARCHAR" property="coverName" />
+    <result column="f_description_name" jdbcType="VARCHAR" property="descriptionName" />
+    <result column="f_video_name" jdbcType="VARCHAR" property="videoName" />
+    <result column="f_free_watch_time" jdbcType="INTEGER" property="freeWatchTime" />
   </resultMap>
-  <resultMap id="VoResultMap" type="com.mq.vo.VideoVo" >
-    <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="title" property="title" jdbcType="VARCHAR" />
-    <result column="subtitle" property="subtitle" jdbcType="VARCHAR" />
-    <result column="price" property="price" jdbcType="DECIMAL" />
-    <result column="watched" property="watched" jdbcType="INTEGER" />
-    <result column="purchased" property="purchased" jdbcType="INTEGER" />
-    <result column="cover_real_name" property="coverRealName" jdbcType="VARCHAR" />
-    <result column="description_real_name" property="descriptionRealName" jdbcType="VARCHAR" />
-    <result column="video_real_name" property="videoRealName" jdbcType="VARCHAR" />
-    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
-    <result column="del_flag" property="delFlag" jdbcType="INTEGER" />
-    <result column="classification" property="classification" jdbcType="BIGINT" />
-    <result column="classification_name" property="classificationName" jdbcType="VARCHAR" />
-    <result column="profit_share" property="profitShare" jdbcType="DECIMAL" />
-    <result column="accessed" property="accessed" jdbcType="INTEGER" />
-    <result column="status" property="status" jdbcType="VARCHAR" />
-    <result column="cover_name" property="coverName" jdbcType="VARCHAR" />
-    <result column="description_name" property="descriptionName" jdbcType="VARCHAR" />
-    <result column="video_name" property="videoName" jdbcType="VARCHAR" />
-    <result column="is_purchased" property="isPurchased" jdbcType="BOOLEAN" />
-    <result column="free_watch_time" property="freeWatchTime" jdbcType="INTEGER" />
-    <result column="user_id" property="userId" jdbcType="BIGINT" />
-    <result column="share_card" property="shareCard" jdbcType="VARCHAR" />
-    <result column="is_white_user" property="isWhiteUser" jdbcType="BOOLEAN" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    id, title, subtitle, price, cover_real_name, description_real_name,
-    video_real_name, create_time, update_time, del_flag, classification, profit_share,
-    status, cover_name, description_name, video_name, free_watch_time
+
+    <resultMap id="VoResultMap" type="com.mq.vo.VideoVo">
+        <id column="f_id" jdbcType="BIGINT" property="id" />
+        <result column="f_title" jdbcType="VARCHAR" property="title" />
+        <result column="f_subtitle" jdbcType="VARCHAR" property="subtitle" />
+        <result column="f_price" jdbcType="DECIMAL" property="price" />
+        <result column="f_watched" jdbcType="INTEGER" property="watched" />
+        <result column="f_purchased" jdbcType="INTEGER" property="purchased" />
+        <result column="f_cover_real_name" jdbcType="VARCHAR" property="coverRealName" />
+        <result column="f_description_real_name" jdbcType="VARCHAR" property="descriptionRealName" />
+        <result column="f_video_real_name" jdbcType="VARCHAR" property="videoRealName" />
+        <result column="f_create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="f_update_time" jdbcType="TIMESTAMP" property="updateTime" />
+        <result column="f_del_flag" jdbcType="INTEGER" property="delFlag" />
+        <result column="f_classification" jdbcType="BIGINT" property="classification" />
+        <result column="f_classification_name" jdbcType="VARCHAR" property="classificationName" />
+        <result column="f_profit_share" jdbcType="DECIMAL" property="profitShare" />
+        <result column="f_accessed" jdbcType="INTEGER" property="accessed" />
+        <result column="f_status" jdbcType="VARCHAR" property="status" />
+        <result column="f_cover_name" jdbcType="VARCHAR" property="coverName" />
+        <result column="f_description_name" jdbcType="VARCHAR" property="descriptionName" />
+        <result column="f_video_name" jdbcType="VARCHAR" property="videoName" />
+        <result column="f_is_purchased" jdbcType="BOOLEAN" property="isPurchased" />
+        <result column="f_free_watch_time" jdbcType="INTEGER" property="freeWatchTime" />
+        <result column="f_user_id" jdbcType="BIGINT" property="userId" />
+        <result column="f_share_card" jdbcType="VARCHAR" property="shareCard" />
+        <result column="f_is_white_user" jdbcType="BOOLEAN" property="isWhiteUser" />
+    </resultMap>
+
+  <sql id="Base_Column_List">
+    f_id, f_title, f_subtitle, f_price, f_cover_real_name, f_description_real_name, f_video_real_name, 
+    f_created_time, f_modified_time, f_del_flag, f_classification, f_profit_share, f_status, 
+    f_cover_name, f_description_name, f_video_name, f_free_watch_time
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from t_video
-    where id = #{id,jdbcType=BIGINT}
+    where f_id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from t_video
-    where id = #{id,jdbcType=BIGINT}
+    where f_id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.mq.model.Video" >
-    insert into t_video (id, title, subtitle, 
-      price,
-      cover_real_name, description_real_name, video_real_name, 
-      create_time, update_time, del_flag, 
-      classification, profit_share,
-      status, cover_name, description_name, 
-      video_name, free_watch_time)
+  <insert id="insert" parameterType="com.mq.model.Video">
+    insert into t_video (f_id, f_title, f_subtitle, 
+      f_price, f_cover_real_name, f_description_real_name, 
+      f_video_real_name, f_created_time, f_modified_time, 
+      f_del_flag, f_classification, f_profit_share, 
+      f_status, f_cover_name, f_description_name, 
+      f_video_name, f_free_watch_time)
     values (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{subtitle,jdbcType=VARCHAR}, 
-      #{price,jdbcType=DECIMAL},
-      #{coverRealName,jdbcType=VARCHAR}, #{descriptionRealName,jdbcType=VARCHAR}, #{videoRealName,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=INTEGER}, 
-      #{classification,jdbcType=BIGINT}, #{profitShare,jdbcType=DECIMAL},
+      #{price,jdbcType=DECIMAL}, #{coverRealName,jdbcType=VARCHAR}, #{descriptionRealName,jdbcType=VARCHAR}, 
+      #{videoRealName,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}, #{modifiedTime,jdbcType=TIMESTAMP}, 
+      #{delFlag,jdbcType=BIT}, #{classification,jdbcType=BIGINT}, #{profitShare,jdbcType=DECIMAL},
       #{status,jdbcType=VARCHAR}, #{coverName,jdbcType=VARCHAR}, #{descriptionName,jdbcType=VARCHAR}, 
-      #{videoName,jdbcType=VARCHAR}), #{freeWatchTime,jdbcType=INTEGER}
+      #{videoName,jdbcType=VARCHAR}, #{freeWatchTime,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.mq.model.Video" >
-    <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
+  <insert id="insertSelective" parameterType="com.mq.model.Video">
     insert into t_video
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        f_id,
       </if>
-      <if test="title != null" >
-        title,
+      <if test="title != null">
+        f_title,
       </if>
-      <if test="subtitle != null" >
-        subtitle,
+      <if test="subtitle != null">
+        f_subtitle,
       </if>
-      <if test="price != null" >
-        price,
+      <if test="price != null">
+        f_price,
       </if>
-      <if test="coverRealName != null" >
-        cover_real_name,
+      <if test="coverRealName != null">
+        f_cover_real_name,
       </if>
-      <if test="descriptionRealName != null" >
-        description_real_name,
+      <if test="descriptionRealName != null">
+        f_description_real_name,
       </if>
-      <if test="videoRealName != null" >
-        video_real_name,
+      <if test="videoRealName != null">
+        f_video_real_name,
       </if>
-      <if test="createTime != null" >
-        create_time,
+      <if test="createdTime != null">
+        f_created_time,
       </if>
-      <if test="updateTime != null" >
-        update_time,
+      <if test="modifiedTime != null">
+        f_modified_time,
       </if>
-      <if test="delFlag != null" >
-        del_flag,
+      <if test="delFlag != null">
+        f_del_flag,
       </if>
-      <if test="classification != null" >
-        classification,
+      <if test="classification != null">
+        f_classification,
       </if>
-      <if test="profitShare != null" >
-        profit_share,
+      <if test="profitShare != null">
+        f_profit_share,
       </if>
-      <if test="status != null" >
-        status,
+      <if test="status != null">
+        f_status,
       </if>
-      <if test="coverName != null" >
-        cover_name,
+      <if test="coverName != null">
+        f_cover_name,
       </if>
-      <if test="descriptionName != null" >
-        description_name,
+      <if test="descriptionName != null">
+        f_description_name,
       </if>
-      <if test="videoName != null" >
-        video_name,
+      <if test="videoName != null">
+        f_video_name,
       </if>
-      <if test="freeWatchTime != null" >
-        free_watch_time,
+      <if test="freeWatchTime != null">
+        f_free_watch_time,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
         #{id,jdbcType=BIGINT},
       </if>
-      <if test="title != null" >
+      <if test="title != null">
         #{title,jdbcType=VARCHAR},
       </if>
-      <if test="subtitle != null" >
+      <if test="subtitle != null">
         #{subtitle,jdbcType=VARCHAR},
       </if>
-      <if test="price != null" >
+      <if test="price != null">
         #{price,jdbcType=DECIMAL},
       </if>
-      <if test="coverRealName != null" >
+      <if test="coverRealName != null">
         #{coverRealName,jdbcType=VARCHAR},
       </if>
-      <if test="descriptionRealName != null" >
+      <if test="descriptionRealName != null">
         #{descriptionRealName,jdbcType=VARCHAR},
       </if>
-      <if test="videoRealName != null" >
+      <if test="videoRealName != null">
         #{videoRealName,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null" >
-        #{createTime,jdbcType=TIMESTAMP},
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updateTime != null" >
-        #{updateTime,jdbcType=TIMESTAMP},
+      <if test="modifiedTime != null">
+        #{modifiedTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="delFlag != null" >
-        #{delFlag,jdbcType=INTEGER},
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=BIT},
       </if>
-      <if test="classification != null" >
+      <if test="classification != null">
         #{classification,jdbcType=BIGINT},
       </if>
-      <if test="profitShare != null" >
+      <if test="profitShare != null">
         #{profitShare,jdbcType=DECIMAL},
       </if>
-      <if test="status != null" >
+      <if test="status != null">
         #{status,jdbcType=VARCHAR},
       </if>
-      <if test="coverName != null" >
+      <if test="coverName != null">
         #{coverName,jdbcType=VARCHAR},
       </if>
-      <if test="descriptionName != null" >
+      <if test="descriptionName != null">
         #{descriptionName,jdbcType=VARCHAR},
       </if>
-      <if test="videoName != null" >
+      <if test="videoName != null">
         #{videoName,jdbcType=VARCHAR},
       </if>
-      <if test="freeWatchTime != null" >
+      <if test="freeWatchTime != null">
         #{freeWatchTime,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.mq.model.Video" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.mq.model.Video">
     update t_video
-    <set >
-      <if test="title != null" >
-        title = #{title,jdbcType=VARCHAR},
+    <set>
+      <if test="title != null">
+        f_title = #{title,jdbcType=VARCHAR},
       </if>
-      <if test="subtitle != null" >
-        subtitle = #{subtitle,jdbcType=VARCHAR},
+      <if test="subtitle != null">
+        f_subtitle = #{subtitle,jdbcType=VARCHAR},
       </if>
-      <if test="price != null" >
-        price = #{price,jdbcType=DECIMAL},
+      <if test="price != null">
+        f_price = #{price,jdbcType=DECIMAL},
       </if>
-      <if test="coverRealName != null" >
-        cover_real_name = #{coverRealName,jdbcType=VARCHAR},
+      <if test="coverRealName != null">
+        f_cover_real_name = #{coverRealName,jdbcType=VARCHAR},
       </if>
-      <if test="descriptionRealName != null" >
-        description_real_name = #{descriptionRealName,jdbcType=VARCHAR},
+      <if test="descriptionRealName != null">
+        f_description_real_name = #{descriptionRealName,jdbcType=VARCHAR},
       </if>
-      <if test="videoRealName != null" >
-        video_real_name = #{videoRealName,jdbcType=VARCHAR},
+      <if test="videoRealName != null">
+        f_video_real_name = #{videoRealName,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null" >
-        create_time = #{createTime,jdbcType=TIMESTAMP},
+      <if test="createdTime != null">
+        f_created_time = #{createdTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updateTime != null" >
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      <if test="modifiedTime != null">
+        f_modified_time = #{modifiedTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="delFlag != null" >
-        del_flag = #{delFlag,jdbcType=INTEGER},
+      <if test="delFlag != null">
+        f_del_flag = #{delFlag,jdbcType=BIT},
       </if>
-      <if test="classification != null" >
-        classification = #{classification,jdbcType=BIGINT},
+      <if test="classification != null">
+        f_classification = #{classification,jdbcType=BIGINT},
       </if>
-      <if test="profitShare != null" >
-        profit_share = #{profitShare,jdbcType=DECIMAL},
+      <if test="profitShare != null">
+        f_profit_share = #{profitShare,jdbcType=DECIMAL},
       </if>
-      <if test="status != null" >
-        status = #{status,jdbcType=VARCHAR},
+      <if test="status != null">
+        f_status = #{status,jdbcType=VARCHAR},
       </if>
-      <if test="coverName != null" >
-        cover_name = #{coverName,jdbcType=VARCHAR},
+      <if test="coverName != null">
+        f_cover_name = #{coverName,jdbcType=VARCHAR},
       </if>
-      <if test="descriptionName != null" >
-        description_name = #{descriptionName,jdbcType=VARCHAR},
+      <if test="descriptionName != null">
+        f_description_name = #{descriptionName,jdbcType=VARCHAR},
       </if>
-      <if test="videoName != null" >
-        video_name = #{videoName,jdbcType=VARCHAR},
+      <if test="videoName != null">
+        f_video_name = #{videoName,jdbcType=VARCHAR},
       </if>
-      <if test="freeWatchTime != null" >
-        free_watch_time = #{freeWatchTime,jdbcType=INTEGER},
+      <if test="freeWatchTime != null">
+        f_free_watch_time = #{freeWatchTime,jdbcType=INTEGER},
       </if>
     </set>
-    where id = #{id,jdbcType=BIGINT}
+    where f_id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.mq.model.Video" >
+  <update id="updateByPrimaryKey" parameterType="com.mq.model.Video">
     update t_video
-    set title = #{title,jdbcType=VARCHAR},
-      subtitle = #{subtitle,jdbcType=VARCHAR},
-      price = #{price,jdbcType=DECIMAL},
-      cover_real_name = #{coverRealName,jdbcType=VARCHAR},
-      description_real_name = #{descriptionRealName,jdbcType=VARCHAR},
-      video_real_name = #{videoRealName,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      del_flag = #{delFlag,jdbcType=INTEGER},
-      classification = #{classification,jdbcType=BIGINT},
-      profit_share = #{profitShare,jdbcType=DECIMAL},
-      status = #{status,jdbcType=VARCHAR},
-      cover_name = #{coverName,jdbcType=VARCHAR},
-      description_name = #{descriptionName,jdbcType=VARCHAR},
-      video_name = #{videoName,jdbcType=VARCHAR},
-      free_watch_time = #{freeWatchTime,jdbcType=INTEGER}
-    where id = #{id,jdbcType=BIGINT}
+    set f_title = #{title,jdbcType=VARCHAR},
+      f_subtitle = #{subtitle,jdbcType=VARCHAR},
+      f_price = #{price,jdbcType=DECIMAL},
+      f_cover_real_name = #{coverRealName,jdbcType=VARCHAR},
+      f_description_real_name = #{descriptionRealName,jdbcType=VARCHAR},
+      f_video_real_name = #{videoRealName,jdbcType=VARCHAR},
+      f_created_time = #{createdTime,jdbcType=TIMESTAMP},
+      f_modified_time = #{modifiedTime,jdbcType=TIMESTAMP},
+      f_del_flag = #{delFlag,jdbcType=BIT},
+      f_classification = #{classification,jdbcType=BIGINT},
+      f_profit_share = #{profitShare,jdbcType=DECIMAL},
+      f_status = #{status,jdbcType=VARCHAR},
+      f_cover_name = #{coverName,jdbcType=VARCHAR},
+      f_description_name = #{descriptionName,jdbcType=VARCHAR},
+      f_video_name = #{videoName,jdbcType=VARCHAR},
+      f_free_watch_time = #{freeWatchTime,jdbcType=INTEGER}
+    where f_id = #{id,jdbcType=BIGINT}
   </update>
 
   <select id="selectByQuery" parameterType="com.mq.query.VideoQuery" resultMap="VoResultMap">
     select
-    v.id, v.title, v.subtitle, v.price, v.cover_real_name, v.description_real_name, v.video_real_name,
-    v.create_time, v.update_time, v.del_flag, v.classification, v.profit_share, v.status, v.cover_name,
-    v.description_name, v.video_name, v.free_watch_time,
-    vc.v_name as classification_name,
-    (select count(1) from t_statistics s where s.statistics_type = '003003' and s.business_id = v.id) as watched,
-    (select count(1) from t_statistics s where s.statistics_type = '003004' and s.business_id = v.id) as purchased,
-    (select count(1) from t_statistics s where s.statistics_type = '003005' and s.business_id = v.id) as accessed
+    v.f_id, v.f_title, v.f_subtitle, v.f_price, v.f_cover_real_name, v.f_description_real_name, v.f_video_real_name,
+    v.f_created_time, v.f_modified_time, v.f_del_flag, v.f_classification, v.f_profit_share, v.f_status, v.f_cover_name,
+    v.f_description_name, v.f_video_name, v.f_free_watch_time,
+    vc.f_v_name as f_classification_name,
+    (select count(1) from t_statistics s where s.f_statistics_type = '003003' and s.f_business_id = v.f_id) as f_watched,
+    (select count(1) from t_statistics s where s.f_statistics_type = '003004' and s.f_business_id = v.f_id) as f_purchased,
+    (select count(1) from t_statistics s where s.f_statistics_type = '003005' and s.f_business_id = v.f_id) as f_accessed
     from t_video v
-    left join t_video_classification vc on v.classification = vc.id
-    where v.del_flag = 0
-    <if test="title != null and title != ''" >
-      and v.title like concat(concat("%",#{title}),"%")
+    left join t_video_classification vc on v.f_classification = vc.f_id
+    where v.f_del_flag = 0
+    <if test="title != null and title != ''">
+      and v.f_title like concat(concat("%",#{title}),"%")
     </if>
-    <if test="subtitle != null" >
-      and v.subtitle = #{subtitle,jdbcType=VARCHAR}
+    <if test="subtitle != null">
+      and v.f_subtitle = #{subtitle,jdbcType=VARCHAR}
     </if>
-    <if test="price != null" >
-      and v.price = #{price,jdbcType=DECIMAL}
+    <if test="price != null">
+      and v.f_price = #{price,jdbcType=DECIMAL}
     </if>
-    <if test="coverRealName != null" >
-      and v.cover_real_name = #{coverRealName,jdbcType=VARCHAR}
+    <if test="coverRealName != null">
+      and v.f_cover_real_name = #{coverRealName,jdbcType=VARCHAR}
     </if>
-    <if test="descriptionRealName != null" >
-      and v.description_real_name = #{descriptionRealName,jdbcType=VARCHAR}
+    <if test="descriptionRealName != null">
+      and v.f_description_real_name = #{descriptionRealName,jdbcType=VARCHAR}
     </if>
-    <if test="videoRealName != null" >
-      and v.video_real_name = #{videoRealName,jdbcType=VARCHAR}
+    <if test="videoRealName != null">
+      and v.f_video_real_name = #{videoRealName,jdbcType=VARCHAR}
     </if>
-    <if test="createTime != null" >
-      and v.create_time = #{createTime,jdbcType=TIMESTAMP}
+      <if test="createdTime != null">
+          and v.f_created_time = #{createdTime,jdbcType=DATE}
+      </if>
+      <if test="createdTimeBegin != null">
+          and v.f_created_time &gt;= #{createdTimeBegin,jdbcType=DATE}
+      </if>
+      <if test="createdTimeEnd != null">
+          and v.f_created_time &lt;= #{createdTimeEnd,jdbcType=DATE}
+      </if>
+      <if test="modifiedTime != null">
+          and v.f_modified_time = #{modifiedTime,jdbcType=DATE}
+      </if>
+      <if test="modifiedTimeBegin != null">
+          and v.f_modified_time &gt;= #{modifiedTimeBegin,jdbcType=DATE}
+      </if>
+      <if test="modifiedTimeEnd != null">
+          and v.f_modified_time &lt;= #{modifiedTimeEnd,jdbcType=DATE}
+      </if>
+    <if test="delFlag != null">
+      and v.f_del_flag = #{delFlag,jdbcType=INTEGER}
     </if>
-    <if test="createTimeBegin != null" >
-      and v.create_time &gt;= #{createTimeBegin,jdbcType=TIMESTAMP}
+    <if test="classification != null">
+      and v.f_classification = #{classification,jdbcType=BIGINT}
     </if>
-    <if test="createTimeEnd != null" >
-      and v.create_time &lt;= #{createTimeEnd,jdbcType=TIMESTAMP}
+    <if test="profitShare != null">
+      and v.f_profit_share = #{profitShare,jdbcType=DECIMAL}
     </if>
-    <if test="updateTime != null" >
-      and v.update_time = #{updateTime,jdbcType=TIMESTAMP}
+    <if test="status != null">
+      and v.f_status = #{status,jdbcType=VARCHAR}
     </if>
-    <if test="updateTimeBegin != null" >
-      and v.update_time &gt;= #{updateTimeBegin,jdbcType=TIMESTAMP}
+    <if test="coverName != null">
+      and v.f_cover_name = #{coverName,jdbcType=VARCHAR}
     </if>
-    <if test="updateTimeEnd != null" >
-      and v.update_time &lt;= #{updateTimeEnd,jdbcType=TIMESTAMP}
+    <if test="descriptionName != null">
+      and v.f_description_name = #{descriptionName,jdbcType=VARCHAR}
     </if>
-    <if test="delFlag != null" >
-      and v.del_flag = #{delFlag,jdbcType=INTEGER}
+    <if test="videoName != null">
+      and v.f_video_name = #{videoName,jdbcType=VARCHAR}
     </if>
-    <if test="classification != null" >
-      and v.classification = #{classification,jdbcType=BIGINT}
+    <if test="freeWatchTime != null">
+      and v.f_free_watch_time = #{freeWatchTime,jdbcType=INTEGER}
     </if>
-    <if test="profitShare != null" >
-      and v.profit_share = #{profitShare,jdbcType=DECIMAL}
-    </if>
-    <if test="status != null" >
-      and v.status = #{status,jdbcType=VARCHAR}
-    </if>
-    <if test="coverName != null" >
-      and v.cover_name = #{coverName,jdbcType=VARCHAR}
-    </if>
-    <if test="descriptionName != null" >
-      and v.description_name = #{descriptionName,jdbcType=VARCHAR}
-    </if>
-    <if test="videoName != null" >
-      and v.video_name = #{videoName,jdbcType=VARCHAR}
-    </if>
-    <if test="freeWatchTime != null" >
-      and v.free_watch_time = #{freeWatchTime,jdbcType=INTEGER}
-    </if>
-    <if test="orderBy != null" >
-      order by v.${orderBy} ${sequence}
+    <if test="orderBy != null">
+      order by v.f_${orderBy} ${sequence}
     </if>
   </select>
   <select id="selectNums" parameterType="com.mq.query.VideoQuery" resultType="java.lang.Long">
     select count(1) from t_video
-    where del_flag = 0
-    <if test="title != null and title != ''" >
-      and title like concat(concat("%",#{title}),"%")
+    where f_del_flag = 0
+    <if test="title != null and title != ''">
+      and f_title like concat(concat("%",#{title}),"%")
     </if>
-    <if test="subtitle != null" >
-      and subtitle = #{subtitle,jdbcType=VARCHAR}
+    <if test="subtitle != null">
+      and f_subtitle = #{subtitle,jdbcType=VARCHAR}
     </if>
-    <if test="price != null" >
-      and price = #{price,jdbcType=DECIMAL}
+    <if test="price != null">
+      and f_price = #{price,jdbcType=DECIMAL}
     </if>
-    <if test="coverRealName != null" >
-      and cover_real_name = #{coverRealName,jdbcType=VARCHAR}
+    <if test="coverRealName != null">
+      and f_cover_real_name = #{coverRealName,jdbcType=VARCHAR}
     </if>
-    <if test="descriptionRealName != null" >
-      and description_real_name = #{descriptionRealName,jdbcType=VARCHAR}
+    <if test="descriptionRealName != null">
+      and f_description_real_name = #{descriptionRealName,jdbcType=VARCHAR}
     </if>
-    <if test="videoRealName != null" >
-      and video_real_name = #{videoRealName,jdbcType=VARCHAR}
+    <if test="videoRealName != null">
+      and f_video_real_name = #{videoRealName,jdbcType=VARCHAR}
     </if>
-    <if test="createTime != null" >
-      and create_time = #{createTime,jdbcType=TIMESTAMP}
+      <if test="createdTime != null">
+          and f_created_time = #{createdTime,jdbcType=DATE}
+      </if>
+      <if test="createdTimeBegin != null">
+          and f_created_time &gt;= #{createdTimeBegin,jdbcType=DATE}
+      </if>
+      <if test="createdTimeEnd != null">
+          and f_created_time &lt;= #{createdTimeEnd,jdbcType=DATE}
+      </if>
+      <if test="modifiedTime != null">
+          and f_modified_time = #{modifiedTime,jdbcType=DATE}
+      </if>
+      <if test="modifiedTimeBegin != null">
+          and f_modified_time &gt;= #{modifiedTimeBegin,jdbcType=DATE}
+      </if>
+      <if test="modifiedTimeEnd != null">
+          and f_modified_time &lt;= #{modifiedTimeEnd,jdbcType=DATE}
+      </if>
+    <if test="delFlag != null">
+      and f_del_flag = #{delFlag,jdbcType=BIT}
     </if>
-    <if test="createTimeBegin != null" >
-      and create_time &gt;= #{createTimeBegin,jdbcType=TIMESTAMP}
+    <if test="classification != null">
+      and f_classification = #{classification,jdbcType=BIGINT}
     </if>
-    <if test="createTimeEnd != null" >
-      and create_time &lt;= #{createTimeEnd,jdbcType=TIMESTAMP}
+    <if test="profitShare != null">
+      and f_profit_share = #{profitShare,jdbcType=DECIMAL}
     </if>
-    <if test="updateTime != null" >
-      and update_time = #{updateTime,jdbcType=TIMESTAMP}
+    <if test="status != null">
+      and f_status = #{status,jdbcType=VARCHAR}
     </if>
-    <if test="updateTimeBegin != null" >
-      and update_time &gt;= #{updateTimeBegin,jdbcType=TIMESTAMP}
+    <if test="coverName != null">
+      and f_cover_name = #{coverName,jdbcType=VARCHAR}
     </if>
-    <if test="updateTimeEnd != null" >
-      and update_time &lt;= #{updateTimeEnd,jdbcType=TIMESTAMP}
+    <if test="descriptionName != null">
+      and f_description_name = #{descriptionName,jdbcType=VARCHAR}
     </if>
-    <if test="delFlag != null" >
-      and del_flag = #{delFlag,jdbcType=INTEGER}
+    <if test="videoName != null">
+      and f_video_name = #{videoName,jdbcType=VARCHAR}
     </if>
-    <if test="classification != null" >
-      and classification = #{classification,jdbcType=BIGINT}
-    </if>
-    <if test="profitShare != null" >
-      and profit_share = #{profitShare,jdbcType=DECIMAL}
-    </if>
-    <if test="status != null" >
-      and status = #{status,jdbcType=VARCHAR}
-    </if>
-    <if test="coverName != null" >
-      and cover_name = #{coverName,jdbcType=VARCHAR}
-    </if>
-    <if test="descriptionName != null" >
-      and description_name = #{descriptionName,jdbcType=VARCHAR}
-    </if>
-    <if test="videoName != null" >
-      and video_name = #{videoName,jdbcType=VARCHAR}
-    </if>
-    <if test="freeWatchTime != null" >
-      and free_watch_time = #{freeWatchTime,jdbcType=INTEGER}
+    <if test="freeWatchTime != null">
+      and f_free_watch_time = #{freeWatchTime,jdbcType=INTEGER}
     </if>
   </select>
 
   <select id="selectVoByPrimaryKey" parameterType="java.lang.Long" resultMap="VoResultMap">
     select
-    v.id, v.title, v.subtitle, v.price, v.cover_real_name, v.description_real_name, v.video_real_name,
-    v.create_time, v.update_time, v.del_flag, v.classification, v.profit_share, v.status, v.cover_name,
-    v.description_name, v.video_name, v.free_watch_time,
-    vc.v_name as classification_name,
-    (select count(1) from t_statistics s where s.statistics_type = '003003' and s.business_id = v.id) as watched,
-    (select count(1) from t_statistics s where s.statistics_type = '003004' and s.business_id = v.id) as purchased,
-    (select count(1) from t_statistics s where s.statistics_type = '003005' and s.business_id = v.id) as accessed
+    v.f_id, v.f_title, v.f_subtitle, v.f_price, v.f_cover_real_name, v.f_description_real_name, v.f_video_real_name,
+    v.f_created_time, v.f_modified_time, v.f_del_flag, v.f_classification, v.f_profit_share, v.f_status, v.f_cover_name,
+    v.f_description_name, v.f_video_name, v.f_free_watch_time,
+    vc.f_v_name as f_classification_name,
+    (select count(1) from t_statistics s where s.f_statistics_type = '003003' and s.f_business_id = v.f_id) as f_watched,
+    (select count(1) from t_statistics s where s.f_statistics_type = '003004' and s.f_business_id = v.f_id) as f_purchased,
+    (select count(1) from t_statistics s where s.f_statistics_type = '003005' and s.f_business_id = v.f_id) as f_accessed
     from t_video v
-    left join t_video_classification vc on v.classification = vc.id
-    where v.id = #{id,jdbcType=BIGINT}
+    left join t_video_classification vc on v.f_classification = vc.f_id
+    where v.f_id = #{id,jdbcType=BIGINT}
   </select>
 
   <select id="selectOneVoWithAuth" resultMap="VoResultMap">
     select
-    v.id, v.title, v.subtitle, v.price, v.cover_real_name, v.description_real_name, v.video_real_name,
-    v.create_time, v.update_time, v.del_flag, v.classification, v.profit_share, v.status, v.cover_name,
-    v.description_name, v.video_name, v.free_watch_time,
-    vc.v_name as classification_name,
-    (select count(1) from t_statistics s where s.statistics_type = '003003' and s.business_id = v.id) as watched,
-    (select count(1) from t_statistics s where s.statistics_type = '003004' and s.business_id = v.id) as purchased,
-    (select count(1) from t_statistics s where s.statistics_type = '003005' and s.business_id = v.id) as accessed
+    v.f_id, v.f_title, v.f_subtitle, v.f_price, v.f_cover_real_name, v.f_description_real_name, v.f_video_real_name,
+    v.f_created_time, v.f_modified_time, v.f_del_flag, v.f_classification, v.f_profit_share, v.f_status, v.f_cover_name,
+    v.f_description_name, v.f_video_name, v.f_free_watch_time,
+    vc.f_v_name as f_classification_name,
+    (select count(1) from t_statistics s where s.f_statistics_type = '003003' and s.f_business_id = v.f_id) as f_watched,
+    (select count(1) from t_statistics s where s.f_statistics_type = '003004' and s.f_business_id = v.f_id) as f_purchased,
+    (select count(1) from t_statistics s where s.f_statistics_type = '003005' and s.f_business_id = v.f_id) as f_accessed
     <if test="userId != null">
-      ,(case when o.id is null then false else true end) as is_purchased
-      ,o.user_id
-      ,sc.share_card_real_name as share_card
+      ,(case when o.id is null then false else true end) as f_is_purchased
+      ,o.f_user_id
+      ,sc.f_share_card_real_name as f_share_card
     </if>
     <if test="userId == null">
-      ,false as is_purchased
+      ,false as f_is_purchased
     </if>
     from t_video v
-    left join t_video_classification vc on v.classification = vc.id
+    left join t_video_classification vc on v.f_classification = vc.f_id
     <if test="userId != null">
-      left join t_order o on v.id = o.goods_id and o.order_status = '004002' and o.user_id = #{userId,jdbcType=BIGINT}
-      left join t_share_card sc on v.id = sc.goods_id and sc.goods_type = '002001' and sc.user_id = #{userId,jdbcType=BIGINT}
+      left join t_order o on v.f_id = o.f_goods_id and o.f_order_status = '004002' and o.f_user_id = #{userId,jdbcType=BIGINT}
+      left join t_share_card sc on v.f_id = sc.f_goods_id and sc.f_goods_type = '002001' and sc.f_user_id = #{userId,jdbcType=BIGINT}
     </if>
-    where v.id = #{videoId,jdbcType=BIGINT}
+    where v.f_id = #{videoId,jdbcType=BIGINT}
   </select>
 
   <select id="isPurchased" resultType="java.lang.Boolean">
-    select case when o.id is null then false else true end
+    select case when o.f_id is null then false else true end
     from t_video v
-    left join t_order o on v.id = o.goods_id and o.order_status = '004002' and o.user_id = #{userId,jdbcType=BIGINT}
-    where v.id = #{videoId,jdbcType=BIGINT}
+    left join t_order o on v.f_id = o.f_goods_id and o.f_order_status = '004002' and o.f_user_id = #{userId,jdbcType=BIGINT}
+    where v.f_id = #{videoId,jdbcType=BIGINT}
   </select>
 
   <select id="findPurchases" resultMap="VoResultMap">
     select
-      v.id, v.title, v.subtitle, v.price, v.cover_real_name, v.description_real_name, v.video_real_name,
-      v.create_time, v.update_time, v.del_flag, v.classification, v.profit_share, v.status, v.cover_name,
-      v.description_name, v.video_name, v.free_watch_time,
-      vc.v_name as classification_name,
-      (select count(1) from t_statistics s where s.statistics_type = '003003' and s.business_id = v.id and s.user_id = #{userId,jdbcType=BIGINT}) as watched,
-      (select count(1) from t_statistics s where s.statistics_type = '003004' and s.business_id = v.id and s.user_id = #{userId,jdbcType=BIGINT}) as purchased,
-      (select count(1) from t_statistics s where s.statistics_type = '003005' and s.business_id = v.id and s.user_id = #{userId,jdbcType=BIGINT}) as accessed
-      ,(case when o.id is null then false else true end) as is_purchased
-      ,o.user_id
+      v.f_id, v.f_title, v.f_subtitle, v.f_price, v.f_cover_real_name, v.f_description_real_name, v.f_video_real_name,
+      v.f_created_time, v.f_modified_time, v.f_del_flag, v.f_classification, v.f_profit_share, v.f_status, v.f_cover_name,
+      v.f_description_name, v.f_video_name, v.f_free_watch_time,
+      vc.f_v_name as f_classification_name,
+      (select count(1) from t_statistics s where s.f_statistics_type = '003003' and s.f_business_id = v.f_id and s.f_user_id = #{userId,jdbcType=BIGINT}) as f_watched,
+      (select count(1) from t_statistics s where s.f_statistics_type = '003004' and s.f_business_id = v.f_id and s.f_user_id = #{userId,jdbcType=BIGINT}) as f_purchased,
+      (select count(1) from t_statistics s where s.f_statistics_type = '003005' and s.f_business_id = v.f_id and s.f_user_id = #{userId,jdbcType=BIGINT}) as f_accessed
+      ,(case when o.f_id is null then false else true end) as f_is_purchased
+      ,o.f_user_id
     from t_video v
-    left join t_video_classification vc on v.classification = vc.id
-    join t_order o on v.id = o.goods_id and o.order_status = '004002' and o.user_id = #{userId,jdbcType=BIGINT}
-    where v.del_flag = 0
-    and v.status = '001003'
-    and o.user_id =  #{userId,jdbcType=BIGINT}
+    left join t_video_classification vc on v.f_classification = vc.f_id
+    join t_order o on v.f_id = o.goods_id and o.f_order_status = '004002' and o.f_user_id = #{userId,jdbcType=BIGINT}
+    where v.f_del_flag = 0
+    and v.f_status = '001003'
+    and o.f_user_id =  #{userId,jdbcType=BIGINT}
   </select>
 
   <select id="selectOneVoWithWhiteUser" resultMap="VoResultMap">
     select
-    v.id, v.title, v.subtitle, v.price, v.cover_real_name, v.description_real_name, v.video_real_name,
-    v.create_time, v.update_time, v.del_flag, v.classification, v.profit_share, v.status, v.cover_name,
-    v.description_name, v.video_name, v.free_watch_time,
-    vc.v_name as classification_name,
-    (select count(1) from t_statistics s where s.statistics_type = '003003' and s.business_id = v.id) as watched,
-    (select count(1) from t_statistics s where s.statistics_type = '003004' and s.business_id = v.id) as purchased,
-    (select count(1) from t_statistics s where s.statistics_type = '003005' and s.business_id = v.id) as accessed,
-    true as is_purchased,
-    true as is_white_user
+    v.f_id, v.f_title, v.f_subtitle, v.f_price, v.f_cover_real_name, v.f_description_real_name, v.f_video_real_name,
+    v.f_created_time, v.f_modified_time, v.f_del_flag, v.f_classification, v.f_profit_share, v.f_status, v.f_cover_name,
+    v.f_description_name, v.f_video_name, v.f_free_watch_time,
+    vc.f_v_name as f_classification_name,
+    (select count(1) from t_statistics s where s.f_statistics_type = '003003' and s.f_business_id = v.f_id) as f_watched,
+    (select count(1) from t_statistics s where s.f_statistics_type = '003004' and s.f_business_id = v.f_id) as f_purchased,
+    (select count(1) from t_statistics s where s.f_statistics_type = '003005' and s.f_business_id = v.f_id) as f_accessed,
+    true as f_is_purchased,
+    true as f_is_white_user
     from t_video v
-    left join t_video_classification vc on v.classification = vc.id
-    where v.id = #{videoId,jdbcType=BIGINT}
+    left join t_video_classification vc on v.f_classification = vc.f_id
+    where v.f_id = #{videoId,jdbcType=BIGINT}
   </select>
 
   <select id="findPurchasesWithWhiteUser" resultMap="VoResultMap">
     select
-      v.id, v.title, v.subtitle, v.price, v.cover_real_name, v.description_real_name, v.video_real_name,
-      v.create_time, v.update_time, v.del_flag, v.classification, v.profit_share, v.status, v.cover_name,
-      v.description_name, v.video_name, v.free_watch_time,
-      vc.v_name as classification_name,
-      0 as watched,
-      0 as purchased,
-      0 as accessed,
-      true as is_purchased
+      v.f_id, v.f_title, v.f_subtitle, v.f_price, v.f_cover_real_name, v.f_description_real_name, v.f_video_real_name,
+      v.f_create_time, v.f_update_time, v.f_del_flag, v.f_classification, v.f_profit_share, v.f_status, v.f_cover_name,
+      v.f_description_name, v.f_video_name, v.f_free_watch_time,
+      vc.f_v_name as f_classification_name,
+      0 as f_watched,
+      0 as f_purchased,
+      0 as f_accessed,
+      true as f_is_purchased
     from t_video v
-    left join t_video_classification vc on v.classification = vc.id
-    where v.del_flag = 0
-    and v.status = '001003'
+    left join t_video_classification vc on v.f_classification = vc.id
+    where v.f_del_flag = 0
+    and v.f_status = '001003'
   </select>
 </mapper>

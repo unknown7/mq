@@ -1,58 +1,58 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.mq.mapper.VerifySwitchMapper" >
-  <resultMap id="BaseResultMap" type="com.mq.model.VerifySwitch" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="verify_switch" property="verifySwitch" jdbcType="BIT" />
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mq.mapper.VerifySwitchMapper">
+  <resultMap id="BaseResultMap" type="com.mq.model.VerifySwitch">
+    <result column="f_id" jdbcType="INTEGER" property="id" />
+    <result column="f_verify_switch" jdbcType="BIT" property="verifySwitch" />
   </resultMap>
-  <sql id="Base_Column_List" >
-    id, verify_switch
+    <sql id="Base_Column_List" >
+    f_id, f_verify_switch
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from t_verify_switch
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+        select
+        <include refid="Base_Column_List" />
+        from t_verify_switch
+        where f_id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_verify_switch
-    where id = #{id,jdbcType=INTEGER}
+    where f_id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.mq.model.VerifySwitch" >
-    insert into t_verify_switch (id, verify_switch)
+  <insert id="insert" parameterType="com.mq.model.VerifySwitch">
+    insert into t_verify_switch (f_id, f_verify_switch)
     values (#{id,jdbcType=INTEGER}, #{verifySwitch,jdbcType=BIT})
   </insert>
-  <insert id="insertSelective" parameterType="com.mq.model.VerifySwitch" >
+  <insert id="insertSelective" parameterType="com.mq.model.VerifySwitch">
     insert into t_verify_switch
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        f_id,
       </if>
-      <if test="verifySwitch != null" >
-        verify_switch,
+      <if test="verifySwitch != null">
+        f_verify_switch,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="verifySwitch != null" >
+      <if test="verifySwitch != null">
         #{verifySwitch,jdbcType=BIT},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.mq.model.VerifySwitch" >
+    <update id="updateByPrimaryKeySelective" parameterType="com.mq.model.VerifySwitch" >
+        update t_verify_switch
+        <set >
+            <if test="verifySwitch != null" >
+                f_verify_switch = #{verifySwitch,jdbcType=BIT},
+            </if>
+        </set>
+        where f_id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.mq.model.VerifySwitch" >
     update t_verify_switch
-    <set >
-      <if test="verifySwitch != null" >
-        verify_switch = #{verifySwitch,jdbcType=BIT},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.mq.model.VerifySwitch" >
-    update t_verify_switch
-    set verify_switch = #{verifySwitch,jdbcType=BIT}
-    where id = #{id,jdbcType=INTEGER}
+    set f_verify_switch = #{verifySwitch,jdbcType=BIT}
+    where f_id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

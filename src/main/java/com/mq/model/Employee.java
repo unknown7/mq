@@ -7,7 +7,7 @@ public class Employee {
 
     private String eName;
 
-    private String gender;
+    private Boolean gender;
 
     private Date birth;
 
@@ -17,11 +17,11 @@ public class Employee {
 
     private String avatarName;
 
-    private Date createTime;
+    private Date createdTime;
 
-    private Date updateTime;
+    private Date modifiedTime;
 
-    private Integer delFlag;
+    private Boolean delFlag;
 
     private String password;
 
@@ -49,12 +49,12 @@ public class Employee {
         this.eName = eName == null ? null : eName.trim();
     }
 
-    public String getGender() {
+    public Boolean getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
-        this.gender = gender == null ? null : gender.trim();
+    public void setGender(Boolean gender) {
+        this.gender = gender;
     }
 
     public Date getBirth() {
@@ -78,7 +78,7 @@ public class Employee {
     }
 
     public void setAvatarRealName(String avatarRealName) {
-        this.avatarRealName = avatarRealName;
+        this.avatarRealName = avatarRealName == null ? null : avatarRealName.trim();
     }
 
     public String getAvatarName() {
@@ -86,30 +86,30 @@ public class Employee {
     }
 
     public void setAvatarName(String avatarName) {
-        this.avatarName = avatarName;
+        this.avatarName = avatarName == null ? null : avatarName.trim();
     }
 
-    public Date getCreateTime() {
-        return createTime;
+    public Date getCreatedTime() {
+        return createdTime;
     }
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+    public void setCreatedTime(Date createdTime) {
+        this.createdTime = createdTime;
     }
 
-    public Date getUpdateTime() {
-        return updateTime;
+    public Date getModifiedTime() {
+        return modifiedTime;
     }
 
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
+    public void setModifiedTime(Date modifiedTime) {
+        this.modifiedTime = modifiedTime;
     }
 
-    public Integer getDelFlag() {
+    public Boolean getDelFlag() {
         return delFlag;
     }
 
-    public void setDelFlag(Integer delFlag) {
+    public void setDelFlag(Boolean delFlag) {
         this.delFlag = delFlag;
     }
 

@@ -1,417 +1,418 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.mq.mapper.UserMapper" >
-  <resultMap id="BaseResultMap" type="com.mq.model.User" >
-    <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="country" property="country" jdbcType="VARCHAR" />
-    <result column="gender" property="gender" jdbcType="INTEGER" />
-    <result column="province" property="province" jdbcType="VARCHAR" />
-    <result column="city" property="city" jdbcType="VARCHAR" />
-    <result column="avatar_url" property="avatarUrl" jdbcType="VARCHAR" />
-    <result column="open_id" property="openId" jdbcType="VARCHAR" />
-    <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
-    <result column="language" property="language" jdbcType="VARCHAR" />
-    <result column="session_key" property="sessionKey" jdbcType="VARCHAR" />
-    <result column="skey" property="skey" jdbcType="VARCHAR" />
-    <result column="referrer" property="referrer" jdbcType="BIGINT" />
-    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
-    <result column="del_flag" property="delFlag" jdbcType="INTEGER" />
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mq.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="com.mq.model.User">
+    <id column="f_id" jdbcType="BIGINT" property="id" />
+    <result column="f_country" jdbcType="VARCHAR" property="country" />
+    <result column="f_gender" jdbcType="BIT" property="gender" />
+    <result column="f_province" jdbcType="VARCHAR" property="province" />
+    <result column="f_city" jdbcType="VARCHAR" property="city" />
+    <result column="f_avatar_url" jdbcType="VARCHAR" property="avatarUrl" />
+    <result column="f_open_id" jdbcType="VARCHAR" property="openId" />
+    <result column="f_nick_name" jdbcType="VARCHAR" property="nickName" />
+    <result column="f_language" jdbcType="VARCHAR" property="language" />
+    <result column="f_session_key" jdbcType="VARCHAR" property="sessionKey" />
+    <result column="f_skey" jdbcType="VARCHAR" property="skey" />
+    <result column="f_referrer" jdbcType="BIGINT" property="referrer" />
+    <result column="f_created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="f_modified_time" jdbcType="TIMESTAMP" property="modifiedTime" />
+    <result column="f_del_flag" jdbcType="BIT" property="delFlag" />
   </resultMap>
-  <resultMap id="VoResultMap" type="com.mq.vo.UserVo" >
-    <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="country" property="country" jdbcType="VARCHAR" />
-    <result column="gender" property="gender" jdbcType="INTEGER" />
-    <result column="province" property="province" jdbcType="VARCHAR" />
-    <result column="city" property="city" jdbcType="VARCHAR" />
-    <result column="avatar_url" property="avatarUrl" jdbcType="VARCHAR" />
-    <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
-    <result column="language" property="language" jdbcType="VARCHAR" />
-    <result column="referrer" property="referrer" jdbcType="BIGINT" />
-    <result column="referrer_name" property="referrerName" jdbcType="VARCHAR" />
-    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
-    <result column="del_flag" property="delFlag" jdbcType="INTEGER" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    id, country, gender, province, city, avatar_url, open_id, nick_name, `language`, session_key,
-    skey, referrer, create_time, update_time, del_flag
+
+    <resultMap id="VoResultMap" type="com.mq.vo.UserVo">
+        <id column="f_id" jdbcType="BIGINT" property="id" />
+        <result column="f_country" jdbcType="VARCHAR" property="country" />
+        <result column="f_gender" jdbcType="INTEGER" property="gender" />
+        <result column="f_province" jdbcType="VARCHAR" property="province" />
+        <result column="f_city" jdbcType="VARCHAR" property="city" />
+        <result column="f_avatar_url" jdbcType="VARCHAR" property="avatarUrl" />
+        <result column="f_nick_name" jdbcType="VARCHAR" property="nickName" />
+        <result column="f_language" jdbcType="VARCHAR" property="language" />
+        <result column="f_referrer" jdbcType="BIGINT" property="referrer" />
+        <result column="f_referrer_name" jdbcType="VARCHAR" property="referrerName" />
+        <result column="f_created_time" jdbcType="TIMESTAMP" property="createdTime" />
+        <result column="f_modified_time" jdbcType="TIMESTAMP" property="modifiedTime" />
+        <result column="f_del_flag" jdbcType="BIT" property="delFlag" />
+    </resultMap>
+
+  <sql id="Base_Column_List">
+    f_id, f_country, f_gender, f_province, f_city, f_avatar_url, f_open_id, f_nick_name, 
+    f_language, f_session_key, f_skey, f_referrer, f_created_time, f_modified_time, f_del_flag
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from t_user
-    where id = #{id,jdbcType=BIGINT}
+    where f_id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from t_user
-    where id = #{id,jdbcType=BIGINT}
+    where f_id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.mq.model.User" >
-    insert into t_user (id, country, gender, 
-      province, city, avatar_url, 
-      open_id, nick_name, `language`,
-      session_key, skey, referrer, create_time,
-      update_time, del_flag)
-    values (#{id,jdbcType=BIGINT}, #{country,jdbcType=VARCHAR}, #{gender,jdbcType=INTEGER}, 
+  <insert id="insert" parameterType="com.mq.model.User">
+    insert into t_user (f_id, f_country, f_gender, 
+      f_province, f_city, f_avatar_url, 
+      f_open_id, f_nick_name, f_language, 
+      f_session_key, f_skey, f_referrer, 
+      f_created_time, f_modified_time, f_del_flag
+      )
+    values (#{id,jdbcType=BIGINT}, #{country,jdbcType=VARCHAR}, #{gender,jdbcType=BIT}, 
       #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{avatarUrl,jdbcType=VARCHAR}, 
       #{openId,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, #{language,jdbcType=VARCHAR}, 
-      #{sessionKey,jdbcType=VARCHAR}, #{skey,jdbcType=VARCHAR}, #{referrer,jdbcType=BIGINT},
-      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=INTEGER})
+      #{sessionKey,jdbcType=VARCHAR}, #{skey,jdbcType=VARCHAR}, #{referrer,jdbcType=BIGINT}, 
+      #{createdTime,jdbcType=TIMESTAMP}, #{modifiedTime,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=BIT}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="com.mq.model.User" >
-    <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
+  <insert id="insertSelective" parameterType="com.mq.model.User">
     insert into t_user
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        f_id,
       </if>
-      <if test="country != null" >
-        country,
+      <if test="country != null">
+        f_country,
       </if>
-      <if test="gender != null" >
-        gender,
+      <if test="gender != null">
+        f_gender,
       </if>
-      <if test="province != null" >
-        province,
+      <if test="province != null">
+        f_province,
       </if>
-      <if test="city != null" >
-        city,
+      <if test="city != null">
+        f_city,
       </if>
-      <if test="avatarUrl != null" >
-        avatar_url,
+      <if test="avatarUrl != null">
+        f_avatar_url,
       </if>
-      <if test="openId != null" >
-        open_id,
+      <if test="openId != null">
+        f_open_id,
       </if>
-      <if test="nickName != null" >
-        nick_name,
+      <if test="nickName != null">
+        f_nick_name,
       </if>
-      <if test="language != null" >
-        `language`,
+      <if test="language != null">
+        f_language,
       </if>
-      <if test="sessionKey != null" >
-        session_key,
+      <if test="sessionKey != null">
+        f_session_key,
       </if>
-      <if test="skey != null" >
-        skey,
+      <if test="skey != null">
+        f_skey,
       </if>
-      <if test="referrer != null" >
-        referrer,
+      <if test="referrer != null">
+        f_referrer,
       </if>
-      <if test="createTime != null" >
-        create_time,
+      <if test="createdTime != null">
+        f_created_time,
       </if>
-      <if test="updateTime != null" >
-        update_time,
+      <if test="modifiedTime != null">
+        f_modified_time,
       </if>
-      <if test="delFlag != null" >
-        del_flag,
+      <if test="delFlag != null">
+        f_del_flag,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
         #{id,jdbcType=BIGINT},
       </if>
-      <if test="country != null" >
+      <if test="country != null">
         #{country,jdbcType=VARCHAR},
       </if>
-      <if test="gender != null" >
-        #{gender,jdbcType=INTEGER},
+      <if test="gender != null">
+        #{gender,jdbcType=BIT},
       </if>
-      <if test="province != null" >
+      <if test="province != null">
         #{province,jdbcType=VARCHAR},
       </if>
-      <if test="city != null" >
+      <if test="city != null">
         #{city,jdbcType=VARCHAR},
       </if>
-      <if test="avatarUrl != null" >
+      <if test="avatarUrl != null">
         #{avatarUrl,jdbcType=VARCHAR},
       </if>
-      <if test="openId != null" >
+      <if test="openId != null">
         #{openId,jdbcType=VARCHAR},
       </if>
-      <if test="nickName != null" >
+      <if test="nickName != null">
         #{nickName,jdbcType=VARCHAR},
       </if>
-      <if test="language != null" >
+      <if test="language != null">
         #{language,jdbcType=VARCHAR},
       </if>
-      <if test="sessionKey != null" >
+      <if test="sessionKey != null">
         #{sessionKey,jdbcType=VARCHAR},
       </if>
-      <if test="skey != null" >
+      <if test="skey != null">
         #{skey,jdbcType=VARCHAR},
       </if>
-      <if test="referrer != null" >
+      <if test="referrer != null">
         #{referrer,jdbcType=BIGINT},
       </if>
-      <if test="createTime != null" >
-        #{createTime,jdbcType=TIMESTAMP},
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updateTime != null" >
-        #{updateTime,jdbcType=TIMESTAMP},
+      <if test="modifiedTime != null">
+        #{modifiedTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="delFlag != null" >
-        #{delFlag,jdbcType=INTEGER},
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=BIT},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.mq.model.User" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.mq.model.User">
     update t_user
-    <set >
-      <if test="country != null" >
-        country = #{country,jdbcType=VARCHAR},
+    <set>
+      <if test="country != null">
+        f_country = #{country,jdbcType=VARCHAR},
       </if>
-      <if test="gender != null" >
-        gender = #{gender,jdbcType=INTEGER},
+      <if test="gender != null">
+        f_gender = #{gender,jdbcType=BIT},
       </if>
-      <if test="province != null" >
-        province = #{province,jdbcType=VARCHAR},
+      <if test="province != null">
+        f_province = #{province,jdbcType=VARCHAR},
       </if>
-      <if test="city != null" >
-        city = #{city,jdbcType=VARCHAR},
+      <if test="city != null">
+        f_city = #{city,jdbcType=VARCHAR},
       </if>
-      <if test="avatarUrl != null" >
-        avatar_url = #{avatarUrl,jdbcType=VARCHAR},
+      <if test="avatarUrl != null">
+        f_avatar_url = #{avatarUrl,jdbcType=VARCHAR},
       </if>
-      <if test="openId != null" >
-        open_id = #{openId,jdbcType=VARCHAR},
+      <if test="openId != null">
+        f_open_id = #{openId,jdbcType=VARCHAR},
       </if>
-      <if test="nickName != null" >
-        nick_name = #{nickName,jdbcType=VARCHAR},
+      <if test="nickName != null">
+        f_nick_name = #{nickName,jdbcType=VARCHAR},
       </if>
-      <if test="language != null" >
-        `language` = #{language,jdbcType=VARCHAR},
+      <if test="language != null">
+        f_language = #{language,jdbcType=VARCHAR},
       </if>
-      <if test="sessionKey != null" >
-        session_key = #{sessionKey,jdbcType=VARCHAR},
+      <if test="sessionKey != null">
+        f_session_key = #{sessionKey,jdbcType=VARCHAR},
       </if>
-      <if test="skey != null" >
-        skey = #{skey,jdbcType=VARCHAR},
+      <if test="skey != null">
+        f_skey = #{skey,jdbcType=VARCHAR},
       </if>
-      <if test="referrer != null" >
-        referrer = #{referrer,jdbcType=BIGINT},
+      <if test="referrer != null">
+        f_referrer = #{referrer,jdbcType=BIGINT},
       </if>
-      <if test="createTime != null" >
-        create_time = #{createTime,jdbcType=TIMESTAMP},
+      <if test="createdTime != null">
+        f_created_time = #{createdTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updateTime != null" >
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      <if test="modifiedTime != null">
+        f_modified_time = #{modifiedTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="delFlag != null" >
-        del_flag = #{delFlag,jdbcType=INTEGER},
+      <if test="delFlag != null">
+        f_del_flag = #{delFlag,jdbcType=BIT},
       </if>
     </set>
-    where id = #{id,jdbcType=BIGINT}
+    where f_id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.mq.model.User" >
+  <update id="updateByPrimaryKey" parameterType="com.mq.model.User">
     update t_user
-    set country = #{country,jdbcType=VARCHAR},
-      gender = #{gender,jdbcType=INTEGER},
-      province = #{province,jdbcType=VARCHAR},
-      city = #{city,jdbcType=VARCHAR},
-      avatar_url = #{avatarUrl,jdbcType=VARCHAR},
-      open_id = #{openId,jdbcType=VARCHAR},
-      nick_name = #{nickName,jdbcType=VARCHAR},
-      `language` = #{language,jdbcType=VARCHAR},
-      session_key = #{sessionKey,jdbcType=VARCHAR},
-      skey = #{skey,jdbcType=VARCHAR},
-      referrer = #{referrer,jdbcType=BIGINT},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      del_flag = #{delFlag,jdbcType=INTEGER}
-    where id = #{id,jdbcType=BIGINT}
+    set f_country = #{country,jdbcType=VARCHAR},
+      f_gender = #{gender,jdbcType=BIT},
+      f_province = #{province,jdbcType=VARCHAR},
+      f_city = #{city,jdbcType=VARCHAR},
+      f_avatar_url = #{avatarUrl,jdbcType=VARCHAR},
+      f_open_id = #{openId,jdbcType=VARCHAR},
+      f_nick_name = #{nickName,jdbcType=VARCHAR},
+      f_language = #{language,jdbcType=VARCHAR},
+      f_session_key = #{sessionKey,jdbcType=VARCHAR},
+      f_skey = #{skey,jdbcType=VARCHAR},
+      f_referrer = #{referrer,jdbcType=BIGINT},
+      f_created_time = #{createdTime,jdbcType=TIMESTAMP},
+      f_modified_time = #{modifiedTime,jdbcType=TIMESTAMP},
+      f_del_flag = #{delFlag,jdbcType=BIT}
+    where f_id = #{id,jdbcType=BIGINT}
   </update>
 
-  <select id="selectByOpenId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <select id="selectByOpenId" parameterType="java.lang.String" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from t_user
-    where open_id = #{openId,jdbcType=VARCHAR}
-    and del_flag = 0
+    where f_open_id = #{openId,jdbcType=VARCHAR}
+    and f_del_flag = 0
   </select>
 
   <select id="selectByQuery" parameterType="com.mq.query.UserQuery" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
-    from t_user where del_flag = 0
-    <if test="country != null" >
-      and country = #{country,jdbcType=VARCHAR}
+    from t_user where f_del_flag = 0
+    <if test="country != null">
+      and f_country = #{country,jdbcType=VARCHAR}
     </if>
-    <if test="gender != null" >
-      and gender = #{gender,jdbcType=INTEGER}
+    <if test="gender != null">
+      and f_gender = #{gender,jdbcType=INTEGER}
     </if>
-    <if test="province != null" >
-      and province = #{province,jdbcType=VARCHAR}
+    <if test="province != null">
+      and f_province = #{province,jdbcType=VARCHAR}
     </if>
-    <if test="city != null" >
-      and city = #{city,jdbcType=VARCHAR}
+    <if test="city != null">
+      and f_city = #{city,jdbcType=VARCHAR}
     </if>
-    <if test="avatarUrl != null" >
-      and avatar_url = #{avatarUrl,jdbcType=VARCHAR}
+    <if test="avatarUrl != null">
+      and f_avatar_url = #{avatarUrl,jdbcType=VARCHAR}
     </if>
-    <if test="openId != null" >
-      and open_id = #{openId,jdbcType=VARCHAR}
+    <if test="openId != null">
+      and f_open_id = #{openId,jdbcType=VARCHAR}
     </if>
-    <if test="nickName != null and nickName != ''" >
-      and nick_name like concat(concat("%",#{nickName}),"%")
+    <if test="nickName != null and nickName != ''">
+      and f_nick_name like concat(concat("%",#{nickName}),"%")
     </if>
-    <if test="language != null" >
-      and `language` = #{language,jdbcType=VARCHAR}
+    <if test="language != null">
+      and f_language = #{language,jdbcType=VARCHAR}
     </if>
-    <if test="sessionKey != null" >
-      and session_key = #{sessionKey,jdbcType=VARCHAR}
+    <if test="sessionKey != null">
+      and f_session_key = #{sessionKey,jdbcType=VARCHAR}
     </if>
-    <if test="skey != null" >
-      and skey = #{skey,jdbcType=VARCHAR}
+    <if test="skey != null">
+      and f_skey = #{skey,jdbcType=VARCHAR}
     </if>
-    <if test="referrer != null" >
-      and referrer = #{referrer,jdbcType=BIGINT}
+    <if test="referrer != null">
+      and f_referrer = #{referrer,jdbcType=BIGINT}
     </if>
-    <if test="createTime != null" >
-      and create_time = #{createTime,jdbcType=TIMESTAMP}
-    </if>
-    <if test="createTimeBegin != null" >
-      and create_time &gt;= #{createTimeBegin,jdbcType=TIMESTAMP}
-    </if>
-    <if test="createTimeEnd != null" >
-      and create_time &lt;= #{createTimeEnd,jdbcType=TIMESTAMP}
-    </if>
-    <if test="updateTime != null" >
-      and update_time = #{updateTime,jdbcType=TIMESTAMP}
-    </if>
-    <if test="updateTimeBegin != null" >
-      and update_time &gt;= #{updateTimeBegin,jdbcType=TIMESTAMP}
-    </if>
-    <if test="updateTimeEnd != null" >
-      and update_time &lt;= #{updateTimeEnd,jdbcType=TIMESTAMP}
-    </if>
+      <if test="createdTime != null">
+          and f_created_time = #{createdTime,jdbcType=DATE}
+      </if>
+      <if test="createdTimeBegin != null">
+          and f_created_time &gt;= #{createdTimeBegin,jdbcType=DATE}
+      </if>
+      <if test="createdTimeEnd != null">
+          and f_created_time &lt;= #{createdTimeEnd,jdbcType=DATE}
+      </if>
+      <if test="modifiedTime != null">
+          and f_modified_time = #{modifiedTime,jdbcType=DATE}
+      </if>
+      <if test="modifiedTimeBegin != null">
+          and f_modified_time &gt;= #{modifiedTimeBegin,jdbcType=DATE}
+      </if>
+      <if test="modifiedTimeEnd != null">
+          and f_modified_time &lt;= #{modifiedTimeEnd,jdbcType=DATE}
+      </if>
   </select>
 
   <select id="selectVoByQuery" parameterType="com.mq.query.UserQuery" resultMap="VoResultMap">
     select
-    u1.id, u1.country, u1.gender, u1.province, u1.city, u1.avatar_url, u1.nick_name, u1.language,
-    u1.referrer, u2.nick_name as referrer_name, u1.create_time, u1.update_time, u1.del_flag
+    u1.f_id, u1.f_country, u1.f_gender, u1.f_province, u1.f_city, u1.f_avatar_url, u1.f_nick_name, u1.f_language,
+    u1.f_referrer, u2.f_nick_name as f_referrer_name, u1.f_created_time, u1.f_modified_time, u1.f_del_flag
     from t_user u1
-    left join t_user u2 on u1.referrer = u2.id
-    where u1.del_flag = 0
-    <if test="country != null" >
-      and u1.country = #{country,jdbcType=VARCHAR}
+    left join t_user u2 on u1.f_referrer = u2.id
+    where u1.f_del_flag = 0
+    <if test="country != null">
+      and u1.f_country = #{country,jdbcType=VARCHAR}
     </if>
-    <if test="gender != null" >
-      and u1.gender = #{gender,jdbcType=INTEGER}
+    <if test="gender != null">
+      and u1.f_gender = #{gender,jdbcType=INTEGER}
     </if>
-    <if test="province != null" >
-      and u1.province = #{province,jdbcType=VARCHAR}
+    <if test="province != null">
+      and u1.f_province = #{province,jdbcType=VARCHAR}
     </if>
-    <if test="city != null" >
-      and u1.city = #{city,jdbcType=VARCHAR}
+    <if test="city != null">
+      and u1.f_city = #{city,jdbcType=VARCHAR}
     </if>
-    <if test="avatarUrl != null" >
-      and u1.avatar_url = #{avatarUrl,jdbcType=VARCHAR}
+    <if test="avatarUrl != null">
+      and u1.f_avatar_url = #{avatarUrl,jdbcType=VARCHAR}
     </if>
-    <if test="openId != null" >
-      and u1.open_id = #{openId,jdbcType=VARCHAR}
+    <if test="openId != null">
+      and u1.f_open_id = #{openId,jdbcType=VARCHAR}
     </if>
-    <if test="nickName != null and nickName != ''" >
-      and u1.nick_name like concat(concat("%",#{nickName}),"%")
+    <if test="nickName != null and nickName != ''">
+      and u1.f_nick_name like concat(concat("%",#{nickName}),"%")
     </if>
-    <if test="language != null" >
-      and u1.language = #{language,jdbcType=VARCHAR}
+    <if test="language != null">
+      and u1.f_language = #{language,jdbcType=VARCHAR}
     </if>
-    <if test="sessionKey != null" >
-      and u1.session_key = #{sessionKey,jdbcType=VARCHAR}
+    <if test="sessionKey != null">
+      and u1.f_session_key = #{sessionKey,jdbcType=VARCHAR}
     </if>
-    <if test="skey != null" >
-      and u1.skey = #{skey,jdbcType=VARCHAR}
+    <if test="skey != null">
+      and u1.f_skey = #{skey,jdbcType=VARCHAR}
     </if>
-    <if test="referrer != null" >
-      and u1.referrer = #{referrer,jdbcType=BIGINT}
+    <if test="referrer != null">
+      and u1.f_referrer = #{referrer,jdbcType=BIGINT}
     </if>
-    <if test="createTime != null" >
-      and u1.create_time = #{createTime,jdbcType=TIMESTAMP}
-    </if>
-    <if test="createTimeBegin != null" >
-      and u1.create_time &gt;= #{createTimeBegin,jdbcType=TIMESTAMP}
-    </if>
-    <if test="createTimeEnd != null" >
-      and u1.create_time &lt;= #{createTimeEnd,jdbcType=TIMESTAMP}
-    </if>
-    <if test="updateTime != null" >
-      and u1.update_time = #{updateTime,jdbcType=TIMESTAMP}
-    </if>
-    <if test="updateTimeBegin != null" >
-      and u1.update_time &gt;= #{updateTimeBegin,jdbcType=TIMESTAMP}
-    </if>
-    <if test="updateTimeEnd != null" >
-      and u1.update_time &lt;= #{updateTimeEnd,jdbcType=TIMESTAMP}
-    </if>
+      <if test="createdTime != null">
+          and u1.f_created_time = #{createdTime,jdbcType=DATE}
+      </if>
+      <if test="createdTimeBegin != null">
+          and u1.f_created_time &gt;= #{createdTimeBegin,jdbcType=DATE}
+      </if>
+      <if test="createdTimeEnd != null">
+          and u1.f_created_time &lt;= #{createdTimeEnd,jdbcType=DATE}
+      </if>
+      <if test="modifiedTime != null">
+          and u1.f_modified_time = #{modifiedTime,jdbcType=DATE}
+      </if>
+      <if test="modifiedTimeBegin != null">
+          and u1.f_modified_time &gt;= #{modifiedTimeBegin,jdbcType=DATE}
+      </if>
+      <if test="modifiedTimeEnd != null">
+          and u1.f_modified_time &lt;= #{modifiedTimeEnd,jdbcType=DATE}
+      </if>
   </select>
 
   <select id="selectNums" parameterType="com.mq.query.UserQuery" resultType="java.lang.Long">
     select count(1)
-    from t_user where del_flag = 0
-    <if test="country != null" >
-      and country = #{country,jdbcType=VARCHAR}
+    from t_user where f_del_flag = 0
+    <if test="country != null">
+      and f_country = #{country,jdbcType=VARCHAR}
     </if>
-    <if test="gender != null" >
-      and gender = #{gender,jdbcType=INTEGER}
+    <if test="gender != null">
+      and f_gender = #{gender,jdbcType=INTEGER}
     </if>
-    <if test="province != null" >
-      and province = #{province,jdbcType=VARCHAR}
+    <if test="province != null">
+      and f_province = #{province,jdbcType=VARCHAR}
     </if>
-    <if test="city != null" >
-      and city = #{city,jdbcType=VARCHAR}
+    <if test="city != null">
+      and f_city = #{city,jdbcType=VARCHAR}
     </if>
-    <if test="avatarUrl != null" >
-      and avatar_url = #{avatarUrl,jdbcType=VARCHAR}
+    <if test="avatarUrl != null">
+      and f_avatar_url = #{avatarUrl,jdbcType=VARCHAR}
     </if>
-    <if test="openId != null" >
-      and open_id = #{openId,jdbcType=VARCHAR}
+    <if test="openId != null">
+      and f_open_id = #{openId,jdbcType=VARCHAR}
     </if>
-    <if test="nickName != null and nickName != ''" >
-      and nick_name like concat(concat("%",#{nickName}),"%")
+    <if test="nickName != null and nickName != ''">
+      and f_nick_name like concat(concat("%",#{nickName}),"%")
     </if>
-    <if test="language != null" >
-      and `language` = #{language,jdbcType=VARCHAR}
+    <if test="language != null">
+      and f_language = #{language,jdbcType=VARCHAR}
     </if>
-    <if test="sessionKey != null" >
-      and session_key = #{sessionKey,jdbcType=VARCHAR}
+    <if test="sessionKey != null">
+      and f_session_key = #{sessionKey,jdbcType=VARCHAR}
     </if>
-    <if test="skey != null" >
-      and skey = #{skey,jdbcType=VARCHAR}
+    <if test="skey != null">
+      and f_skey = #{skey,jdbcType=VARCHAR}
     </if>
-    <if test="referrer != null" >
-      and referrer = #{referrer,jdbcType=BIGINT}
+    <if test="referrer != null">
+      and f_referrer = #{referrer,jdbcType=BIGINT}
     </if>
-    <if test="createTime != null" >
-      and create_time = #{createTime,jdbcType=TIMESTAMP}
-    </if>
-    <if test="createTimeBegin != null" >
-      and create_time &gt;= #{createTimeBegin,jdbcType=TIMESTAMP}
-    </if>
-    <if test="createTimeEnd != null" >
-      and create_time &lt;= #{createTimeEnd,jdbcType=TIMESTAMP}
-    </if>
-    <if test="updateTime != null" >
-      and update_time = #{updateTime,jdbcType=TIMESTAMP}
-    </if>
-    <if test="updateTimeBegin != null" >
-      and update_time &gt;= #{updateTimeBegin,jdbcType=TIMESTAMP}
-    </if>
-    <if test="updateTimeEnd != null" >
-      and update_time &lt;= #{updateTimeEnd,jdbcType=TIMESTAMP}
-    </if>
+      <if test="createdTime != null">
+          and f_created_time = #{createdTime,jdbcType=DATE}
+      </if>
+      <if test="createdTimeBegin != null">
+          and f_created_time &gt;= #{createdTimeBegin,jdbcType=DATE}
+      </if>
+      <if test="createdTimeEnd != null">
+          and f_created_time &lt;= #{createdTimeEnd,jdbcType=DATE}
+      </if>
+      <if test="modifiedTime != null">
+          and f_modified_time = #{modifiedTime,jdbcType=DATE}
+      </if>
+      <if test="modifiedTimeBegin != null">
+          and f_modified_time &gt;= #{modifiedTimeBegin,jdbcType=DATE}
+      </if>
+      <if test="modifiedTimeEnd != null">
+          and f_modified_time &lt;= #{modifiedTimeEnd,jdbcType=DATE}
+      </if>
   </select>
 
-  <select id="selectBySkey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <select id="selectBySkey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from t_user
-    where skey = #{skey,jdbcType=VARCHAR}
-    and del_flag = 0
+    where f_skey = #{skey,jdbcType=VARCHAR}
+    and f_del_flag = 0
   </select>
 </mapper>

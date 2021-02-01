@@ -72,9 +72,9 @@ public class MenuServiceImpl implements MenuService {
                 EmpMenu empMenu = new EmpMenu();
                 empMenu.setEid(employeeId);
                 empMenu.setMid(Long.valueOf(s));
-                empMenu.setCreateTime(new Date());
-                empMenu.setUpdateTime(new Date());
-                empMenu.setDelFlag(0);
+                empMenu.setCreatedTime(new Date());
+                empMenu.setModifiedTime(new Date());
+                empMenu.setDelFlag(Boolean.FALSE);
                 list.add(empMenu);
             }
             empMenuMapper.insertBatch(list);
@@ -129,7 +129,7 @@ public class MenuServiceImpl implements MenuService {
         Menu menu = new Menu();
         menu.setPid(-1L);
         menu.setmName("t");
-        menu.setDelFlag(0);
+        menu.setDelFlag(Boolean.FALSE);
         menuMapper.insertSelective(menu);
         throw new RuntimeException();
     }

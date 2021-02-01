@@ -1,261 +1,261 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.mq.mapper.RewardPointsMapper" >
-  <resultMap id="BaseResultMap" type="com.mq.model.RewardPoints" >
-    <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="user_id" property="userId" jdbcType="BIGINT" />
-    <result column="points" property="points" jdbcType="DECIMAL" />
-    <result column="reward_type" property="rewardType" jdbcType="VARCHAR" />
-    <result column="reward_id" property="rewardId" jdbcType="BIGINT" />
-    <result column="profit_from" property="profitFrom" jdbcType="BIGINT" />
-    <result column="points_status" property="pointsStatus" jdbcType="VARCHAR" />
-    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
-    <result column="del_flag" property="delFlag" jdbcType="INTEGER" />
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mq.mapper.RewardPointsMapper">
+  <resultMap id="BaseResultMap" type="com.mq.model.RewardPoints">
+    <id column="f_id" jdbcType="BIGINT" property="id" />
+    <result column="f_user_id" jdbcType="BIGINT" property="userId" />
+    <result column="f_points" jdbcType="DECIMAL" property="points" />
+    <result column="f_reward_type" jdbcType="VARCHAR" property="rewardType" />
+    <result column="f_reward_id" jdbcType="BIGINT" property="rewardId" />
+    <result column="f_profit_from" jdbcType="BIGINT" property="profitFrom" />
+    <result column="f_points_status" jdbcType="VARCHAR" property="pointsStatus" />
+    <result column="f_created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="f_modified_time" jdbcType="TIMESTAMP" property="modifiedTime" />
+    <result column="f_del_flag" jdbcType="BIT" property="delFlag" />
   </resultMap>
-  <sql id="Base_Column_List" >
-    id, user_id, points, reward_type, reward_id, profit_from, points_status, create_time, 
-    update_time, del_flag
+  <sql id="Base_Column_List">
+    f_id, f_user_id, f_points, f_reward_type, f_reward_id, f_profit_from, f_points_status, 
+    f_created_time, f_modified_time, f_del_flag
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from t_reward_points
-    where id = #{id,jdbcType=BIGINT}
+    where f_id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from t_reward_points
-    where id = #{id,jdbcType=BIGINT}
+    where f_id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.mq.model.RewardPoints" >
-    insert into t_reward_points (id, user_id, points, 
-      reward_type, reward_id, profit_from, 
-      points_status, create_time, update_time, 
-      del_flag)
+  <insert id="insert" parameterType="com.mq.model.RewardPoints">
+    insert into t_reward_points (f_id, f_user_id, f_points, 
+      f_reward_type, f_reward_id, f_profit_from, 
+      f_points_status, f_created_time, f_modified_time, 
+      f_del_flag)
     values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{points,jdbcType=DECIMAL}, 
       #{rewardType,jdbcType=VARCHAR}, #{rewardId,jdbcType=BIGINT}, #{profitFrom,jdbcType=BIGINT}, 
-      #{pointsStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{delFlag,jdbcType=INTEGER})
+      #{pointsStatus,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}, #{modifiedTime,jdbcType=TIMESTAMP}, 
+      #{delFlag,jdbcType=BIT})
   </insert>
-  <insert id="insertSelective" parameterType="com.mq.model.RewardPoints" >
+  <insert id="insertSelective" parameterType="com.mq.model.RewardPoints">
     insert into t_reward_points
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        f_id,
       </if>
-      <if test="userId != null" >
-        user_id,
+      <if test="userId != null">
+        f_user_id,
       </if>
-      <if test="points != null" >
-        points,
+      <if test="points != null">
+        f_points,
       </if>
-      <if test="rewardType != null" >
-        reward_type,
+      <if test="rewardType != null">
+        f_reward_type,
       </if>
-      <if test="rewardId != null" >
-        reward_id,
+      <if test="rewardId != null">
+        f_reward_id,
       </if>
-      <if test="profitFrom != null" >
-        profit_from,
+      <if test="profitFrom != null">
+        f_profit_from,
       </if>
-      <if test="pointsStatus != null" >
-        points_status,
+      <if test="pointsStatus != null">
+        f_points_status,
       </if>
-      <if test="createTime != null" >
-        create_time,
+      <if test="createdTime != null">
+        f_created_time,
       </if>
-      <if test="updateTime != null" >
-        update_time,
+      <if test="modifiedTime != null">
+        f_modified_time,
       </if>
-      <if test="delFlag != null" >
-        del_flag,
+      <if test="delFlag != null">
+        f_del_flag,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
         #{id,jdbcType=BIGINT},
       </if>
-      <if test="userId != null" >
+      <if test="userId != null">
         #{userId,jdbcType=BIGINT},
       </if>
-      <if test="points != null" >
+      <if test="points != null">
         #{points,jdbcType=DECIMAL},
       </if>
-      <if test="rewardType != null" >
+      <if test="rewardType != null">
         #{rewardType,jdbcType=VARCHAR},
       </if>
-      <if test="rewardId != null" >
+      <if test="rewardId != null">
         #{rewardId,jdbcType=BIGINT},
       </if>
-      <if test="profitFrom != null" >
+      <if test="profitFrom != null">
         #{profitFrom,jdbcType=BIGINT},
       </if>
-      <if test="pointsStatus != null" >
+      <if test="pointsStatus != null">
         #{pointsStatus,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null" >
-        #{createTime,jdbcType=TIMESTAMP},
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updateTime != null" >
-        #{updateTime,jdbcType=TIMESTAMP},
+      <if test="modifiedTime != null">
+        #{modifiedTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="delFlag != null" >
-        #{delFlag,jdbcType=INTEGER},
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=BIT},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.mq.model.RewardPoints" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.mq.model.RewardPoints">
     update t_reward_points
-    <set >
-      <if test="userId != null" >
-        user_id = #{userId,jdbcType=BIGINT},
+    <set>
+      <if test="userId != null">
+        f_user_id = #{userId,jdbcType=BIGINT},
       </if>
-      <if test="points != null" >
-        points = #{points,jdbcType=DECIMAL},
+      <if test="points != null">
+        f_points = #{points,jdbcType=DECIMAL},
       </if>
-      <if test="rewardType != null" >
-        reward_type = #{rewardType,jdbcType=VARCHAR},
+      <if test="rewardType != null">
+        f_reward_type = #{rewardType,jdbcType=VARCHAR},
       </if>
-      <if test="rewardId != null" >
-        reward_id = #{rewardId,jdbcType=BIGINT},
+      <if test="rewardId != null">
+        f_reward_id = #{rewardId,jdbcType=BIGINT},
       </if>
-      <if test="profitFrom != null" >
-        profit_from = #{profitFrom,jdbcType=BIGINT},
+      <if test="profitFrom != null">
+        f_profit_from = #{profitFrom,jdbcType=BIGINT},
       </if>
-      <if test="pointsStatus != null" >
-        points_status = #{pointsStatus,jdbcType=VARCHAR},
+      <if test="pointsStatus != null">
+        f_points_status = #{pointsStatus,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null" >
-        create_time = #{createTime,jdbcType=TIMESTAMP},
+      <if test="createdTime != null">
+        f_created_time = #{createdTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updateTime != null" >
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      <if test="modifiedTime != null">
+        f_modified_time = #{modifiedTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="delFlag != null" >
-        del_flag = #{delFlag,jdbcType=INTEGER},
+      <if test="delFlag != null">
+        f_del_flag = #{delFlag,jdbcType=BIT},
       </if>
     </set>
-    where id = #{id,jdbcType=BIGINT}
+    where f_id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.mq.model.RewardPoints" >
+  <update id="updateByPrimaryKey" parameterType="com.mq.model.RewardPoints">
     update t_reward_points
-    set user_id = #{userId,jdbcType=BIGINT},
-      points = #{points,jdbcType=DECIMAL},
-      reward_type = #{rewardType,jdbcType=VARCHAR},
-      reward_id = #{rewardId,jdbcType=BIGINT},
-      profit_from = #{profitFrom,jdbcType=BIGINT},
-      points_status = #{pointsStatus,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      del_flag = #{delFlag,jdbcType=INTEGER}
-    where id = #{id,jdbcType=BIGINT}
+    set f_user_id = #{userId,jdbcType=BIGINT},
+      f_points = #{points,jdbcType=DECIMAL},
+      f_reward_type = #{rewardType,jdbcType=VARCHAR},
+      f_reward_id = #{rewardId,jdbcType=BIGINT},
+      f_profit_from = #{profitFrom,jdbcType=BIGINT},
+      f_points_status = #{pointsStatus,jdbcType=VARCHAR},
+      f_created_time = #{createdTime,jdbcType=TIMESTAMP},
+      f_modified_time = #{modifiedTime,jdbcType=TIMESTAMP},
+      f_del_flag = #{delFlag,jdbcType=BIT}
+    where f_id = #{id,jdbcType=BIGINT}
   </update>
 
   <select id="selectByQuery" parameterType="com.mq.query.RewardPointsQuery" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
-    from t_reward_points where del_flag = 0
-    <if test="userId != null" >
-      and user_id = #{userId,jdbcType=BIGINT}
+    from t_reward_points where f_del_flag = 0
+    <if test="userId != null">
+      and f_user_id = #{userId,jdbcType=BIGINT}
     </if>
-    <if test="points != null" >
-      and points = #{points,jdbcType=DECIMAL}
+    <if test="points != null">
+      and f_points = #{points,jdbcType=DECIMAL}
     </if>
-    <if test="rewardType != null" >
-      and reward_type = #{rewardType,jdbcType=VARCHAR}
+    <if test="rewardType != null">
+      and f_reward_type = #{rewardType,jdbcType=VARCHAR}
     </if>
-    <if test="rewardId != null" >
-      and reward_id = #{rewardId,jdbcType=BIGINT}
+    <if test="rewardId != null">
+      and f_reward_id = #{rewardId,jdbcType=BIGINT}
     </if>
-    <if test="profitFrom != null" >
-      and profit_from = #{profitFrom,jdbcType=BIGINT}
+    <if test="profitFrom != null">
+      and f_profit_from = #{profitFrom,jdbcType=BIGINT}
     </if>
-    <if test="pointsStatus != null" >
-      and points_status = #{pointsStatus,jdbcType=VARCHAR}
+    <if test="pointsStatus != null">
+      and f_points_status = #{pointsStatus,jdbcType=VARCHAR}
     </if>
-    <if test="createTime != null" >
-      and create_time = #{createTime,jdbcType=TIMESTAMP}
-    </if>
-    <if test="createTimeBegin != null" >
-      and create_time &gt;= #{createTimeBegin,jdbcType=TIMESTAMP}
-    </if>
-    <if test="createTimeEnd != null" >
-      and create_time &lt;= #{createTimeEnd,jdbcType=TIMESTAMP}
-    </if>
-    <if test="updateTime != null" >
-      and update_time = #{updateTime,jdbcType=TIMESTAMP}
-    </if>
-    <if test="updateTimeBegin != null" >
-      and update_time &gt;= #{updateTimeBegin,jdbcType=TIMESTAMP}
-    </if>
-    <if test="updateTimeEnd != null" >
-      and update_time &lt;= #{updateTimeEnd,jdbcType=TIMESTAMP}
-    </if>
+      <if test="createdTime != null">
+          and f_created_time = #{createdTime,jdbcType=DATE}
+      </if>
+      <if test="createdTimeBegin != null">
+          and f_created_time &gt;= #{createdTimeBegin,jdbcType=DATE}
+      </if>
+      <if test="createdTimeEnd != null">
+          and f_created_time &lt;= #{createdTimeEnd,jdbcType=DATE}
+      </if>
+      <if test="modifiedTime != null">
+          and f_modified_time = #{modifiedTime,jdbcType=DATE}
+      </if>
+      <if test="modifiedTimeBegin != null">
+          and f_modified_time &gt;= #{modifiedTimeBegin,jdbcType=DATE}
+      </if>
+      <if test="modifiedTimeEnd != null">
+          and f_modified_time &lt;= #{modifiedTimeEnd,jdbcType=DATE}
+      </if>
   </select>
 
   <select id="selectNums" parameterType="com.mq.query.RewardPointsQuery" resultType="java.lang.Long">
     select count(1)
-    from t_reward_points where del_flag = 0
-    <if test="userId != null" >
-      and user_id = #{userId,jdbcType=BIGINT}
+    from t_reward_points where f_del_flag = 0
+    <if test="userId != null">
+      and f_user_id = #{userId,jdbcType=BIGINT}
     </if>
-    <if test="points != null" >
-      and points = #{points,jdbcType=DECIMAL}
+    <if test="points != null">
+      and f_points = #{points,jdbcType=DECIMAL}
     </if>
-    <if test="rewardType != null" >
-      and reward_type = #{rewardType,jdbcType=VARCHAR}
+    <if test="rewardType != null">
+      and f_reward_type = #{rewardType,jdbcType=VARCHAR}
     </if>
-    <if test="rewardId != null" >
-      and reward_id = #{rewardId,jdbcType=BIGINT}
+    <if test="rewardId != null">
+      and f_reward_id = #{rewardId,jdbcType=BIGINT}
     </if>
-    <if test="profitFrom != null" >
-      and profit_from = #{profitFrom,jdbcType=BIGINT}
+    <if test="profitFrom != null">
+      and f_profit_from = #{profitFrom,jdbcType=BIGINT}
     </if>
-    <if test="pointsStatus != null" >
-      and points_status = #{pointsStatus,jdbcType=VARCHAR}
+    <if test="pointsStatus != null">
+      and f_points_status = #{pointsStatus,jdbcType=VARCHAR}
     </if>
-    <if test="createTime != null" >
-      and create_time = #{createTime,jdbcType=TIMESTAMP}
-    </if>
-    <if test="createTimeBegin != null" >
-      and create_time &gt;= #{createTimeBegin,jdbcType=TIMESTAMP}
-    </if>
-    <if test="createTimeEnd != null" >
-      and create_time &lt;= #{createTimeEnd,jdbcType=TIMESTAMP}
-    </if>
-    <if test="updateTime != null" >
-      and update_time = #{updateTime,jdbcType=TIMESTAMP}
-    </if>
-    <if test="updateTimeBegin != null" >
-      and update_time &gt;= #{updateTimeBegin,jdbcType=TIMESTAMP}
-    </if>
-    <if test="updateTimeEnd != null" >
-      and update_time &lt;= #{updateTimeEnd,jdbcType=TIMESTAMP}
-    </if>
+      <if test="createdTime != null">
+          and f_created_time = #{createdTime,jdbcType=DATE}
+      </if>
+      <if test="createdTimeBegin != null">
+          and f_created_time &gt;= #{createdTimeBegin,jdbcType=DATE}
+      </if>
+      <if test="createdTimeEnd != null">
+          and f_created_time &lt;= #{createdTimeEnd,jdbcType=DATE}
+      </if>
+      <if test="modifiedTime != null">
+          and f_modified_time = #{modifiedTime,jdbcType=DATE}
+      </if>
+      <if test="modifiedTimeBegin != null">
+          and f_modified_time &gt;= #{modifiedTimeBegin,jdbcType=DATE}
+      </if>
+      <if test="modifiedTimeEnd != null">
+          and f_modified_time &lt;= #{modifiedTimeEnd,jdbcType=DATE}
+      </if>
   </select>
 
   <select id="getPoints" parameterType="java.lang.Long" resultType="java.math.BigDecimal">
-    select ifnull(sum(points), 0) from t_reward_points
+    select ifnull(sum(f_points), 0) from t_reward_points
     where
-    user_id = #{userId,jdbcType=BIGINT}
-    and del_flag = 0
-    and points_status = '006001'
+    f_user_id = #{userId,jdbcType=BIGINT}
+    and f_del_flag = 0
+    and f_points_status = '006001'
   </select>
 
   <select id="getUnusedPointsBefore" resultType="java.lang.Long">
     select id from t_reward_points
     where
-    user_id = #{userId,jdbcType=BIGINT}
-    and del_flag = 0
-    and points_status = '006001'
-    and create_time &lt;= #{unifiedOrderTime,jdbcType=TIMESTAMP}
+    f_user_id = #{userId,jdbcType=BIGINT}
+    and f_del_flag = 0
+    and f_points_status = '006001'
+    and f_created_time &lt;= #{unifiedOrderTime,jdbcType=TIMESTAMP}
   </select>
 
-  <update id="batchUpdateStatus" >
+  <update id="batchUpdateStatus">
     update t_reward_points
-    set points_status = #{status,jdbcType=VARCHAR}, update_time = now()
-    where id in
-    <foreach collection="ids" item="id" index="index" open="(" close=")" separator=",">
+    set f_points_status = #{status,jdbcType=VARCHAR}, f_modified_time = now()
+    where f_id in
+    <foreach close=")" collection="ids" index="index" item="id" open="(" separator=",">
       #{id}
     </foreach>
   </update>

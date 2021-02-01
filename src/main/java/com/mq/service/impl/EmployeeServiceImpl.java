@@ -8,6 +8,7 @@ import com.mq.model.Employee;
 import com.mq.query.EmployeeQuery;
 import com.mq.service.EmployeeService;
 import com.mq.util.*;
+import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -67,15 +68,15 @@ public class EmployeeServiceImpl implements EmployeeService {
         employee.setAge(DateUtil.calcAge(employee.getBirth(), now));
         employee.setUsername(username);
         employee.seteName(eName);
-        employee.setGender(gender);
+        employee.setGender(BooleanUtils.toBoolean(Integer.valueOf(gender)));
         employee.setMobile(mobile);
         employee.setEmail(email);
         employee.setWechat(wechat);
-        employee.setUpdateTime(now);
+        employee.setModifiedTime(now);
         if (StringUtils.isEmpty(id)) {
             employee.setPassword(MD5.generate(password));
-            employee.setCreateTime(now);
-            employee.setDelFlag(0);
+            employee.setCreatedTime(now);
+            employee.setDelFlag(Boolean.FALSE);
         } else {
             employee.setId(Long.valueOf(id));
             Employee byPrimaryKey = employeeMapper.selectByPrimaryKey(employee.getId());

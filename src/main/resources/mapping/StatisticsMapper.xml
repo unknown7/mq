@@ -1,131 +1,129 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.mq.mapper.StatisticsMapper" >
-  <resultMap id="BaseResultMap" type="com.mq.model.Statistics" >
-    <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="statistics_type" property="statisticsType" jdbcType="VARCHAR" />
-    <result column="business_id" property="businessId" jdbcType="BIGINT" />
-    <result column="user_id" property="userId" jdbcType="BIGINT" />
-    <result column="skey" property="skey" jdbcType="VARCHAR" />
-    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
-    <result column="del_flag" property="delFlag" jdbcType="INTEGER" />
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mq.mapper.StatisticsMapper">
+  <resultMap id="BaseResultMap" type="com.mq.model.Statistics">
+    <id column="f_id" jdbcType="BIGINT" property="id" />
+    <result column="f_statistics_type" jdbcType="VARCHAR" property="statisticsType" />
+    <result column="f_business_id" jdbcType="BIGINT" property="businessId" />
+    <result column="f_user_id" jdbcType="BIGINT" property="userId" />
+    <result column="f_skey" jdbcType="VARCHAR" property="skey" />
+    <result column="f_created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="f_modified_time" jdbcType="TIMESTAMP" property="modifiedTime" />
+    <result column="f_del_flag" jdbcType="BIT" property="delFlag" />
   </resultMap>
-  <sql id="Base_Column_List" >
-    id, statistics_type, business_id, user_id, skey, create_time, update_time, del_flag
+  <sql id="Base_Column_List">
+    f_id, f_statistics_type, f_business_id, f_user_id, f_skey, f_created_time, f_modified_time, 
+    f_del_flag
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from t_statistics
-    where id = #{id,jdbcType=BIGINT}
+    where f_id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from t_statistics
-    where id = #{id,jdbcType=BIGINT}
+    where f_id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.mq.model.Statistics" >
-    insert into t_statistics (id, statistics_type, business_id, 
-      user_id, skey, create_time, 
-      update_time, del_flag)
+  <insert id="insert" parameterType="com.mq.model.Statistics">
+    insert into t_statistics (f_id, f_statistics_type, f_business_id, 
+      f_user_id, f_skey, f_created_time, 
+      f_modified_time, f_del_flag)
     values (#{id,jdbcType=BIGINT}, #{statisticsType,jdbcType=VARCHAR}, #{businessId,jdbcType=BIGINT}, 
-      #{userId,jdbcType=BIGINT}, #{skey,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=INTEGER})
+      #{userId,jdbcType=BIGINT}, #{skey,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}, 
+      #{modifiedTime,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=BIT})
   </insert>
-  <insert id="insertSelective" parameterType="com.mq.model.Statistics" >
-    <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
+  <insert id="insertSelective" parameterType="com.mq.model.Statistics">
     insert into t_statistics
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        f_id,
       </if>
-      <if test="statisticsType != null" >
-        statistics_type,
+      <if test="statisticsType != null">
+        f_statistics_type,
       </if>
-      <if test="businessId != null" >
-        business_id,
+      <if test="businessId != null">
+        f_business_id,
       </if>
-      <if test="userId != null" >
-        user_id,
+      <if test="userId != null">
+        f_user_id,
       </if>
-      <if test="skey != null" >
-        skey,
+      <if test="skey != null">
+        f_skey,
       </if>
-      <if test="createTime != null" >
-        create_time,
+      <if test="createdTime != null">
+        f_created_time,
       </if>
-      <if test="updateTime != null" >
-        update_time,
+      <if test="modifiedTime != null">
+        f_modified_time,
       </if>
-      <if test="delFlag != null" >
-        del_flag,
+      <if test="delFlag != null">
+        f_del_flag,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
         #{id,jdbcType=BIGINT},
       </if>
-      <if test="statisticsType != null" >
+      <if test="statisticsType != null">
         #{statisticsType,jdbcType=VARCHAR},
       </if>
-      <if test="businessId != null" >
+      <if test="businessId != null">
         #{businessId,jdbcType=BIGINT},
       </if>
-      <if test="userId != null" >
+      <if test="userId != null">
         #{userId,jdbcType=BIGINT},
       </if>
-      <if test="skey != null" >
+      <if test="skey != null">
         #{skey,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null" >
-        #{createTime,jdbcType=TIMESTAMP},
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updateTime != null" >
-        #{updateTime,jdbcType=TIMESTAMP},
+      <if test="modifiedTime != null">
+        #{modifiedTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="delFlag != null" >
-        #{delFlag,jdbcType=INTEGER},
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=BIT},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.mq.model.Statistics" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.mq.model.Statistics">
     update t_statistics
-    <set >
-      <if test="statisticsType != null" >
-        statistics_type = #{statisticsType,jdbcType=VARCHAR},
+    <set>
+      <if test="statisticsType != null">
+        f_statistics_type = #{statisticsType,jdbcType=VARCHAR},
       </if>
-      <if test="businessId != null" >
-        business_id = #{businessId,jdbcType=BIGINT},
+      <if test="businessId != null">
+        f_business_id = #{businessId,jdbcType=BIGINT},
       </if>
-      <if test="userId != null" >
-        user_id = #{userId,jdbcType=BIGINT},
+      <if test="userId != null">
+        f_user_id = #{userId,jdbcType=BIGINT},
       </if>
-      <if test="skey != null" >
-        skey = #{skey,jdbcType=VARCHAR},
+      <if test="skey != null">
+        f_skey = #{skey,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null" >
-        create_time = #{createTime,jdbcType=TIMESTAMP},
+      <if test="createdTime != null">
+        f_created_time = #{createdTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updateTime != null" >
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      <if test="modifiedTime != null">
+        f_modified_time = #{modifiedTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="delFlag != null" >
-        del_flag = #{delFlag,jdbcType=INTEGER},
+      <if test="delFlag != null">
+        f_del_flag = #{delFlag,jdbcType=BIT},
       </if>
     </set>
-    where id = #{id,jdbcType=BIGINT}
+    where f_id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.mq.model.Statistics" >
+  <update id="updateByPrimaryKey" parameterType="com.mq.model.Statistics">
     update t_statistics
-    set statistics_type = #{statisticsType,jdbcType=VARCHAR},
-      business_id = #{businessId,jdbcType=BIGINT},
-      user_id = #{userId,jdbcType=BIGINT},
-      skey = #{skey,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      del_flag = #{delFlag,jdbcType=INTEGER}
-    where id = #{id,jdbcType=BIGINT}
+    set f_statistics_type = #{statisticsType,jdbcType=VARCHAR},
+      f_business_id = #{businessId,jdbcType=BIGINT},
+      f_user_id = #{userId,jdbcType=BIGINT},
+      f_skey = #{skey,jdbcType=VARCHAR},
+      f_created_time = #{createdTime,jdbcType=TIMESTAMP},
+      f_modified_time = #{modifiedTime,jdbcType=TIMESTAMP},
+      f_del_flag = #{delFlag,jdbcType=BIT}
+    where f_id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

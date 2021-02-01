@@ -23,7 +23,7 @@ public class UnifiedOrderResponse {
 
     private String errCode;
 
-    private String errCodeDes;
+    private String errCodeDesc;
 
     public Long getId() {
         return id;
@@ -113,11 +113,11 @@ public class UnifiedOrderResponse {
         this.errCode = errCode == null ? null : errCode.trim();
     }
 
-    public String getErrCodeDes() {
-        return errCodeDes;
+    public String getErrCodeDesc() {
+        return errCodeDesc;
     }
 
-    public void setErrCodeDes(String errCodeDes) {
-        this.errCodeDes = errCodeDes == null ? null : errCodeDes.trim();
+    public void setErrCodeDesc(String errCodeDesc) {
+        this.errCodeDesc = errCodeDesc == null ? null : errCodeDesc.trim();
     }
 }

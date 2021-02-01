@@ -89,12 +89,12 @@ public class VideoServiceImpl implements VideoService {
         video.setPrice(new BigDecimal(price));
         if (StringUtils.isEmpty(id)) {
             video.setStatus(Enums.VideoStatus.UN_UPLOADED.getKey());
-            video.setCreateTime(now);
-            video.setUpdateTime(now);
-            video.setDelFlag(0);
+            video.setCreatedTime(now);
+            video.setModifiedTime(now);
+            video.setDelFlag(Boolean.FALSE);
         } else {
             video.setId(Long.valueOf(id));
-            video.setUpdateTime(now);
+            video.setModifiedTime(now);
         }
         return this;
     }
@@ -181,8 +181,8 @@ public class VideoServiceImpl implements VideoService {
     @Transactional
     public void remove(Long id) {
         Video video = videoMapper.selectByPrimaryKey(id);
-        video.setDelFlag(1);
-        video.setUpdateTime(new Date());
+        video.setDelFlag(Boolean.TRUE);
+        video.setModifiedTime(new Date());
         videoMapper.updateByPrimaryKeySelective(video);
 
         String coverPath = GlobalConstants.IMAGE_PATH.concat(video.getCoverRealName());
@@ -196,7 +196,7 @@ public class VideoServiceImpl implements VideoService {
     public void shelve(Long id) {
         Video video = videoMapper.selectByPrimaryKey(id);
         video.setStatus(Enums.VideoStatus.UN_RELEASED.getKey());
-        video.setUpdateTime(new Date());
+        video.setModifiedTime(new Date());
         videoMapper.updateByPrimaryKeySelective(video);
     }
 
@@ -205,7 +205,7 @@ public class VideoServiceImpl implements VideoService {
     public void release(Long id) {
         Video video = videoMapper.selectByPrimaryKey(id);
         video.setStatus(Enums.VideoStatus.RELEASED.getKey());
-        video.setUpdateTime(new Date());
+        video.setModifiedTime(new Date());
         videoMapper.updateByPrimaryKeySelective(video);
     }
 
@@ -218,7 +218,7 @@ public class VideoServiceImpl implements VideoService {
         Video byPrimaryKey = videoMapper.selectByPrimaryKey(Long.valueOf(id));
         byPrimaryKey.setVideoName(videoName);
         byPrimaryKey.setVideoRealName(UUID.randomUUID().toString().concat(fileSuffix));
-        byPrimaryKey.setUpdateTime(new Date());
+        byPrimaryKey.setModifiedTime(new Date());
         byPrimaryKey.setStatus(Enums.VideoStatus.UN_RELEASED.getKey());
         videoMapper.updateByPrimaryKeySelective(byPrimaryKey);
         FileUtil.persistFile(video, byPrimaryKey.getVideoRealName(), GlobalConstants.VIDEO_PATH);
@@ -229,7 +229,7 @@ public class VideoServiceImpl implements VideoService {
         VideoQuery query = new VideoQuery();
         query.setDelFlag(0);
         query.setStatus(Enums.VideoStatus.RELEASED.getKey());
-        query.setOrderBy("classification");
+        query.setOrderBy("f_classification");
         List<VideoVo> videoVos = videoMapper.selectByQuery(query);
         return videoVos;
     }
@@ -249,9 +249,9 @@ public class VideoServiceImpl implements VideoService {
             shareCard.setProfitShare(videoVo.getProfitShare());
             shareCard.setSkey(skey);
             shareCard.setUserId(userVo.getId());
-            shareCard.setCreateTime(now);
-            shareCard.setUpdateTime(now);
-            shareCard.setDelFlag(0);
+            shareCard.setCreatedTime(now);
+            shareCard.setModifiedTime(now);
+            shareCard.setDelFlag(Boolean.FALSE);
             shareCardMapper.insertSelective(shareCard);
             String page = "pages/index/index";
             miniProgramCode = wxAPI.getUnlimited(page, shareCard.getId());

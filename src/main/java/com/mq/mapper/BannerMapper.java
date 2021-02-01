@@ -19,9 +19,9 @@ public interface BannerMapper {
 
     int updateByPrimaryKey(Banner record);
 
-    List<Banner> selectByQuery(BannerQuery query);
+	List<Banner> selectByQuery(BannerQuery query);
 
-    List<BannerVo> selectVoByQuery(BannerQuery query);
+	List<BannerVo> selectVoByQuery(BannerQuery query);
 
-    Long selectNums(BannerQuery query);
+	Long selectNums(BannerQuery query);
 }

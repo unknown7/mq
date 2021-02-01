@@ -1,72 +1,72 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.mq.mapper.WhiteListMapper" >
-  <resultMap id="BaseResultMap" type="com.mq.model.WhiteList" >
-    <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="user_id" property="userId" jdbcType="BIGINT" />
-    <result column="skey" property="skey" jdbcType="VARCHAR" />
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mq.mapper.WhiteListMapper">
+  <resultMap id="BaseResultMap" type="com.mq.model.WhiteList">
+    <id column="f_id" jdbcType="BIGINT" property="id" />
+    <result column="f_user_id" jdbcType="BIGINT" property="userId" />
+    <result column="f_skey" jdbcType="VARCHAR" property="skey" />
   </resultMap>
-  <sql id="Base_Column_List" >
-    id, user_id, skey
+  <sql id="Base_Column_List">
+    f_id, f_user_id, f_skey
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from t_white_list
-    where id = #{id,jdbcType=BIGINT}
+    where f_id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from t_white_list
-    where id = #{id,jdbcType=BIGINT}
+    where f_id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.mq.model.WhiteList" >
-    insert into t_white_list (id, user_id, skey
+  <insert id="insert" parameterType="com.mq.model.WhiteList">
+    insert into t_white_list (f_id, f_user_id, f_skey
       )
     values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{skey,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.mq.model.WhiteList" >
+  <insert id="insertSelective" parameterType="com.mq.model.WhiteList">
     insert into t_white_list
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        f_id,
       </if>
-      <if test="userId != null" >
-        user_id,
+      <if test="userId != null">
+        f_user_id,
       </if>
-      <if test="skey != null" >
-        skey,
+      <if test="skey != null">
+        f_skey,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
         #{id,jdbcType=BIGINT},
       </if>
-      <if test="userId != null" >
+      <if test="userId != null">
         #{userId,jdbcType=BIGINT},
       </if>
-      <if test="skey != null" >
+      <if test="skey != null">
         #{skey,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.mq.model.WhiteList" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.mq.model.WhiteList">
     update t_white_list
-    <set >
-      <if test="userId != null" >
-        user_id = #{userId,jdbcType=BIGINT},
+    <set>
+      <if test="userId != null">
+        f_user_id = #{userId,jdbcType=BIGINT},
       </if>
-      <if test="skey != null" >
-        skey = #{skey,jdbcType=VARCHAR},
+      <if test="skey != null">
+        f_skey = #{skey,jdbcType=VARCHAR},
       </if>
     </set>
-    where id = #{id,jdbcType=BIGINT}
+    where f_id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.mq.model.WhiteList" >
+  <update id="updateByPrimaryKey" parameterType="com.mq.model.WhiteList">
     update t_white_list
-    set user_id = #{userId,jdbcType=BIGINT},
-      skey = #{skey,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=BIGINT}
+    set f_user_id = #{userId,jdbcType=BIGINT},
+      f_skey = #{skey,jdbcType=VARCHAR}
+    where f_id = #{id,jdbcType=BIGINT}
   </update>
 
   <select id="findAll" resultMap="BaseResultMap">
