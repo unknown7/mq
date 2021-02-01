@@ -18,8 +18,8 @@
             <div class="input-group">
                 <select class="form-control" name="gender">
                     <option value="">性别</option>
-                    <option value="male">男</option>
-                    <option value="female">女</option>
+                    <option value="1">男</option>
+                    <option value="0">女</option>
                 </select>
             </div>
             <div class="input-group">
@@ -129,8 +129,8 @@
                                     <div>
                                         <select class="form-control" name="gender" id="gender" style="width: 86%">
                                             <option value="">-</option>
-                                            <option value="male">男</option>
-                                            <option value="female">女</option>
+                                            <option value="1">男</option>
+                                            <option value="0">女</option>
                                         </select>
                                     </div>
                                 </div>

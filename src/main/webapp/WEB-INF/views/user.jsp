@@ -25,14 +25,14 @@
             <div class="input-group">
                 <input type="text"
                        class="datepicker form-control"
-                       data-date-format="yyyy-mm-dd" name="createTimeBegin"
+                       data-date-format="yyyy-mm-dd" name="createdTimeBegin"
                        placeholder="注册时间从"/>
                 <span class="input-group-addon">
                     <i class="fa fa-exchange"></i>
                 </span>
                 <input type="text"
                        class="datepicker form-control"
-                       data-date-format="yyyy-mm-dd" name="createTimeEnd"
+                       data-date-format="yyyy-mm-dd" name="createdTimeEnd"
                        placeholder="至"/>
             </div>
             <button type="button" id="query" class="btn btn-sm btn-success">
@@ -108,10 +108,10 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="createTime">注册时间</label>
+                                    <label for="createdTime">注册时间</label>
 
                                     <div>
-                                        <input type="text" id="createTime" name="createTime"/>
+                                        <input type="text" id="createdTime" name="createdTime"/>
                                     </div>
                                 </div>
 
