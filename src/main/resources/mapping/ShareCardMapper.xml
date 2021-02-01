@@ -39,6 +39,9 @@
       #{modifiedTime,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" parameterType="com.mq.model.ShareCard">
+    <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into t_share_card
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">

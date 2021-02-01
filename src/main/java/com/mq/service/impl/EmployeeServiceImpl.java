@@ -68,7 +68,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         employee.setAge(DateUtil.calcAge(employee.getBirth(), now));
         employee.setUsername(username);
         employee.seteName(eName);
-        employee.setGender(BooleanUtils.toBoolean(Integer.valueOf(gender)));
+        employee.setGender(Integer.valueOf(gender));
         employee.setMobile(mobile);
         employee.setEmail(email);
         employee.setWechat(wechat);

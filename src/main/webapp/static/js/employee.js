@@ -11,9 +11,9 @@ $(function () {
                 "data": "gender",
                 "class": "text-center",
                 "render": function (data, type, row) {
-                    if (data == 'female') {
+                    if (data == '0') {
                         return "女";
-                    } else if (data == 'male') {
+                    } else if (data == '1') {
                         return "男";
                     }
                     return "";

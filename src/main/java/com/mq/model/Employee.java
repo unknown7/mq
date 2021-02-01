@@ -7,7 +7,7 @@ public class Employee {
 
     private String eName;
 
-    private Boolean gender;
+    private Integer gender;
 
     private Date birth;
 
@@ -49,11 +49,11 @@ public class Employee {
         this.eName = eName == null ? null : eName.trim();
     }
 
-    public Boolean getGender() {
+    public Integer getGender() {
         return gender;
     }
 
-    public void setGender(Boolean gender) {
+    public void setGender(Integer gender) {
         this.gender = gender;
     }
 

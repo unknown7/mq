@@ -21,8 +21,8 @@
         <result column="f_jump_to" property="jumpTo" jdbcType="BIGINT" />
         <result column="f_jump_to_name" property="jumpToName" jdbcType="VARCHAR" />
         <result column="f_del_flag" property="delFlag" jdbcType="BIT" />
-        <result column="f_create_time" property="createdTime" jdbcType="TIMESTAMP" />
-        <result column="f_update_time" property="modifiedTime" jdbcType="TIMESTAMP" />
+        <result column="f_created_time" property="createdTime" jdbcType="TIMESTAMP" />
+        <result column="f_modified_time" property="modifiedTime" jdbcType="TIMESTAMP" />
         <result column="f_desc" property="desc" jdbcType="VARCHAR" />
         <result column="f_image_real_name" property="imageRealName" jdbcType="VARCHAR" />
         <result column="f_b_name" property="bName" jdbcType="VARCHAR" />
@@ -215,7 +215,7 @@
     <select id="selectVoByQuery" parameterType="com.mq.query.BannerQuery" resultMap="VoResultMap">
         select
         b.f_id, b.f_image_name, b.f_sort, b.f_jump_to, v.f_title as jump_to_name, b.f_del_flag,
-        b.f_create_time, b.f_update_time, b.f_desc, b.f_image_real_name, b.f_b_name
+        b.f_created_time, b.f_modified_time, b.f_desc, b.f_image_real_name, b.f_b_name
         from t_banner b
         left join t_video v on b.f_jump_to = v.f_id
         where b.f_del_flag = 0

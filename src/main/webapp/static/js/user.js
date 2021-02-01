@@ -49,7 +49,7 @@ $(function () {
                 }
             },
             {
-                "data": "createTime",
+                "data": "createdTime",
                 "class": "text-center",
                 "render": function (data, type, row) {
                     return new Date(data).Format("yyyy-MM-dd hh:mm:ss");
@@ -172,7 +172,7 @@ var view = function(id) {
             $('#userForm').find('input, select').each(function () {
                 var that = $(this);
                 var value = result[that.attr('name')];
-                if (that.attr('name') == 'createTime') {
+                if (that.attr('name') == 'createdTime') {
                     value = new Date(value).Format("yyyy-MM-dd hh:mm:ss");
                 }
                 that.val(value);

@@ -31,8 +31,8 @@
         <result column="f_cover_real_name" jdbcType="VARCHAR" property="coverRealName" />
         <result column="f_description_real_name" jdbcType="VARCHAR" property="descriptionRealName" />
         <result column="f_video_real_name" jdbcType="VARCHAR" property="videoRealName" />
-        <result column="f_create_time" jdbcType="TIMESTAMP" property="createTime" />
-        <result column="f_update_time" jdbcType="TIMESTAMP" property="updateTime" />
+        <result column="f_created_time" jdbcType="TIMESTAMP" property="createdTime" />
+        <result column="f_modified" jdbcType="TIMESTAMP" property="modifiedTime" />
         <result column="f_del_flag" jdbcType="INTEGER" property="delFlag" />
         <result column="f_classification" jdbcType="BIGINT" property="classification" />
         <result column="f_classification_name" jdbcType="VARCHAR" property="classificationName" />
@@ -427,7 +427,7 @@
     (select count(1) from t_statistics s where s.f_statistics_type = '003004' and s.f_business_id = v.f_id) as f_purchased,
     (select count(1) from t_statistics s where s.f_statistics_type = '003005' and s.f_business_id = v.f_id) as f_accessed
     <if test="userId != null">
-      ,(case when o.id is null then false else true end) as f_is_purchased
+      ,(case when o.f_id is null then false else true end) as f_is_purchased
       ,o.f_user_id
       ,sc.f_share_card_real_name as f_share_card
     </if>
@@ -463,7 +463,7 @@
       ,o.f_user_id
     from t_video v
     left join t_video_classification vc on v.f_classification = vc.f_id
-    join t_order o on v.f_id = o.goods_id and o.f_order_status = '004002' and o.f_user_id = #{userId,jdbcType=BIGINT}
+    join t_order o on v.f_id = o.f_goods_id and o.f_order_status = '004002' and o.f_user_id = #{userId,jdbcType=BIGINT}
     where v.f_del_flag = 0
     and v.f_status = '001003'
     and o.f_user_id =  #{userId,jdbcType=BIGINT}
@@ -488,7 +488,7 @@
   <select id="findPurchasesWithWhiteUser" resultMap="VoResultMap">
     select
       v.f_id, v.f_title, v.f_subtitle, v.f_price, v.f_cover_real_name, v.f_description_real_name, v.f_video_real_name,
-      v.f_create_time, v.f_update_time, v.f_del_flag, v.f_classification, v.f_profit_share, v.f_status, v.f_cover_name,
+      v.f_created_time, v.f_modified_time, v.f_del_flag, v.f_classification, v.f_profit_share, v.f_status, v.f_cover_name,
       v.f_description_name, v.f_video_name, v.f_free_watch_time,
       vc.f_v_name as f_classification_name,
       0 as f_watched,
@@ -496,7 +496,7 @@
       0 as f_accessed,
       true as f_is_purchased
     from t_video v
-    left join t_video_classification vc on v.f_classification = vc.id
+    left join t_video_classification vc on v.f_classification = vc.f_id
     where v.f_del_flag = 0
     and v.f_status = '001003'
   </select>

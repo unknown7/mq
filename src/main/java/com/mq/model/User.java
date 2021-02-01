@@ -7,7 +7,7 @@ public class User {
 
     private String country;
 
-    private Boolean gender;
+    private Integer gender;
 
     private String province;
 
@@ -49,11 +49,11 @@ public class User {
         this.country = country == null ? null : country.trim();
     }
 
-    public Boolean getGender() {
+    public Integer getGender() {
         return gender;
     }
 
-    public void setGender(Boolean gender) {
+    public void setGender(Integer gender) {
         this.gender = gender;
     }
 
