@@ -36,7 +36,7 @@ $(function () {
                 }
             },
             {
-                "data": "updateTime",
+                "data": "modifiedTime",
                 "class": "text-center",
                 "render": function (data, type, row) {
                     return new Date(data).Format("yyyy-MM-dd hh:mm:ss");
