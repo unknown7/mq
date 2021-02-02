@@ -1,4 +1,4 @@
-package com.mq.base;
+package com.mq.type.handler;
 
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;

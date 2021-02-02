@@ -13,6 +13,7 @@ spring:
 mybatis:
   mapper-locations: classpath:mapping/*.xml
   type-aliases-package: com.mq.model
+#  type-handlers-package: com.mq.type.handler
 
 #pagehelper分页插件
 pagehelper:
