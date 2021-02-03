@@ -53,8 +53,9 @@ public class EmployeeController extends BaseController {
             String gender = request.getParameter("gender");
             String mobile = request.getParameter("mobile");
             String email = request.getParameter("email");
-            String wechat = request.getParameter("wechat");
-            employeeService.save(id, username, password, eName, birth, gender, mobile, email, wechat, avatar);
+            String openId = request.getParameter("openId");
+            String profitRate = request.getParameter("profitRate");
+            employeeService.save(id, username, password, eName, birth, gender, mobile, email, openId, profitRate, avatar);
             return success("员工信息已保存");
         } catch (Exception e) {
             logger.error(e.getMessage());

@@ -63,6 +63,13 @@ $(function () {
                 }
             },
             {
+                "data": "profitSale",
+                "class": "text-center",
+                "render": function (data, type, row) {
+                    return (Math.format(data * 100, 2)) + "%";
+                }
+            },
+            {
                 "data": "freeWatchTime",
                 "class": "text-center",
                 "render": function (data, type, row) {
@@ -181,7 +188,7 @@ $(function () {
         success: function (result) {
             $.each(result, function (i, item) {
                 $('#search_form select[name=classification]').append('<option value="' + item.id + '">' + item.vName + '</option>');
-                $('#videoForm select[name=classification]').append('<option value="' + item.id + '" data-default-profit-share="' + item.defaultProfitShare + '" data-default-free-watch-time="' + item.defaultFreeWatchTime + '">' + item.vName + '</option>');
+                $('#videoForm select[name=classification]').append('<option value="' + item.id + '" data-default-profit-share="' + item.defaultProfitShare + '" data-default-profit-sale="' + item.defaultProfitSale + '" data-default-free-watch-time="' + item.defaultFreeWatchTime + '">' + item.vName + '</option>');
             });
         }
     });
@@ -340,7 +347,7 @@ $(function () {
         },
         invalidHandler: function (form, e) {
             var shakes = $(e.currentElements).not('.valid');
-            _shake($(shakes).not('#cover_success, #description_success, #profitShareValue, #freeWatchTimeValue').closest('.form-group'));
+            _shake($(shakes).not('#cover_success, #description_success, #profitShareValue, #profitSaleValue, #freeWatchTimeValue').closest('.form-group'));
             if ($('#cover_success').val() == '') {
                 _shake($('#cover_success').parent());
             }
@@ -405,10 +412,13 @@ $(function () {
     $("#videoForm select[name=classification]").on("change", function () {
         var $selected = $(this).find("option:selected");
         var defaultProfitShare = 0;
+        var defaultProfitSale = 0;
         var defaultFreeWatchTime = 0;
         if ($selected.val()) {
             defaultProfitShare = $selected.attr("data-default-profit-share");
             defaultProfitShare = Math.format(defaultProfitShare * 100, 2);
+            defaultProfitSale = $selected.attr("data-default-profit-sale");
+            defaultProfitSale = Math.format(defaultProfitSale * 100, 2);
             defaultFreeWatchTime = $selected.attr("data-default-free-watch-time");
         } else {
             $(this).removeClass('valid');
@@ -417,6 +427,10 @@ $(function () {
             value: defaultProfitShare
         });
         $("#profitShareValue").val(defaultProfitShare);
+        $("#profitSale ").slider({
+            value: defaultProfitSale
+        });
+        $("#profitSaleValue").val(defaultProfitSale);
         $("#freeWatchTime ").slider({
             value: defaultFreeWatchTime
         });
@@ -437,7 +451,7 @@ var edit = function (id) {
                 var that = $(this);
                 var value = result[that.attr('name')];
                 if (that.attr('type') == 'number') {
-                    if (that.attr('name') == 'profitShare') {
+                    if (that.attr('name') == 'profitShare' || that.attr('name') == 'profitSale') {
                         value = Math.format(value * 100, 2);
                     }
                     that.val(value).keyup();
@@ -653,7 +667,7 @@ var view = function(id) {
                 var that = $(this);
                 var value = result[that.attr('name')];
                 if (that.attr('type') == 'number') {
-                    if (that.attr('name') == 'profitShare') {
+                    if (that.attr('name') == 'profitShare' || that.attr('name') == 'profitSale') {
                         value = Math.format(value * 100, 2);
                     }
                     that.val(value).keyup();
@@ -696,6 +710,7 @@ var viewStatus = function() {
     $("#price").prev().css("display", "none");
     $("#price").next().css("display", "none");
     $("#profitShareValue").next().next().attr("hidden", "hidden");
+    $("#profitSaleValue").next().next().attr("hidden", "hidden");
     $("#freeWatchTimeValue").next().next().attr("hidden", "hidden");
     $("#cover").next().next().css("display", "none");
     $("#description").next().next().css("display", "none");
@@ -707,6 +722,7 @@ var editStatus = function() {
     $("#price").prev().removeAttr("style");
     $("#price").next().removeAttr("style");
     $("#profitShareValue").next().next().removeAttr("hidden");
+    $("#profitSaleValue").next().next().removeAttr("hidden");
     $("#freeWatchTimeValue").next().next().removeAttr("hidden");
     $("#cover").next().next().removeAttr("style");
     $("#description").next().next().removeAttr("style");

@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.UUID;
 
@@ -43,12 +44,13 @@ public class EmployeeServiceImpl implements EmployeeService {
                      String gender,
                      String mobile,
                      String email,
-                     String wechat,
+                     String openId,
+                     String profitRate,
                      MultipartFile avatar
     ) throws Exception {
         Employee employee = new Employee();
         this
-        .handleEmployee(id, username, password, eName, birth, gender, mobile, email, wechat, employee)
+        .handleEmployee(id, username, password, eName, birth, gender, mobile, email, openId, profitRate, employee)
         .handleAvatar(employee, avatar)
         .executeSave(employee, avatar);
     }
@@ -61,7 +63,8 @@ public class EmployeeServiceImpl implements EmployeeService {
                                                String gender,
                                                String mobile,
                                                String email,
-                                               String wechat,
+                                               String openId,
+											   String profitRate,
                                                Employee employee
     ) throws Exception {
         Date now = new Date();
@@ -72,8 +75,9 @@ public class EmployeeServiceImpl implements EmployeeService {
         employee.setGender(Integer.valueOf(gender));
         employee.setMobile(mobile);
         employee.setEmail(email);
-        employee.setWechat(wechat);
+        employee.setOpenId(openId);
         employee.setModifiedTime(now);
+		employee.setProfitRate(new BigDecimal(profitRate).divide(new BigDecimal("100")));
         if (StringUtils.isEmpty(id)) {
             employee.setPassword(MD5.generate(password));
             employee.setCreatedTime(now);

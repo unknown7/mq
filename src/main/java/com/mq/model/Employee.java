@@ -1,5 +1,6 @@
 package com.mq.model;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class Employee {
@@ -31,7 +32,9 @@ public class Employee {
 
     private String mobile;
 
-    private String wechat;
+    private String openId;
+
+    private BigDecimal profitRate;
 
     public Long getId() {
         return id;
@@ -145,11 +148,19 @@ public class Employee {
         this.mobile = mobile == null ? null : mobile.trim();
     }
 
-    public String getWechat() {
-        return wechat;
+    public String getOpenId() {
+        return openId;
     }
 
-    public void setWechat(String wechat) {
-        this.wechat = wechat == null ? null : wechat.trim();
+    public void setOpenId(String openId) {
+        this.openId = openId == null ? null : openId.trim();
     }
+
+	public BigDecimal getProfitRate() {
+		return profitRate;
+	}
+
+	public void setProfitRate(BigDecimal profitRate) {
+		this.profitRate = profitRate;
+	}
 }

@@ -2,6 +2,7 @@ package com.mq.query;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class EmployeeQuery extends DefaultQuery {
@@ -44,7 +45,9 @@ public class EmployeeQuery extends DefaultQuery {
 
     private String mobile;
 
-    private String wechat;
+    private String openId;
+
+    private BigDecimal profitRate;
 
     private Integer start;
 
@@ -230,15 +233,23 @@ public class EmployeeQuery extends DefaultQuery {
         this.mobile = mobile;
     }
 
-    public String getWechat() {
-        return wechat;
-    }
+	public String getOpenId() {
+		return openId;
+	}
 
-    public void setWechat(String wechat) {
-        this.wechat = wechat;
-    }
+	public void setOpenId(String openId) {
+		this.openId = openId;
+	}
 
-    public Integer getStart() {
+	public BigDecimal getProfitRate() {
+		return profitRate;
+	}
+
+	public void setProfitRate(BigDecimal profitRate) {
+		this.profitRate = profitRate;
+	}
+
+	public Integer getStart() {
         return start;
     }
 

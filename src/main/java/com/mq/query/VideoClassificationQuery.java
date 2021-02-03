@@ -32,6 +32,8 @@ public class VideoClassificationQuery extends DefaultQuery {
 
     private BigDecimal defaultProfitShare;
 
+    private BigDecimal defaultProfitSale;
+
     private Integer defaultFreeWatchTime;
 
     public Long getId() {
@@ -130,7 +132,15 @@ public class VideoClassificationQuery extends DefaultQuery {
         this.defaultProfitShare = defaultProfitShare;
     }
 
-    public Integer getDefaultFreeWatchTime() {
+	public BigDecimal getDefaultProfitSale() {
+		return defaultProfitSale;
+	}
+
+	public void setDefaultProfitSale(BigDecimal defaultProfitSale) {
+		this.defaultProfitSale = defaultProfitSale;
+	}
+
+	public Integer getDefaultFreeWatchTime() {
         return defaultFreeWatchTime;
     }
 

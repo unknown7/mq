@@ -28,6 +28,8 @@ public class Video {
 
     private BigDecimal profitShare;
 
+    private BigDecimal profitSale;
+
     private String status;
 
     private String coverName;
@@ -134,7 +136,15 @@ public class Video {
         this.profitShare = profitShare;
     }
 
-    public String getStatus() {
+	public BigDecimal getProfitSale() {
+		return profitSale;
+	}
+
+	public void setProfitSale(BigDecimal profitSale) {
+		this.profitSale = profitSale;
+	}
+
+	public String getStatus() {
         return status;
     }
 
