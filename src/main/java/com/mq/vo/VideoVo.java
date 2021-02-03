@@ -36,6 +36,8 @@ public class VideoVo {
 
     private BigDecimal profitShare;
 
+    private BigDecimal profitSale;
+
     private Integer accessed;
 
     private String status;
@@ -194,7 +196,15 @@ public class VideoVo {
         this.profitShare = profitShare;
     }
 
-    public Integer getAccessed() {
+	public BigDecimal getProfitSale() {
+		return profitSale;
+	}
+
+	public void setProfitSale(BigDecimal profitSale) {
+		this.profitSale = profitSale;
+	}
+
+	public Integer getAccessed() {
         return accessed;
     }
 

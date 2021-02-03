@@ -16,11 +16,12 @@
     <result column="f_username" jdbcType="VARCHAR" property="username" />
     <result column="f_email" jdbcType="VARCHAR" property="email" />
     <result column="f_mobile" jdbcType="VARCHAR" property="mobile" />
-    <result column="f_wechat" jdbcType="VARCHAR" property="wechat" />
+    <result column="f_open_id" jdbcType="VARCHAR" property="openId" />
+    <result column="f_profit_rate" jdbcType="DECIMAL" property="profitRate" />
   </resultMap>
   <sql id="Base_Column_List">
     f_id, f_e_name, f_gender, f_birth, f_age, f_avatar_real_name, f_avatar_name, f_created_time, 
-    f_modified_time, f_del_flag, f_password, f_username, f_email, f_mobile, f_wechat
+    f_modified_time, f_del_flag, f_password, f_username, f_email, f_mobile, f_open_id, f_profit_rate
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -37,13 +38,13 @@
       f_birth, f_age, f_avatar_real_name, 
       f_avatar_name, f_created_time, f_modified_time, 
       f_del_flag, f_password, f_username, 
-      f_email, f_mobile, f_wechat
+      f_email, f_mobile, f_open_id, f_profit_rate
       )
     values (#{id,jdbcType=BIGINT}, #{eName,jdbcType=VARCHAR}, #{gender,jdbcType=BIT}, 
       #{birth,jdbcType=DATE}, #{age,jdbcType=INTEGER}, #{avatarRealName,jdbcType=VARCHAR}, 
       #{avatarName,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}, #{modifiedTime,jdbcType=TIMESTAMP}, 
       #{delFlag,jdbcType=BIT}, #{password,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, 
-      #{email,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{wechat,jdbcType=VARCHAR}
+      #{email,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{openId,jdbcType=VARCHAR}, #{profitRate,jdbcType=DECIMAL}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.mq.model.Employee">
@@ -91,9 +92,12 @@
       <if test="mobile != null">
         f_mobile,
       </if>
-      <if test="wechat != null">
-        f_wechat,
+      <if test="openId != null">
+        f_open_id,
       </if>
+        <if test="profitRate != null">
+            f_profit_rate,
+        </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -138,9 +142,12 @@
       <if test="mobile != null">
         #{mobile,jdbcType=VARCHAR},
       </if>
-      <if test="wechat != null">
-        #{wechat,jdbcType=VARCHAR},
+      <if test="openId != null">
+        #{openId,jdbcType=VARCHAR},
       </if>
+        <if test="profitRate != null">
+            #{profitRate,jdbcType=DECIMAL},
+        </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.mq.model.Employee">
@@ -185,9 +192,12 @@
       <if test="mobile != null">
         f_mobile = #{mobile,jdbcType=VARCHAR},
       </if>
-      <if test="wechat != null">
-        f_wechat = #{wechat,jdbcType=VARCHAR},
+      <if test="openId != null">
+        f_open_id = #{openId,jdbcType=VARCHAR},
       </if>
+        <if test="profitRate != null">
+            f_profit_rate = #{profitRate,jdbcType=DECIMAL},
+        </if>
     </set>
     where f_id = #{id,jdbcType=BIGINT}
   </update>
@@ -206,7 +216,8 @@
       f_username = #{username,jdbcType=VARCHAR},
       f_email = #{email,jdbcType=VARCHAR},
       f_mobile = #{mobile,jdbcType=VARCHAR},
-      f_wechat = #{wechat,jdbcType=VARCHAR}
+      f_open_id = #{openId,jdbcType=VARCHAR},
+      f_profit_rate = #{profitRate,jdbcType=DECIMAL}
     where f_id = #{id,jdbcType=BIGINT}
   </update>
 
@@ -283,9 +294,12 @@
     <if test="mobile != null and mobile != ''">
       and f_mobile = #{mobile,jdbcType=VARCHAR}
     </if>
-    <if test="wechat != null and wechat != ''">
-      and f_wechat = #{wechat,jdbcType=VARCHAR}
+    <if test="openId != null and openId != ''">
+      and f_open_id = #{openId,jdbcType=VARCHAR}
     </if>
+      <if test="profitRate != null and profitRate != ''">
+          and f_profit_rate = #{profitRate,jdbcType=DECIMAL}
+      </if>
     <if test="avatarName != null and avatarName != ''">
       and f_avatar_name = #{avatarName,jdbcType=VARCHAR}
     </if>
@@ -353,9 +367,12 @@
     <if test="mobile != null and mobile != ''">
       and f_mobile = #{mobile,jdbcType=VARCHAR}
     </if>
-    <if test="wechat != null and wechat != ''">
-      and f_wechat = #{wechat,jdbcType=VARCHAR}
+    <if test="openId != null and openId != ''">
+      and f_open_id = #{openId,jdbcType=VARCHAR}
     </if>
+      <if test="profitRate != null and profitRate != ''">
+          and f_profit_rate = #{profitRate,jdbcType=DECIMAL}
+      </if>
     <if test="avatarName != null and avatarName != ''">
       and f_avatar_name = #{avatarName,jdbcType=VARCHAR}
     </if>

@@ -63,7 +63,7 @@
                     <th width="8%" class="min-mobile-l">用户名</th>
                     <th width="5%" class="min-mobile-l">电话</th>
                     <th width="10%" class="min-mobile-l">邮箱</th>
-                    <th width="10%" class="min-mobile-l">微信</th>
+                    <th width="10%" class="min-mobile-l">微信唯一标识</th>
                     <th width="10%" class="min-mobile-l">操作</th>
                 </tr>
                 </thead>
@@ -150,13 +150,36 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="wechat">微信</label>
+                                    <label for="openId">微信唯一标识</label>
                                     <div>
-                                        <input type="text" id="wechat" name="wechat"/>
+                                        <input type="text" id="openId" name="openId"/>
                                     </div>
                                 </div>
                             </div>
+
                         </div>
+
+                        <div class="row">
+
+                            <div class="col-xs-12 col-sm-8 col-sm-offset-4">
+                                <div class="form-group">
+                                    <label for="profitRate"> <font color="red">*</font>最高优惠比例</label>
+
+                                    <div>
+                                        <input class="value-input" type="number" max="100" min="0" value="0"
+                                               id="profitRateValue"
+                                               name="profitRate"
+                                               style="width: 15%;float: left;"
+                                               onfocus="$(this).select();"
+                                               onkeyup="$('#profitRate').slider({value: $(this).val()});">
+                                        <span style="width: 3%;padding-left: 5px;padding-top: 10px;font-size: 16px;">%</span>
+                                        <span id="profitRate" class="ui-slider-simple ui-slider-orange value-slider"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
                     </div>
                 </form>
 

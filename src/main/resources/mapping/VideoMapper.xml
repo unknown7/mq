@@ -14,6 +14,7 @@
     <result column="f_del_flag" jdbcType="BIT" property="delFlag" />
     <result column="f_classification" jdbcType="BIGINT" property="classification" />
     <result column="f_profit_share" jdbcType="DECIMAL" property="profitShare" />
+    <result column="f_profit_sale" jdbcType="DECIMAL" property="profitSale" />
     <result column="f_status" jdbcType="VARCHAR" property="status" />
     <result column="f_cover_name" jdbcType="VARCHAR" property="coverName" />
     <result column="f_description_name" jdbcType="VARCHAR" property="descriptionName" />
@@ -37,6 +38,7 @@
         <result column="f_classification" jdbcType="BIGINT" property="classification" />
         <result column="f_classification_name" jdbcType="VARCHAR" property="classificationName" />
         <result column="f_profit_share" jdbcType="DECIMAL" property="profitShare" />
+        <result column="f_profit_sale" jdbcType="DECIMAL" property="profitSale" />
         <result column="f_accessed" jdbcType="INTEGER" property="accessed" />
         <result column="f_status" jdbcType="VARCHAR" property="status" />
         <result column="f_cover_name" jdbcType="VARCHAR" property="coverName" />
@@ -51,7 +53,7 @@
 
   <sql id="Base_Column_List">
     f_id, f_title, f_subtitle, f_price, f_cover_real_name, f_description_real_name, f_video_real_name, 
-    f_created_time, f_modified_time, f_del_flag, f_classification, f_profit_share, f_status, 
+    f_created_time, f_modified_time, f_del_flag, f_classification, f_profit_share, f_profit_sale, f_status,
     f_cover_name, f_description_name, f_video_name, f_free_watch_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -68,13 +70,13 @@
     insert into t_video (f_id, f_title, f_subtitle, 
       f_price, f_cover_real_name, f_description_real_name, 
       f_video_real_name, f_created_time, f_modified_time, 
-      f_del_flag, f_classification, f_profit_share, 
+      f_del_flag, f_classification, f_profit_share, f_profit_sale,
       f_status, f_cover_name, f_description_name, 
       f_video_name, f_free_watch_time)
     values (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{subtitle,jdbcType=VARCHAR}, 
       #{price,jdbcType=DECIMAL}, #{coverRealName,jdbcType=VARCHAR}, #{descriptionRealName,jdbcType=VARCHAR}, 
       #{videoRealName,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}, #{modifiedTime,jdbcType=TIMESTAMP}, 
-      #{delFlag,jdbcType=BIT}, #{classification,jdbcType=BIGINT}, #{profitShare,jdbcType=DECIMAL},
+      #{delFlag,jdbcType=BIT}, #{classification,jdbcType=BIGINT}, #{profitShare,jdbcType=DECIMAL}, #{profitSale,jdbcType=DECIMAL},
       #{status,jdbcType=VARCHAR}, #{coverName,jdbcType=VARCHAR}, #{descriptionName,jdbcType=VARCHAR}, 
       #{videoName,jdbcType=VARCHAR}, #{freeWatchTime,jdbcType=INTEGER})
   </insert>
@@ -117,6 +119,9 @@
       <if test="profitShare != null">
         f_profit_share,
       </if>
+        <if test="profitSale != null">
+            f_profit_sale,
+        </if>
       <if test="status != null">
         f_status,
       </if>
@@ -170,6 +175,9 @@
       <if test="profitShare != null">
         #{profitShare,jdbcType=DECIMAL},
       </if>
+        <if test="profitSale != null">
+            #{profitSale,jdbcType=DECIMAL},
+        </if>
       <if test="status != null">
         #{status,jdbcType=VARCHAR},
       </if>
@@ -223,6 +231,9 @@
       <if test="profitShare != null">
         f_profit_share = #{profitShare,jdbcType=DECIMAL},
       </if>
+        <if test="profitSale != null">
+            f_profit_sale = #{profitSale,jdbcType=DECIMAL},
+        </if>
       <if test="status != null">
         f_status = #{status,jdbcType=VARCHAR},
       </if>
@@ -254,6 +265,7 @@
       f_del_flag = #{delFlag,jdbcType=BIT},
       f_classification = #{classification,jdbcType=BIGINT},
       f_profit_share = #{profitShare,jdbcType=DECIMAL},
+      f_profit_sale = #{profitSale,jdbcType=DECIMAL},
       f_status = #{status,jdbcType=VARCHAR},
       f_cover_name = #{coverName,jdbcType=VARCHAR},
       f_description_name = #{descriptionName,jdbcType=VARCHAR},
@@ -265,7 +277,7 @@
   <select id="selectByQuery" parameterType="com.mq.query.VideoQuery" resultMap="VoResultMap">
     select
     v.f_id, v.f_title, v.f_subtitle, v.f_price, v.f_cover_real_name, v.f_description_real_name, v.f_video_real_name,
-    v.f_created_time, v.f_modified_time, v.f_del_flag, v.f_classification, v.f_profit_share, v.f_status, v.f_cover_name,
+    v.f_created_time, v.f_modified_time, v.f_del_flag, v.f_classification, v.f_profit_share, v.f_profit_sale, v.f_status, v.f_cover_name,
     v.f_description_name, v.f_video_name, v.f_free_watch_time,
     vc.f_v_name as f_classification_name,
     (select count(1) from t_statistics s where s.f_statistics_type = '003003' and s.f_business_id = v.f_id) as f_watched,
@@ -319,6 +331,9 @@
     <if test="profitShare != null">
       and v.f_profit_share = #{profitShare,jdbcType=DECIMAL}
     </if>
+      <if test="profitSale != null">
+          and v.f_profit_sale = #{profitSale,jdbcType=DECIMAL}
+      </if>
     <if test="status != null">
       and v.f_status = #{status,jdbcType=VARCHAR}
     </if>
@@ -386,6 +401,9 @@
     <if test="profitShare != null">
       and f_profit_share = #{profitShare,jdbcType=DECIMAL}
     </if>
+      <if test="profitSale != null">
+          and v.f_profit_sale = #{profitSale,jdbcType=DECIMAL}
+      </if>
     <if test="status != null">
       and f_status = #{status,jdbcType=VARCHAR}
     </if>
@@ -406,7 +424,7 @@
   <select id="selectVoByPrimaryKey" parameterType="java.lang.Long" resultMap="VoResultMap">
     select
     v.f_id, v.f_title, v.f_subtitle, v.f_price, v.f_cover_real_name, v.f_description_real_name, v.f_video_real_name,
-    v.f_created_time, v.f_modified_time, v.f_del_flag, v.f_classification, v.f_profit_share, v.f_status, v.f_cover_name,
+    v.f_created_time, v.f_modified_time, v.f_del_flag, v.f_classification, v.f_profit_share, v.f_profit_sale, v.f_status, v.f_cover_name,
     v.f_description_name, v.f_video_name, v.f_free_watch_time,
     vc.f_v_name as f_classification_name,
     (select count(1) from t_statistics s where s.f_statistics_type = '003003' and s.f_business_id = v.f_id) as f_watched,
@@ -420,7 +438,7 @@
   <select id="selectOneVoWithAuth" resultMap="VoResultMap">
     select
     v.f_id, v.f_title, v.f_subtitle, v.f_price, v.f_cover_real_name, v.f_description_real_name, v.f_video_real_name,
-    v.f_created_time, v.f_modified_time, v.f_del_flag, v.f_classification, v.f_profit_share, v.f_status, v.f_cover_name,
+    v.f_created_time, v.f_modified_time, v.f_del_flag, v.f_classification, v.f_profit_share, v.f_profit_sale, v.f_status, v.f_cover_name,
     v.f_description_name, v.f_video_name, v.f_free_watch_time,
     vc.f_v_name as f_classification_name,
     (select count(1) from t_statistics s where s.f_statistics_type = '003003' and s.f_business_id = v.f_id) as f_watched,
@@ -453,7 +471,7 @@
   <select id="findPurchases" resultMap="VoResultMap">
     select
       v.f_id, v.f_title, v.f_subtitle, v.f_price, v.f_cover_real_name, v.f_description_real_name, v.f_video_real_name,
-      v.f_created_time, v.f_modified_time, v.f_del_flag, v.f_classification, v.f_profit_share, v.f_status, v.f_cover_name,
+      v.f_created_time, v.f_modified_time, v.f_del_flag, v.f_classification, v.f_profit_share, v.f_profit_sale, v.f_status, v.f_cover_name,
       v.f_description_name, v.f_video_name, v.f_free_watch_time,
       vc.f_v_name as f_classification_name,
       (select count(1) from t_statistics s where s.f_statistics_type = '003003' and s.f_business_id = v.f_id and s.f_user_id = #{userId,jdbcType=BIGINT}) as f_watched,
@@ -472,7 +490,7 @@
   <select id="selectOneVoWithWhiteUser" resultMap="VoResultMap">
     select
     v.f_id, v.f_title, v.f_subtitle, v.f_price, v.f_cover_real_name, v.f_description_real_name, v.f_video_real_name,
-    v.f_created_time, v.f_modified_time, v.f_del_flag, v.f_classification, v.f_profit_share, v.f_status, v.f_cover_name,
+    v.f_created_time, v.f_modified_time, v.f_del_flag, v.f_classification, v.f_profit_share, v.f_profit_sale, v.f_status, v.f_cover_name,
     v.f_description_name, v.f_video_name, v.f_free_watch_time,
     vc.f_v_name as f_classification_name,
     (select count(1) from t_statistics s where s.f_statistics_type = '003003' and s.f_business_id = v.f_id) as f_watched,
@@ -488,7 +506,7 @@
   <select id="findPurchasesWithWhiteUser" resultMap="VoResultMap">
     select
       v.f_id, v.f_title, v.f_subtitle, v.f_price, v.f_cover_real_name, v.f_description_real_name, v.f_video_real_name,
-      v.f_created_time, v.f_modified_time, v.f_del_flag, v.f_classification, v.f_profit_share, v.f_status, v.f_cover_name,
+      v.f_created_time, v.f_modified_time, v.f_del_flag, v.f_classification, v.f_profit_share, v.f_profit_sale, v.f_status, v.f_cover_name,
       v.f_description_name, v.f_video_name, v.f_free_watch_time,
       vc.f_v_name as f_classification_name,
       0 as f_watched,

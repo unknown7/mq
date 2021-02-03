@@ -19,6 +19,7 @@ public interface VideoService {
               String classification,
               String price,
               String profitShare,
+              String profitSale,
               String freeWatchTime,
               MultipartFile cover,
               MultipartFile description

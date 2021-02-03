@@ -98,7 +98,7 @@ public class PaymentServiceImpl implements PaymentService {
         order.setSkey(skey);
         if (shareCardId != null) {
             ShareCard shareCard = shareCardMapper.selectByPrimaryKey(shareCardId);
-            if (shareCard.getGoodsId() == videoId && shareCard.getUserId() != user.getId()) {
+            if (videoId.equals(shareCard.getGoodsId()) && !user.getId().equals(shareCard.getUserId())) {
                 Long referrer = shareCard.getUserId();
                 order.setReferrer(referrer);
             }

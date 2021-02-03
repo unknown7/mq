@@ -50,7 +50,7 @@ $(function () {
                 "class": "text-center"
             },
             {
-                "data": "wechat",
+                "data": "openId",
                 "class": "text-center"
             },
             {
@@ -181,7 +181,7 @@ $(function () {
         },
         invalidHandler: function (form, e) {
             var shakes = $(e.currentElements).not('.valid');
-            _shake($(shakes).not('#success').closest('.form-group'));
+            _shake($(shakes).not('#success, #profitRateValue').closest('.form-group'));
             if ($('#success').val() == '') {
                 _shake($('#fileDiv'));
             }
@@ -220,6 +220,10 @@ $(function () {
 
     $('#detail-form').on('hide.bs.modal', function () {
         $(':input', '#employeeForm').not(':button,:submit,:reset').val('').removeAttr('checked').removeAttr('readonly');
+        $('.value-slider').slider({
+            value: 0
+        });
+        $("#profitRateValue").next().next().removeAttr("hidden");
         $('#fileDiv .remove').focus().trigger("click");
         $('#success').val('');
         $('#employeeForm').find('input, select').filter('.valid').removeClass('valid');
@@ -230,6 +234,18 @@ $(function () {
         autoclose: true
     }).on('hide', function (e) {
         e.stopPropagation();
+    });
+
+    $('.value-slider').css({width: '70%', 'float': 'right', margin: '15px'}).empty().slider({
+        value: 0,
+        range: "min",
+        animate: true,
+        slide: function (event, handle) {
+            $(this).prev().prev().val(handle.value);
+        },
+        change: function (event, handle) {
+            $(this).prev().prev().val(handle.value);
+        }
     });
 
     $('#query').on('click', function (e) {
@@ -289,10 +305,13 @@ var edit = function (id) {
         },
         dataType: "json",
         success: function (result) {
-            $('#detail-form').find('input[type=text], input[type=password], input[type=hidden], select').each(function () {
+            $('#detail-form').find('input[type=text], input[type=password], input[type=hidden], input[type=number], select').each(function () {
                 var $this = $(this);
                 var value = result[$this.attr('name')];
-                if ($this.hasClass('datepicker')) {
+                if ($this.attr('name') == 'profitRate') {
+                    value = Math.format(value * 100, 2);
+                    $this.val(value).keyup();
+                } else if ($this.hasClass('datepicker')) {
                     $this.val(new Date(value).Format("yyyy-MM-dd"));
                 } else {
                     $this.val(value);

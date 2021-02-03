@@ -17,7 +17,8 @@ public interface EmployeeService {
               String gender,
               String mobile,
               String email,
-              String wechat,
+              String openId,
+              String profitRate,
               MultipartFile avatar) throws Exception;
 
     void remove(Long id);

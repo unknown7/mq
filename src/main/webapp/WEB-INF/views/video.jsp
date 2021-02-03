@@ -48,7 +48,8 @@
                     <%--<th width="3%" class="min-mobile-l">详情</th>--%>
                     <th width="6%" class="min-mobile-l">分类</th>
                     <th width="4%" class="min-mobile-l">分享提成</th>
-                    <th width="6%" class="min-mobile-l">免费观看时长</th>
+                    <th width="4%" class="min-mobile-l">销售提成</th>
+                    <th width="5%" class="min-mobile-l">免费观看</th>
                     <th width="7%" class="min-mobile-l">访问量</th>
                     <th width="7%" class="min-mobile-l">观看量</th>
                     <th width="7%" class="min-mobile-l">已购人数</th>
@@ -119,6 +120,21 @@
                                            onkeyup="$('#profitShare').slider({value: $(this).val()});">
                                     <span style="width: 3%;padding-left: 5px;padding-top: 10px;font-size: 16px;">%</span>
                                     <span id="profitShare" class="ui-slider-simple ui-slider-orange value-slider"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label no-padding-right" for="profitSale"> 销售提成 </label>
+
+                                <div class="col-sm-9">
+                                    <input class="value-input" type="number" max="100" min="0" value="0"
+                                           id="profitSaleValue"
+                                           name="profitSale"
+                                           style="width: 10%;float: left;"
+                                           onfocus="$(this).select();"
+                                           onkeyup="$('#profitSale').slider({value: $(this).val()});">
+                                    <span style="width: 3%;padding-left: 5px;padding-top: 10px;font-size: 16px;">%</span>
+                                    <span id="profitSale" class="ui-slider-simple ui-slider-orange value-slider"></span>
                                 </div>
                             </div>
 
