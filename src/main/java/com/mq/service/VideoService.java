@@ -49,5 +49,5 @@ public interface VideoService {
 
     List<VideoVo> findAll();
 
-    VideoVo findByShareCardId(Long shareCardId);
+    VideoVo findByShareCardId(Long shareCardId, String skey);
 }

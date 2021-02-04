@@ -28,6 +28,8 @@ public class UserVo {
 
     private Boolean delFlag;
 
+    private Boolean isEmployee;
+
     public Long getId() {
         return id;
     }
@@ -130,5 +132,13 @@ public class UserVo {
 
 	public void setDelFlag(Boolean delFlag) {
 		this.delFlag = delFlag;
+	}
+
+	public Boolean getIsEmployee() {
+		return isEmployee;
+	}
+
+	public void setIsEmployee(Boolean isEmployee) {
+		this.isEmployee = isEmployee;
 	}
 }

@@ -3,13 +3,17 @@ package com.mq.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.mq.base.GlobalConstants;
+import com.mq.base.RedisObjectHolder;
 import com.mq.mapper.EmployeeMapper;
+import com.mq.mapper.UserMapper;
 import com.mq.model.Employee;
+import com.mq.model.User;
 import com.mq.query.EmployeeQuery;
 import com.mq.service.EmployeeService;
 import com.mq.util.DateUtil;
 import com.mq.util.FileUtil;
 import com.mq.util.MD5;
+import com.mq.vo.UserVo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -20,12 +24,19 @@ import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
     @Resource
     private EmployeeMapper employeeMapper;
+	@Resource
+	private RedisObjectHolder redisObjectHolder;
+	@Resource
+	private UserMapper userMapper;
 
     @Override
     public PageInfo<Employee> findPage(EmployeeQuery query) {
@@ -103,7 +114,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         return this;
     }
 
-    private void executeSave(Employee employee, MultipartFile avatar) throws IOException {
+    private void executeSave(Employee employee, MultipartFile avatar) throws Exception {
         /**
          * 新增员工
          */
@@ -126,6 +137,20 @@ public class EmployeeServiceImpl implements EmployeeService {
                 FileUtil.persistFile(avatar, employee.getAvatarRealName(), GlobalConstants.IMAGE_PATH);
             }
         }
+		/**
+		 * 更新用户信息
+		 */
+        if (!StringUtils.isEmpty(employee.getOpenId())) {
+			String skey = MD5.generate(employee.getOpenId());
+			User user = userMapper.selectBySkey(skey);
+			if (employee.getOpenId().equals(user.getOpenId())) {
+				UserVo userInfo = redisObjectHolder.getUserInfo(skey);
+				if (userInfo != null) {
+					userInfo.setIsEmployee(employee.getOpenId().equals(user.getOpenId()));
+					redisObjectHolder.setUserInfo(skey, userInfo);
+				}
+			}
+		}
     }
 
     @Override
@@ -141,4 +166,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee selectOneById(Long id) {
         return employeeMapper.selectByPrimaryKey(id);
     }
+
+	@Override
+	public Map<String, Employee> findAllGroupByOpenId() {
+		List<Employee> employees = employeeMapper.selectByQuery(new EmployeeQuery());
+		return employees.stream().collect(Collectors.toMap(Employee::getOpenId, v -> v));
+	}
 }

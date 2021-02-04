@@ -3,12 +3,15 @@ package com.mq.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.mq.base.Enums;
 import com.mq.base.RedisObjectHolder;
 import com.mq.mapper.ShareCardMapper;
 import com.mq.mapper.UserMapper;
+import com.mq.model.InvitationRecord;
 import com.mq.model.ShareCard;
 import com.mq.model.User;
 import com.mq.query.UserQuery;
+import com.mq.service.InvitationRecordService;
 import com.mq.service.UserService;
 import com.mq.util.MD5;
 import com.mq.util.WxDecrptUtil;
@@ -40,6 +43,8 @@ public class UserServiceImpl implements UserService {
     private RedisObjectHolder redisObjectHolder;
     @Resource
     private ShareCardMapper shareCardMapper;
+    @Resource
+	private InvitationRecordService invitationRecordService;
 
     @Override
     @Transactional
@@ -62,13 +67,12 @@ public class UserServiceImpl implements UserService {
         /**
          * 推荐人
          */
-        Long shareCardId = request.getShareCardId();
-        if (shareCardId != null) {
-            ShareCard shareCard = shareCardMapper.selectByPrimaryKey(shareCardId);
-            Long referrer = shareCard.getUserId();
-            user.setReferrer(referrer);
-        }
+		InvitationRecord invitationRecord = invitationRecordService.getBySkey(skey, Enums.InvitationStatus.SCANNED.getKey());
+		if (invitationRecord != null) {
+			user.setReferrer(invitationRecord.getInviterId());
+		}
         userMapper.insertSelective(user);
+		invitationRecordService.registered(user.getId(), skey);
         /**
          * 存入缓存
          */

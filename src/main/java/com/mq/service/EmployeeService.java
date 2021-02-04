@@ -5,6 +5,8 @@ import com.mq.model.Employee;
 import com.mq.query.EmployeeQuery;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Map;
+
 public interface EmployeeService {
 
     PageInfo<Employee> findPage(EmployeeQuery query);
@@ -24,4 +26,6 @@ public interface EmployeeService {
     void remove(Long id);
 
     Employee selectOneById(Long id);
+
+    Map<String, Employee> findAllGroupByOpenId();
 }

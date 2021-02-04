@@ -19,7 +19,6 @@ public class AuthRequest extends DefaultRequest {
     private String encryptedData;
     private String iv;
     private String scene;
-    private Long shareCardId;
 
     public String getSkey() {
         return skey;
@@ -67,13 +66,5 @@ public class AuthRequest extends DefaultRequest {
 
     public void setScene(String scene) {
         this.scene = scene;
-    }
-
-    public Long getShareCardId() {
-        return shareCardId;
-    }
-
-    public void setShareCardId(Long shareCardId) {
-        this.shareCardId = shareCardId;
     }
 }
