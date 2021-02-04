@@ -166,4 +166,32 @@ public class Enums {
             return value;
         }
     }
+
+	/**
+	 * 邀请单状态
+	 */
+	public enum InvitationStatus {
+		SCANNED("007001", "已扫码"),
+		REGISTERED("007002", "已注册"),
+		PURCHASED("007003", "已购买"),
+		USED("007004", "已使用"),
+		APPLIED("007005", "已申请提现"),
+		AGREED("007006", "已同意提现"),
+		REJECTED("007007", "已拒绝提现"),
+		SUCCESS("007008", "提现成功"),
+		FAILURE("007009", "提现失败"),
+		;
+		private String key;
+		private String value;
+		InvitationStatus(String key, String value) {
+			this.key = key;
+			this.value = value;
+		}
+		public String getKey() {
+			return key;
+		}
+		public String getValue() {
+			return value;
+		}
+	}
 }

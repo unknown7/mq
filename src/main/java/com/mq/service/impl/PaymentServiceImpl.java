@@ -6,6 +6,7 @@ import com.mq.base.Enums;
 import com.mq.base.GlobalConstants;
 import com.mq.mapper.*;
 import com.mq.model.*;
+import com.mq.service.InvitationRecordService;
 import com.mq.service.PaymentService;
 import com.mq.service.StatisticsService;
 import com.mq.service.UserService;
@@ -56,6 +57,8 @@ public class PaymentServiceImpl implements PaymentService {
     private GlobalConstants globalConstants;
     @Resource
     private StatisticsService statisticsService;
+    @Resource
+	private InvitationRecordService invitationRecordService;
 
     @Override
     @Transactional
@@ -65,7 +68,6 @@ public class PaymentServiceImpl implements PaymentService {
                                        BigDecimal usedPoints,
                                        BigDecimal price,
                                        BigDecimal originPrice,
-                                       Long shareCardId,
                                        String remoteAddr) throws Exception
     {
         assert !StringUtils.isEmpty(skey);
@@ -96,12 +98,14 @@ public class PaymentServiceImpl implements PaymentService {
         order.setGoodsPrice(videoVo.getPrice());
         order.setUserId(user.getId());
         order.setSkey(skey);
-        if (shareCardId != null) {
-            ShareCard shareCard = shareCardMapper.selectByPrimaryKey(shareCardId);
-            if (videoId.equals(shareCard.getGoodsId()) && !user.getId().equals(shareCard.getUserId())) {
-                Long referrer = shareCard.getUserId();
-                order.setReferrer(referrer);
-            }
+
+		InvitationRecord invitationRecord = invitationRecordService.getByInviteeIdAndGoodsId(
+				user.getId(),
+				videoId,
+				Enums.PurchaseType.VIDEO.getKey()
+		);
+		if (invitationRecord != null) {
+			order.setReferrer(invitationRecord.getInviterId());
         }
         order.setCreatedTime(now);
         order.setModifiedTime(now);

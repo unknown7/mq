@@ -85,7 +85,7 @@ public class WxVideoController {
 
     @RequestMapping("/getVideoByShareCardId")
     public String getVideoByShareCardId(String skey, Long shareCardId) {
-        VideoVo videoVo = videoService.findByShareCardId(shareCardId);
+        VideoVo videoVo = videoService.findByShareCardId(shareCardId, skey);
         return JSON.toJSONString(videoVo);
     }
 }

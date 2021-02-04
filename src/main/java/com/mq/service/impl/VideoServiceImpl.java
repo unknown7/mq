@@ -12,6 +12,7 @@ import com.mq.model.ShareCard;
 import com.mq.model.VerifySwitch;
 import com.mq.model.Video;
 import com.mq.query.VideoQuery;
+import com.mq.service.InvitationRecordService;
 import com.mq.service.VideoService;
 import com.mq.util.FileUtil;
 import com.mq.vo.UserVo;
@@ -42,6 +43,8 @@ public class VideoServiceImpl implements VideoService {
     private ShareCardMapper shareCardMapper;
     @Resource
     private VerifySwitchMapper verifySwitchMapper;
+	@Resource
+	private InvitationRecordService invitationRecordService;
 
     @Override
     public PageInfo<VideoVo> findPage(VideoQuery query) {
@@ -303,9 +306,10 @@ public class VideoServiceImpl implements VideoService {
     }
 
     @Override
-    public VideoVo findByShareCardId(Long shareCardId) {
+    public VideoVo findByShareCardId(Long shareCardId, String skey) {
         ShareCard shareCard = shareCardMapper.selectByPrimaryKey(shareCardId);
         VideoVo videoVo = videoMapper.selectVoByPrimaryKey(shareCard.getGoodsId());
+		invitationRecordService.initRecord(shareCardId, skey);
         return videoVo;
     }
 }

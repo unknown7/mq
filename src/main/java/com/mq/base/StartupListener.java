@@ -2,8 +2,10 @@ package com.mq.base;
 
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Maps;
+import com.mq.model.Employee;
 import com.mq.model.User;
 import com.mq.model.WhiteList;
+import com.mq.service.EmployeeService;
 import com.mq.service.UserService;
 import com.mq.service.WhiteListService;
 import com.mq.util.MD5;
@@ -23,6 +25,7 @@ import javax.servlet.ServletContext;
 import java.io.File;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Component
 public class StartupListener implements ApplicationListener<ContextRefreshedEvent> {
@@ -35,6 +38,8 @@ public class StartupListener implements ApplicationListener<ContextRefreshedEven
     private WhiteListService whiteListService;
     @Resource
     private RedisObjectHolder redisObjectHolder;
+    @Resource
+	private EmployeeService employeeService;
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
@@ -67,12 +72,14 @@ public class StartupListener implements ApplicationListener<ContextRefreshedEven
         try {
             logger.info("初始化用户缓存..");
             List<User> users = userService.findAll();
-            Map<String, String> userVos = Maps.newHashMap();
+			Map<String, Employee> employees = employeeService.findAllGroupByOpenId();
+			Map<String, String> userVos = Maps.newHashMap();
             for (User user : users) {
                 String skey = MD5.generate(user.getOpenId());
                 UserVo vo = new UserVo();
                 BeanUtils.copyProperties(user, vo);
-                String serializable = JSON.toJSONString(vo);
+				vo.setIsEmployee(Optional.ofNullable(employees.get(user.getOpenId())).map(i -> Boolean.TRUE).orElse(Boolean.FALSE));
+				String serializable = JSON.toJSONString(vo);
                 userVos.put(skey, serializable);
             }
             redisObjectHolder.setUserInfo(userVos);
