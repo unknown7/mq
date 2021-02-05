@@ -36,6 +36,8 @@ public class Employee {
 
     private BigDecimal profitRate;
 
+    private Boolean paymentShareReceiver;
+
     public Long getId() {
         return id;
     }
@@ -163,4 +165,12 @@ public class Employee {
 	public void setProfitRate(BigDecimal profitRate) {
 		this.profitRate = profitRate;
 	}
+
+    public Boolean getPaymentShareReceiver() {
+        return paymentShareReceiver;
+    }
+
+    public void setPaymentShareReceiver(Boolean paymentShareReceiver) {
+        this.paymentShareReceiver = paymentShareReceiver;
+    }
 }
