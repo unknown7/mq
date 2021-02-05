@@ -13,7 +13,7 @@
     <result column="f_prepay_id" jdbcType="VARCHAR" property="prepayId" />
     <result column="f_trade_type" jdbcType="VARCHAR" property="tradeType" />
     <result column="f_err_code" jdbcType="VARCHAR" property="errCode" />
-    <result column="f_err_code_desc" jdbcType="VARCHAR" property="errCodeDesc" />
+    <result column="f_err_code_desc" jdbcType="VARCHAR" property="errCodeDes" />
   </resultMap>
   <sql id="Base_Column_List">
     f_id, f_return_code, f_return_msg, f_appid, f_mch_id, f_nonce_str, f_sign, f_result_code, 
@@ -33,12 +33,12 @@
     insert into t_unified_order_response (f_id, f_return_code, f_return_msg, 
       f_appid, f_mch_id, f_nonce_str, 
       f_sign, f_result_code, f_prepay_id, 
-      f_trade_type, f_err_code, f_err_code_desc
+      f_trade_type, f_err_code, f_err_code_des
       )
     values (#{id,jdbcType=BIGINT}, #{returnCode,jdbcType=VARCHAR}, #{returnMsg,jdbcType=VARCHAR}, 
       #{appid,jdbcType=VARCHAR}, #{mchId,jdbcType=VARCHAR}, #{nonceStr,jdbcType=VARCHAR}, 
       #{sign,jdbcType=VARCHAR}, #{resultCode,jdbcType=VARCHAR}, #{prepayId,jdbcType=VARCHAR}, 
-      #{tradeType,jdbcType=VARCHAR}, #{errCode,jdbcType=VARCHAR}, #{errCodeDesc,jdbcType=VARCHAR}
+      #{tradeType,jdbcType=VARCHAR}, #{errCode,jdbcType=VARCHAR}, #{errCodeDes,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.mq.model.UnifiedOrderResponse">
@@ -77,8 +77,8 @@
       <if test="errCode != null">
         f_err_code,
       </if>
-      <if test="errCodeDesc != null">
-        f_err_code_desc,
+      <if test="errCodeDes != null">
+        f_err_code_des,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -115,8 +115,8 @@
       <if test="errCode != null">
         #{errCode,jdbcType=VARCHAR},
       </if>
-      <if test="errCodeDesc != null">
-        #{errCodeDesc,jdbcType=VARCHAR},
+      <if test="errCodeDes != null">
+        #{errCodeDes,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -153,8 +153,8 @@
       <if test="errCode != null">
         f_err_code = #{errCode,jdbcType=VARCHAR},
       </if>
-      <if test="errCodeDesc != null">
-        f_err_code_desc = #{errCodeDesc,jdbcType=VARCHAR},
+      <if test="errCodeDes != null">
+        f_err_code_des = #{errCodeDes,jdbcType=VARCHAR},
       </if>
     </set>
     where f_id = #{id,jdbcType=BIGINT}
@@ -171,7 +171,7 @@
       f_prepay_id = #{prepayId,jdbcType=VARCHAR},
       f_trade_type = #{tradeType,jdbcType=VARCHAR},
       f_err_code = #{errCode,jdbcType=VARCHAR},
-      f_err_code_desc = #{errCodeDesc,jdbcType=VARCHAR}
+      f_err_code_des = #{errCodeDes,jdbcType=VARCHAR}
     where f_id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

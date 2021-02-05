@@ -7,6 +7,7 @@
     <result column="f_points" jdbcType="DECIMAL" property="points" />
     <result column="f_reward_type" jdbcType="VARCHAR" property="rewardType" />
     <result column="f_reward_id" jdbcType="BIGINT" property="rewardId" />
+    <result column="f_order_id" jdbcType="BIGINT" property="orderId" />
     <result column="f_profit_from" jdbcType="BIGINT" property="profitFrom" />
     <result column="f_points_status" jdbcType="VARCHAR" property="pointsStatus" />
     <result column="f_created_time" jdbcType="TIMESTAMP" property="createdTime" />
@@ -14,7 +15,7 @@
     <result column="f_del_flag" jdbcType="BIT" property="delFlag" />
   </resultMap>
   <sql id="Base_Column_List">
-    f_id, f_user_id, f_points, f_reward_type, f_reward_id, f_profit_from, f_points_status, 
+    f_id, f_user_id, f_points, f_reward_type, f_reward_id, f_order_id, f_profit_from, f_points_status,
     f_created_time, f_modified_time, f_del_flag
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -29,11 +30,11 @@
   </delete>
   <insert id="insert" parameterType="com.mq.model.RewardPoints">
     insert into t_reward_points (f_id, f_user_id, f_points, 
-      f_reward_type, f_reward_id, f_profit_from, 
+      f_reward_type, f_reward_id, f_order_id, f_profit_from,
       f_points_status, f_created_time, f_modified_time, 
       f_del_flag)
     values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{points,jdbcType=DECIMAL}, 
-      #{rewardType,jdbcType=VARCHAR}, #{rewardId,jdbcType=BIGINT}, #{profitFrom,jdbcType=BIGINT}, 
+      #{rewardType,jdbcType=VARCHAR}, #{rewardId,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT}, #{profitFrom,jdbcType=BIGINT},
       #{pointsStatus,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}, #{modifiedTime,jdbcType=TIMESTAMP}, 
       #{delFlag,jdbcType=BIT})
   </insert>
@@ -55,6 +56,9 @@
       <if test="rewardId != null">
         f_reward_id,
       </if>
+        <if test="orderId != null">
+            f_order_id,
+        </if>
       <if test="profitFrom != null">
         f_profit_from,
       </if>
@@ -87,6 +91,9 @@
       <if test="rewardId != null">
         #{rewardId,jdbcType=BIGINT},
       </if>
+        <if test="orderId != null">
+            #{orderId,jdbcType=BIGINT},
+        </if>
       <if test="profitFrom != null">
         #{profitFrom,jdbcType=BIGINT},
       </if>
@@ -119,6 +126,9 @@
       <if test="rewardId != null">
         f_reward_id = #{rewardId,jdbcType=BIGINT},
       </if>
+        <if test="orderId != null">
+            f_order_id = #{orderId,jdbcType=BIGINT},
+        </if>
       <if test="profitFrom != null">
         f_profit_from = #{profitFrom,jdbcType=BIGINT},
       </if>
@@ -143,6 +153,7 @@
       f_points = #{points,jdbcType=DECIMAL},
       f_reward_type = #{rewardType,jdbcType=VARCHAR},
       f_reward_id = #{rewardId,jdbcType=BIGINT},
+      f_order_id = #{orderId,jdbcType=BIGINT},
       f_profit_from = #{profitFrom,jdbcType=BIGINT},
       f_points_status = #{pointsStatus,jdbcType=VARCHAR},
       f_created_time = #{createdTime,jdbcType=TIMESTAMP},
@@ -167,6 +178,9 @@
     <if test="rewardId != null">
       and f_reward_id = #{rewardId,jdbcType=BIGINT}
     </if>
+      <if test="orderId != null">
+          and f_order_id = #{orderId,jdbcType=BIGINT}
+      </if>
     <if test="profitFrom != null">
       and f_profit_from = #{profitFrom,jdbcType=BIGINT}
     </if>
@@ -208,6 +222,9 @@
     <if test="rewardId != null">
       and f_reward_id = #{rewardId,jdbcType=BIGINT}
     </if>
+      <if test="orderId != null">
+          and f_order_id = #{orderId,jdbcType=BIGINT}
+      </if>
     <if test="profitFrom != null">
       and f_profit_from = #{profitFrom,jdbcType=BIGINT}
     </if>

@@ -63,28 +63,22 @@ public class InvitationRecordServiceImpl implements InvitationRecordService {
 
 	@Override
 	@Transactional
-	public void purchased(Long inviteeId, Long goodsId, String goodsType) {
-		InvitationRecord query = new InvitationRecord();
-		query.setGoodsId(goodsId);
-		query.setGoodsType(goodsType);
-		query.setInviteeId(inviteeId);
-		query.setStatus(Enums.InvitationStatus.REGISTERED.getKey());
-		InvitationRecord invitationRecord = invitationRecordMapper.selectRecentlyByQuery(query);
-		if (invitationRecord != null) {
-			invitationRecord.setStatus(Enums.InvitationStatus.PURCHASED.getKey());
-			invitationRecord.setModifiedTime(new Date());
-			invitationRecordMapper.updateByPrimaryKeySelective(invitationRecord);
-		}
+	public void purchased(Long invitationId) {
+		InvitationRecord invitationRecord = new InvitationRecord();
+		invitationRecord.setId(invitationId);
+		invitationRecord.setStatus(Enums.InvitationStatus.PURCHASED.getKey());
+		invitationRecord.setModifiedTime(new Date());
+		invitationRecordMapper.updateByPrimaryKeySelective(invitationRecord);
 	}
 
 	@Override
 	@Transactional
-	public void usePoints(Long inviterId) {
+	public void usePoints(Long inviterId, Date unifiedOrderTime) {
 		invitationRecordMapper.updateByInviterIdBeforeDate(
 			inviterId,
 			Enums.InvitationStatus.USED.getKey(),
 			Enums.InvitationStatus.PURCHASED.getKey(),
-			new Date()
+			unifiedOrderTime
 		);
 	}
 
@@ -134,6 +128,16 @@ public class InvitationRecordServiceImpl implements InvitationRecordService {
 		InvitationRecord condition = new InvitationRecord();
 		condition.setInviteeSkey(skey);
 		condition.setStatus(status);
+		InvitationRecord invitationRecord = invitationRecordMapper.selectRecentlyByQuery(condition);
+		return invitationRecord;
+	}
+
+	@Override
+	public InvitationRecord getByInviteeIdAndGoodsId(Long inviteeId, Long goodsId, String goodsType) {
+		InvitationRecord condition = new InvitationRecord();
+		condition.setInviteeId(inviteeId);
+		condition.setGoodsId(goodsId);
+		condition.setGoodsType(goodsType);
 		InvitationRecord invitationRecord = invitationRecordMapper.selectRecentlyByQuery(condition);
 		return invitationRecord;
 	}

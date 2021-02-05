@@ -28,6 +28,8 @@ public class Order {
 
     private Long referrer;
 
+    private Long invitationId;
+
     private Date createdTime;
 
     private Date modifiedTime;
@@ -130,7 +132,15 @@ public class Order {
         this.referrer = referrer;
     }
 
-    public Date getCreatedTime() {
+	public Long getInvitationId() {
+		return invitationId;
+	}
+
+	public void setInvitationId(Long invitationId) {
+		this.invitationId = invitationId;
+	}
+
+	public Date getCreatedTime() {
         return createdTime;
     }
 

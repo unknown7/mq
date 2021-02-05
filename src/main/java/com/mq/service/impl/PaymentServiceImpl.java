@@ -1,6 +1,7 @@
 package com.mq.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.mq.base.Enums;
 import com.mq.base.GlobalConstants;
@@ -14,6 +15,7 @@ import com.mq.util.DateUtil;
 import com.mq.util.MD5;
 import com.mq.util.MapUtil;
 import com.mq.util.OrderNoGenerator;
+import com.mq.vo.UserVo;
 import com.mq.vo.VideoVo;
 import com.mq.wx.base.WxAPI;
 import com.mq.wx.vo.unifiedOrder.UnifiedOrderVo;
@@ -28,6 +30,7 @@ import org.springframework.util.StringUtils;
 import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.function.Predicate;
 
 @Service
 public class PaymentServiceImpl implements PaymentService {
@@ -73,7 +76,7 @@ public class PaymentServiceImpl implements PaymentService {
         assert !StringUtils.isEmpty(skey);
         assert videoId != null;
         User user = userService.getBySkey(skey);
-        VideoVo videoVo = videoMapper.selectVoByPrimaryKey(Long.valueOf(videoId));
+        VideoVo videoVo = videoMapper.selectVoByPrimaryKey(videoId);
         BigDecimal points = rewardPointsMapper.getPoints(user.getId());
         validatePaymentParam(videoVo, points, whetherUsePoints, usedPoints, price, originPrice);
         Date now = new Date();
@@ -99,13 +102,25 @@ public class PaymentServiceImpl implements PaymentService {
         order.setUserId(user.getId());
         order.setSkey(skey);
 
+		Predicate<InvitationRecord> invitation = new Predicate<InvitationRecord>() {
+			private final List<String> LIST = Lists.newArrayList(
+					Enums.InvitationStatus.SCANNED.getKey(),
+					Enums.InvitationStatus.REGISTERED.getKey()
+			);
+			@Override
+			public boolean test(InvitationRecord invitationRecord) {
+				return invitationRecord != null && LIST.contains(invitationRecord.getStatus());
+			}
+		};
+
 		InvitationRecord invitationRecord = invitationRecordService.getByInviteeIdAndGoodsId(
 				user.getId(),
 				videoId,
 				Enums.PurchaseType.VIDEO.getKey()
 		);
-		if (invitationRecord != null) {
+		if (invitation.test(invitationRecord)) {
 			order.setReferrer(invitationRecord.getInviterId());
+			order.setInvitationId(invitationRecord.getId());
         }
         order.setCreatedTime(now);
         order.setModifiedTime(now);
@@ -131,7 +146,17 @@ public class PaymentServiceImpl implements PaymentService {
             params.put("unifiedOrderTime", DateUtil.dateToString(now, "yyyyMMddHHmmss"));
             request.setAttach(JSON.toJSONString(params));
         }
-        unifiedOrderRequestMapper.insertSelective(request);
+		/**
+		 * 是否为业务员推荐
+		 */
+		if (invitation.test(invitationRecord)) {
+			User saleManager = userService.getById(invitationRecord.getInviterId());
+			UserVo saleManagerVo = userService.getVoBySkey(saleManager.getSkey());
+			if (saleManagerVo.getIsEmployee()) {
+				request.setProfitSharing("Y");
+			}
+		}
+		unifiedOrderRequestMapper.insertSelective(request);
         /**
          * 统一下单接口
          */
@@ -219,8 +244,9 @@ public class PaymentServiceImpl implements PaymentService {
                 synchronized (paymentResult.getOutTradeNo()) {
                     Order order = orderMapper.selectByOrderNo(paymentResult.getOutTradeNo());
                     if (Enums.OrderStatus.UNPAID.getKey().equals(order.getOrderStatus())) {
+						Date now = new Date();
                         order.setOrderStatus(Enums.OrderStatus.PAID.getKey());
-                        order.setModifiedTime(new Date());
+                        order.setModifiedTime(now);
                         orderMapper.updateByPrimaryKeySelective(order);
                         /**
                          * 统计已购买
@@ -242,12 +268,13 @@ public class PaymentServiceImpl implements PaymentService {
                             rewardPoints.setRewardId(shareCard.getId());
                             rewardPoints.setRewardType(Enums.RewardType.SHARE.getKey());
                             rewardPoints.setUserId(user.getId());
-                            Date now = new Date();
                             rewardPoints.setCreatedTime(now);
                             rewardPoints.setModifiedTime(now);
                             rewardPoints.setDelFlag(Boolean.FALSE);
                             rewardPointsMapper.insertSelective(rewardPoints);
-                        }
+
+							invitationRecordService.purchased(order.getInvitationId());
+						}
                         /**
                          * 扣取积分
                          */
@@ -257,6 +284,7 @@ public class PaymentServiceImpl implements PaymentService {
                             Date unifiedOrderTime = DateUtil.stringToDate(unifiedOrderTimeStr, "yyyyMMddHHmmss");
                             List<Long> ids = rewardPointsMapper.getUnusedPointsBefore(order.getUserId(), unifiedOrderTime);
                             rewardPointsMapper.batchUpdateStatus(ids, Enums.PointsStatus.USED.getKey());
+							invitationRecordService.usePoints(order.getUserId(), unifiedOrderTime);
                         }
                     }
                 }

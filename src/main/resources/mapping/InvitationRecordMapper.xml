@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mq.mapper.InvitationRecordMapper">
+  <resultMap id="BaseResultMap" type="com.mq.model.InvitationRecord">
+    <id column="f_id" jdbcType="BIGINT" property="id" />
+    <result column="f_invitee_id" jdbcType="BIGINT" property="inviteeId" />
+    <result column="f_invitee_skey" jdbcType="VARCHAR" property="inviteeSkey" />
+    <result column="f_inviter_id" jdbcType="BIGINT" property="inviterId" />
+    <result column="f_share_card_id" jdbcType="BIGINT" property="shareCardId" />
+    <result column="f_goods_id" jdbcType="BIGINT" property="goodsId" />
+    <result column="f_goods_type" jdbcType="VARCHAR" property="goodsType" />
+    <result column="f_status" jdbcType="VARCHAR" property="status" />
+    <result column="f_created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="f_modified_time" jdbcType="TIMESTAMP" property="modifiedTime" />
+    <result column="f_del_flag" jdbcType="BIT" property="delFlag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    f_id, f_invitee_id, f_invitee_skey, f_inviter_id, f_share_card_id, f_goods_id, f_goods_type,
+    f_status, f_created_time, f_modified_time, f_del_flag
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_invitation_record
+    where f_id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_invitation_record
+    where f_id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.mq.model.InvitationRecord">
+    insert into t_invitation_record (f_id, f_invitee_id, f_invitee_skey, 
+      f_inviter_id, f_share_card_id, f_goods_id, f_goods_type, f_status,
+      f_created_time, f_modified_time, f_del_flag
+      )
+    values (#{id,jdbcType=BIGINT}, #{inviteeId,jdbcType=BIGINT}, #{inviteeSkey,jdbcType=VARCHAR}, 
+      #{inviterId,jdbcType=BIGINT}, #{shareCardId,jdbcType=BIGINT}, #{goodsId,jdbcType=BIGINT}, #{goodsType,jdbcType=VARCHAR},
+      #{status,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}, #{modifiedTime,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.mq.model.InvitationRecord">
+    insert into t_invitation_record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        f_id,
+      </if>
+      <if test="inviteeId != null">
+        f_invitee_id,
+      </if>
+      <if test="inviteeSkey != null">
+        f_invitee_skey,
+      </if>
+      <if test="inviterId != null">
+        f_inviter_id,
+      </if>
+      <if test="shareCardId != null">
+        f_share_card_id,
+      </if>
+        <if test="goodsId != null">
+            f_goods_id,
+        </if>
+        <if test="goodsType != null">
+            f_goods_type,
+        </if>
+      <if test="status != null">
+        f_status,
+      </if>
+      <if test="createdTime != null">
+        f_created_time,
+      </if>
+      <if test="modifiedTime != null">
+        f_modified_time,
+      </if>
+      <if test="delFlag != null">
+        f_del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="inviteeId != null">
+        #{inviteeId,jdbcType=BIGINT},
+      </if>
+      <if test="inviteeSkey != null">
+        #{inviteeSkey,jdbcType=VARCHAR},
+      </if>
+      <if test="inviterId != null">
+        #{inviterId,jdbcType=BIGINT},
+      </if>
+      <if test="shareCardId != null">
+        #{shareCardId,jdbcType=BIGINT},
+      </if>
+        <if test="goodsId != null">
+            #{goodsId,jdbcType=BIGINT},
+        </if>
+        <if test="goodsType != null">
+            #{goodsType,jdbcType=VARCHAR},
+        </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedTime != null">
+        #{modifiedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mq.model.InvitationRecord">
+    update t_invitation_record
+    <set>
+      <if test="inviteeId != null">
+        f_invitee_id = #{inviteeId,jdbcType=BIGINT},
+      </if>
+      <if test="inviteeSkey != null">
+        f_invitee_skey = #{inviteeSkey,jdbcType=VARCHAR},
+      </if>
+      <if test="inviterId != null">
+        f_inviter_id = #{inviterId,jdbcType=BIGINT},
+      </if>
+      <if test="shareCardId != null">
+        f_share_card_id = #{shareCardId,jdbcType=BIGINT},
+      </if>
+        <if test="goodsId != null">
+            f_goods_id = #{goodsId,jdbcType=BIGINT},
+        </if>
+        <if test="goodsType != null">
+            f_goods_type = #{goodsType,jdbcType=VARCHAR},
+        </if>
+      <if test="status != null">
+        f_status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null">
+        f_created_time = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedTime != null">
+        f_modified_time = #{modifiedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delFlag != null">
+        f_del_flag = #{delFlag,jdbcType=BIT},
+      </if>
+    </set>
+    where f_id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mq.model.InvitationRecord">
+    update t_invitation_record
+    set f_invitee_id = #{inviteeId,jdbcType=BIGINT},
+      f_invitee_skey = #{inviteeSkey,jdbcType=VARCHAR},
+      f_inviter_id = #{inviterId,jdbcType=BIGINT},
+      f_share_card_id = #{shareCardId,jdbcType=BIGINT},
+      f_goods_id = #{goodsId,jdbcType=BIGINT},
+      f_goods_type = #{goodsType,jdbcType=VARCHAR},
+      f_status = #{status,jdbcType=VARCHAR},
+      f_created_time = #{createdTime,jdbcType=TIMESTAMP},
+      f_modified_time = #{modifiedTime,jdbcType=TIMESTAMP},
+      f_del_flag = #{delFlag,jdbcType=BIT}
+    where f_id = #{id,jdbcType=BIGINT}
+  </update>
+
+    <select id="selectRecentlyByQuery" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from t_invitation_record
+        where f_del_flag = 0
+        <if test="inviteeId != null">
+            f_invitee_id = #{inviteeId,jdbcType=BIGINT},
+        </if>
+        <if test="inviteeSkey != null">
+            f_invitee_skey = #{inviteeSkey,jdbcType=VARCHAR},
+        </if>
+        <if test="inviterId != null">
+            f_inviter_id = #{inviterId,jdbcType=BIGINT},
+        </if>
+        <if test="shareCardId != null">
+            f_share_card_id = #{shareCardId,jdbcType=BIGINT},
+        </if>
+        <if test="goodsId != null">
+            f_goods_id = #{goodsId,jdbcType=BIGINT},
+        </if>
+        <if test="goodsType != null">
+            f_goods_type = #{goodsType,jdbcType=VARCHAR},
+        </if>
+        <if test="status != null">
+            f_status = #{status,jdbcType=VARCHAR},
+        </if>
+        order by f_created_time desc limit 1
+    </select>
+
+    <update id="updateByInviterIdBeforeDate">
+        update t_invitation_record set f_status = #{newStatus,jdbcType=VARCHAR}, f_modified_time = now()
+        where inviterId = #{inviterId,jdbcType=BIGINT} and
+        f_status = #{originalStatus,jdbcType=VARCHAR}
+        f_create_time &lt;= #{now,jdbcType=TIMESTAMP}
+    </update>
+</mapper>

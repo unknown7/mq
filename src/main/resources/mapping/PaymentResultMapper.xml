@@ -13,7 +13,7 @@
     <result column="f_sign_type" jdbcType="VARCHAR" property="signType" />
     <result column="f_result_code" jdbcType="VARCHAR" property="resultCode" />
     <result column="f_err_code" jdbcType="VARCHAR" property="errCode" />
-    <result column="f_err_code_desc" jdbcType="VARCHAR" property="errCodeDesc" />
+    <result column="f_err_code_des" jdbcType="VARCHAR" property="errCodeDes" />
     <result column="f_openid" jdbcType="VARCHAR" property="openid" />
     <result column="f_is_subscribe" jdbcType="VARCHAR" property="isSubscribe" />
     <result column="f_trade_type" jdbcType="VARCHAR" property="tradeType" />
@@ -30,7 +30,7 @@
   </resultMap>
   <sql id="Base_Column_List">
     f_id, f_return_code, f_return_msg, f_appid, f_mch_id, f_device_info, f_nonce_str, 
-    f_sign, f_sign_type, f_result_code, f_err_code, f_err_code_desc, f_openid, f_is_subscribe, 
+    f_sign, f_sign_type, f_result_code, f_err_code, f_err_code_des, f_openid, f_is_subscribe,
     f_trade_type, f_bank_type, f_total_fee, f_settlement_total_fee, f_fee_type, f_cash_fee, 
     f_cash_fee_type, f_transaction_id, f_out_trade_no, f_attach, f_time_end
   </sql>
@@ -48,7 +48,7 @@
     insert into t_payment_result (f_id, f_return_code, f_return_msg, 
       f_appid, f_mch_id, f_device_info, 
       f_nonce_str, f_sign, f_sign_type, 
-      f_result_code, f_err_code, f_err_code_desc, 
+      f_result_code, f_err_code, f_err_code_des,
       f_openid, f_is_subscribe, f_trade_type, 
       f_bank_type, f_total_fee, f_settlement_total_fee, 
       f_fee_type, f_cash_fee, f_cash_fee_type, 
@@ -57,7 +57,7 @@
     values (#{id,jdbcType=BIGINT}, #{returnCode,jdbcType=VARCHAR}, #{returnMsg,jdbcType=VARCHAR}, 
       #{appid,jdbcType=VARCHAR}, #{mchId,jdbcType=VARCHAR}, #{deviceInfo,jdbcType=VARCHAR}, 
       #{nonceStr,jdbcType=VARCHAR}, #{sign,jdbcType=VARCHAR}, #{signType,jdbcType=VARCHAR}, 
-      #{resultCode,jdbcType=VARCHAR}, #{errCode,jdbcType=VARCHAR}, #{errCodeDesc,jdbcType=VARCHAR}, 
+      #{resultCode,jdbcType=VARCHAR}, #{errCode,jdbcType=VARCHAR}, #{errCodeDes,jdbcType=VARCHAR},
       #{openid,jdbcType=VARCHAR}, #{isSubscribe,jdbcType=VARCHAR}, #{tradeType,jdbcType=VARCHAR}, 
       #{bankType,jdbcType=VARCHAR}, #{totalFee,jdbcType=INTEGER}, #{settlementTotalFee,jdbcType=INTEGER}, 
       #{feeType,jdbcType=VARCHAR}, #{cashFee,jdbcType=INTEGER}, #{cashFeeType,jdbcType=VARCHAR}, 
@@ -100,8 +100,8 @@
       <if test="errCode != null">
         f_err_code,
       </if>
-      <if test="errCodeDesc != null">
-        f_err_code_desc,
+      <if test="errCodeDes != null">
+        f_err_code_des,
       </if>
       <if test="openid != null">
         f_openid,
@@ -177,8 +177,8 @@
       <if test="errCode != null">
         #{errCode,jdbcType=VARCHAR},
       </if>
-      <if test="errCodeDesc != null">
-        #{errCodeDesc,jdbcType=VARCHAR},
+      <if test="errCodeDes != null">
+        #{errCodeDes,jdbcType=VARCHAR},
       </if>
       <if test="openid != null">
         #{openid,jdbcType=VARCHAR},
@@ -254,8 +254,8 @@
       <if test="errCode != null">
         f_err_code = #{errCode,jdbcType=VARCHAR},
       </if>
-      <if test="errCodeDesc != null">
-        f_err_code_desc = #{errCodeDesc,jdbcType=VARCHAR},
+      <if test="errCodeDes != null">
+        f_err_code_des = #{errCodeDes,jdbcType=VARCHAR},
       </if>
       <if test="openid != null">
         f_openid = #{openid,jdbcType=VARCHAR},
@@ -311,7 +311,7 @@
       f_sign_type = #{signType,jdbcType=VARCHAR},
       f_result_code = #{resultCode,jdbcType=VARCHAR},
       f_err_code = #{errCode,jdbcType=VARCHAR},
-      f_err_code_desc = #{errCodeDesc,jdbcType=VARCHAR},
+      f_err_code_des = #{errCodeDes,jdbcType=VARCHAR},
       f_openid = #{openid,jdbcType=VARCHAR},
       f_is_subscribe = #{isSubscribe,jdbcType=VARCHAR},
       f_trade_type = #{tradeType,jdbcType=VARCHAR},
