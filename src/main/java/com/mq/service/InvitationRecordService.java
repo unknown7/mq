@@ -2,15 +2,17 @@ package com.mq.service;
 
 import com.mq.model.InvitationRecord;
 
+import java.util.Date;
+
 public interface InvitationRecordService {
 
 	void initRecord(Long shareCardId, String skey);
 
 	void registered(Long inviteeId, String skey);
 
-	void purchased(Long inviteeId, Long goodsId, String goodsType);
+	void purchased(Long invitationId);
 
-	void usePoints(Long inviterId);
+	void usePoints(Long inviterId, Date unifiedOrderTime);
 
 	void withdrawApplyAll(Long inviterId);
 

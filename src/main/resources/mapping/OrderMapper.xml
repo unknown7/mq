@@ -14,13 +14,14 @@
     <result column="f_points" jdbcType="DECIMAL" property="points" />
     <result column="f_wx_amount" jdbcType="DECIMAL" property="wxAmount" />
     <result column="f_referrer" jdbcType="BIGINT" property="referrer" />
+    <result column="f_invitation_id" jdbcType="BIGINT" property="invitationId" />
     <result column="f_created_time" jdbcType="TIMESTAMP" property="createdTime" />
     <result column="f_modified_time" jdbcType="TIMESTAMP" property="modifiedTime" />
     <result column="f_del_flag" jdbcType="BIT" property="delFlag" />
   </resultMap>
   <sql id="Base_Column_List">
     f_id, f_order_no, f_order_status, f_goods_id, f_goods_type, f_goods_price, f_user_id, 
-    f_skey, f_total_amount, f_points, f_wx_amount, f_referrer, f_created_time, f_modified_time, 
+    f_skey, f_total_amount, f_points, f_wx_amount, f_referrer, f_invitation_id, f_created_time, f_modified_time,
     f_del_flag
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -37,13 +38,13 @@
     insert into t_order (f_id, f_order_no, f_order_status, 
       f_goods_id, f_goods_type, f_goods_price, 
       f_user_id, f_skey, f_total_amount, 
-      f_points, f_wx_amount, f_referrer, 
+      f_points, f_wx_amount, f_referrer, f_invitation_id,
       f_created_time, f_modified_time, f_del_flag
       )
     values (#{id,jdbcType=BIGINT}, #{orderNo,jdbcType=VARCHAR}, #{orderStatus,jdbcType=VARCHAR}, 
       #{goodsId,jdbcType=BIGINT}, #{goodsType,jdbcType=VARCHAR}, #{goodsPrice,jdbcType=DECIMAL}, 
       #{userId,jdbcType=BIGINT}, #{skey,jdbcType=VARCHAR}, #{totalAmount,jdbcType=DECIMAL}, 
-      #{points,jdbcType=DECIMAL}, #{wxAmount,jdbcType=DECIMAL}, #{referrer,jdbcType=BIGINT}, 
+      #{points,jdbcType=DECIMAL}, #{wxAmount,jdbcType=DECIMAL}, #{referrer,jdbcType=BIGINT}, #{invitationId,jdbcType=BIGINT},
       #{createdTime,jdbcType=TIMESTAMP}, #{modifiedTime,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=BIT}
       )
   </insert>
@@ -86,6 +87,9 @@
       <if test="referrer != null">
         f_referrer,
       </if>
+        <if test="invitationId != null">
+            f_invitation_id,
+        </if>
       <if test="createdTime != null">
         f_created_time,
       </if>
@@ -133,6 +137,9 @@
       <if test="referrer != null">
         #{referrer,jdbcType=BIGINT},
       </if>
+        <if test="invitationId != null">
+            #{invitationId,jdbcType=BIGINT},
+        </if>
       <if test="createdTime != null">
         #{createdTime,jdbcType=TIMESTAMP},
       </if>
@@ -180,6 +187,9 @@
       <if test="referrer != null">
         f_referrer = #{referrer,jdbcType=BIGINT},
       </if>
+        <if test="invitationId != null">
+            f_invitation_id = #{invitationId,jdbcType=BIGINT},
+        </if>
       <if test="createdTime != null">
         f_created_time = #{createdTime,jdbcType=TIMESTAMP},
       </if>
@@ -205,6 +215,7 @@
       f_points = #{points,jdbcType=DECIMAL},
       f_wx_amount = #{wxAmount,jdbcType=DECIMAL},
       f_referrer = #{referrer,jdbcType=BIGINT},
+      f_invitation_id = #{invitationId,jdbcType=BIGINT},
       f_created_time = #{createdTime,jdbcType=TIMESTAMP},
       f_modified_time = #{modifiedTime,jdbcType=TIMESTAMP},
       f_del_flag = #{delFlag,jdbcType=BIT}
@@ -248,6 +259,9 @@
     <if test="referrer != null">
       and f_referrer = #{referrer,jdbcType=BIGINT}
     </if>
+      <if test="invitationId != null">
+          and f_invitation_id = #{invitationId,jdbcType=BIGINT}
+      </if>
       <if test="createdTime != null">
           and f_created_time = #{createdTime,jdbcType=DATE}
       </if>
@@ -304,6 +318,9 @@
     <if test="referrer != null">
       and f_referrer = #{referrer,jdbcType=BIGINT}
     </if>
+      <if test="invitationId != null">
+          and f_invitation_id = #{invitationId,jdbcType=BIGINT}
+      </if>
       <if test="createdTime != null">
           and f_created_time = #{createdTime,jdbcType=DATE}
       </if>

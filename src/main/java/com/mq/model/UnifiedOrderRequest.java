@@ -25,6 +25,11 @@ public class UnifiedOrderRequest {
 
     private String attach;
 
+	/**
+	 * 是否需要分账
+	 */
+	private String profitSharing;
+
     public Long getId() {
         return id;
     }
@@ -120,4 +125,12 @@ public class UnifiedOrderRequest {
     public void setAttach(String attach) {
         this.attach = attach == null ? null : attach.trim();
     }
+
+	public String getProfitSharing() {
+		return profitSharing;
+	}
+
+	public void setProfitSharing(String profitSharing) {
+		this.profitSharing = profitSharing;
+	}
 }

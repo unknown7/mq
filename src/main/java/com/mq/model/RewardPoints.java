@@ -14,6 +14,8 @@ public class RewardPoints {
 
     private Long rewardId;
 
+    private Long orderId;
+
     private Long profitFrom;
 
     private String pointsStatus;
@@ -64,7 +66,15 @@ public class RewardPoints {
         this.rewardId = rewardId;
     }
 
-    public Long getProfitFrom() {
+	public Long getOrderId() {
+		return orderId;
+	}
+
+	public void setOrderId(Long orderId) {
+		this.orderId = orderId;
+	}
+
+	public Long getProfitFrom() {
         return profitFrom;
     }
 

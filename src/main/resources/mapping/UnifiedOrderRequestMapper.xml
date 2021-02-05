@@ -14,10 +14,11 @@
     <result column="f_total_fee" jdbcType="INTEGER" property="totalFee" />
     <result column="f_trade_type" jdbcType="VARCHAR" property="tradeType" />
     <result column="f_attach" jdbcType="VARCHAR" property="attach" />
+    <result column="f_profit_sharing" jdbcType="VARCHAR" property="profitSharing" />
   </resultMap>
   <sql id="Base_Column_List">
     f_id, f_appid, f_body, f_mch_id, f_nonce_str, f_notify_url, f_openid, f_out_trade_no, 
-    f_spbill_create_ip, f_total_fee, f_trade_type, f_attach
+    f_spbill_create_ip, f_total_fee, f_trade_type, f_attach, f_profit_sharing
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -33,12 +34,12 @@
     insert into t_unified_order_request (f_id, f_appid, f_body, 
       f_mch_id, f_nonce_str, f_notify_url, 
       f_openid, f_out_trade_no, f_spbill_create_ip, 
-      f_total_fee, f_trade_type, f_attach
+      f_total_fee, f_trade_type, f_attach, f_profit_sharing
       )
     values (#{id,jdbcType=BIGINT}, #{appid,jdbcType=VARCHAR}, #{body,jdbcType=VARCHAR}, 
       #{mchId,jdbcType=VARCHAR}, #{nonceStr,jdbcType=VARCHAR}, #{notifyUrl,jdbcType=VARCHAR}, 
       #{openid,jdbcType=VARCHAR}, #{outTradeNo,jdbcType=VARCHAR}, #{spbillCreateIp,jdbcType=VARCHAR}, 
-      #{totalFee,jdbcType=INTEGER}, #{tradeType,jdbcType=VARCHAR}, #{attach,jdbcType=VARCHAR}
+      #{totalFee,jdbcType=INTEGER}, #{tradeType,jdbcType=VARCHAR}, #{attach,jdbcType=VARCHAR}, #{profitSharing,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.mq.model.UnifiedOrderRequest">
@@ -80,6 +81,9 @@
       <if test="attach != null">
         f_attach,
       </if>
+        <if test="profitSharing != null">
+            f_profit_sharing,
+        </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -118,6 +122,9 @@
       <if test="attach != null">
         #{attach,jdbcType=VARCHAR},
       </if>
+        <if test="profitSharing != null">
+            #{profitSharing,jdbcType=VARCHAR},
+        </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.mq.model.UnifiedOrderRequest">
@@ -156,6 +163,9 @@
       <if test="attach != null">
         f_attach = #{attach,jdbcType=VARCHAR},
       </if>
+        <if test="profitSharing != null">
+            f_profit_sharing = #{profitSharing,jdbcType=VARCHAR},
+        </if>
     </set>
     where f_id = #{id,jdbcType=BIGINT}
   </update>
@@ -172,6 +182,7 @@
       f_total_fee = #{totalFee,jdbcType=INTEGER},
       f_trade_type = #{tradeType,jdbcType=VARCHAR},
       f_attach = #{attach,jdbcType=VARCHAR}
+      f_profit_sharing = #{profitSharing,jdbcType=VARCHAR}
     where f_id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

@@ -1,13 +1,13 @@
 package com.mq.wx.base;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Maps;
 import com.mq.base.Enums;
 import com.mq.base.GlobalConstants;
 import com.mq.base.Http;
 import com.mq.base.RedisObjectHolder;
-import com.mq.model.UnifiedOrderRequest;
-import com.mq.model.UnifiedOrderResponse;
+import com.mq.model.*;
 import com.mq.util.MD5;
 import com.mq.util.MapUtil;
 import com.mq.wx.vo.accessToken.AccessTokenResponse;
@@ -191,6 +191,13 @@ public class WxAPI {
          */
         Element notify_url = xml.addElement("notify_url");
         notify_url.setText(request.getNotifyUrl());
+		/**
+		 * profit_sharing
+		 */
+		if (!StringUtils.isEmpty(request.getProfitSharing())) {
+			Element profit_sharing = xml.addElement("profit_sharing");
+			profit_sharing.setText(request.getProfitSharing());
+		}
         /**
          * trade_type
          */
@@ -216,6 +223,9 @@ public class WxAPI {
         signData.put("notify_url", notify_url.getStringValue());
         signData.put("openid", openid.getStringValue());
         signData.put("out_trade_no", out_trade_no.getStringValue());
+		if (!StringUtils.isEmpty(request.getProfitSharing())) {
+			signData.put("profit_sharing", request.getProfitSharing());
+		}
         signData.put("spbill_create_ip", spbill_create_ip.getStringValue());
         signData.put("total_fee", total_fee.getStringValue());
         signData.put("trade_type", trade_type.getStringValue());
@@ -258,8 +268,277 @@ public class WxAPI {
             response.setTradeType(r_trade_type.getStringValue());
         } else {
             response.setErrCode(r_err_code.getStringValue());
-            response.setErrCodeDesc(r_err_code_des.getStringValue());
+            response.setErrCodeDes(r_err_code_des.getStringValue());
         }
         return response;
     }
+
+    public ProfitSharingAddReceiverResponse profitSharingAddReceiver(ProfitSharingAddReceiverRequest request)
+			throws Exception {
+		String domain = "https://api.mch.weixin.qq.com/pay/profitsharingaddreceiver";
+		Document doc = DocumentHelper.createDocument();
+		Element xml = doc.addElement("xml");
+		/**
+		 * appid
+		 */
+		Element appid = xml.addElement("appid");
+		appid.setText(request.getAppId());
+		/**
+		 * mch_id
+		 */
+		Element mch_id = xml.addElement("mch_id");
+		mch_id.setText(request.getMchId());
+		/**
+		 * nonce_str
+		 */
+		Element nonce_str = xml.addElement("nonce_str");
+		nonce_str.setText(request.getNonceStr());
+		/**
+		 * receiver
+		 */
+		Element receiver = xml.addElement("receiver");
+		receiver.setText(JSON.toJSONString(request.getReceiver()));
+
+		/**
+		 * sign
+		 */
+		Element sign = xml.addElement("sign");
+		Map<String, Object> signData = Maps.newLinkedHashMap();
+		signData.put("appid", appid.getStringValue());
+		signData.put("mch_id", mch_id.getStringValue());
+		signData.put("nonce_str", nonce_str.getStringValue());
+		signData.put("receiver", receiver.getStringValue());
+		String signStr = MD5.generate(MapUtil.map2str(signData)).toUpperCase();
+		sign.setText(signStr);
+		OutputFormat format = OutputFormat.createCompactFormat();
+		StringWriter requestString = new StringWriter();
+		XMLWriter output = new XMLWriter(requestString, format);
+		output.write(doc);
+		requestString.close();
+		output.close();
+		ResponseEntity<String> responseEntity = http.postForEntity(domain, requestString.toString(), String.class, MediaType.APPLICATION_XML);
+		logger.info("请求添加分账人员，request：" + requestString);
+		String responseString = responseEntity.getBody();
+		logger.info("请求添加分账人员，response：" + responseString);
+		doc = DocumentHelper.parseText(responseString);
+		Element root = doc.getRootElement();
+		Element r_return_code = root.element("return_code");
+		Element r_return_msg = root.element("return_msg");
+		Element r_appid = root.element("appid");
+		Element r_mch_id = root.element("mch_id");
+		Element r_nonce_str = root.element("nonce_str");
+		Element r_sign = root.element("sign");
+		Element r_result_code = root.element("result_code");
+		Element r_receiver = root.element("receiver");
+		Element r_err_code = root.element("err_code");
+		Element r_err_code_des = root.element("err_code_des");
+		ProfitSharingAddReceiverResponse response = new ProfitSharingAddReceiverResponse();
+		response.setReturnCode(r_return_code.getStringValue());
+		response.setReturnMsg(r_return_msg.getStringValue());
+		response.setAppid(r_appid.getStringValue());
+		response.setMchId(r_mch_id.getStringValue());
+		response.setNonceStr(r_nonce_str.getStringValue());
+		response.setResultCode(r_result_code.getStringValue());
+		if (r_err_code == null) {
+			response.setSign(r_sign.getStringValue());
+			response.setReceiver(r_receiver.getStringValue());
+		} else {
+			response.setErrCode(r_err_code.getStringValue());
+			response.setErrCodeDes(r_err_code_des.getStringValue());
+		}
+		return response;
+	}
+
+	public ProfitSharingRemoveReceiverResponse profitSharingRemoveReceiver(ProfitSharingRemoveReceiverRequest request)
+			throws Exception {
+		String domain = "https://api.mch.weixin.qq.com/pay/profitsharingremovereceiver";
+		Document doc = DocumentHelper.createDocument();
+		Element xml = doc.addElement("xml");
+		/**
+		 * appid
+		 */
+		Element appid = xml.addElement("appid");
+		appid.setText(request.getAppId());
+		/**
+		 * mch_id
+		 */
+		Element mch_id = xml.addElement("mch_id");
+		mch_id.setText(request.getMchId());
+		/**
+		 * nonce_str
+		 */
+		Element nonce_str = xml.addElement("nonce_str");
+		nonce_str.setText(request.getNonceStr());
+		/**
+		 * receiver
+		 */
+		Element receiver = xml.addElement("receiver");
+		receiver.setText(JSON.toJSONString(request.getReceiver()));
+
+		/**
+		 * sign
+		 */
+		Element sign = xml.addElement("sign");
+		Map<String, Object> signData = Maps.newLinkedHashMap();
+		signData.put("appid", appid.getStringValue());
+		signData.put("mch_id", mch_id.getStringValue());
+		signData.put("nonce_str", nonce_str.getStringValue());
+		signData.put("receiver", receiver.getStringValue());
+		String signStr = MD5.generate(MapUtil.map2str(signData)).toUpperCase();
+		sign.setText(signStr);
+		OutputFormat format = OutputFormat.createCompactFormat();
+		StringWriter requestString = new StringWriter();
+		XMLWriter output = new XMLWriter(requestString, format);
+		output.write(doc);
+		requestString.close();
+		output.close();
+		ResponseEntity<String> responseEntity = http.postForEntity(domain, requestString.toString(), String.class, MediaType.APPLICATION_XML);
+		logger.info("请求删除分账人员，request：" + requestString);
+		String responseString = responseEntity.getBody();
+		logger.info("请求删除分账人员，response：" + responseString);
+		doc = DocumentHelper.parseText(responseString);
+		Element root = doc.getRootElement();
+		Element r_return_code = root.element("return_code");
+		Element r_return_msg = root.element("return_msg");
+		Element r_appid = root.element("appid");
+		Element r_mch_id = root.element("mch_id");
+		Element r_nonce_str = root.element("nonce_str");
+		Element r_sign = root.element("sign");
+		Element r_result_code = root.element("result_code");
+		Element r_receiver = root.element("receiver");
+		Element r_err_code = root.element("err_code");
+		Element r_err_code_des = root.element("err_code_des");
+		ProfitSharingRemoveReceiverResponse response = new ProfitSharingRemoveReceiverResponse();
+		response.setReturnCode(r_return_code.getStringValue());
+		response.setReturnMsg(r_return_msg.getStringValue());
+		response.setAppid(r_appid.getStringValue());
+		response.setMchId(r_mch_id.getStringValue());
+		response.setNonceStr(r_nonce_str.getStringValue());
+		response.setResultCode(r_result_code.getStringValue());
+		if (r_err_code == null) {
+			response.setSign(r_sign.getStringValue());
+			response.setReceiver(r_receiver.getStringValue());
+		} else {
+			response.setErrCode(r_err_code.getStringValue());
+			response.setErrCodeDes(r_err_code_des.getStringValue());
+		}
+		return response;
+	}
+
+	public ProfitSharingResponse profitSharing(ProfitSharingRequest request) throws Exception {
+		String domain = "https://api.mch.weixin.qq.com/secapi/pay/profitsharing";
+		Document doc = DocumentHelper.createDocument();
+		Element xml = doc.addElement("xml");
+		/**
+		 * appid
+		 */
+		Element appid = xml.addElement("appid");
+		appid.setText(request.getAppId());
+		/**
+		 * account
+		 */
+		Element account = xml.addElement("account");
+		account.setText(request.getAccount());
+		/**
+		 * amount
+		 */
+		Element amount = xml.addElement("amount");
+		amount.setText(request.getAmount().toString());
+		/**
+		 * description
+		 */
+		Element description = xml.addElement("description");
+		description.setText(request.getDescription());
+		/**
+		 * mch_id
+		 */
+		Element mch_id = xml.addElement("mch_id");
+		mch_id.setText(request.getMchId());
+		/**
+		 * name
+		 */
+		Element name = xml.addElement("name");
+		name.setText(request.getName());
+		/**
+		 * nonce_str
+		 */
+		Element nonce_str = xml.addElement("nonce_str");
+		nonce_str.setText(request.getNonceStr());
+		/**
+		 * out_order_no
+		 */
+		Element out_order_no = xml.addElement("out_order_no");
+		out_order_no.setText(request.getOutOrderNo());
+		/**
+		 * receivers
+		 */
+		Element receivers = xml.addElement("receivers");
+		receivers.setText(JSON.toJSONString(request.getReceivers()));
+		/**
+		 * transaction_id
+		 */
+		Element transaction_id = xml.addElement("transaction_id");
+		transaction_id.setText(request.getTransactionId());
+
+		/**
+		 * sign
+		 */
+		Element sign = xml.addElement("sign");
+		Map<String, Object> signData = Maps.newLinkedHashMap();
+		signData.put("appid", appid.getStringValue());
+		signData.put("account", account.getStringValue());
+		signData.put("amount", amount.getStringValue());
+		signData.put("description", description.getStringValue());
+		signData.put("mch_id", mch_id.getStringValue());
+		signData.put("name", name.getStringValue());
+		signData.put("nonce_str", nonce_str.getStringValue());
+		signData.put("out_order_no", out_order_no.getStringValue());
+		signData.put("receivers", receivers.getStringValue());
+		signData.put("transaction_id", transaction_id.getStringValue());
+		signData.put("key", globalConstants.getApiKey());
+		String signStr = MD5.generate(MapUtil.map2str(signData)).toUpperCase();
+		sign.setText(signStr);
+		OutputFormat format = OutputFormat.createCompactFormat();
+		StringWriter requestString = new StringWriter();
+		XMLWriter output = new XMLWriter(requestString, format);
+		output.write(doc);
+		requestString.close();
+		output.close();
+		ResponseEntity<String> responseEntity = http.postForEntity(domain, requestString.toString(), String.class, MediaType.APPLICATION_XML);
+		logger.info("请求分账，request：" + requestString);
+		String responseString = responseEntity.getBody();
+		logger.info("请求分账，response：" + responseString);
+		doc = DocumentHelper.parseText(responseString);
+		Element root = doc.getRootElement();
+		Element r_return_code = root.element("return_code");
+		Element r_return_msg = root.element("return_msg");
+		Element r_appid = root.element("appid");
+		Element r_mch_id = root.element("mch_id");
+		Element r_nonce_str = root.element("nonce_str");
+		Element r_sign = root.element("sign");
+		Element r_result_code = root.element("result_code");
+		Element r_transaction_id = root.element("transaction_id");
+		Element r_out_order_no = root.element("out_order_no");
+		Element r_order_id = root.element("order_id");
+		Element r_err_code = root.element("err_code");
+		Element r_err_code_des = root.element("err_code_des");
+		ProfitSharingResponse response = new ProfitSharingResponse();
+		response.setReturnCode(r_return_code.getStringValue());
+		response.setReturnMsg(r_return_msg.getStringValue());
+		response.setAppid(r_appid.getStringValue());
+		response.setMchId(r_mch_id.getStringValue());
+		response.setNonceStr(r_nonce_str.getStringValue());
+		response.setResultCode(r_result_code.getStringValue());
+		if (r_err_code == null) {
+			response.setSign(r_sign.getStringValue());
+			response.setTransactionId(r_transaction_id.getStringValue());
+			response.setOutOrderNo(r_transaction_id.getStringValue());
+			response.setTransactionId(r_out_order_no.getStringValue());
+			response.setOrderId(r_order_id.getStringValue());
+		} else {
+			response.setErrCode(r_err_code.getStringValue());
+			response.setErrCodeDes(r_err_code_des.getStringValue());
+		}
+		return response;
+	}
 }

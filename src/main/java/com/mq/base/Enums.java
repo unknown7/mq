@@ -152,6 +152,8 @@ public class Enums {
     public enum PointsStatus {
         UNUSED("006001", "未使用"),
         USED("006002", "已使用"),
+        FROZEN("006003", "提现冻结"),
+        WITHDRAW_SUCCESS("006004", "提现成功"),
         ;
         private String key;
         private String value;

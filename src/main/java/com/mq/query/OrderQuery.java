@@ -30,6 +30,8 @@ public class OrderQuery extends DefaultQuery {
 
     private Long referrer;
 
+    private Long invitationId;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createdTime;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -142,7 +144,15 @@ public class OrderQuery extends DefaultQuery {
         this.referrer = referrer;
     }
 
-    public Date getCreatedTime() {
+	public Long getInvitationId() {
+		return invitationId;
+	}
+
+	public void setInvitationId(Long invitationId) {
+		this.invitationId = invitationId;
+	}
+
+	public Date getCreatedTime() {
         return createdTime;
     }
 
