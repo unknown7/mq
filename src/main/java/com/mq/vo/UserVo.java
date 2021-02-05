@@ -30,6 +30,8 @@ public class UserVo {
 
     private Boolean isEmployee;
 
+    private Boolean paymentShareReceiver;
+
     public Long getId() {
         return id;
     }
@@ -141,4 +143,12 @@ public class UserVo {
 	public void setIsEmployee(Boolean isEmployee) {
 		this.isEmployee = isEmployee;
 	}
+
+    public Boolean getPaymentShareReceiver() {
+        return paymentShareReceiver;
+    }
+
+    public void setPaymentShareReceiver(Boolean paymentShareReceiver) {
+        this.paymentShareReceiver = paymentShareReceiver;
+    }
 }

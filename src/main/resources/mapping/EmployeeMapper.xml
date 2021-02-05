@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.mq.model.Employee">
     <id column="f_id" jdbcType="BIGINT" property="id" />
     <result column="f_e_name" jdbcType="VARCHAR" property="eName" />
-    <result column="f_gender" jdbcType="BIT" property="gender" />
+    <result column="f_gender" jdbcType="INTEGER" property="gender" />
     <result column="f_birth" jdbcType="DATE" property="birth" />
     <result column="f_age" jdbcType="INTEGER" property="age" />
     <result column="f_avatar_real_name" jdbcType="VARCHAR" property="avatarRealName" />
@@ -18,10 +18,12 @@
     <result column="f_mobile" jdbcType="VARCHAR" property="mobile" />
     <result column="f_open_id" jdbcType="VARCHAR" property="openId" />
     <result column="f_profit_rate" jdbcType="DECIMAL" property="profitRate" />
+    <result column="f_payment_share_receiver" jdbcType="BIT" property="paymentShareReceiver" />
   </resultMap>
   <sql id="Base_Column_List">
     f_id, f_e_name, f_gender, f_birth, f_age, f_avatar_real_name, f_avatar_name, f_created_time, 
-    f_modified_time, f_del_flag, f_password, f_username, f_email, f_mobile, f_open_id, f_profit_rate
+    f_modified_time, f_del_flag, f_password, f_username, f_email, f_mobile, f_open_id,
+    f_profit_rate, f_payment_share_receiver
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -38,13 +40,15 @@
       f_birth, f_age, f_avatar_real_name, 
       f_avatar_name, f_created_time, f_modified_time, 
       f_del_flag, f_password, f_username, 
-      f_email, f_mobile, f_open_id, f_profit_rate
+      f_email, f_mobile, f_open_id, f_profit_rate,
+      f_payment_share_receiver
       )
-    values (#{id,jdbcType=BIGINT}, #{eName,jdbcType=VARCHAR}, #{gender,jdbcType=BIT}, 
+    values (#{id,jdbcType=BIGINT}, #{eName,jdbcType=VARCHAR}, #{gender,jdbcType=INTEGER},
       #{birth,jdbcType=DATE}, #{age,jdbcType=INTEGER}, #{avatarRealName,jdbcType=VARCHAR}, 
       #{avatarName,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}, #{modifiedTime,jdbcType=TIMESTAMP}, 
       #{delFlag,jdbcType=BIT}, #{password,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, 
-      #{email,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{openId,jdbcType=VARCHAR}, #{profitRate,jdbcType=DECIMAL}
+      #{email,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{openId,jdbcType=VARCHAR},
+      #{profitRate,jdbcType=DECIMAL}, #{paymentShareReceiver,jdbcType=BIT}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.mq.model.Employee">
@@ -98,6 +102,9 @@
         <if test="profitRate != null">
             f_profit_rate,
         </if>
+      <if test="paymentShareReceiver != null">
+        f_payment_share_receiver,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -107,7 +114,7 @@
         #{eName,jdbcType=VARCHAR},
       </if>
       <if test="gender != null">
-        #{gender,jdbcType=BIT},
+        #{gender,jdbcType=INTEGER},
       </if>
       <if test="birth != null">
         #{birth,jdbcType=DATE},
@@ -148,6 +155,9 @@
         <if test="profitRate != null">
             #{profitRate,jdbcType=DECIMAL},
         </if>
+      <if test="paymentShareReceiver != null">
+        #{paymentShareReceiver,jdbcType=BIT},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.mq.model.Employee">
@@ -157,7 +167,7 @@
         f_e_name = #{eName,jdbcType=VARCHAR},
       </if>
       <if test="gender != null">
-        f_gender = #{gender,jdbcType=BIT},
+        f_gender = #{gender,jdbcType=INTEGER},
       </if>
       <if test="birth != null">
         f_birth = #{birth,jdbcType=DATE},
@@ -198,13 +208,16 @@
         <if test="profitRate != null">
             f_profit_rate = #{profitRate,jdbcType=DECIMAL},
         </if>
+      <if test="paymentShareReceiver != null">
+        f_payment_share_receiver = #{paymentShareReceiver,jdbcType=BIT},
+      </if>
     </set>
     where f_id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.mq.model.Employee">
     update t_employee
     set f_e_name = #{eName,jdbcType=VARCHAR},
-      f_gender = #{gender,jdbcType=BIT},
+      f_gender = #{gender,jdbcType=INTEGER},
       f_birth = #{birth,jdbcType=DATE},
       f_age = #{age,jdbcType=INTEGER},
       f_avatar_real_name = #{avatarRealName,jdbcType=VARCHAR},
@@ -217,7 +230,8 @@
       f_email = #{email,jdbcType=VARCHAR},
       f_mobile = #{mobile,jdbcType=VARCHAR},
       f_open_id = #{openId,jdbcType=VARCHAR},
-      f_profit_rate = #{profitRate,jdbcType=DECIMAL}
+      f_profit_rate = #{profitRate,jdbcType=DECIMAL},
+      f_payment_share_receiver = #{paymentShareReceiver,jdbcType=BIT}
     where f_id = #{id,jdbcType=BIGINT}
   </update>
 
@@ -244,7 +258,7 @@
       and f_e_name like concat(concat("%",#{searchName}),"%") or f_username like concat(concat("%",#{searchName}),"%")
     </if>
     <if test="gender != null and gender != ''">
-      and f_gender = #{gender,jdbcType=CHAR}
+      and f_gender = #{gender,jdbcType=INTEGER}
     </if>
     <if test="birth != null">
       and f_birth = #{birth,jdbcType=DATE}
@@ -303,6 +317,9 @@
     <if test="avatarName != null and avatarName != ''">
       and f_avatar_name = #{avatarName,jdbcType=VARCHAR}
     </if>
+    <if test="paymentShareReceiver != null and paymentShareReceiver != ''">
+      and f_payment_share_receiver = #{paymentShareReceiver,jdbcType=BIT}
+    </if>
   </select>
   <select id="selectNums" parameterType="com.mq.query.EmployeeQuery" resultType="java.lang.Long">
     select count(1) from t_employee
@@ -317,7 +334,7 @@
       and f_e_name like concat(concat("%",#{searchName}),"%") or f_username like concat(concat("%",#{searchName}),"%")
     </if>
     <if test="gender != null and gender != ''">
-      and f_gender = #{gender,jdbcType=CHAR}
+      and f_gender = #{gender,jdbcType=INTEGER}
     </if>
     <if test="birth != null">
       and f_birth = #{birth,jdbcType=DATE}
@@ -375,6 +392,9 @@
       </if>
     <if test="avatarName != null and avatarName != ''">
       and f_avatar_name = #{avatarName,jdbcType=VARCHAR}
+    </if>
+    <if test="paymentShareReceiver != null and paymentShareReceiver != ''">
+      and f_payment_share_receiver = #{paymentShareReceiver,jdbcType=BIT}
     </if>
   </select>
 </mapper>
