@@ -226,4 +226,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 		List<Employee> employees = employeeMapper.selectByQuery(new EmployeeQuery());
 		return employees.stream().collect(Collectors.toMap(Employee::getOpenId, v -> v));
 	}
+
+	@Override
+	public Employee getByOpenId(String openId) {
+		return null;
+	}
 }

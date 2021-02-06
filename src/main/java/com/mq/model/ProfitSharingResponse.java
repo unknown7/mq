@@ -158,4 +158,10 @@ public class ProfitSharingResponse {
 	public void setOrderId(String orderId) {
 		this.orderId = orderId;
 	}
+
+	private static final String SUCCESS = "SUCCESS";
+
+	public Boolean success() {
+		return SUCCESS.equals(this.returnCode) && SUCCESS.equals(this.resultCode);
+	}
 }

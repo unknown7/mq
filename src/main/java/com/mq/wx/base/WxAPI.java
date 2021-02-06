@@ -435,30 +435,10 @@ public class WxAPI {
 		Element appid = xml.addElement("appid");
 		appid.setText(request.getAppId());
 		/**
-		 * account
-		 */
-		Element account = xml.addElement("account");
-		account.setText(request.getAccount());
-		/**
-		 * amount
-		 */
-		Element amount = xml.addElement("amount");
-		amount.setText(request.getAmount().toString());
-		/**
-		 * description
-		 */
-		Element description = xml.addElement("description");
-		description.setText(request.getDescription());
-		/**
 		 * mch_id
 		 */
 		Element mch_id = xml.addElement("mch_id");
 		mch_id.setText(request.getMchId());
-		/**
-		 * name
-		 */
-		Element name = xml.addElement("name");
-		name.setText(request.getName());
 		/**
 		 * nonce_str
 		 */
@@ -486,11 +466,7 @@ public class WxAPI {
 		Element sign = xml.addElement("sign");
 		Map<String, Object> signData = Maps.newLinkedHashMap();
 		signData.put("appid", appid.getStringValue());
-		signData.put("account", account.getStringValue());
-		signData.put("amount", amount.getStringValue());
-		signData.put("description", description.getStringValue());
 		signData.put("mch_id", mch_id.getStringValue());
-		signData.put("name", name.getStringValue());
 		signData.put("nonce_str", nonce_str.getStringValue());
 		signData.put("out_order_no", out_order_no.getStringValue());
 		signData.put("receivers", receivers.getStringValue());

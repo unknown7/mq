@@ -29,4 +29,6 @@ public interface RewardPointsMapper {
 	List<Long> getUnusedPointsBefore(Long userId, Date unifiedOrderTime);
 
 	int batchUpdateStatus(List<Long> ids, String status);
+
+	RewardPoints selectByOrderId(Long orderId);
 }

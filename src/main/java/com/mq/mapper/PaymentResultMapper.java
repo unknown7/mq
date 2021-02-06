@@ -1,6 +1,7 @@
 package com.mq.mapper;
 
 import com.mq.model.PaymentResult;
+import org.apache.ibatis.annotations.Param;
 
 public interface PaymentResultMapper {
     int deleteByPrimaryKey(Long id);
@@ -14,4 +15,6 @@ public interface PaymentResultMapper {
     int updateByPrimaryKeySelective(PaymentResult record);
 
     int updateByPrimaryKey(PaymentResult record);
+
+    PaymentResult selectByOutTradeNo(@Param("outTradeNo") String outTradeNo);
 }

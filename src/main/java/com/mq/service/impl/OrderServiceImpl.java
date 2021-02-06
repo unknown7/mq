@@ -21,4 +21,10 @@ public class OrderServiceImpl implements OrderService {
         PageInfo<Order> pageInfo = new PageInfo<>(orderMapper.selectByQuery(query));
         return pageInfo;
     }
+
+	@Override
+	public Order getByInvitationId(Long invitationId) {
+		Order order = orderMapper.selectByInvitationId(invitationId);
+		return order;
+	}
 }

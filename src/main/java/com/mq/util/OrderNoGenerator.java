@@ -13,12 +13,14 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class OrderNoGenerator {
     private static final Object ORDER_NO_LOCK = "orderNoLock";
+    private static final String ORDER_NO_PREFIX = "MQO";
+    private static final String SHARING_NO_PREFIX = "MQS";
     @Resource
     private StringRedisTemplate stringRedisTemplate;
     @Resource
     private GlobalConstants globalConstants;
 
-    public String next() {
+    public String next(String prefix) {
         synchronized (ORDER_NO_LOCK) {
             String key = Enums.RedisKey.ORDER_NUM_TODAY.getKey();
             String num = stringRedisTemplate.opsForValue().get(key);
@@ -30,7 +32,7 @@ public class OrderNoGenerator {
                 incr = 1;
                 stringRedisTemplate.opsForValue().set(key, String.valueOf(incr), seconds, TimeUnit.SECONDS);
             }
-            StringBuilder builder = new StringBuilder();
+            StringBuilder builder = new StringBuilder(prefix);
             String curr = DateUtil.dateToString(new Date(), "yyyyMMddHHmmss");
             builder.append(curr);
             long t = (incr << 1) + (incr << 3);
@@ -43,4 +45,12 @@ public class OrderNoGenerator {
             return builder.toString();
         }
     }
+
+    public String nextOrderNo() {
+    	return next(ORDER_NO_PREFIX);
+	}
+
+	public String nextSharingNo() {
+		return next(SHARING_NO_PREFIX);
+	}
 }
