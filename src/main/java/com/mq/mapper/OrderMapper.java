@@ -23,4 +23,6 @@ public interface OrderMapper {
 	Long selectNums(OrderQuery query);
 
 	Order selectByOrderNo(String orderNo);
+
+	Order selectByInvitationId(Long invitationId);
 }

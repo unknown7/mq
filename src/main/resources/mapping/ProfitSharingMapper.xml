@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mq.mapper.ProfitSharingMapper" >
+  <resultMap id="BaseResultMap" type="com.mq.model.ProfitSharing" >
+    <id column="f_id" property="id" jdbcType="BIGINT" />
+    <result column="f_profit_sharing_no" property="profitSharingNo" jdbcType="VARCHAR" />
+    <result column="f_order_no" property="orderNo" jdbcType="VARCHAR" />
+    <result column="f_order_amount" property="orderAmount" jdbcType="DECIMAL" />
+    <result column="f_sharing_amount" property="sharingAmount" jdbcType="DECIMAL" />
+    <result column="f_transaction_id" property="transactionId" jdbcType="VARCHAR" />
+    <result column="f_order_id" property="orderId" jdbcType="VARCHAR" />
+    <result column="f_created_time" property="createdTime" jdbcType="TIMESTAMP" />
+    <result column="f_modified_time" property="modifiedTime" jdbcType="TIMESTAMP" />
+    <result column="f_del_flag" property="delFlag" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    f_id, f_profit_sharing_no, f_order_no, f_order_amount, f_sharing_amount, f_transaction_id, 
+    f_order_id, f_created_time, f_modified_time, f_del_flag
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_profit_sharing
+    where f_id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_profit_sharing
+    where f_id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.mq.model.ProfitSharing" >
+    insert into t_profit_sharing (f_id, f_profit_sharing_no, f_order_no, 
+      f_order_amount, f_sharing_amount, f_transaction_id, 
+      f_order_id, f_created_time, f_modified_time, 
+      f_del_flag)
+    values (#{id,jdbcType=BIGINT}, #{profitSharingNo,jdbcType=VARCHAR}, #{orderNo,jdbcType=VARCHAR}, 
+      #{orderAmount,jdbcType=DECIMAL}, #{sharingAmount,jdbcType=DECIMAL}, #{transactionId,jdbcType=VARCHAR}, 
+      #{orderId,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}, #{modifiedTime,jdbcType=TIMESTAMP}, 
+      #{delFlag,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mq.model.ProfitSharing" >
+    insert into t_profit_sharing
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        f_id,
+      </if>
+      <if test="profitSharingNo != null" >
+        f_profit_sharing_no,
+      </if>
+      <if test="orderNo != null" >
+        f_order_no,
+      </if>
+      <if test="orderAmount != null" >
+        f_order_amount,
+      </if>
+      <if test="sharingAmount != null" >
+        f_sharing_amount,
+      </if>
+      <if test="transactionId != null" >
+        f_transaction_id,
+      </if>
+      <if test="orderId != null" >
+        f_order_id,
+      </if>
+      <if test="createdTime != null" >
+        f_created_time,
+      </if>
+      <if test="modifiedTime != null" >
+        f_modified_time,
+      </if>
+      <if test="delFlag != null" >
+        f_del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="profitSharingNo != null" >
+        #{profitSharingNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderAmount != null" >
+        #{orderAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="sharingAmount != null" >
+        #{sharingAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="transactionId != null" >
+        #{transactionId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null" >
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedTime != null" >
+        #{modifiedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mq.model.ProfitSharing" >
+    update t_profit_sharing
+    <set >
+      <if test="profitSharingNo != null" >
+        f_profit_sharing_no = #{profitSharingNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null" >
+        f_order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderAmount != null" >
+        f_order_amount = #{orderAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="sharingAmount != null" >
+        f_sharing_amount = #{sharingAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="transactionId != null" >
+        f_transaction_id = #{transactionId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null" >
+        f_order_id = #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null" >
+        f_created_time = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedTime != null" >
+        f_modified_time = #{modifiedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delFlag != null" >
+        f_del_flag = #{delFlag,jdbcType=BIT},
+      </if>
+    </set>
+    where f_id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mq.model.ProfitSharing" >
+    update t_profit_sharing
+    set f_profit_sharing_no = #{profitSharingNo,jdbcType=VARCHAR},
+      f_order_no = #{orderNo,jdbcType=VARCHAR},
+      f_order_amount = #{orderAmount,jdbcType=DECIMAL},
+      f_sharing_amount = #{sharingAmount,jdbcType=DECIMAL},
+      f_transaction_id = #{transactionId,jdbcType=VARCHAR},
+      f_order_id = #{orderId,jdbcType=VARCHAR},
+      f_created_time = #{createdTime,jdbcType=TIMESTAMP},
+      f_modified_time = #{modifiedTime,jdbcType=TIMESTAMP},
+      f_del_flag = #{delFlag,jdbcType=BIT}
+    where f_id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

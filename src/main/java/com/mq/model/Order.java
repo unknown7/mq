@@ -24,7 +24,7 @@ public class Order {
 
     private BigDecimal points;
 
-    private BigDecimal wxAmount;
+    private BigDecimal payAmount;
 
     private Long referrer;
 
@@ -116,15 +116,15 @@ public class Order {
         this.points = points;
     }
 
-    public BigDecimal getWxAmount() {
-        return wxAmount;
-    }
+	public BigDecimal getPayAmount() {
+		return payAmount;
+	}
 
-    public void setWxAmount(BigDecimal wxAmount) {
-        this.wxAmount = wxAmount;
-    }
+	public void setPayAmount(BigDecimal payAmount) {
+		this.payAmount = payAmount;
+	}
 
-    public Long getReferrer() {
+	public Long getReferrer() {
         return referrer;
     }
 

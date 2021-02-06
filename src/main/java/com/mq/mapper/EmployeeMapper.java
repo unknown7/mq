@@ -2,6 +2,7 @@ package com.mq.mapper;
 
 import com.mq.model.Employee;
 import com.mq.query.EmployeeQuery;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -23,4 +24,6 @@ public interface EmployeeMapper {
 	List<Employee> selectByQuery(EmployeeQuery query);
 
 	Long selectNums(EmployeeQuery query);
+
+	Employee selectByOpenId(@Param("openId") String openId);
 }

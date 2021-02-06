@@ -82,7 +82,7 @@ public class PaymentServiceImpl implements PaymentService {
         Date now = new Date();
 
         Order order = new Order();
-        order.setOrderNo(generator.next());
+        order.setOrderNo(generator.nextOrderNo());
         order.setOrderStatus(Enums.OrderStatus.UNPAID.getKey());
         order.setGoodsId(videoId);
         order.setGoodsType(Enums.PurchaseType.VIDEO.getKey());
@@ -91,11 +91,11 @@ public class PaymentServiceImpl implements PaymentService {
          */
         if (whetherUsePoints) {
             order.setTotalAmount(videoVo.getPrice());
-            order.setWxAmount(videoVo.getPrice().subtract(points));
+            order.setPayAmount(videoVo.getPrice().subtract(points));
             order.setPoints(points);
         } else {
             order.setTotalAmount(videoVo.getPrice());
-            order.setWxAmount(videoVo.getPrice());
+            order.setPayAmount(videoVo.getPrice());
             order.setPoints(BigDecimal.ZERO);
         }
         order.setGoodsPrice(videoVo.getPrice());
@@ -136,7 +136,7 @@ public class PaymentServiceImpl implements PaymentService {
         request.setTradeType(globalConstants.getTradeType());
         request.setBody("木荃瑜伽-" + videoVo.getClassificationName() + "-" + videoVo.getTitle());
         request.setOpenid(user.getOpenId());
-        request.setTotalFee(Integer.valueOf(order.getWxAmount().multiply(new BigDecimal("100")).setScale(0, BigDecimal.ROUND_HALF_UP).toString()));
+        request.setTotalFee(Integer.valueOf(order.getPayAmount().multiply(new BigDecimal("100")).setScale(0, BigDecimal.ROUND_HALF_UP).toString()));
         request.setSpbillCreateIp(remoteAddr);
         /**
          * 是否使用积分抵扣

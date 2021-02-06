@@ -327,4 +327,11 @@
       f_time_end = #{timeEnd,jdbcType=TIMESTAMP}
     where f_id = #{id,jdbcType=BIGINT}
   </update>
+
+    <select id="selectByOutTradeNo" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from t_payment_result
+        where f_out_trade_no = #{outTradeNo,jdbcType=VARCHAR}
+    </select>
 </mapper>

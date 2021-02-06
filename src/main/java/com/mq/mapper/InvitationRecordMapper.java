@@ -4,6 +4,7 @@ import com.mq.model.InvitationRecord;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.Date;
+import java.util.List;
 
 public interface InvitationRecordMapper {
     int deleteByPrimaryKey(Long id);
@@ -26,4 +27,11 @@ public interface InvitationRecordMapper {
 		@Param("originalStatus") String originalStatus,
 		@Param("now") Date now
 	);
+
+	List<InvitationRecord> selectProfitSharableByRange(
+		@Param("modifiedTimeBegin") Date modifiedTimeBegin,
+		@Param("modifiedTimeEnd") Date modifiedTimeEnd
+	);
+
+	int updateStatusByPrimaryKey(@Param("id") Long id, @Param("status") String status);
 }

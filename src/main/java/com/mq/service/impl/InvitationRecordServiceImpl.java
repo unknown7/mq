@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class InvitationRecordServiceImpl implements InvitationRecordService {
@@ -140,5 +141,17 @@ public class InvitationRecordServiceImpl implements InvitationRecordService {
 		condition.setGoodsType(goodsType);
 		InvitationRecord invitationRecord = invitationRecordMapper.selectRecentlyByQuery(condition);
 		return invitationRecord;
+	}
+
+	@Override
+	public List<InvitationRecord> findProfitSharableList(Date begin, Date end) {
+		List<InvitationRecord> invitationRecords = invitationRecordMapper.selectProfitSharableByRange(begin, end);
+		return invitationRecords;
+	}
+
+	@Override
+	@Transactional
+	public void withdrawSuccess(Long id) {
+		invitationRecordMapper.updateStatusByPrimaryKey(id, Enums.InvitationStatus.SUCCESS.getKey());
 	}
 }

@@ -28,4 +28,6 @@ public interface EmployeeService {
     Employee selectOneById(Long id);
 
     Map<String, Employee> findAllGroupByOpenId();
+
+    Employee getByOpenId(String openId);
 }

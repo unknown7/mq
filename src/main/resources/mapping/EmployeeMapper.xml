@@ -397,4 +397,11 @@
       and f_payment_share_receiver = #{paymentShareReceiver,jdbcType=BIT}
     </if>
   </select>
+
+    <select id="selectByOpenId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from t_employee
+        where f_open_id = #{openId,jdbcType=VARCHAR}
+    </select>
 </mapper>

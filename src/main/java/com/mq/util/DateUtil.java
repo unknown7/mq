@@ -41,9 +41,9 @@ public class DateUtil {
      *
      * @return
      */
-    public static String getCurrentDateTime(String Dateformat) {
+    public static String getCurrentDateTime(String dateFormat) {
         String datestr = null;
-        SimpleDateFormat df = new SimpleDateFormat(Dateformat);
+        SimpleDateFormat df = new SimpleDateFormat(dateFormat);
         datestr = df.format(new Date());
         return datestr;
     }
@@ -496,10 +496,11 @@ public class DateUtil {
 //        long s = DateUtil.getDayByMinusDate("2012-01-01", "2012-12-31");
 //        System.err.println(s);
 
-        Date date = DateUtil.stringToDate("1991-01-07");
-        Date now = new Date();
-        int i = DateUtil.calcAge(date, now);
-        System.err.println(i);
-
-    }
+		Date now = new Date();
+		Date yesterday = addDay(now, -1);
+		String prefix = dateToString(yesterday);
+		Date begin = stringToDate(prefix + " 00:00:00", DATE_TIME_FORMAT);
+		Date end = stringToDate(prefix + " 23:59:59", DATE_TIME_FORMAT);
+		System.err.println(begin +","+ end);
+	}
 }

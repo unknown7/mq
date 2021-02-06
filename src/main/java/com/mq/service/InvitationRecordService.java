@@ -3,6 +3,7 @@ package com.mq.service;
 import com.mq.model.InvitationRecord;
 
 import java.util.Date;
+import java.util.List;
 
 public interface InvitationRecordService {
 
@@ -25,4 +26,8 @@ public interface InvitationRecordService {
 	InvitationRecord getBySkey(String skey, String status);
 
 	InvitationRecord getByInviteeIdAndGoodsId(Long inviteeId, Long goodsId, String goodsType);
+
+	List<InvitationRecord> findProfitSharableList(Date begin, Date end);
+
+	void withdrawSuccess(Long id);
 }

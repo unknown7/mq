@@ -12,7 +12,7 @@
     <result column="f_skey" jdbcType="VARCHAR" property="skey" />
     <result column="f_total_amount" jdbcType="DECIMAL" property="totalAmount" />
     <result column="f_points" jdbcType="DECIMAL" property="points" />
-    <result column="f_wx_amount" jdbcType="DECIMAL" property="wxAmount" />
+    <result column="f_pay_amount" jdbcType="DECIMAL" property="payAmount" />
     <result column="f_referrer" jdbcType="BIGINT" property="referrer" />
     <result column="f_invitation_id" jdbcType="BIGINT" property="invitationId" />
     <result column="f_created_time" jdbcType="TIMESTAMP" property="createdTime" />
@@ -21,7 +21,7 @@
   </resultMap>
   <sql id="Base_Column_List">
     f_id, f_order_no, f_order_status, f_goods_id, f_goods_type, f_goods_price, f_user_id, 
-    f_skey, f_total_amount, f_points, f_wx_amount, f_referrer, f_invitation_id, f_created_time, f_modified_time,
+    f_skey, f_total_amount, f_points, f_pay_amount, f_referrer, f_invitation_id, f_created_time, f_modified_time,
     f_del_flag
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -38,13 +38,13 @@
     insert into t_order (f_id, f_order_no, f_order_status, 
       f_goods_id, f_goods_type, f_goods_price, 
       f_user_id, f_skey, f_total_amount, 
-      f_points, f_wx_amount, f_referrer, f_invitation_id,
+      f_points, f_pay_amount, f_referrer, f_invitation_id,
       f_created_time, f_modified_time, f_del_flag
       )
     values (#{id,jdbcType=BIGINT}, #{orderNo,jdbcType=VARCHAR}, #{orderStatus,jdbcType=VARCHAR}, 
       #{goodsId,jdbcType=BIGINT}, #{goodsType,jdbcType=VARCHAR}, #{goodsPrice,jdbcType=DECIMAL}, 
       #{userId,jdbcType=BIGINT}, #{skey,jdbcType=VARCHAR}, #{totalAmount,jdbcType=DECIMAL}, 
-      #{points,jdbcType=DECIMAL}, #{wxAmount,jdbcType=DECIMAL}, #{referrer,jdbcType=BIGINT}, #{invitationId,jdbcType=BIGINT},
+      #{points,jdbcType=DECIMAL}, #{payAmount,jdbcType=DECIMAL}, #{referrer,jdbcType=BIGINT}, #{invitationId,jdbcType=BIGINT},
       #{createdTime,jdbcType=TIMESTAMP}, #{modifiedTime,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=BIT}
       )
   </insert>
@@ -81,8 +81,8 @@
       <if test="points != null">
         f_points,
       </if>
-      <if test="wxAmount != null">
-        f_wx_amount,
+      <if test="payAmount != null">
+        f_pay_amount,
       </if>
       <if test="referrer != null">
         f_referrer,
@@ -131,8 +131,8 @@
       <if test="points != null">
         #{points,jdbcType=DECIMAL},
       </if>
-      <if test="wxAmount != null">
-        #{wxAmount,jdbcType=DECIMAL},
+      <if test="payAmount != null">
+        #{payAmount,jdbcType=DECIMAL},
       </if>
       <if test="referrer != null">
         #{referrer,jdbcType=BIGINT},
@@ -181,8 +181,8 @@
       <if test="points != null">
         f_points = #{points,jdbcType=DECIMAL},
       </if>
-      <if test="wxAmount != null">
-        f_wx_amount = #{wxAmount,jdbcType=DECIMAL},
+      <if test="payAmount != null">
+        f_pay_amount = #{payAmount,jdbcType=DECIMAL},
       </if>
       <if test="referrer != null">
         f_referrer = #{referrer,jdbcType=BIGINT},
@@ -213,7 +213,7 @@
       f_skey = #{skey,jdbcType=VARCHAR},
       f_total_amount = #{totalAmount,jdbcType=DECIMAL},
       f_points = #{points,jdbcType=DECIMAL},
-      f_wx_amount = #{wxAmount,jdbcType=DECIMAL},
+      f_pay_amount = #{payAmount,jdbcType=DECIMAL},
       f_referrer = #{referrer,jdbcType=BIGINT},
       f_invitation_id = #{invitationId,jdbcType=BIGINT},
       f_created_time = #{createdTime,jdbcType=TIMESTAMP},
@@ -253,8 +253,8 @@
     <if test="points != null">
       and f_points = #{points,jdbcType=DECIMAL}
     </if>
-    <if test="wxAmount != null">
-      and f_wx_amount = #{wxAmount,jdbcType=DECIMAL}
+    <if test="payAmount != null">
+      and f_pay_amount = #{payAmount,jdbcType=DECIMAL}
     </if>
     <if test="referrer != null">
       and f_referrer = #{referrer,jdbcType=BIGINT}
@@ -312,8 +312,8 @@
     <if test="points != null">
       and f_points = #{points,jdbcType=DECIMAL}
     </if>
-    <if test="wxAmount != null">
-      and f_wx_amount = #{wxAmount,jdbcType=DECIMAL}
+    <if test="payAmount != null">
+      and f_pay_amount = #{payAmount,jdbcType=DECIMAL}
     </if>
     <if test="referrer != null">
       and f_referrer = #{referrer,jdbcType=BIGINT}
@@ -348,4 +348,13 @@
     where f_order_no = #{orderNo,jdbcType=VARCHAR}
     and f_del_flag = 0
   </select>
+
+    <select id="selectByInvitationId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from t_order
+        where f_invitation_id = #{invitationId,jdbcType=BIGINT}
+        and f_del_flag = 0
+    </select>
+
 </mapper>

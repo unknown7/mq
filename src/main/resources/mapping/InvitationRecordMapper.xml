@@ -193,8 +193,29 @@
 
     <update id="updateByInviterIdBeforeDate">
         update t_invitation_record set f_status = #{newStatus,jdbcType=VARCHAR}, f_modified_time = now()
-        where inviterId = #{inviterId,jdbcType=BIGINT} and
+        where f_inviterId = #{inviterId,jdbcType=BIGINT} and
         f_status = #{originalStatus,jdbcType=VARCHAR}
         f_create_time &lt;= #{now,jdbcType=TIMESTAMP}
+    </update>
+
+    <select id="selectProfitSharableByRange" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from t_invitation_record t1
+        where
+            t1.f_modified_time between #{modifiedTimeBegin,jdbcType=TIMESTAMP} and #{modifiedTimeEnd,jdbcType=TIMESTAMP}
+        and
+            t1.f_status = '007003'
+        and
+            t1.f_inviter_id in (
+                select t2.f_id from t_user t2 where t2.f_open_id in (
+                    select t3.f_open_id from t_employee t3 where t3.f_open_id is not null and t3.f_open_id != '' and t3.f_payment_share_receiver = 1
+                )
+            );
+    </select>
+
+    <update id="updateStatusByPrimaryKey">
+        update t_invitation_record set f_status = #{status,jdbcType=VARCHAR}, f_modified_time = now()
+        where f_id = #{id,jdbcType=BIGINT}
     </update>
 </mapper>
