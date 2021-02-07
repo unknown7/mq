@@ -57,6 +57,8 @@ public class EmployeeQuery extends DefaultQuery {
 
     private String searchName;
 
+    private Boolean paymentShareReceiver;
+
     public Long getId() {
         return id;
     }
@@ -280,4 +282,12 @@ public class EmployeeQuery extends DefaultQuery {
     public void setSearchName(String searchName) {
         this.searchName = searchName;
     }
+
+	public Boolean getPaymentShareReceiver() {
+		return paymentShareReceiver;
+	}
+
+	public void setPaymentShareReceiver(Boolean paymentShareReceiver) {
+		this.paymentShareReceiver = paymentShareReceiver;
+	}
 }
