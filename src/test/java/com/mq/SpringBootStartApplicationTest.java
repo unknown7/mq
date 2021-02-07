@@ -237,7 +237,7 @@ public class SpringBootStartApplicationTest {
          * out_trade_no
          */
         Element out_trade_no = xml.addElement("out_trade_no");
-        out_trade_no.setText(generator.next());
+        out_trade_no.setText(generator.nextOrderNo());
         /**
          * total_fee
          */
@@ -302,7 +302,7 @@ public class SpringBootStartApplicationTest {
             exec.execute(new Runnable() {
                 @Override
                 public void run() {
-                    System.err.println(generator.next());
+                    System.err.println(generator.nextOrderNo());
                 }
             });
         }
@@ -345,12 +345,12 @@ public class SpringBootStartApplicationTest {
     public void orderInsert() {
         Date now = new Date();
         Order order = new Order();
-        order.setOrderNo(generator.next());
+        order.setOrderNo(generator.nextOrderNo());
         order.setOrderStatus(Enums.OrderStatus.UNPAID.getKey());
         order.setGoodsId(1L);
         order.setGoodsType(Enums.PurchaseType.VIDEO.getKey());
         order.setTotalAmount(new BigDecimal("0.2"));
-        order.setWxAmount(new BigDecimal("0.2"));
+        order.setPayAmount(new BigDecimal("0.2"));
         order.setPoints(BigDecimal.ZERO);
         order.setGoodsPrice(new BigDecimal("0.2"));
         order.setUserId(8L);
