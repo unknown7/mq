@@ -1,6 +1,13 @@
 package com.mq.base;
 
+import java.util.Arrays;
+
 public class Enums {
+
+    public enum BaseEnum {
+
+    }
+
     /**
      * 微信api类型
      */
@@ -77,6 +84,10 @@ public class Enums {
         public String getValue() {
             return value;
         }
+
+        public static PurchaseType getByKey(String key) {
+            return Arrays.stream(values()).filter(item -> item.getKey().equals(key)).findFirst().orElseThrow(() -> new BusinessException(RspCode.NO_CORRESPONDENT_ENUM_KEY));
+        }
     }
 
     /**
@@ -123,6 +134,10 @@ public class Enums {
         }
         public String getValue() {
             return value;
+        }
+
+        public static OrderStatus getByKey(String key) {
+            return Arrays.stream(values()).filter(item -> item.getKey().equals(key)).findFirst().orElseThrow(() -> new BusinessException(RspCode.NO_CORRESPONDENT_ENUM_KEY));
         }
     }
 
