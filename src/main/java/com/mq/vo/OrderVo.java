@@ -1,11 +1,10 @@
-package com.mq.query;
-
-import org.springframework.format.annotation.DateTimeFormat;
+package com.mq.vo;
 
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class OrderQuery extends DefaultQuery {
+public class OrderVo {
+
     private Long id;
 
     private String orderNo;
@@ -32,21 +31,15 @@ public class OrderQuery extends DefaultQuery {
 
     private Long invitationId;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date createdTime;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date createdTimeBegin;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date createdTimeEnd;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date modifiedTime;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date modifiedTimeBegin;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date modifiedTimeEnd;
 
-    private Integer delFlag;
+    private Boolean delFlag;
+
+    private String title;
+
+    private String nickName;
 
     public Long getId() {
         return id;
@@ -128,15 +121,15 @@ public class OrderQuery extends DefaultQuery {
         this.points = points;
     }
 
-	public BigDecimal getPayAmount() {
-		return payAmount;
-	}
+    public BigDecimal getPayAmount() {
+        return payAmount;
+    }
 
-	public void setPayAmount(BigDecimal payAmount) {
-		this.payAmount = payAmount;
-	}
+    public void setPayAmount(BigDecimal payAmount) {
+        this.payAmount = payAmount;
+    }
 
-	public Long getReferrer() {
+    public Long getReferrer() {
         return referrer;
     }
 
@@ -144,36 +137,20 @@ public class OrderQuery extends DefaultQuery {
         this.referrer = referrer;
     }
 
-	public Long getInvitationId() {
-		return invitationId;
-	}
+    public Long getInvitationId() {
+        return invitationId;
+    }
 
-	public void setInvitationId(Long invitationId) {
-		this.invitationId = invitationId;
-	}
+    public void setInvitationId(Long invitationId) {
+        this.invitationId = invitationId;
+    }
 
-	public Date getCreatedTime() {
+    public Date getCreatedTime() {
         return createdTime;
     }
 
     public void setCreatedTime(Date createdTime) {
         this.createdTime = createdTime;
-    }
-
-    public Date getCreatedTimeBegin() {
-        return createdTimeBegin;
-    }
-
-    public void setCreatedTimeBegin(Date createdTimeBegin) {
-        this.createdTimeBegin = createdTimeBegin;
-    }
-
-    public Date getCreatedTimeEnd() {
-        return createdTimeEnd;
-    }
-
-    public void setCreatedTimeEnd(Date createdTimeEnd) {
-        this.createdTimeEnd = createdTimeEnd;
     }
 
     public Date getModifiedTime() {
@@ -184,27 +161,27 @@ public class OrderQuery extends DefaultQuery {
         this.modifiedTime = modifiedTime;
     }
 
-    public Date getModifiedTimeBegin() {
-        return modifiedTimeBegin;
-    }
-
-    public void setModifiedTimeBegin(Date modifiedTimeBegin) {
-        this.modifiedTimeBegin = modifiedTimeBegin;
-    }
-
-    public Date getModifiedTimeEnd() {
-        return modifiedTimeEnd;
-    }
-
-    public void setModifiedTimeEnd(Date modifiedTimeEnd) {
-        this.modifiedTimeEnd = modifiedTimeEnd;
-    }
-
-    public Integer getDelFlag() {
+    public Boolean getDelFlag() {
         return delFlag;
     }
 
-    public void setDelFlag(Integer delFlag) {
+    public void setDelFlag(Boolean delFlag) {
         this.delFlag = delFlag;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
     }
 }

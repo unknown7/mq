@@ -19,6 +19,28 @@
     <result column="f_modified_time" jdbcType="TIMESTAMP" property="modifiedTime" />
     <result column="f_del_flag" jdbcType="BIT" property="delFlag" />
   </resultMap>
+
+  <resultMap id="VoResultMap" type="com.mq.vo.OrderVo">
+    <id column="f_id" jdbcType="BIGINT" property="id" />
+    <result column="f_order_no" jdbcType="VARCHAR" property="orderNo" />
+    <result column="f_order_status" jdbcType="VARCHAR" property="orderStatus" />
+    <result column="f_goods_id" jdbcType="BIGINT" property="goodsId" />
+    <result column="f_goods_type" jdbcType="VARCHAR" property="goodsType" />
+    <result column="f_goods_price" jdbcType="DECIMAL" property="goodsPrice" />
+    <result column="f_user_id" jdbcType="BIGINT" property="userId" />
+    <result column="f_skey" jdbcType="VARCHAR" property="skey" />
+    <result column="f_total_amount" jdbcType="DECIMAL" property="totalAmount" />
+    <result column="f_points" jdbcType="DECIMAL" property="points" />
+    <result column="f_pay_amount" jdbcType="DECIMAL" property="payAmount" />
+    <result column="f_referrer" jdbcType="BIGINT" property="referrer" />
+    <result column="f_invitation_id" jdbcType="BIGINT" property="invitationId" />
+    <result column="f_created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="f_modified_time" jdbcType="TIMESTAMP" property="modifiedTime" />
+    <result column="f_del_flag" jdbcType="BIT" property="delFlag" />
+    <result column="f_title" jdbcType="VARCHAR" property="title" />
+    <result column="f_nick_name" jdbcType="VARCHAR" property="nickName" />
+  </resultMap>
+
   <sql id="Base_Column_List">
     f_id, f_order_no, f_order_status, f_goods_id, f_goods_type, f_goods_price, f_user_id, 
     f_skey, f_total_amount, f_points, f_pay_amount, f_referrer, f_invitation_id, f_created_time, f_modified_time,
@@ -222,123 +244,134 @@
     where f_id = #{id,jdbcType=BIGINT}
   </update>
 
-  <select id="selectByQuery" parameterType="com.mq.query.OrderQuery" resultMap="BaseResultMap">
+  <select id="selectByQuery" parameterType="com.mq.query.OrderQuery" resultMap="VoResultMap">
     select
-    <include refid="Base_Column_List" />
-    from t_order where f_del_flag = 0
-    <if test="orderNo != null">
-      and f_order_no = #{orderNo,jdbcType=VARCHAR}
+    t1.f_id, t1.f_order_no, t1.f_order_status, t1.f_goods_id, t1.f_goods_type, t1.f_goods_price, t1.f_user_id,
+    t1.f_skey, t1.f_total_amount, t1.f_points, t1.f_pay_amount, t1.f_referrer, t1.f_invitation_id, t1.f_created_time, t1.f_modified_time,
+    t1.f_del_flag, t2.f_title, t3.f_nick_name
+    from t_order t1
+    join t_video t2 on t1.f_goods_id = t2.f_id
+    join t_user t3 on t1.f_user_id = t3.f_id
+    where t1.f_del_flag = 0
+    <if test="orderNo != null and orderNo != ''">
+      and t1.f_order_no like concat(concat("%",#{orderNo}),"%")
     </if>
     <if test="orderStatus != null">
-      and f_order_status = #{orderStatus,jdbcType=VARCHAR}
+      and t1.f_order_status = #{orderStatus,jdbcType=VARCHAR}
     </if>
     <if test="goodsId != null">
-      and f_goods_id = #{goodsId,jdbcType=BIGINT}
+      and t1.f_goods_id = #{goodsId,jdbcType=BIGINT}
     </if>
     <if test="goodsType != null">
-      and f_goods_type = #{goodsType,jdbcType=VARCHAR}
+      and t1.f_goods_type = #{goodsType,jdbcType=VARCHAR}
     </if>
     <if test="goodsPrice != null">
-      and f_goods_price = #{goodsPrice,jdbcType=DECIMAL}
+      and t1.f_goods_price = #{goodsPrice,jdbcType=DECIMAL}
     </if>
     <if test="userId != null">
-      and f_user_id = #{userId,jdbcType=BIGINT}
+      and t1.f_user_id = #{userId,jdbcType=BIGINT}
     </if>
     <if test="skey != null">
-      and f_skey = #{skey,jdbcType=VARCHAR}
+      and t1.f_skey = #{skey,jdbcType=VARCHAR}
     </if>
     <if test="totalAmount != null">
-      and f_total_amount = #{totalAmount,jdbcType=DECIMAL}
+      and t1.f_total_amount = #{totalAmount,jdbcType=DECIMAL}
     </if>
     <if test="points != null">
-      and f_points = #{points,jdbcType=DECIMAL}
+      and t1.f_points = #{points,jdbcType=DECIMAL}
     </if>
     <if test="payAmount != null">
-      and f_pay_amount = #{payAmount,jdbcType=DECIMAL}
+      and t1.f_pay_amount = #{payAmount,jdbcType=DECIMAL}
     </if>
     <if test="referrer != null">
-      and f_referrer = #{referrer,jdbcType=BIGINT}
+      and t1.f_referrer = #{referrer,jdbcType=BIGINT}
     </if>
       <if test="invitationId != null">
-          and f_invitation_id = #{invitationId,jdbcType=BIGINT}
+          and t1.f_invitation_id = #{invitationId,jdbcType=BIGINT}
       </if>
       <if test="createdTime != null">
-          and f_created_time = #{createdTime,jdbcType=DATE}
+          and t1.f_created_time = #{createdTime,jdbcType=DATE}
       </if>
       <if test="createdTimeBegin != null">
-          and f_created_time &gt;= #{createdTimeBegin,jdbcType=DATE}
+          and t1.f_created_time &gt;= #{createdTimeBegin,jdbcType=DATE}
       </if>
       <if test="createdTimeEnd != null">
-          and f_created_time &lt;= #{createdTimeEnd,jdbcType=DATE}
+          and t1.f_created_time &lt;= #{createdTimeEnd,jdbcType=DATE}
       </if>
       <if test="modifiedTime != null">
-          and f_modified_time = #{modifiedTime,jdbcType=DATE}
+          and t1.f_modified_time = #{modifiedTime,jdbcType=DATE}
       </if>
       <if test="modifiedTimeBegin != null">
-          and f_modified_time &gt;= #{modifiedTimeBegin,jdbcType=DATE}
+          and t1.f_modified_time &gt;= #{modifiedTimeBegin,jdbcType=DATE}
       </if>
       <if test="modifiedTimeEnd != null">
-          and f_modified_time &lt;= #{modifiedTimeEnd,jdbcType=DATE}
+          and t1.f_modified_time &lt;= #{modifiedTimeEnd,jdbcType=DATE}
       </if>
   </select>
 
   <select id="selectNums" parameterType="com.mq.query.OrderQuery" resultType="java.lang.Long">
     select count(1)
-    from t_order where del_flag = 0
-    <if test="orderNo != null">
-      and order_no = #{orderNo,jdbcType=VARCHAR}
+    t1.f_id, t1.f_order_no, t1.f_order_status, t1.f_goods_id, t1.f_goods_type, t1.f_goods_price, t1.f_user_id, t1.
+    f_skey, t1.f_total_amount, t1.f_points, t1.f_pay_amount, t1.f_referrer, t1.f_invitation_id, t1.f_created_time,t1.f_modified_time,
+    t1.f_del_flag, t2.f_title, t3.f_nick_name
+    from t_order t1
+    join t_video t2 on t1.f_goods_id = t2.f_id
+    join t_user t3 on t1.f_user_id = t3.f_id
+    where t1.f_del_flag = 0
+    <if test="orderNo != null and orderNo != ''">
+      and t1.f_order_no like concat(concat("%",#{orderNo}),"%")
     </if>
     <if test="orderStatus != null">
-      and f_order_status = #{orderStatus,jdbcType=VARCHAR}
+      and t1.f_order_status = #{orderStatus,jdbcType=VARCHAR}
     </if>
     <if test="goodsId != null">
-      and f_goods_id = #{goodsId,jdbcType=BIGINT}
+      and t1.f_goods_id = #{goodsId,jdbcType=BIGINT}
     </if>
     <if test="goodsType != null">
-      and f_goods_type = #{goodsType,jdbcType=VARCHAR}
+      and t1.f_goods_type = #{goodsType,jdbcType=VARCHAR}
     </if>
     <if test="goodsPrice != null">
-      and f_goods_price = #{goodsPrice,jdbcType=DECIMAL}
+      and t1.f_goods_price = #{goodsPrice,jdbcType=DECIMAL}
     </if>
     <if test="userId != null">
-      and f_user_id = #{userId,jdbcType=BIGINT}
+      and t1.f_user_id = #{userId,jdbcType=BIGINT}
     </if>
     <if test="skey != null">
-      and f_skey = #{skey,jdbcType=VARCHAR}
+      and t1.f_skey = #{skey,jdbcType=VARCHAR}
     </if>
     <if test="totalAmount != null">
-      and f_total_amount = #{totalAmount,jdbcType=DECIMAL}
+      and t1.f_total_amount = #{totalAmount,jdbcType=DECIMAL}
     </if>
     <if test="points != null">
-      and f_points = #{points,jdbcType=DECIMAL}
+      and t1.f_points = #{points,jdbcType=DECIMAL}
     </if>
     <if test="payAmount != null">
-      and f_pay_amount = #{payAmount,jdbcType=DECIMAL}
+      and t1.f_pay_amount = #{payAmount,jdbcType=DECIMAL}
     </if>
     <if test="referrer != null">
-      and f_referrer = #{referrer,jdbcType=BIGINT}
+      and t1.f_referrer = #{referrer,jdbcType=BIGINT}
     </if>
-      <if test="invitationId != null">
-          and f_invitation_id = #{invitationId,jdbcType=BIGINT}
-      </if>
-      <if test="createdTime != null">
-          and f_created_time = #{createdTime,jdbcType=DATE}
-      </if>
-      <if test="createdTimeBegin != null">
-          and f_created_time &gt;= #{createdTimeBegin,jdbcType=DATE}
-      </if>
-      <if test="createdTimeEnd != null">
-          and f_created_time &lt;= #{createdTimeEnd,jdbcType=DATE}
-      </if>
-      <if test="modifiedTime != null">
-          and f_modified_time = #{modifiedTime,jdbcType=DATE}
-      </if>
-      <if test="modifiedTimeBegin != null">
-          and f_modified_time &gt;= #{modifiedTimeBegin,jdbcType=DATE}
-      </if>
-      <if test="modifiedTimeEnd != null">
-          and f_modified_time &lt;= #{modifiedTimeEnd,jdbcType=DATE}
-      </if>
+    <if test="invitationId != null">
+      and t1.f_invitation_id = #{invitationId,jdbcType=BIGINT}
+    </if>
+    <if test="createdTime != null">
+      and t1.f_created_time = #{createdTime,jdbcType=DATE}
+    </if>
+    <if test="createdTimeBegin != null">
+      and t1.f_created_time &gt;= #{createdTimeBegin,jdbcType=DATE}
+    </if>
+    <if test="createdTimeEnd != null">
+      and t1.f_created_time &lt;= #{createdTimeEnd,jdbcType=DATE}
+    </if>
+    <if test="modifiedTime != null">
+      and t1.f_modified_time = #{modifiedTime,jdbcType=DATE}
+    </if>
+    <if test="modifiedTimeBegin != null">
+      and t1.f_modified_time &gt;= #{modifiedTimeBegin,jdbcType=DATE}
+    </if>
+    <if test="modifiedTimeEnd != null">
+      and t1.f_modified_time &lt;= #{modifiedTimeEnd,jdbcType=DATE}
+    </if>
   </select>
 
   <select id="selectByOrderNo" parameterType="java.lang.String" resultMap="BaseResultMap">

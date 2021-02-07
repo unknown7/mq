@@ -2,6 +2,7 @@ package com.mq.mapper;
 
 import com.mq.model.Order;
 import com.mq.query.OrderQuery;
+import com.mq.vo.OrderVo;
 
 import java.util.List;
 
@@ -18,7 +19,7 @@ public interface OrderMapper {
 
     int updateByPrimaryKey(Order record);
 
-	List<Order> selectByQuery(OrderQuery query);
+	List<OrderVo> selectByQuery(OrderQuery query);
 
 	Long selectNums(OrderQuery query);
 
