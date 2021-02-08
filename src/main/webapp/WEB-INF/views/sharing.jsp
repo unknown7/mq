@@ -23,7 +23,7 @@
                 <input type="text"
                        class="datepicker form-control"
                        data-date-format="yyyy-mm-dd" name="createdTimeBegin"
-                       placeholder="下单时间从"/>
+                       placeholder="分账时间从"/>
                 <span class="input-group-addon">
                     <i class="fa fa-exchange"></i>
                 </span>
