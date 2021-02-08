@@ -4,7 +4,7 @@ $(function () {
     }).dataTable({
         columns: [
             {
-                "data": "eName",
+                "data": "employeeName",
                 "class": "text-center"
             },
             {
@@ -155,7 +155,7 @@ $(function () {
             password: {
                 required: true
             },
-            eName: {
+            employeeName: {
                 required: true
             },
             birth: {

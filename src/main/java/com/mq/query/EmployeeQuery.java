@@ -9,7 +9,7 @@ public class EmployeeQuery extends DefaultQuery {
 
     private Long id;
 
-    private String eName;
+    private String employeeName;
 
     private String gender;
 
@@ -67,12 +67,12 @@ public class EmployeeQuery extends DefaultQuery {
         this.id = id;
     }
 
-    public String geteName() {
-        return eName;
+    public String getEmployeeName() {
+        return employeeName;
     }
 
-    public void seteName(String eName) {
-        this.eName = eName;
+    public void setEmployeeName(String employeeName) {
+        this.employeeName = employeeName;
     }
 
     public String getGender() {

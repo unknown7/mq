@@ -1,9 +1,12 @@
-package com.mq.model;
+package com.mq.query;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class ProfitSharing {
+public class ProfitSharingQuery extends DefaultQuery {
+
     private Long id;
 
     private String profitSharingNo;
@@ -20,11 +23,23 @@ public class ProfitSharing {
 
     private Long employeeId;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date createdTime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date createdTimeBegin;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date createdTimeEnd;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date modifiedTime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date modifiedTimeBegin;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date modifiedTimeEnd;
 
     private Boolean delFlag;
+
+    private String employeeName;
 
     public Long getId() {
         return id;
@@ -39,7 +54,7 @@ public class ProfitSharing {
     }
 
     public void setProfitSharingNo(String profitSharingNo) {
-        this.profitSharingNo = profitSharingNo == null ? null : profitSharingNo.trim();
+        this.profitSharingNo = profitSharingNo;
     }
 
     public String getOrderNo() {
@@ -47,7 +62,7 @@ public class ProfitSharing {
     }
 
     public void setOrderNo(String orderNo) {
-        this.orderNo = orderNo == null ? null : orderNo.trim();
+        this.orderNo = orderNo;
     }
 
     public BigDecimal getOrderAmount() {
@@ -71,7 +86,7 @@ public class ProfitSharing {
     }
 
     public void setTransactionId(String transactionId) {
-        this.transactionId = transactionId == null ? null : transactionId.trim();
+        this.transactionId = transactionId;
     }
 
     public String getOrderId() {
@@ -79,7 +94,7 @@ public class ProfitSharing {
     }
 
     public void setOrderId(String orderId) {
-        this.orderId = orderId == null ? null : orderId.trim();
+        this.orderId = orderId;
     }
 
     public Long getEmployeeId() {
@@ -98,6 +113,22 @@ public class ProfitSharing {
         this.createdTime = createdTime;
     }
 
+    public Date getCreatedTimeBegin() {
+        return createdTimeBegin;
+    }
+
+    public void setCreatedTimeBegin(Date createdTimeBegin) {
+        this.createdTimeBegin = createdTimeBegin;
+    }
+
+    public Date getCreatedTimeEnd() {
+        return createdTimeEnd;
+    }
+
+    public void setCreatedTimeEnd(Date createdTimeEnd) {
+        this.createdTimeEnd = createdTimeEnd;
+    }
+
     public Date getModifiedTime() {
         return modifiedTime;
     }
@@ -106,11 +137,35 @@ public class ProfitSharing {
         this.modifiedTime = modifiedTime;
     }
 
+    public Date getModifiedTimeBegin() {
+        return modifiedTimeBegin;
+    }
+
+    public void setModifiedTimeBegin(Date modifiedTimeBegin) {
+        this.modifiedTimeBegin = modifiedTimeBegin;
+    }
+
+    public Date getModifiedTimeEnd() {
+        return modifiedTimeEnd;
+    }
+
+    public void setModifiedTimeEnd(Date modifiedTimeEnd) {
+        this.modifiedTimeEnd = modifiedTimeEnd;
+    }
+
     public Boolean getDelFlag() {
         return delFlag;
     }
 
     public void setDelFlag(Boolean delFlag) {
         this.delFlag = delFlag;
+    }
+
+    public String getEmployeeName() {
+        return employeeName;
+    }
+
+    public void setEmployeeName(String employeeName) {
+        this.employeeName = employeeName;
     }
 }

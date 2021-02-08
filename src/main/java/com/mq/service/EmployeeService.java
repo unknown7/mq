@@ -14,7 +14,7 @@ public interface EmployeeService {
     void save(String id,
               String username,
               String password,
-              String eName,
+              String employeeName,
               String birth,
               String gender,
               String mobile,

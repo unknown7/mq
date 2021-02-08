@@ -53,7 +53,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public void save(String id,
                      String username,
                      String password,
-                     String eName,
+                     String employeeName,
                      String birth,
                      String gender,
                      String mobile,
@@ -64,7 +64,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     ) throws Exception {
         Employee employee = new Employee();
         this
-        .handleEmployee(id, username, password, eName, birth, gender, mobile, email, openId, profitRate, employee)
+        .handleEmployee(id, username, password, employeeName, birth, gender, mobile, email, openId, profitRate, employee)
         .handleAvatar(employee, avatar)
         .executeSave(employee, avatar);
     }
@@ -72,7 +72,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     private EmployeeServiceImpl handleEmployee(String id,
                                                String username,
                                                String password,
-                                               String eName,
+                                               String employeeName,
                                                String birth,
                                                String gender,
                                                String mobile,
@@ -85,7 +85,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         employee.setBirth(DateUtil.stringToDate(birth));
         employee.setAge(DateUtil.calcAge(employee.getBirth(), now));
         employee.setUsername(username);
-        employee.seteName(eName);
+        employee.setEmployeeName(employeeName);
         employee.setGender(Integer.valueOf(gender));
         employee.setMobile(mobile);
         employee.setEmail(email);
@@ -168,7 +168,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                 ProfitSharingAddReceiverRequest request = new ProfitSharingAddReceiverRequest();
                 ProfitSharingAddReceiverRequest.Receiver receiver = new ProfitSharingAddReceiverRequest.Receiver();
                 receiver.setAccount(employee.getOpenId());
-                receiver.setName(employee.geteName());
+                receiver.setName(employee.getEmployeeName());
                 receiver.setRelation_type("STAFF");
                 receiver.setType("PERSONAL_OPENID");
                 request.setReceiver(receiver);
@@ -190,7 +190,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                 ProfitSharingAddReceiverRequest request = new ProfitSharingAddReceiverRequest();
                 ProfitSharingAddReceiverRequest.Receiver receiver = new ProfitSharingAddReceiverRequest.Receiver();
                 receiver.setAccount(employee.getOpenId());
-                receiver.setName(employee.geteName());
+                receiver.setName(employee.getEmployeeName());
                 receiver.setRelation_type("STAFF");
                 receiver.setType("PERSONAL_OPENID");
                 request.setReceiver(receiver);

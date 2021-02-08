@@ -48,14 +48,14 @@ public class EmployeeController extends BaseController {
             String id = request.getParameter("id");
             String username = request.getParameter("username");
             String password = request.getParameter("password");
-            String eName = request.getParameter("eName");
+            String employeeName = request.getParameter("employeeName");
             String birth = request.getParameter("birth");
             String gender = request.getParameter("gender");
             String mobile = request.getParameter("mobile");
             String email = request.getParameter("email");
             String openId = request.getParameter("openId");
             String profitRate = request.getParameter("profitRate");
-            employeeService.save(id, username, password, eName, birth, gender, mobile, email, openId, profitRate, avatar);
+            employeeService.save(id, username, password, employeeName, birth, gender, mobile, email, openId, profitRate, avatar);
             return success("员工信息已保存");
         } catch (Exception e) {
             logger.error(e.getMessage());

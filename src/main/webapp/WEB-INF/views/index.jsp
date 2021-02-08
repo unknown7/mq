@@ -43,7 +43,7 @@
                         <img class="nav-user-photo" src="${image}${curEmp.avatarRealName}" />
                         <span class="user-info">
 									<small>欢迎您,</small>
-									${curEmp.eName }
+									${curEmp.employeeName }
 								</span>
 
                         <i class="ace-icon fa fa-caret-down"></i>
