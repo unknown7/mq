@@ -3,7 +3,7 @@
 <mapper namespace="com.mq.mapper.EmployeeMapper">
   <resultMap id="BaseResultMap" type="com.mq.model.Employee">
     <id column="f_id" jdbcType="BIGINT" property="id" />
-    <result column="f_e_name" jdbcType="VARCHAR" property="eName" />
+    <result column="f_employee_name" jdbcType="VARCHAR" property="employeeName" />
     <result column="f_gender" jdbcType="INTEGER" property="gender" />
     <result column="f_birth" jdbcType="DATE" property="birth" />
     <result column="f_age" jdbcType="INTEGER" property="age" />
@@ -21,7 +21,7 @@
     <result column="f_payment_share_receiver" jdbcType="BIT" property="paymentShareReceiver" />
   </resultMap>
   <sql id="Base_Column_List">
-    f_id, f_e_name, f_gender, f_birth, f_age, f_avatar_real_name, f_avatar_name, f_created_time, 
+    f_id, f_employee_name, f_gender, f_birth, f_age, f_avatar_real_name, f_avatar_name, f_created_time,
     f_modified_time, f_del_flag, f_password, f_username, f_email, f_mobile, f_open_id,
     f_profit_rate, f_payment_share_receiver
   </sql>
@@ -36,14 +36,14 @@
     where f_id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.mq.model.Employee">
-    insert into t_employee (f_id, f_e_name, f_gender, 
+    insert into t_employee (f_id, f_employee_name, f_gender,
       f_birth, f_age, f_avatar_real_name, 
       f_avatar_name, f_created_time, f_modified_time, 
       f_del_flag, f_password, f_username, 
       f_email, f_mobile, f_open_id, f_profit_rate,
       f_payment_share_receiver
       )
-    values (#{id,jdbcType=BIGINT}, #{eName,jdbcType=VARCHAR}, #{gender,jdbcType=INTEGER},
+    values (#{id,jdbcType=BIGINT}, #{employeeName,jdbcType=VARCHAR}, #{gender,jdbcType=INTEGER},
       #{birth,jdbcType=DATE}, #{age,jdbcType=INTEGER}, #{avatarRealName,jdbcType=VARCHAR}, 
       #{avatarName,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}, #{modifiedTime,jdbcType=TIMESTAMP}, 
       #{delFlag,jdbcType=BIT}, #{password,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, 
@@ -57,8 +57,8 @@
       <if test="id != null">
         f_id,
       </if>
-      <if test="eName != null">
-        f_e_name,
+      <if test="employeeName != null">
+        f_employee_name,
       </if>
       <if test="gender != null">
         f_gender,
@@ -110,8 +110,8 @@
       <if test="id != null">
         #{id,jdbcType=BIGINT},
       </if>
-      <if test="eName != null">
-        #{eName,jdbcType=VARCHAR},
+      <if test="employeeName != null">
+        #{employeeName,jdbcType=VARCHAR},
       </if>
       <if test="gender != null">
         #{gender,jdbcType=INTEGER},
@@ -163,8 +163,8 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.mq.model.Employee">
     update t_employee
     <set>
-      <if test="eName != null">
-        f_e_name = #{eName,jdbcType=VARCHAR},
+      <if test="employeeName != null">
+        f_employee_name = #{employeeName,jdbcType=VARCHAR},
       </if>
       <if test="gender != null">
         f_gender = #{gender,jdbcType=INTEGER},
@@ -216,7 +216,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.mq.model.Employee">
     update t_employee
-    set f_e_name = #{eName,jdbcType=VARCHAR},
+    set f_employee_name = #{employeeName,jdbcType=VARCHAR},
       f_gender = #{gender,jdbcType=INTEGER},
       f_birth = #{birth,jdbcType=DATE},
       f_age = #{age,jdbcType=INTEGER},
@@ -251,11 +251,11 @@
     <if test="id != null">
       and f_id = #{id,jdbcType=BIGINT}
     </if>
-    <if test="eName != null and eName != ''">
-      and f_e_name = #{eName,jdbcType=VARCHAR}
+    <if test="employeeName != null and employeeName != ''">
+      and f_employee_name = #{employeeName,jdbcType=VARCHAR}
     </if>
     <if test="searchName != null and searchName != ''">
-      and f_e_name like concat(concat("%",#{searchName}),"%") or f_username like concat(concat("%",#{searchName}),"%")
+      and f_employee_name like concat(concat("%",#{searchName}),"%") or f_username like concat(concat("%",#{searchName}),"%")
     </if>
     <if test="gender != null and gender != ''">
       and f_gender = #{gender,jdbcType=INTEGER}
@@ -327,11 +327,11 @@
     <if test="id != null">
       and f_id = #{id,jdbcType=BIGINT}
     </if>
-    <if test="eName != null and eName != ''">
-      and f_e_name = #{eName,jdbcType=VARCHAR}
+    <if test="employeeName != null and employeeName != ''">
+      and f_employee_name = #{employeeName,jdbcType=VARCHAR}
     </if>
     <if test="searchName != null and searchName != ''">
-      and f_e_name like concat(concat("%",#{searchName}),"%") or f_username like concat(concat("%",#{searchName}),"%")
+      and f_employee_name like concat(concat("%",#{searchName}),"%") or f_username like concat(concat("%",#{searchName}),"%")
     </if>
     <if test="gender != null and gender != ''">
       and f_gender = #{gender,jdbcType=INTEGER}

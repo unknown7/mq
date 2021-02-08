@@ -1,9 +1,10 @@
-package com.mq.model;
+package com.mq.vo;
 
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class ProfitSharing {
+public class ProfitSharingVo {
+
     private Long id;
 
     private String profitSharingNo;
@@ -18,13 +19,15 @@ public class ProfitSharing {
 
     private String orderId;
 
-    private Long employeeId;
+    private String employeeId;
 
     private Date createdTime;
 
     private Date modifiedTime;
 
     private Boolean delFlag;
+
+    private String employeeName;
 
     public Long getId() {
         return id;
@@ -39,7 +42,7 @@ public class ProfitSharing {
     }
 
     public void setProfitSharingNo(String profitSharingNo) {
-        this.profitSharingNo = profitSharingNo == null ? null : profitSharingNo.trim();
+        this.profitSharingNo = profitSharingNo;
     }
 
     public String getOrderNo() {
@@ -47,7 +50,7 @@ public class ProfitSharing {
     }
 
     public void setOrderNo(String orderNo) {
-        this.orderNo = orderNo == null ? null : orderNo.trim();
+        this.orderNo = orderNo;
     }
 
     public BigDecimal getOrderAmount() {
@@ -71,7 +74,7 @@ public class ProfitSharing {
     }
 
     public void setTransactionId(String transactionId) {
-        this.transactionId = transactionId == null ? null : transactionId.trim();
+        this.transactionId = transactionId;
     }
 
     public String getOrderId() {
@@ -79,14 +82,14 @@ public class ProfitSharing {
     }
 
     public void setOrderId(String orderId) {
-        this.orderId = orderId == null ? null : orderId.trim();
+        this.orderId = orderId;
     }
 
-    public Long getEmployeeId() {
+    public String getEmployeeId() {
         return employeeId;
     }
 
-    public void setEmployeeId(Long employeeId) {
+    public void setEmployeeId(String employeeId) {
         this.employeeId = employeeId;
     }
 
@@ -112,5 +115,13 @@ public class ProfitSharing {
 
     public void setDelFlag(Boolean delFlag) {
         this.delFlag = delFlag;
+    }
+
+    public String getEmployeeName() {
+        return employeeName;
+    }
+
+    public void setEmployeeName(String employeeName) {
+        this.employeeName = employeeName;
     }
 }

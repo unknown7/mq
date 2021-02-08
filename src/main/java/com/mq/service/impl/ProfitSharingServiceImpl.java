@@ -1,6 +1,8 @@
 package com.mq.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.mq.base.BusinessException;
 import com.mq.base.Enums;
 import com.mq.base.GlobalConstants;
@@ -8,10 +10,12 @@ import com.mq.base.RspCode;
 import com.mq.mapper.PaymentResultMapper;
 import com.mq.mapper.ProfitSharingMapper;
 import com.mq.model.*;
+import com.mq.query.ProfitSharingQuery;
 import com.mq.service.*;
 import com.mq.util.DateUtil;
 import com.mq.util.MD5;
 import com.mq.util.OrderNoGenerator;
+import com.mq.vo.ProfitSharingVo;
 import com.mq.wx.base.WxAPI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -76,6 +80,13 @@ public class ProfitSharingServiceImpl implements ProfitSharingService {
 		}
 	}
 
+	@Override
+	public PageInfo<ProfitSharingVo> findPage(ProfitSharingQuery query) {
+		PageHelper.startPage(query.getPage(), query.getLength());
+		PageInfo<ProfitSharingVo> pageInfo = new PageInfo<>(profitSharingMapper.selectByQuery(query));
+		return pageInfo;
+	}
+
 	@Transactional
 	public void doShare(InvitationRecord invitationRecord) throws Exception {
 		Order order = orderService.getByInvitationId(invitationRecord.getId());
@@ -96,7 +107,7 @@ public class ProfitSharingServiceImpl implements ProfitSharingService {
 		receiver.setAccount(user.getOpenId());
 		receiver.setAmount(rewardPoints.getPoints().multiply(new BigDecimal("100")).setScale(0, BigDecimal.ROUND_HALF_UP).toBigInteger().intValue());
 		receiver.setDescription("微信小程序分账");
-		receiver.setName(employee.geteName());
+		receiver.setName(employee.getEmployeeName());
 		request.setReceivers(Collections.singletonList(receiver));
 		ProfitSharingResponse response = wxAPI.profitSharing(request);
 		if (response.success()) {

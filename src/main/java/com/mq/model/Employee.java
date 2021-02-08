@@ -6,7 +6,7 @@ import java.util.Date;
 public class Employee {
     private Long id;
 
-    private String eName;
+    private String employeeName;
 
     private Integer gender;
 
@@ -46,12 +46,12 @@ public class Employee {
         this.id = id;
     }
 
-    public String geteName() {
-        return eName;
+    public String getEmployeeName() {
+        return employeeName;
     }
 
-    public void seteName(String eName) {
-        this.eName = eName == null ? null : eName.trim();
+    public void setEmployeeName(String employeeName) {
+        this.employeeName = employeeName;
     }
 
     public Integer getGender() {

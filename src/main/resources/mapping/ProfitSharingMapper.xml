@@ -9,13 +9,30 @@
     <result column="f_sharing_amount" property="sharingAmount" jdbcType="DECIMAL" />
     <result column="f_transaction_id" property="transactionId" jdbcType="VARCHAR" />
     <result column="f_order_id" property="orderId" jdbcType="VARCHAR" />
+    <result column="f_employee_id" property="employeeId" jdbcType="BIGINT" />
     <result column="f_created_time" property="createdTime" jdbcType="TIMESTAMP" />
     <result column="f_modified_time" property="modifiedTime" jdbcType="TIMESTAMP" />
     <result column="f_del_flag" property="delFlag" jdbcType="BIT" />
   </resultMap>
+
+  <resultMap id="VoResultMap" type="com.mq.vo.ProfitSharingVo" >
+    <id column="f_id" property="id" jdbcType="BIGINT" />
+    <result column="f_profit_sharing_no" property="profitSharingNo" jdbcType="VARCHAR" />
+    <result column="f_order_no" property="orderNo" jdbcType="VARCHAR" />
+    <result column="f_order_amount" property="orderAmount" jdbcType="DECIMAL" />
+    <result column="f_sharing_amount" property="sharingAmount" jdbcType="DECIMAL" />
+    <result column="f_transaction_id" property="transactionId" jdbcType="VARCHAR" />
+    <result column="f_order_id" property="orderId" jdbcType="VARCHAR" />
+    <result column="f_employee_id" property="employeeId" jdbcType="BIGINT" />
+    <result column="f_created_time" property="createdTime" jdbcType="TIMESTAMP" />
+    <result column="f_modified_time" property="modifiedTime" jdbcType="TIMESTAMP" />
+    <result column="f_del_flag" property="delFlag" jdbcType="BIT" />
+    <result column="f_employee_name" property="employeeName" jdbcType="VARCHAR" />
+  </resultMap>
+
   <sql id="Base_Column_List" >
     f_id, f_profit_sharing_no, f_order_no, f_order_amount, f_sharing_amount, f_transaction_id, 
-    f_order_id, f_created_time, f_modified_time, f_del_flag
+    f_order_id, f_employee_id, f_created_time, f_modified_time, f_del_flag
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -30,11 +47,11 @@
   <insert id="insert" parameterType="com.mq.model.ProfitSharing" >
     insert into t_profit_sharing (f_id, f_profit_sharing_no, f_order_no, 
       f_order_amount, f_sharing_amount, f_transaction_id, 
-      f_order_id, f_created_time, f_modified_time, 
+      f_order_id, f_employee_id, f_created_time, f_modified_time,
       f_del_flag)
     values (#{id,jdbcType=BIGINT}, #{profitSharingNo,jdbcType=VARCHAR}, #{orderNo,jdbcType=VARCHAR}, 
       #{orderAmount,jdbcType=DECIMAL}, #{sharingAmount,jdbcType=DECIMAL}, #{transactionId,jdbcType=VARCHAR}, 
-      #{orderId,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}, #{modifiedTime,jdbcType=TIMESTAMP}, 
+      #{orderId,jdbcType=VARCHAR}, #{employeeId,jdbcType=BIGINT}, #{createdTime,jdbcType=TIMESTAMP}, #{modifiedTime,jdbcType=TIMESTAMP},
       #{delFlag,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" parameterType="com.mq.model.ProfitSharing" >
@@ -60,6 +77,9 @@
       </if>
       <if test="orderId != null" >
         f_order_id,
+      </if>
+      <if test="employeeId != null" >
+        f_employee_id,
       </if>
       <if test="createdTime != null" >
         f_created_time,
@@ -93,6 +113,9 @@
       <if test="orderId != null" >
         #{orderId,jdbcType=VARCHAR},
       </if>
+      <if test="employeeId != null" >
+        #{employeeId,jdbcType=BIGINT},
+      </if>
       <if test="createdTime != null" >
         #{createdTime,jdbcType=TIMESTAMP},
       </if>
@@ -125,6 +148,9 @@
       <if test="orderId != null" >
         f_order_id = #{orderId,jdbcType=VARCHAR},
       </if>
+      <if test="employeeId != null" >
+        f_employee_id = #{employeeId,jdbcType=BIGINT},
+      </if>
       <if test="createdTime != null" >
         f_created_time = #{createdTime,jdbcType=TIMESTAMP},
       </if>
@@ -145,9 +171,40 @@
       f_sharing_amount = #{sharingAmount,jdbcType=DECIMAL},
       f_transaction_id = #{transactionId,jdbcType=VARCHAR},
       f_order_id = #{orderId,jdbcType=VARCHAR},
+      f_employee_id = #{employeeId,jdbcType=BIGINT},
       f_created_time = #{createdTime,jdbcType=TIMESTAMP},
       f_modified_time = #{modifiedTime,jdbcType=TIMESTAMP},
       f_del_flag = #{delFlag,jdbcType=BIT}
     where f_id = #{id,jdbcType=BIGINT}
   </update>
+
+  <select id="selectByQuery" resultMap="VoResultMap">
+    select
+    t1.f_id, t1.f_profit_sharing_no, t1.f_order_no, t1.f_order_amount, t1.f_sharing_amount, t1.f_transaction_id,
+    t1.f_order_id, t1.f_employee_id, t1.f_created_time, t1.f_modified_time, t1.f_del_flag, t2.f_employee_name
+    from t_profit_sharing t1
+    join t_employee t2 on t1.f_employee_id = t2.f_id
+    where t1.f_del_flag = 0
+    <if test="employeeName != null and employeeName != ''">
+      and t2.f_employee_name like concat(concat("%",#{employeeName}),"%")
+    </if>
+    <if test="createdTime != null">
+      and t1.f_created_time = #{createdTime,jdbcType=DATE}
+    </if>
+    <if test="createdTimeBegin != null">
+      and t1.f_created_time &gt;= #{createdTimeBegin,jdbcType=DATE}
+    </if>
+    <if test="createdTimeEnd != null">
+      and t1.f_created_time &lt;= #{createdTimeEnd,jdbcType=DATE}
+    </if>
+    <if test="modifiedTime != null">
+      and t1.f_modified_time = #{modifiedTime,jdbcType=DATE}
+    </if>
+    <if test="modifiedTimeBegin != null">
+      and t1.f_modified_time &gt;= #{modifiedTimeBegin,jdbcType=DATE}
+    </if>
+    <if test="modifiedTimeEnd != null">
+      and t1.f_modified_time &lt;= #{modifiedTimeEnd,jdbcType=DATE}
+    </if>
+  </select>
 </mapper>

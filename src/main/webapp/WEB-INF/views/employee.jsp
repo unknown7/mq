@@ -108,9 +108,9 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="eName"><font color="red">*</font>姓名</label>
+                                    <label for="employeeName"><font color="red">*</font>姓名</label>
                                     <div>
-                                        <input type="text" id="eName" name="eName"/>
+                                        <input type="text" id="employeeName" name="employeeName"/>
                                     </div>
                                 </div>
 
