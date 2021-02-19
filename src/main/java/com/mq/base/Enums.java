@@ -210,5 +210,9 @@ public class Enums {
 		public String getValue() {
 			return value;
 		}
+
+        public static InvitationStatus getByKey(String key) {
+            return Arrays.stream(values()).filter(item -> item.getKey().equals(key)).findFirst().orElseThrow(() -> new BusinessException(RspCode.NO_CORRESPONDENT_ENUM_KEY));
+        }
 	}
 }
