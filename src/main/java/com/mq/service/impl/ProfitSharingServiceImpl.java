@@ -96,12 +96,13 @@ public class ProfitSharingServiceImpl implements ProfitSharingService {
 		User user = userService.getById(invitationRecord.getInviterId());
 		Employee employee = employeeService.getByOpenId(user.getOpenId());
 
+		String profitSharingNo = orderNoGenerator.nextSharingNo();
 		ProfitSharingRequest request = new ProfitSharingRequest();
 		request.setMchId(globalConstants.getMchId());
 		request.setAppId(globalConstants.getAppId());
 		request.setNonceStr(MD5.generate(UUID.randomUUID().toString()));
 		request.setTransactionId(paymentResult.getTransactionId());
-		request.setOutOrderNo("");
+		request.setOutOrderNo(profitSharingNo);
 		ProfitSharingRequest.Receiver receiver = new ProfitSharingRequest.Receiver();
 		receiver.setType("PERSONAL_OPENID");
 		receiver.setAccount(user.getOpenId());
@@ -113,7 +114,7 @@ public class ProfitSharingServiceImpl implements ProfitSharingService {
 		if (response.success()) {
 			Date now = new Date();
 			ProfitSharing profitSharing = new ProfitSharing();
-			profitSharing.setProfitSharingNo(orderNoGenerator.nextSharingNo());
+			profitSharing.setProfitSharingNo(profitSharingNo);
 			profitSharing.setOrderNo(order.getOrderNo());
 			profitSharing.setSharingAmount(rewardPoints.getPoints());
 			profitSharing.setOrderAmount(order.getTotalAmount());
@@ -122,6 +123,7 @@ public class ProfitSharingServiceImpl implements ProfitSharingService {
 			profitSharing.setDelFlag(Boolean.FALSE);
 			profitSharing.setTransactionId(response.getTransactionId());
 			profitSharing.setOrderId(response.getOrderId());
+			profitSharing.setEmployeeId(user.getId());
 
 			rewardPoints.setPointsStatus(Enums.PointsStatus.WITHDRAW_SUCCESS.getKey());
 
@@ -131,7 +133,7 @@ public class ProfitSharingServiceImpl implements ProfitSharingService {
 			rewardPointsService.modify(rewardPoints);
 			invitationRecordService.withdrawSuccess(invitationRecord.getId());
 		} else {
-			throw new BusinessException(RspCode.PROFIT_SHARING_ERROR);
+			throw new BusinessException(response.getErrCodeDes(), RspCode.PROFIT_SHARING_ERROR.getCode());
 		}
 	}
 
