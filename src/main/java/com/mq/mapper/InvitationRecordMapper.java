@@ -1,6 +1,7 @@
 package com.mq.mapper;
 
 import com.mq.model.InvitationRecord;
+import com.mq.vo.InvitationRecordVo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.Date;
@@ -34,4 +35,6 @@ public interface InvitationRecordMapper {
 	);
 
 	int updateStatusByPrimaryKey(@Param("id") Long id, @Param("status") String status);
+
+	List<InvitationRecordVo> selectByInviterId(@Param("inviterId") Long inviterId);
 }

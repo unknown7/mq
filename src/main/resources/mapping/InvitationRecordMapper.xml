@@ -14,6 +14,24 @@
     <result column="f_modified_time" jdbcType="TIMESTAMP" property="modifiedTime" />
     <result column="f_del_flag" jdbcType="BIT" property="delFlag" />
   </resultMap>
+
+    <resultMap id="VoResultMap" type="com.mq.vo.InvitationRecordVo">
+        <id column="f_id" jdbcType="BIGINT" property="id" />
+        <result column="f_invitee_id" jdbcType="BIGINT" property="inviteeId" />
+        <result column="f_invitee_skey" jdbcType="VARCHAR" property="inviteeSkey" />
+        <result column="f_inviter_id" jdbcType="BIGINT" property="inviterId" />
+        <result column="f_share_card_id" jdbcType="BIGINT" property="shareCardId" />
+        <result column="f_goods_id" jdbcType="BIGINT" property="goodsId" />
+        <result column="f_goods_type" jdbcType="VARCHAR" property="goodsType" />
+        <result column="f_status" jdbcType="VARCHAR" property="status" />
+        <result column="f_created_time" jdbcType="TIMESTAMP" property="createdTime" />
+        <result column="f_modified_time" jdbcType="TIMESTAMP" property="modifiedTime" />
+        <result column="f_del_flag" jdbcType="BIT" property="delFlag" />
+        <result column="f_goods_title" jdbcType="VARCHAR" property="goodsTitle" />
+        <result column="f_status_desc" jdbcType="VARCHAR" property="statusDesc" />
+        <result column="f_invitee_nick_name" jdbcType="VARCHAR" property="inviteeNickName" />
+    </resultMap>
+
   <sql id="Base_Column_List">
     f_id, f_invitee_id, f_invitee_skey, f_inviter_id, f_share_card_id, f_goods_id, f_goods_type,
     f_status, f_created_time, f_modified_time, f_del_flag
@@ -218,4 +236,17 @@
         update t_invitation_record set f_status = #{status,jdbcType=VARCHAR}, f_modified_time = now()
         where f_id = #{id,jdbcType=BIGINT}
     </update>
+
+    <select id="selectByInviterId" resultMap="VoResultMap">
+        select
+        t1.f_id, t1.f_invitee_id, t1.f_invitee_skey, t1.f_inviter_id, t1.f_share_card_id, t1.f_goods_id, t1.f_goods_type,
+        t1.f_status, t1.f_created_time, t1.f_modified_time, t1.f_del_flag,
+        t2.f_title as f_goods_title,
+        t3.f_nick_name as f_invitee_nick_name
+        from t_invitation_record t1
+        join t_video t2 on t1.f_goods_id = t2.f_id
+        join t_user t3 on t1.f_invitee_id = t3.f_id
+        where t1.f_inviter_id = #{inviterId,jdbcType=BIGINT}
+        order by t1.f_modified_time desc
+    </select>
 </mapper>

@@ -6,8 +6,12 @@ import com.mq.mapper.ShareCardMapper;
 import com.mq.model.InvitationRecord;
 import com.mq.model.ShareCard;
 import com.mq.service.InvitationRecordService;
+import com.mq.service.UserService;
+import com.mq.vo.InvitationRecordVo;
+import com.mq.vo.UserVo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -21,6 +25,9 @@ public class InvitationRecordServiceImpl implements InvitationRecordService {
 
 	@Resource
 	private ShareCardMapper shareCardMapper;
+
+	@Resource
+	private UserService userService;
 
 	@Override
 	@Transactional
@@ -153,5 +160,17 @@ public class InvitationRecordServiceImpl implements InvitationRecordService {
 	@Transactional
 	public void withdrawSuccess(Long id) {
 		invitationRecordMapper.updateStatusByPrimaryKey(id, Enums.InvitationStatus.SUCCESS.getKey());
+	}
+
+	@Override
+	public List<InvitationRecordVo> findByInviterSkey(String skey) {
+		UserVo userVo = userService.getVoBySkey(skey);
+		List<InvitationRecordVo> invitationRecords = invitationRecordMapper.selectByInviterId(userVo.getId());
+		if (!CollectionUtils.isEmpty(invitationRecords)) {
+			invitationRecords.forEach(record -> {
+				record.setStatusDesc(Enums.InvitationStatus.getByKey(record.getStatus()).getValue());
+			});
+		}
+		return invitationRecords;
 	}
 }
