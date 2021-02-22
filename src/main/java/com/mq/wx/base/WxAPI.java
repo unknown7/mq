@@ -12,7 +12,6 @@ import com.mq.util.MD5;
 import com.mq.util.MapUtil;
 import com.mq.wx.vo.accessToken.AccessTokenResponse;
 import com.mq.wx.vo.auth.AuthResponse;
-import jdk.nashorn.internal.objects.Global;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
@@ -20,12 +19,12 @@ import org.dom4j.io.OutputFormat;
 import org.dom4j.io.XMLWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import javax.annotation.Resource;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -40,11 +39,11 @@ import java.util.UUID;
 @Component
 public class WxAPI {
     protected static final Logger logger = LoggerFactory.getLogger(WxAPI.class);
-    @javax.annotation.Resource
+    @Resource
     private Http http;
-    @javax.annotation.Resource
+	@Resource
     private RedisObjectHolder redisObjectHolder;
-    @javax.annotation.Resource
+	@Resource
     private GlobalConstants globalConstants;
 
     /**
@@ -88,7 +87,7 @@ public class WxAPI {
         params.put("page", page);
         params.put("scene", shareCardId);
         params.put("is_hyaline", true);
-        ResponseEntity<Resource> responseEntity = http.postForEntity(domain.toString(), params, Resource.class, MediaType.APPLICATION_JSON_UTF8);
+        ResponseEntity<org.springframework.core.io.Resource> responseEntity = http.postForEntity(domain.toString(), params, org.springframework.core.io.Resource.class, MediaType.APPLICATION_JSON_UTF8);
         MediaType contentType = responseEntity.getHeaders().getContentType();
         System.err.println(contentType);
         logger.info("contentType:" + contentType);
