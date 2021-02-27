@@ -38,6 +38,8 @@ public class Employee {
 
     private Boolean paymentShareReceiver;
 
+    private Integer status;
+
     public Long getId() {
         return id;
     }
@@ -173,4 +175,12 @@ public class Employee {
     public void setPaymentShareReceiver(Boolean paymentShareReceiver) {
         this.paymentShareReceiver = paymentShareReceiver;
     }
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
 }

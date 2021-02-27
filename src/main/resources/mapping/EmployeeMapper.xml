@@ -19,6 +19,7 @@
     <result column="f_open_id" jdbcType="VARCHAR" property="openId" />
     <result column="f_profit_rate" jdbcType="DECIMAL" property="profitRate" />
     <result column="f_payment_share_receiver" jdbcType="BIT" property="paymentShareReceiver" />
+    <result column="f_status" jdbcType="INTEGER" property="status" />
   </resultMap>
   <sql id="Base_Column_List">
     f_id, f_employee_name, f_gender, f_birth, f_age, f_avatar_real_name, f_avatar_name, f_created_time,
