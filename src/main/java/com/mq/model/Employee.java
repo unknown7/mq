@@ -38,7 +38,11 @@ public class Employee {
 
     private Boolean paymentShareReceiver;
 
-    private Integer status;
+	/**
+	 * 1：在职
+	 * 2：离职
+	 */
+	private Integer status;
 
     public Long getId() {
         return id;
