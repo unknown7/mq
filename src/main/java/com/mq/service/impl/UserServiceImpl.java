@@ -251,6 +251,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getById(Long id) {
+		PageHelper.startPage(1, 10);
         return userMapper.selectByPrimaryKey(id);
     }
 }
