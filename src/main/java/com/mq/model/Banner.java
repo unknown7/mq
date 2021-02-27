@@ -23,6 +23,8 @@ public class Banner {
 
     private String bName;
 
+    private String collection;
+
     public Long getId() {
         return id;
     }
@@ -102,4 +104,12 @@ public class Banner {
     public void setbName(String bName) {
         this.bName = bName == null ? null : bName.trim();
     }
+
+	public String getCollection() {
+		return collection;
+	}
+
+	public void setCollection(String collection) {
+		this.collection = collection;
+	}
 }
