@@ -32,6 +32,4 @@ public interface BasicConfigService {
     Banner selectOneBannerById(Long id);
 
     List<Banner> findBanner(BannerQuery query);
-
-    void checkConfigQualification();
 }

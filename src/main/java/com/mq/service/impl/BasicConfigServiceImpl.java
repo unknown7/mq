@@ -178,9 +178,4 @@ public class BasicConfigServiceImpl implements BasicConfigService {
         List<Banner> banners = bannerMapper.selectByQuery(query);
         return banners;
     }
-
-	@Override
-	public void checkConfigQualification() {
-
-	}
 }

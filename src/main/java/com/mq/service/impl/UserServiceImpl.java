@@ -225,16 +225,22 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserVo getVoBySkey(String skey) {
-        UserVo userVo = redisObjectHolder.getUserInfo(skey);
-        if (userVo == null) {
-            User user = userMapper.selectBySkey(skey);
-            if (user != null) {
-                userVo = new UserVo();
-                BeanUtils.copyProperties(user, userVo);
-                redisObjectHolder.setUserInfo(skey, userVo);
-            }
-        }
-        return userVo;
+    	try {
+
+			UserVo userVo = redisObjectHolder.getUserInfo(skey);
+			if (userVo == null) {
+				User user = userMapper.selectBySkey(skey);
+				if (user != null) {
+					userVo = new UserVo();
+					BeanUtils.copyProperties(user, userVo);
+					redisObjectHolder.setUserInfo(skey, userVo);
+				}
+			}
+			return userVo;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException();
+		}
     }
 
     @Override
