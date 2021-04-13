@@ -186,25 +186,25 @@
         from t_invitation_record
         where f_del_flag = 0
         <if test="inviteeId != null">
-            f_invitee_id = #{inviteeId,jdbcType=BIGINT},
+            and f_invitee_id = #{inviteeId,jdbcType=BIGINT}
         </if>
         <if test="inviteeSkey != null">
-            f_invitee_skey = #{inviteeSkey,jdbcType=VARCHAR},
+            and f_invitee_skey = #{inviteeSkey,jdbcType=VARCHAR}
         </if>
         <if test="inviterId != null">
-            f_inviter_id = #{inviterId,jdbcType=BIGINT},
+            and f_inviter_id = #{inviterId,jdbcType=BIGINT}
         </if>
         <if test="shareCardId != null">
-            f_share_card_id = #{shareCardId,jdbcType=BIGINT},
+            and f_share_card_id = #{shareCardId,jdbcType=BIGINT}
         </if>
         <if test="goodsId != null">
-            f_goods_id = #{goodsId,jdbcType=BIGINT},
+            and f_goods_id = #{goodsId,jdbcType=BIGINT}
         </if>
         <if test="goodsType != null">
-            f_goods_type = #{goodsType,jdbcType=VARCHAR},
+            and f_goods_type = #{goodsType,jdbcType=VARCHAR}
         </if>
         <if test="status != null">
-            f_status = #{status,jdbcType=VARCHAR},
+            and f_status = #{status,jdbcType=VARCHAR}
         </if>
         order by f_created_time desc limit 1
     </select>
@@ -212,7 +212,7 @@
     <update id="updateByInviterIdBeforeDate">
         update t_invitation_record set f_status = #{newStatus,jdbcType=VARCHAR}, f_modified_time = now()
         where f_inviterId = #{inviterId,jdbcType=BIGINT} and
-        f_status = #{originalStatus,jdbcType=VARCHAR}
+        f_status = #{originalStatus,jdbcType=VARCHAR} and
         f_create_time &lt;= #{now,jdbcType=TIMESTAMP}
     </update>
 

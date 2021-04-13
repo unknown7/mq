@@ -12,7 +12,7 @@ import com.mq.service.PaymentService;
 import com.mq.service.StatisticsService;
 import com.mq.service.UserService;
 import com.mq.util.DateUtil;
-import com.mq.util.MD5;
+import com.mq.util.SignUtil;
 import com.mq.util.MapUtil;
 import com.mq.util.OrderNoGenerator;
 import com.mq.vo.UserVo;
@@ -130,7 +130,7 @@ public class PaymentServiceImpl implements PaymentService {
         UnifiedOrderRequest request = new UnifiedOrderRequest();
         request.setAppid(globalConstants.getAppId());
         request.setMchId(globalConstants.getMchId());
-        request.setNonceStr(MD5.generate(UUID.randomUUID().toString()));
+        request.setNonceStr(SignUtil.md5(UUID.randomUUID().toString()));
         request.setNotifyUrl(globalConstants.getNotifyUrl());
         request.setOutTradeNo(order.getOrderNo());
         request.setTradeType(globalConstants.getTradeType());
@@ -165,12 +165,12 @@ public class PaymentServiceImpl implements PaymentService {
 
         Map<String, Object> signData = Maps.newLinkedHashMap();
         signData.put("appId", globalConstants.getAppId());
-        signData.put("nonceStr", MD5.generate(UUID.randomUUID().toString()));
+        signData.put("nonceStr", SignUtil.md5(UUID.randomUUID().toString()));
         signData.put("package", "prepay_id=" + unifiedOrderResponse.getPrepayId());
-        signData.put("signType", "MD5");
+        signData.put("signType", "SignUtil");
         signData.put("timeStamp", System.currentTimeMillis() / 1000);
         signData.put("key", globalConstants.getApiKey());
-        String paySign = MD5.generate(MapUtil.map2str(signData)).toUpperCase();
+        String paySign = SignUtil.md5(MapUtil.map2str(signData)).toUpperCase();
         UnifiedOrderVo unifiedOrderVo = new UnifiedOrderVo();
         unifiedOrderVo.setNonceStr(signData.get("nonceStr").toString());
         unifiedOrderVo.set_package(signData.get("package").toString());
@@ -199,7 +199,7 @@ public class PaymentServiceImpl implements PaymentService {
         String s = MapUtil.map2str(signData);
         s = s + "&key=" + globalConstants.getApiKey();
         Element sign = root.element("sign");
-        Assert.isTrue(MD5.generate(s).toUpperCase().equals(sign.getStringValue()), "验签失败");
+        Assert.isTrue(SignUtil.md5(s).toUpperCase().equals(sign.getStringValue()), "验签失败");
 
         Element appid = root.element("appid");
         Element attach = root.element("attach");

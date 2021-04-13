@@ -8,12 +8,11 @@ import com.mq.base.RedisObjectHolder;
 import com.mq.mapper.ShareCardMapper;
 import com.mq.mapper.UserMapper;
 import com.mq.model.InvitationRecord;
-import com.mq.model.ShareCard;
 import com.mq.model.User;
 import com.mq.query.UserQuery;
 import com.mq.service.InvitationRecordService;
 import com.mq.service.UserService;
-import com.mq.util.MD5;
+import com.mq.util.SignUtil;
 import com.mq.util.WxDecrptUtil;
 import com.mq.vo.UserVo;
 import com.mq.wx.base.WxAPI;
@@ -57,7 +56,7 @@ public class UserServiceImpl implements UserService {
         /**
          * 注册用户
          */
-        String skey = MD5.generate(temporaryUser.getOpenId());
+        String skey = SignUtil.md5(temporaryUser.getOpenId());
         Date now = new Date();
         user.setCreatedTime(now);
         user.setDelFlag(Boolean.FALSE);
@@ -111,7 +110,7 @@ public class UserServiceImpl implements UserService {
         if (!StringUtils.isEmpty(authResponse.getSession_key())) {
             String sessionKey = authResponse.getSession_key();
             String openId = authResponse.getOpenid();
-            String openIdMD5 = MD5.generate(authResponse.getOpenid());
+            String openIdMD5 = SignUtil.md5(authResponse.getOpenid());
             TemporaryUser temporaryUser = new TemporaryUser();
             temporaryUser.setSkey(openIdMD5);
             temporaryUser.setSessionKey(sessionKey);

@@ -11,7 +11,6 @@ import com.mq.mapper.OrderMapper;
 import com.mq.mapper.RewardPointsMapper;
 import com.mq.mapper.VideoClassificationMapper;
 import com.mq.model.Order;
-import com.mq.model.ShareCard;
 import com.mq.model.VideoClassification;
 import com.mq.query.VideoClassificationQuery;
 import com.mq.service.MenuService;
@@ -21,7 +20,7 @@ import com.mq.util.OrderNoGenerator;
 import com.mq.base.RedisObjectHolder;
 import com.mq.mapper.MenuMapper;
 import com.mq.model.Menu;
-import com.mq.util.MD5;
+import com.mq.util.SignUtil;
 import com.mq.vo.MenuTree;
 import com.mq.vo.UserVo;
 import com.mq.wx.base.WxAPI;
@@ -227,7 +226,7 @@ public class SpringBootStartApplicationTest {
          * nonce_str
          */
         Element nonce_str = xml.addElement("nonce_str");
-        nonce_str.setText(MD5.generate(UUID.randomUUID().toString()));
+        nonce_str.setText(SignUtil.md5(UUID.randomUUID().toString()));
         /**
          * body
          */
@@ -279,7 +278,7 @@ public class SpringBootStartApplicationTest {
         signData.put("trade_type", trade_type.getStringValue());
         signData.put("key", "a02ec5baf0987e3857dd1980c5602252");
         System.err.println(MapUtil.map2str(signData));
-        String signStr = MD5.generate(MapUtil.map2str(signData)).toUpperCase();
+        String signStr = SignUtil.md5(MapUtil.map2str(signData)).toUpperCase();
         System.err.println(signStr);
         sign.setText(signStr);
         OutputFormat format = OutputFormat.createCompactFormat();
@@ -413,9 +412,9 @@ public class SpringBootStartApplicationTest {
     }
 
     public static void main(String[] args) throws Exception {
-        System.err.println(MD5.generate("123456"));
-        System.err.println(MD5.generate("xiaoxiao900529"));
-        System.err.println(MD5.generate("x1tVKvwXVwIHwX79puI="));
+        System.err.println(SignUtil.md5("123456"));
+        System.err.println(SignUtil.md5("xiaoxiao900529"));
+        System.err.println(SignUtil.md5("x1tVKvwXVwIHwX79puI="));
         System.err.println(new BigDecimal("12.30").multiply(new BigDecimal("100")).setScale(0, BigDecimal.ROUND_HALF_UP));
         System.err.println(System.currentTimeMillis());
         String a = new StringBuilder("t").toString();

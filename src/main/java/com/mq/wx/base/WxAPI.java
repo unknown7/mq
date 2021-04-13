@@ -8,7 +8,7 @@ import com.mq.base.GlobalConstants;
 import com.mq.base.Http;
 import com.mq.base.RedisObjectHolder;
 import com.mq.model.*;
-import com.mq.util.MD5;
+import com.mq.util.SignUtil;
 import com.mq.util.MapUtil;
 import com.mq.wx.vo.accessToken.AccessTokenResponse;
 import com.mq.wx.vo.auth.AuthResponse;
@@ -229,7 +229,7 @@ public class WxAPI {
         signData.put("total_fee", total_fee.getStringValue());
         signData.put("trade_type", trade_type.getStringValue());
         signData.put("key", globalConstants.getApiKey());
-        String signStr = MD5.generate(MapUtil.map2str(signData)).toUpperCase();
+        String signStr = SignUtil.md5(MapUtil.map2str(signData)).toUpperCase();
         sign.setText(signStr);
         OutputFormat format = OutputFormat.createCompactFormat();
         StringWriter requestString = new StringWriter();
@@ -307,7 +307,8 @@ public class WxAPI {
 		signData.put("mch_id", mch_id.getStringValue());
 		signData.put("nonce_str", nonce_str.getStringValue());
 		signData.put("receiver", receiver.getStringValue());
-		String signStr = MD5.generate(MapUtil.map2str(signData)).toUpperCase();
+		signData.put("key", globalConstants.getApiKey());
+		String signStr = SignUtil.HMACSHA256(MapUtil.map2str(signData), globalConstants.getApiKey()).toUpperCase();
 		sign.setText(signStr);
 		OutputFormat format = OutputFormat.createCompactFormat();
 		StringWriter requestString = new StringWriter();
@@ -333,7 +334,9 @@ public class WxAPI {
 		Element r_err_code_des = root.element("err_code_des");
 		ProfitSharingAddReceiverResponse response = new ProfitSharingAddReceiverResponse();
 		response.setReturnCode(r_return_code.getStringValue());
-		response.setReturnMsg(r_return_msg.getStringValue());
+		if (r_return_msg != null) {
+			response.setReturnMsg(r_return_msg.getStringValue());
+		}
 		response.setAppid(r_appid.getStringValue());
 		response.setMchId(r_mch_id.getStringValue());
 		response.setNonceStr(r_nonce_str.getStringValue());
@@ -383,7 +386,8 @@ public class WxAPI {
 		signData.put("mch_id", mch_id.getStringValue());
 		signData.put("nonce_str", nonce_str.getStringValue());
 		signData.put("receiver", receiver.getStringValue());
-		String signStr = MD5.generate(MapUtil.map2str(signData)).toUpperCase();
+		signData.put("key", globalConstants.getApiKey());
+		String signStr = SignUtil.HMACSHA256(MapUtil.map2str(signData), globalConstants.getApiKey()).toUpperCase();
 		sign.setText(signStr);
 		OutputFormat format = OutputFormat.createCompactFormat();
 		StringWriter requestString = new StringWriter();
@@ -409,7 +413,9 @@ public class WxAPI {
 		Element r_err_code_des = root.element("err_code_des");
 		ProfitSharingRemoveReceiverResponse response = new ProfitSharingRemoveReceiverResponse();
 		response.setReturnCode(r_return_code.getStringValue());
-		response.setReturnMsg(r_return_msg.getStringValue());
+		if (r_return_msg != null) {
+			response.setReturnMsg(r_return_msg.getStringValue());
+		}
 		response.setAppid(r_appid.getStringValue());
 		response.setMchId(r_mch_id.getStringValue());
 		response.setNonceStr(r_nonce_str.getStringValue());
@@ -471,7 +477,7 @@ public class WxAPI {
 		signData.put("receivers", receivers.getStringValue());
 		signData.put("transaction_id", transaction_id.getStringValue());
 		signData.put("key", globalConstants.getApiKey());
-		String signStr = MD5.generate(MapUtil.map2str(signData)).toUpperCase();
+		String signStr = SignUtil.HMACSHA256(MapUtil.map2str(signData), globalConstants.getApiKey()).toUpperCase();
 		sign.setText(signStr);
 		OutputFormat format = OutputFormat.createCompactFormat();
 		StringWriter requestString = new StringWriter();
@@ -499,7 +505,9 @@ public class WxAPI {
 		Element r_err_code_des = root.element("err_code_des");
 		ProfitSharingResponse response = new ProfitSharingResponse();
 		response.setReturnCode(r_return_code.getStringValue());
-		response.setReturnMsg(r_return_msg.getStringValue());
+		if (r_return_msg != null) {
+			response.setReturnMsg(r_return_msg.getStringValue());
+		}
 		response.setAppid(r_appid.getStringValue());
 		response.setMchId(r_mch_id.getStringValue());
 		response.setNonceStr(r_nonce_str.getStringValue());

@@ -8,10 +8,8 @@ import com.mq.model.WhiteList;
 import com.mq.service.EmployeeService;
 import com.mq.service.UserService;
 import com.mq.service.WhiteListService;
-import com.mq.util.MD5;
-import com.mq.util.MD5Util;
+import com.mq.util.SignUtil;
 import com.mq.vo.UserVo;
-import org.apache.commons.codec.digest.Md5Crypt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -75,7 +73,7 @@ public class StartupListener implements ApplicationListener<ContextRefreshedEven
 			Map<String, Employee> employees = employeeService.findAllGroupByOpenId();
 			Map<String, String> userVos = Maps.newHashMap();
             for (User user : users) {
-                String skey = MD5.generate(user.getOpenId());
+                String skey = SignUtil.md5(user.getOpenId());
                 UserVo vo = new UserVo();
                 BeanUtils.copyProperties(user, vo);
 				vo.setIsEmployee(Optional.ofNullable(employees.get(user.getOpenId())).map(i -> Boolean.TRUE).orElse(Boolean.FALSE));

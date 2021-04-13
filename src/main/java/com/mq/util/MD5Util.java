@@ -8,7 +8,7 @@ public class MD5Util {
         if (originString != null) {
             try {
                 // 指定加密的方式为MD5
-                MessageDigest md = MessageDigest.getInstance("MD5");
+                MessageDigest md = MessageDigest.getInstance("SignUtil");
                 // 进行加密运算
                 byte bytes[] = md.digest(originString.getBytes("ISO8859-1"));
                 for (int i = 0; i < bytes.length; i++) {

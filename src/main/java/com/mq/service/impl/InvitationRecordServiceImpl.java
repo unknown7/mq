@@ -39,6 +39,7 @@ public class InvitationRecordServiceImpl implements InvitationRecordService {
 		InvitationRecord history = invitationRecordMapper.selectRecentlyByQuery(query);
 		if (history == null) {
 			ShareCard shareCard = shareCardMapper.selectByPrimaryKey(shareCardId);
+			UserVo userVo = userService.getVoBySkey(skey);
 
 			Date now = new Date();
 			InvitationRecord invitationRecord = new InvitationRecord();
@@ -49,6 +50,9 @@ public class InvitationRecordServiceImpl implements InvitationRecordService {
 			invitationRecord.setCreatedTime(now);
 			invitationRecord.setModifiedTime(now);
 			invitationRecord.setInviterId(shareCard.getUserId());
+			invitationRecord.setGoodsId(shareCard.getGoodsId());
+			invitationRecord.setGoodsType(shareCard.getGoodsType());
+			invitationRecord.setInviteeId(userVo.getId());
 
 			invitationRecordMapper.insertSelective(invitationRecord);
 		}

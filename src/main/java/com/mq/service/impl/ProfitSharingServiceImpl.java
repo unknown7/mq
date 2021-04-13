@@ -13,7 +13,7 @@ import com.mq.model.*;
 import com.mq.query.ProfitSharingQuery;
 import com.mq.service.*;
 import com.mq.util.DateUtil;
-import com.mq.util.MD5;
+import com.mq.util.SignUtil;
 import com.mq.util.OrderNoGenerator;
 import com.mq.vo.ProfitSharingVo;
 import com.mq.wx.base.WxAPI;
@@ -100,7 +100,7 @@ public class ProfitSharingServiceImpl implements ProfitSharingService {
 		ProfitSharingRequest request = new ProfitSharingRequest();
 		request.setMchId(globalConstants.getMchId());
 		request.setAppId(globalConstants.getAppId());
-		request.setNonceStr(MD5.generate(UUID.randomUUID().toString()));
+		request.setNonceStr(SignUtil.md5(UUID.randomUUID().toString()));
 		request.setTransactionId(paymentResult.getTransactionId());
 		request.setOutOrderNo(profitSharingNo);
 		ProfitSharingRequest.Receiver receiver = new ProfitSharingRequest.Receiver();
