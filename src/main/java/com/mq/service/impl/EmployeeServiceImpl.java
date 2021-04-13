@@ -162,14 +162,13 @@ public class EmployeeServiceImpl implements EmployeeService {
             }
 
 
-			String skey = SignUtil.md5(employee.getOpenId());
-			UserVo userInfo = redisObjectHolder.getUserInfo(skey);
-
+			String skey;
 			if (StringUtils.isEmpty(employee.getOpenId()) && !StringUtils.isEmpty(byPrimaryKey.getOpenId())) {
+				skey = SignUtil.md5(byPrimaryKey.getOpenId());
 				// 删除分账用户
 				ProfitSharingRemoveReceiverRequest request = new ProfitSharingRemoveReceiverRequest();
 				ProfitSharingRemoveReceiverRequest.Receiver receiver = new ProfitSharingRemoveReceiverRequest.Receiver();
-				receiver.setAccount(employee.getOpenId());
+				receiver.setAccount(byPrimaryKey.getOpenId());
 				receiver.setType("PERSONAL_OPENID");
 				request.setReceiver(receiver);
 				request.setAppId(globalConstants.getAppId());
@@ -177,9 +176,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 				request.setNonceStr(SignUtil.md5(UUID.randomUUID().toString()));
 				ProfitSharingRemoveReceiverResponse response = wxAPI.profitSharingRemoveReceiver(request);
 				employee.setPaymentShareReceiver(Boolean.FALSE);
+				UserVo userInfo = redisObjectHolder.getUserInfo(skey);
 				userInfo.setIsEmployee(Boolean.FALSE);
 				redisObjectHolder.setUserInfo(skey, userInfo);
 			} else if (!StringUtils.isEmpty(employee.getOpenId()) && StringUtils.isEmpty(byPrimaryKey.getOpenId())) {
+				skey = SignUtil.md5(employee.getOpenId());
 				// 添加分账用户
 				ProfitSharingAddReceiverRequest request = new ProfitSharingAddReceiverRequest();
 				ProfitSharingAddReceiverRequest.Receiver receiver = new ProfitSharingAddReceiverRequest.Receiver();
@@ -193,6 +194,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 				request.setNonceStr(SignUtil.md5(UUID.randomUUID().toString()));
 				ProfitSharingAddReceiverResponse response = wxAPI.profitSharingAddReceiver(request);
 				employee.setPaymentShareReceiver(Boolean.TRUE);
+				UserVo userInfo = redisObjectHolder.getUserInfo(skey);
 				userInfo.setIsEmployee(Boolean.TRUE);
 				redisObjectHolder.setUserInfo(skey, userInfo);
 			}
