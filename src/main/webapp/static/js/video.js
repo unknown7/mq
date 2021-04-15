@@ -631,10 +631,10 @@ var progress = function () {
     var video = $('#videoUploadForm input[name=video]').get(0).files[0];
     var kb = video.size / 1000;
     /**
-     * 默认1024KB / 秒
+     * 默认256KB / 秒
      * @type {number}
      */
-    var simulation = kb / 1024;
+    var simulation = kb / 256;
     var section = 100 / simulation;
     var denominator = 1;
     var step = 0.01;
@@ -643,7 +643,7 @@ var progress = function () {
     var cal = 0;
     var interval = setInterval(function () {
         if (!complete) {
-            cal = Math.format(section / denominator, 7);
+            cal = Math.format(section / denominator, 2);
             result += cal;
             $progressbar.progressbar("value", result);
             denominator = denominator + step;
