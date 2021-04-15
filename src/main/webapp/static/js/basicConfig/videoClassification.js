@@ -26,6 +26,13 @@ $(function () {
                 }
             },
             {
+                "data": "defaultProfitSale",
+                "class": "text-center",
+                "render": function (data, type, row) {
+                    return (Math.format(data * 100, 2)) + "%";
+                }
+            },
+            {
                 "data": "defaultFreeWatchTime",
                 "class": "text-center",
                 "render": function (data, type, row) {
@@ -192,7 +199,7 @@ $(function () {
         },
         invalidHandler: function (form, e) {
             var shakes = $(e.currentElements).not('.valid');
-            _shake($(shakes).not("#defaultProfitShareValue, #defaultFreeWatchTimeValue").closest('.form-group'));
+            _shake($(shakes).not("#defaultProfitShareValue, #defaultProfitSaleValue, #defaultFreeWatchTimeValue").closest('.form-group'));
         }
     });
 
@@ -283,7 +290,7 @@ var editClassification = function (id) {
                 var that = $(this);
                 var value = result[that.attr('name')];
                 if (that.attr('type') == 'number') {
-                    if (that.attr('name') == 'defaultProfitShare') {
+                    if (that.attr('name') == 'defaultProfitShare' || that.attr('name') == 'defaultProfitSale') {
                         value = Math.format(value * 100, 2);
                     }
                     that.val(value).keyup();

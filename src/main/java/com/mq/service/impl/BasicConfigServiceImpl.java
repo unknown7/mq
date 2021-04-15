@@ -49,6 +49,13 @@ public class BasicConfigServiceImpl implements BasicConfigService {
                     )
             );
         }
+		if (videoClassification.getDefaultProfitSale() != null) {
+			videoClassification.setDefaultProfitSale(
+					videoClassification.getDefaultProfitSale().divide(
+							new BigDecimal("100")
+					)
+			);
+		}
         /**
          * 新增
          */

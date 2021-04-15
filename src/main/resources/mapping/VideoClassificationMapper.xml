@@ -10,11 +10,12 @@
     <result column="f_sort" jdbcType="INTEGER" property="sort" />
     <result column="f_desc" jdbcType="VARCHAR" property="desc" />
     <result column="f_default_profit_share" jdbcType="DECIMAL" property="defaultProfitShare" />
+    <result column="f_default_profit_sale" jdbcType="DECIMAL" property="defaultProfitSale" />
     <result column="f_default_free_watch_time" jdbcType="INTEGER" property="defaultFreeWatchTime" />
   </resultMap>
   <sql id="Base_Column_List">
     f_id, f_v_name, f_created_time, f_modified_time, f_del_flag, f_sort, f_desc, f_default_profit_share, 
-    f_default_free_watch_time
+    f_default_profit_sale, f_default_free_watch_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -29,11 +30,13 @@
   <insert id="insert" parameterType="com.mq.model.VideoClassification">
     insert into t_video_classification (f_id, f_v_name, f_created_time, 
       f_modified_time, f_del_flag, f_sort, 
-      f_desc, f_default_profit_share, f_default_free_watch_time
+      f_desc, f_default_profit_share,
+      f_default_profit_sale, f_default_free_watch_time
       )
     values (#{id,jdbcType=BIGINT}, #{vName,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}, 
       #{modifiedTime,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=BIT}, #{sort,jdbcType=INTEGER}, 
-      #{desc,jdbcType=VARCHAR}, #{defaultProfitShare,jdbcType=DECIMAL}, #{defaultFreeWatchTime,jdbcType=INTEGER}
+      #{desc,jdbcType=VARCHAR}, #{defaultProfitShare,jdbcType=DECIMAL},
+      #{defaultProfitSale,jdbcType=DECIMAL}, #{defaultFreeWatchTime,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.mq.model.VideoClassification">
@@ -63,6 +66,9 @@
       <if test="defaultProfitShare != null">
         f_default_profit_share,
       </if>
+        <if test="defaultProfitSale != null">
+            f_default_profit_sale,
+        </if>
       <if test="defaultFreeWatchTime != null">
         f_default_free_watch_time,
       </if>
@@ -92,6 +98,9 @@
       <if test="defaultProfitShare != null">
         #{defaultProfitShare,jdbcType=DECIMAL},
       </if>
+        <if test="defaultProfitSale != null">
+            #{defaultProfitSale,jdbcType=DECIMAL},
+        </if>
       <if test="defaultFreeWatchTime != null">
         #{defaultFreeWatchTime,jdbcType=INTEGER},
       </if>
@@ -121,6 +130,9 @@
       <if test="defaultProfitShare != null">
         f_default_profit_share = #{defaultProfitShare,jdbcType=DECIMAL},
       </if>
+        <if test="defaultProfitSale != null">
+            f_default_profit_sale = #{defaultProfitSale,jdbcType=DECIMAL},
+        </if>
       <if test="defaultFreeWatchTime != null">
         f_default_free_watch_time = #{defaultFreeWatchTime,jdbcType=INTEGER},
       </if>
@@ -136,6 +148,7 @@
       f_sort = #{sort,jdbcType=INTEGER},
       f_desc = #{desc,jdbcType=VARCHAR},
       f_default_profit_share = #{defaultProfitShare,jdbcType=DECIMAL},
+      f_default_profit_sale = #{defaultProfitSale,jdbcType=DECIMAL},
       f_default_free_watch_time = #{defaultFreeWatchTime,jdbcType=INTEGER}
     where f_id = #{id,jdbcType=BIGINT}
   </update>
@@ -178,6 +191,9 @@
     <if test="defaultProfitShare != null">
       and f_default_profit_share = #{defaultProfitShare,jdbcType=DECIMAL}
     </if>
+      <if test="defaultProfitSale != null">
+          and f_default_profit_sale = #{defaultProfitSale,jdbcType=DECIMAL}
+      </if>
     <if test="defaultFreeWatchTime != null">
       and f_default_free_watch_time = #{defaultFreeWatchTime,jdbcType=INTEGER}
     </if>
@@ -219,6 +235,9 @@
     <if test="defaultProfitShare != null">
       and f_default_profit_share = #{defaultProfitShare,jdbcType=DECIMAL}
     </if>
+      <if test="defaultProfitSale != null">
+          and f_default_profit_sale = #{defaultProfitSale,jdbcType=DECIMAL}
+      </if>
     <if test="defaultFreeWatchTime != null">
       and f_default_free_watch_time = #{defaultFreeWatchTime,jdbcType=INTEGER}
     </if>

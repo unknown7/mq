@@ -29,6 +29,7 @@
                 <th width="10%" class="min-mobile-l">名称</th>
                 <th width="3%" class="min-mobile-l">排序</th>
                 <th width="7%" class="min-mobile-l">分享提成</th>
+                <th width="7%" class="min-mobile-l">销售提成</th>
                 <th width="7%" class="min-mobile-l">免费观看时长</th>
                 <th width="10%" class="min-mobile-l">最后修改时间</th>
                 <th width="20%" class="min-mobile-l">描述</th>
@@ -80,6 +81,21 @@
                                        onkeyup="$('#defaultProfitShare').slider({value: $(this).val()});">
                                 <span style="width: 3%;padding-left: 5px;padding-top: 10px;font-size: 16px;">%</span>
                                 <span id="defaultProfitShare" class="ui-slider-simple ui-slider-orange default-value-slider"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label no-padding-right" for="defaultProfitSale"> 销售提成 </label>
+
+                            <div class="col-sm-9">
+                                <input class="default-value-input" type="number" max="100" min="0" value="0"
+                                       id="defaultProfitSaleValue"
+                                       name="defaultProfitSale"
+                                       style="width: 10%;float: left;"
+                                       onfocus="$(this).select();"
+                                       onkeyup="$('#defaultProfitSale').slider({value: $(this).val()});">
+                                <span style="width: 3%;padding-left: 5px;padding-top: 10px;font-size: 16px;">%</span>
+                                <span id="defaultProfitSale" class="ui-slider-simple ui-slider-orange default-value-slider"></span>
                             </div>
                         </div>
 
