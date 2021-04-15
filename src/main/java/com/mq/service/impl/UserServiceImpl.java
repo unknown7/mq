@@ -77,6 +77,7 @@ public class UserServiceImpl implements UserService {
          */
         UserVo userVo = new UserVo();
         BeanUtils.copyProperties(user, userVo);
+		userVo.setIsEmployee(Boolean.FALSE);
         redisObjectHolder.setUserInfo(skey, userVo);
         /**
          * 删除临时用户缓存
