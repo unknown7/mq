@@ -277,6 +277,7 @@ public class PaymentServiceImpl implements PaymentService {
                             rewardPoints.setCreatedTime(now);
                             rewardPoints.setModifiedTime(now);
                             rewardPoints.setDelFlag(Boolean.FALSE);
+							rewardPoints.setOrderId(order.getId());
                             rewardPointsMapper.insertSelective(rewardPoints);
 
 							invitationRecordService.purchased(order.getInvitationId());
