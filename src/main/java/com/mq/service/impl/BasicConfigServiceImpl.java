@@ -3,8 +3,10 @@ package com.mq.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.mq.base.GlobalConstants;
+import com.mq.mapper.AboutUsMapper;
 import com.mq.mapper.BannerMapper;
 import com.mq.mapper.VideoClassificationMapper;
+import com.mq.model.AboutUs;
 import com.mq.model.Banner;
 import com.mq.model.VideoClassification;
 import com.mq.query.BannerQuery;
@@ -30,6 +32,8 @@ public class BasicConfigServiceImpl implements BasicConfigService {
     private VideoClassificationMapper videoClassificationMapper;
     @Resource
     private BannerMapper bannerMapper;
+    @Resource
+	private AboutUsMapper aboutUsMapper;
 
     @Override
     public PageInfo<VideoClassification> findClassificationPageByQuery(VideoClassificationQuery query) {
@@ -185,4 +189,9 @@ public class BasicConfigServiceImpl implements BasicConfigService {
         List<Banner> banners = bannerMapper.selectByQuery(query);
         return banners;
     }
+
+	@Override
+	public AboutUs getAboutUs() {
+		return aboutUsMapper.selectOne();
+	}
 }

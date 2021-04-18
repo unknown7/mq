@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mq.mapper.AboutUsMapper" >
+  <resultMap id="BaseResultMap" type="com.mq.model.AboutUs" >
+    <id column="f_id" property="id" jdbcType="BIGINT" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.mq.model.AboutUs" extends="BaseResultMap" >
+    <result column="f_content" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    f_id
+  </sql>
+  <sql id="Blob_Column_List" >
+    f_content
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_about_us
+    where f_id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_about_us
+    where f_id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.mq.model.AboutUs" >
+    insert into t_about_us (f_id, f_content)
+    values (#{id,jdbcType=BIGINT}, #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mq.model.AboutUs" >
+    insert into t_about_us
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        f_id,
+      </if>
+      <if test="content != null" >
+        f_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mq.model.AboutUs" >
+    update t_about_us
+    <set >
+      <if test="content != null" >
+        f_content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where f_id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.mq.model.AboutUs" >
+    update t_about_us
+    set f_content = #{content,jdbcType=LONGVARCHAR}
+    where f_id = #{id,jdbcType=BIGINT}
+  </update>
+
+    <select id="selectOne" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List" />
+        ,
+        <include refid="Blob_Column_List" />
+        from t_about_us limit 1;
+    </select>
+</mapper>

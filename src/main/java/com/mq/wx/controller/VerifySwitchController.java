@@ -12,8 +12,8 @@ public class VerifySwitchController {
     @Resource
     private VerifySwitchService verifySwitchService;
 
-    @RequestMapping("/wx/getVerifySwitch")
-    public String getVerifySwitch() {
+    @RequestMapping("/wx/getButton")
+    public String getButton() {
         Boolean verifySwitch = verifySwitchService.getVerifySwitch();
         return JSON.toJSONString(verifySwitch);
     }

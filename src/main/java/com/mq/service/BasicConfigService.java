@@ -1,6 +1,7 @@
 package com.mq.service;
 
 import com.github.pagehelper.PageInfo;
+import com.mq.model.AboutUs;
 import com.mq.model.Banner;
 import com.mq.model.VideoClassification;
 import com.mq.query.BannerQuery;
@@ -32,4 +33,6 @@ public interface BasicConfigService {
     Banner selectOneBannerById(Long id);
 
     List<Banner> findBanner(BannerQuery query);
+
+    AboutUs getAboutUs();
 }
