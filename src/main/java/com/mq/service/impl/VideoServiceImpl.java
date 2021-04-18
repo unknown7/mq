@@ -255,6 +255,9 @@ public class VideoServiceImpl implements VideoService {
             shareCard.setGoodsType(Enums.PurchaseType.VIDEO.getKey());
             shareCard.setGoodsPrice(videoVo.getPrice());
             shareCard.setProfitShare(videoVo.getProfitShare());
+            if (userVo.getIsEmployee()) {
+				shareCard.setProfitSale(videoVo.getProfitSale());
+			}
             shareCard.setSkey(skey);
             shareCard.setUserId(userVo.getId());
             shareCard.setCreatedTime(now);

@@ -20,6 +20,8 @@ public class ShareCard {
 
     private BigDecimal profitShare;
 
+    private BigDecimal profitSale;
+
     private Date createdTime;
 
     private Date modifiedTime;
@@ -90,7 +92,15 @@ public class ShareCard {
         this.profitShare = profitShare;
     }
 
-    public Date getCreatedTime() {
+	public BigDecimal getProfitSale() {
+		return profitSale;
+	}
+
+	public void setProfitSale(BigDecimal profitSale) {
+		this.profitSale = profitSale;
+	}
+
+	public Date getCreatedTime() {
         return createdTime;
     }
 

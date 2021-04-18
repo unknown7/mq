@@ -257,10 +257,16 @@ public class PaymentServiceImpl implements PaymentService {
                          */
                         if (order.getReferrer() != null) {
                             User user = userMapper.selectByPrimaryKey(order.getReferrer());
-                            ShareCard shareCard = shareCardMapper.selectOneByUserIdAndGoodsId(user.getId(), order.getGoodsId(), order.getGoodsType());
+							UserVo userVo = userService.getVoBySkey(user.getSkey());
+							ShareCard shareCard = shareCardMapper.selectOneByUserIdAndGoodsId(user.getId(), order.getGoodsId(), order.getGoodsType());
                             BigDecimal goodsPrice = shareCard.getGoodsPrice();
-                            BigDecimal profitShare = shareCard.getProfitShare();
-                            BigDecimal points = goodsPrice.multiply(profitShare);
+                            BigDecimal profitPercent;
+                            if (userVo.getIsEmployee()) {
+								profitPercent = shareCard.getProfitSale();
+							} else {
+								profitPercent = shareCard.getProfitShare();
+							}
+                            BigDecimal points = goodsPrice.multiply(profitPercent);
                             RewardPoints rewardPoints = new RewardPoints();
                             rewardPoints.setPoints(points);
                             rewardPoints.setPointsStatus(Enums.PointsStatus.UNUSED.getKey());

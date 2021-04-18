@@ -10,13 +10,14 @@
     <result column="f_goods_type" jdbcType="VARCHAR" property="goodsType" />
     <result column="f_goods_price" jdbcType="DECIMAL" property="goodsPrice" />
     <result column="f_profit_share" jdbcType="DECIMAL" property="profitShare" />
+    <result column="f_profit_sale" jdbcType="DECIMAL" property="profitSale" />
     <result column="f_created_time" jdbcType="TIMESTAMP" property="createdTime" />
     <result column="f_modified_time" jdbcType="TIMESTAMP" property="modifiedTime" />
     <result column="f_del_flag" jdbcType="BIT" property="delFlag" />
   </resultMap>
   <sql id="Base_Column_List">
     f_id, f_user_id, f_skey, f_share_card_real_name, f_goods_id, f_goods_type, f_goods_price, 
-    f_profit_share, f_created_time, f_modified_time, f_del_flag
+    f_profit_share, f_profit_sale, f_created_time, f_modified_time, f_del_flag
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -31,11 +32,11 @@
   <insert id="insert" parameterType="com.mq.model.ShareCard">
     insert into t_share_card (f_id, f_user_id, f_skey, 
       f_share_card_real_name, f_goods_id, f_goods_type, 
-      f_goods_price, f_profit_share, f_created_time, 
+      f_goods_price, f_profit_share, f_profit_sale, f_created_time,
       f_modified_time, f_del_flag)
     values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{skey,jdbcType=VARCHAR}, 
       #{shareCardRealName,jdbcType=VARCHAR}, #{goodsId,jdbcType=BIGINT}, #{goodsType,jdbcType=VARCHAR}, 
-      #{goodsPrice,jdbcType=DECIMAL}, #{profitShare,jdbcType=DECIMAL}, #{createdTime,jdbcType=TIMESTAMP}, 
+      #{goodsPrice,jdbcType=DECIMAL}, #{profitShare,jdbcType=DECIMAL}, #{profitSale,jdbcType=DECIMAL}, #{createdTime,jdbcType=TIMESTAMP},
       #{modifiedTime,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" parameterType="com.mq.model.ShareCard">
@@ -68,6 +69,9 @@
       <if test="profitShare != null">
         f_profit_share,
       </if>
+        <if test="profitSale != null">
+            f_profit_sale,
+        </if>
       <if test="createdTime != null">
         f_created_time,
       </if>
@@ -103,6 +107,9 @@
       <if test="profitShare != null">
         #{profitShare,jdbcType=DECIMAL},
       </if>
+        <if test="profitSale != null">
+            #{profitSale,jdbcType=DECIMAL},
+        </if>
       <if test="createdTime != null">
         #{createdTime,jdbcType=TIMESTAMP},
       </if>
@@ -138,6 +145,9 @@
       <if test="profitShare != null">
         f_profit_share = #{profitShare,jdbcType=DECIMAL},
       </if>
+        <if test="profitSale != null">
+            f_profit_sale = #{profitSale,jdbcType=DECIMAL},
+        </if>
       <if test="createdTime != null">
         f_created_time = #{createdTime,jdbcType=TIMESTAMP},
       </if>
@@ -159,6 +169,7 @@
       f_goods_type = #{goodsType,jdbcType=VARCHAR},
       f_goods_price = #{goodsPrice,jdbcType=DECIMAL},
       f_profit_share = #{profitShare,jdbcType=DECIMAL},
+      f_profit_sale = #{profitSale,jdbcType=DECIMAL},
       f_created_time = #{createdTime,jdbcType=TIMESTAMP},
       f_modified_time = #{modifiedTime,jdbcType=TIMESTAMP},
       f_del_flag = #{delFlag,jdbcType=BIT}
