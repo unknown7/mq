@@ -14,6 +14,7 @@ import com.mq.model.Order;
 import com.mq.model.VideoClassification;
 import com.mq.query.VideoClassificationQuery;
 import com.mq.service.MenuService;
+import com.mq.service.ProfitSharingService;
 import com.mq.util.DateUtil;
 import com.mq.util.MapUtil;
 import com.mq.util.OrderNoGenerator;
@@ -76,6 +77,13 @@ public class SpringBootStartApplicationTest {
     private VideoClassificationMapper videoClassificationMapper;
     @Resource
     private MenuService menuService;
+    @Resource
+	private ProfitSharingService profitSharingService;
+
+    @Test
+	public void share() {
+    	profitSharingService.profitShare();
+	}
 
     @Test
     public void contextLoads() {

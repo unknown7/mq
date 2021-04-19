@@ -2,6 +2,7 @@ package com.mq.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
+import com.mq.base.BaseController;
 import com.mq.query.ProfitSharingQuery;
 import com.mq.service.ProfitSharingService;
 import com.mq.vo.ProfitSharingVo;
@@ -13,7 +14,7 @@ import javax.annotation.Resource;
 
 @Controller
 @RequestMapping("/sharing")
-public class ProfitSharingController {
+public class ProfitSharingController extends BaseController {
 
     @Resource
     private ProfitSharingService profitSharingService;
@@ -29,4 +30,11 @@ public class ProfitSharingController {
         PageInfo<ProfitSharingVo> result = profitSharingService.findPage(query);
         return JSON.toJSONString(result);
     }
+
+	@RequestMapping("/exec")
+	@ResponseBody
+	public String exec() {
+		profitSharingService.profitShare();
+		return success();
+	}
 }

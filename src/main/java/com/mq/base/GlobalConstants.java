@@ -26,6 +26,8 @@ public class GlobalConstants {
     public String notifyUrl;
     @Value("${global-constants.trade-type}")
     public String tradeType;
+	@Value("${global-constants.cert-path}")
+	public String certPath;
 
     /**
      * 订单号生成器信息
@@ -63,4 +65,8 @@ public class GlobalConstants {
     public Long getOrdersLimitPerDay() {
         return ordersLimitPerDay;
     }
+
+	public String getCertPath() {
+		return certPath;
+	}
 }

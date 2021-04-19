@@ -226,6 +226,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public Employee getByOpenId(String openId) {
-		return null;
+		return employeeMapper.selectByOpenId(openId);
 	}
 }

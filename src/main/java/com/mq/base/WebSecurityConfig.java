@@ -49,6 +49,7 @@ public class WebSecurityConfig implements WebMvcConfigurer {
                         .excludePathPatterns("/wx/**")
                         .excludePathPatterns("/videos/**")
                         .excludePathPatterns("/images/**")
+                        .excludePathPatterns("/sharing/exec")
                         .addPathPatterns("/**");
     }
 

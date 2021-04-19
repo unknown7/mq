@@ -12,6 +12,10 @@ import com.mq.util.SignUtil;
 import com.mq.util.MapUtil;
 import com.mq.wx.vo.accessToken.AccessTokenResponse;
 import com.mq.wx.vo.auth.AuthResponse;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.ssl.SSLContexts;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
@@ -19,16 +23,21 @@ import org.dom4j.io.OutputFormat;
 import org.dom4j.io.XMLWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
+import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringWriter;
+import javax.net.ssl.SSLContext;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.security.KeyStore;
 import java.util.Map;
 import java.util.UUID;
 
@@ -485,10 +494,27 @@ public class WxAPI {
 		output.write(doc);
 		requestString.close();
 		output.close();
-		ResponseEntity<String> responseEntity = http.postForEntity(domain, requestString.toString(), String.class, MediaType.APPLICATION_XML);
+
+		KeyStore keyStore = getCertificate(request.getMchId());
+		SSLContext sslContext = SSLContexts.custom().loadKeyMaterial(keyStore, request.getMchId().toCharArray()).build();
+		SSLConnectionSocketFactory sslf = new SSLConnectionSocketFactory(sslContext);
+		CloseableHttpClient httpClient = HttpClients.custom().setSSLSocketFactory(sslf).build();
+
+		HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
+		factory.setConnectionRequestTimeout(5000);
+		factory.setConnectTimeout(5000);
+		factory.setReadTimeout(5000);
+		factory.setHttpClient(httpClient);
+		RestTemplate restTemplate = new RestTemplate(factory);
+		restTemplate.getMessageConverters().set(1, new StringHttpMessageConverter(StandardCharsets.UTF_8));
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_XML);
+		HttpEntity<String> entity = new HttpEntity(requestString.toString(), headers);
+		ResponseEntity<String> responseEntity = restTemplate.postForEntity(domain, entity, String.class);
 		logger.info("请求分账，request：" + requestString);
 		String responseString = responseEntity.getBody();
 		logger.info("请求分账，response：" + responseString);
+
 		doc = DocumentHelper.parseText(responseString);
 		Element root = doc.getRootElement();
 		Element r_return_code = root.element("return_code");
@@ -523,5 +549,16 @@ public class WxAPI {
 			response.setErrCodeDes(r_err_code_des.getStringValue());
 		}
 		return response;
+	}
+
+	private KeyStore getCertificate(String mchId) {
+		try (FileInputStream inputStream = new FileInputStream(new File(globalConstants.getCertPath()))) {
+			KeyStore keyStore = KeyStore.getInstance("PKCS12");
+			keyStore.load(inputStream, mchId.toCharArray());
+			inputStream.close();
+			return keyStore;
+		} catch (Exception e) {
+			throw new RuntimeException(e.getMessage(), e);
+		}
 	}
 }
