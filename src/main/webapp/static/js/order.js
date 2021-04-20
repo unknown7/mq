@@ -125,6 +125,29 @@ $(function () {
     }).on('hide', function (e) {
         e.stopPropagation();
     });
+
+    $('#avatar').ace_file_input({
+        style: 'well',
+        btn_choose: '请上传用户头像',
+        btn_change: null,
+        no_icon: 'ace-icon fa fa-picture-o',
+        droppable: true,
+        thumbnail: 'large',
+        allowExt: ["jpeg", "jpg", "png", "gif", "bmp"],
+        allowMime: ["image/jpg", "image/jpeg", "image/png", "image/gif", "image/bmp"],
+        maxFileSize: 10,
+        before_change: function (files, dropped) {
+            //选择文件 展示之前的事件
+            //return true 保留当前文件; return false 不保留文件；return -1 重置文件框
+            //需要同步等待返回结果
+            $('#avatar_success').val('success');
+            return true;
+        }
+    }).on('file.error.ace', function (e, info) {
+        _alert('info', '请上传图片类型的文件作为头像', '错误的文件格式');
+        _shake($('#fileDiv'));
+        $('#avatar_success').val('');
+    });
 });
 
 var view = function(id) {
