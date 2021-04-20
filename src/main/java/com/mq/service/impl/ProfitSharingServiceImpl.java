@@ -123,7 +123,7 @@ public class ProfitSharingServiceImpl implements ProfitSharingService {
 			profitSharing.setDelFlag(Boolean.FALSE);
 			profitSharing.setTransactionId(response.getTransactionId());
 			profitSharing.setOrderId(response.getOrderId());
-			profitSharing.setEmployeeId(user.getId());
+			profitSharing.setEmployeeId(employee.getId());
 
 			rewardPoints.setPointsStatus(Enums.PointsStatus.WITHDRAW_SUCCESS.getKey());
 

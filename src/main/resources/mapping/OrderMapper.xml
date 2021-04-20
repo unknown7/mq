@@ -252,7 +252,7 @@
     from t_order t1
     join t_video t2 on t1.f_goods_id = t2.f_id
     join t_user t3 on t1.f_user_id = t3.f_id
-    where t1.f_del_flag = 0
+    where t1.f_del_flag = 0 and t1.f_order_status = '004002'
     <if test="orderNo != null and orderNo != ''">
       and t1.f_order_no like concat(concat("%",#{orderNo}),"%")
     </if>

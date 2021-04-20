@@ -49,13 +49,13 @@
                    width="100%">
                 <thead>
                 <tr>
-                    <th width="7%" class="min-mobile-l">分账单号</th>
-                    <th width="7%" class="min-mobile-l">订单号</th>
-                    <th width="4%" class="min-mobile-l">订单金额</th>
-                    <th width="4%" class="min-mobile-l">分账金额</th>
-                    <th width="7%" class="min-mobile-l">微信支付订单号</th>
+                    <th width="6%" class="min-mobile-l">分账单号</th>
+                    <th width="6%" class="min-mobile-l">订单号</th>
+                    <th width="5%" class="min-mobile-l">订单金额</th>
+                    <th width="5%" class="min-mobile-l">分账金额</th>
+                    <th width="6%" class="min-mobile-l">微信支付订单号</th>
                     <th width="7%" class="min-mobile-l">微信分账单号</th>
-                    <th width="4%" class="min-mobile-l">员工</th>
+                    <th width="5%" class="min-mobile-l">员工</th>
                     <th width="7%" class="min-mobile-l">分账时间</th>
                 </tr>
                 </thead>
