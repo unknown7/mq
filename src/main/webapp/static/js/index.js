@@ -45,30 +45,31 @@ $(function () {
             var newPasswordConfirm = $('#passwordModificationForm input[name=newPasswordConfirm]').val();
             if (newPassword != newPasswordConfirm) {
                 _shake($('#passwordModificationForm input[name=newPasswordConfirm]').closest('.form-group'));
-            }
-            $('button').attr('disabled', 'disabled');
-            var formData = new FormData($("#passwordModificationForm")[0]);
-            $.ajax({
-                type: "POST",
-                dataType: "json",
-                url: ctx + "/employee/password/modification",
-                data: formData,
-                cache: false,
-                contentType: false,
-                processData: false,
-                success: function (result) {
-                    $('button').removeAttr('disabled');
-                    if (result.success) {
-                        _alert('success', result.msg);
-                        $('#detail-form').modal('hide');
-                        setTimeout(function() {
-                            window.location = ctx + "/logout";
-                        }, 1200);
-                    } else {
-                        _alert('error', result.msg);
+            } else {
+                $('button').attr('disabled', 'disabled');
+                var formData = new FormData($("#passwordModificationForm")[0]);
+                $.ajax({
+                    type: "POST",
+                    dataType: "json",
+                    url: ctx + "/employee/password/modification",
+                    data: formData,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function (result) {
+                        $('button').removeAttr('disabled');
+                        if (result.success) {
+                            _alert('success', result.msg);
+                            $('#detail-form').modal('hide');
+                            setTimeout(function() {
+                                window.location = ctx + "/logout";
+                            }, 1200);
+                        } else {
+                            _alert('error', result.msg);
+                        }
                     }
-                }
-            });
+                });
+            }
         }
     });
 
