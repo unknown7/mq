@@ -58,9 +58,9 @@
                         </li>
 
                         <li>
-                            <a href="profile.html">
+                            <a href="#" onclick="changePasswordOnClick();">
                                 <i class="ace-icon fa fa-user"></i>
-                                Profile
+                                修改密码
                             </a>
                         </li>
 
@@ -151,6 +151,54 @@
     <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
         <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
     </a>
+
+    <div id="password-modification-form" class="modal fade" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="blue bigger">修改密码</h4>
+                </div>
+
+                <form class="form-horizontal" id="passwordModificationForm" name="passwordModificationForm">
+                    <div class="modal-body">
+
+                        <input type="hidden" name="id" value="${curEmp.id }"/>
+
+                        <div class="form-group">
+                            <div class="col-xs-12 col-sm-11">
+                                <input name="oldPassword" type="text" placeholder="原密码"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-xs-12 col-sm-11">
+                                <input name="newPassword" type="text" placeholder="新密码"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-xs-12 col-sm-11">
+                                <input name="newPasswordConfirm" type="text" placeholder="确认新密码"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button class="btn btn-sm" data-dismiss="modal">
+                            <i class="ace-icon fa fa-times"></i>
+                            取消
+                        </button>
+
+                        <button class="btn btn-sm btn-primary" id="savePassword">
+                            <i class="ace-icon fa fa-check"></i>
+                            保存
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div><!-- /.main-container -->
 <script type="text/javascript">
     var ctx = "${ctx}";

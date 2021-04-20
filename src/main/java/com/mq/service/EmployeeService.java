@@ -30,4 +30,6 @@ public interface EmployeeService {
     Map<String, Employee> findAllGroupByOpenId();
 
     Employee getByOpenId(String openId);
+
+    void passwordModification(Long id, String oldPassword, String newPassword, String newPasswordConfirm) throws Exception;
 }

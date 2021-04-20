@@ -100,4 +100,16 @@ public class EmployeeController extends BaseController {
             return error("员工信息保存时出现问题");
         }
     }
+
+	@RequestMapping("/password/modification")
+	@ResponseBody
+	public String passwordModification(Long id, String oldPassword, String newPassword, String newPasswordConfirm) {
+		try {
+			employeeService.passwordModification(id, oldPassword, newPassword, newPasswordConfirm);
+			return success("新的密码已生效");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return error("修改密码时出现问题");
+		}
+	}
 }

@@ -228,4 +228,18 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public Employee getByOpenId(String openId) {
 		return employeeMapper.selectByOpenId(openId);
 	}
+
+	@Override
+	@Transactional
+	public void passwordModification(Long id, String oldPassword, String newPassword, String newPasswordConfirm) throws Exception {
+    	if (id == null) {
+    		throw new RuntimeException();
+		}
+		Employee employee = employeeMapper.selectByPrimaryKey(id);
+		if (employee == null || !employee.getPassword().equals(SignUtil.md5(oldPassword)) || !newPassword.equals(newPasswordConfirm)) {
+			throw new RuntimeException();
+		}
+		employee.setPassword(SignUtil.md5(newPasswordConfirm));
+		employeeMapper.updateByPrimaryKeySelective(employee);
+	}
 }
