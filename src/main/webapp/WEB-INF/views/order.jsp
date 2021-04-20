@@ -235,6 +235,99 @@
             </div>
         </div>
     </div>
+
+    <div id="user-detail-form" class="modal fade" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="blue bigger">用户信息</h4>
+                </div>
+
+                <form class="form-horizontal" id="userForm" name="userForm" enctype="multipart/form-data">
+                    <div class="modal-body">
+                        <div class="row">
+                            <input name="id" type="hidden"/>
+
+                            <div id="avatarFileDiv" class="col-xs-12 col-sm-4">
+                                <div class="space"></div>
+
+                                <input type="file" id="avatar" name="avatar"/>
+                                <input type="hidden" id="avatar_success" name="avatar_success"/>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-4">
+                                <div class="form-group">
+                                    <label for="nickName">昵称</label>
+                                    <div>
+                                        <input type="text" id="nickName" name="nickName"/>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="gender">性别</label>
+
+                                    <div>
+                                        <select class="form-control" name="gender" id="gender" style="width: 86%">
+                                            <option value="">-</option>
+                                            <option value="1">男</option>
+                                            <option value="2">女</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="createdTime">注册时间</label>
+
+                                    <div>
+                                        <input type="text" id="createdTime" name="createdTime"/>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="openId">微信唯一标识</label>
+                                    <div>
+                                        <input type="text" id="openId" name="openId"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-4">
+                                <div class="form-group">
+                                    <label for="country">国家</label>
+
+                                    <div>
+                                        <input type="text" id="country" name="country"/>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="province">省份</label>
+                                    <div>
+                                        <input type="text" id="province" name="province"/>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="city">城市</label>
+                                    <div>
+                                        <input type="text" id="city" name="city"/>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="language">语言</label>
+                                    <div>
+                                        <input type="text" id="language" name="language"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 <script type="text/javascript">

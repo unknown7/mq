@@ -25,7 +25,13 @@ $(function () {
             },
             {
                 "data": "nickName",
-                "class": "text-center"
+                "class": "text-center",
+                "render": function (data, type, row) {
+                    if (data && row.userId) {
+                        return '<a href="javascript:void(0)" data-id="' + data + '" onclick="view(' + row.userId + ')">' + data + '</a>';
+                    }
+                    return '';
+                }
             },
             {
                 "data": "totalAmount",
@@ -120,3 +126,51 @@ $(function () {
         e.stopPropagation();
     });
 });
+
+var view = function(id) {
+    $.ajax({
+        type: "POST",
+        url: ctx + "/user/selectOne",
+        cache: false,  //禁用缓存
+        data: {
+            id: id
+        },
+        dataType: "json",
+        success: function (result) {
+            $('#userForm').find('input, select').each(function () {
+                var that = $(this);
+                var value = result[that.attr('name')];
+                if (that.attr('name') == 'createdTime') {
+                    value = new Date(value).Format("yyyy-MM-dd hh:mm:ss");
+                }
+                that.val(value);
+            });
+            var data = [
+                {
+                    'id': 'cover',
+                    'oldTile': "请上传用户头像",
+                    'newTile': "用户头像",
+                    'url': result.avatarUrl
+                }
+            ];
+            $.each(data, function (i, item) {
+                var span = $('span[data-title=' + item.oldTile + ']');
+                $(span).addClass('hide-placeholder selected');
+                $(span).children()
+                    .attr('data-title', item.newTile)
+                    .addClass('large')
+                    .prepend("<img class='middle'" +
+                        "style='backgroud-image: url(" + item.url + ");width: 150px;height: 112px;'" +
+                        "src='" + item.url + "'>")
+                    .children().attr('class', ' ace-icon fa fa-picture-o file-image');
+            });
+            viewStatus();
+            $('#user-detail-form').modal('show');
+        }
+    });
+}
+var viewStatus = function() {
+    $('#userForm').find("input[type=text], input[type=number]").attr("readonly", "readonly");
+    $('#userForm').find("input[type=file], select").attr("disabled", "disabled");
+    $("#avatar").next().next().css("display", "none");
+}
