@@ -17,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -241,5 +242,20 @@ public class EmployeeServiceImpl implements EmployeeService {
 		}
 		employee.setPassword(SignUtil.md5(newPasswordConfirm));
 		employeeMapper.updateByPrimaryKeySelective(employee);
+	}
+
+	@Override
+	public void updateAge() {
+		List<Employee> employees = employeeMapper.selectByQuery(new EmployeeQuery());
+		if (!CollectionUtils.isEmpty(employees)) {
+			Date now = new Date();
+			employees.forEach(employee -> {
+				int age;
+				if ((age = DateUtil.calcAge(employee.getBirth(), now)) != employee.getAge()) {
+					employee.setAge(age);
+					employeeMapper.updateByPrimaryKeySelective(employee);
+				}
+			});
+		}
 	}
 }

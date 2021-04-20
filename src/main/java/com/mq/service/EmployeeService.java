@@ -32,4 +32,6 @@ public interface EmployeeService {
     Employee getByOpenId(String openId);
 
     void passwordModification(Long id, String oldPassword, String newPassword, String newPasswordConfirm) throws Exception;
+
+    void updateAge();
 }
