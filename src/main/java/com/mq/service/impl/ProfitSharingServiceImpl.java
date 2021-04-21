@@ -63,12 +63,8 @@ public class ProfitSharingServiceImpl implements ProfitSharingService {
 	private OrderNoGenerator orderNoGenerator;
 
 	@Override
-	public void profitShare() {
-		Date yesterday = DateUtil.addDay(new Date(), -1);
-		String prefix = DateUtil.dateToString(yesterday);
-		Date begin = DateUtil.stringToDate(prefix + " 00:00:00", DateUtil.DATE_TIME_FORMAT);
-		Date end = DateUtil.stringToDate(prefix + " 23:59:59", DateUtil.DATE_TIME_FORMAT);
-		List<InvitationRecord> profitSharableList = invitationRecordService.findProfitSharableList(begin, end);
+	public void profitShare(Date beginTime, Date endTime) {
+		List<InvitationRecord> profitSharableList = invitationRecordService.findProfitSharableList(beginTime, endTime);
 		if (!CollectionUtils.isEmpty(profitSharableList)) {
 			profitSharableList.forEach(invitationRecord -> {
 				try {
