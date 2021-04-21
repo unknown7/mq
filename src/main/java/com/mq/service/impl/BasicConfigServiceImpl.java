@@ -65,7 +65,7 @@ public class BasicConfigServiceImpl implements BasicConfigService {
 			}
 			BigDecimal profitSale = videoClassification.getDefaultProfitSale().divide(new BigDecimal("100"));
 			if (profitSale.compareTo(maxRatioResponse.getMaxRatio()) > 0) {
-				throw new BaseBusinessException("默认分账比例大于商户设置的分账比例，请调整后重试");
+				throw new BaseBusinessException("默认销售提成大于商户设置的分账比例，请调整后重试");
 			}
 			videoClassification.setDefaultProfitSale(profitSale);
 		}

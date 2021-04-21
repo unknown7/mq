@@ -94,7 +94,7 @@ public class VideoServiceImpl implements VideoService {
 			}
 			BigDecimal profitSaleBigDecimal = new BigDecimal(profitSale).divide(new BigDecimal("100"));
 			if (profitSaleBigDecimal.compareTo(maxRatioResponse.getMaxRatio()) > 0) {
-				throw new BaseBusinessException("分账比例大于商户设置的分账比例，请调整后重试");
+				throw new BaseBusinessException("销售提成大于商户设置的分账比例，请调整后重试");
 			}
 			video.setProfitSale(profitSaleBigDecimal);
 		}
