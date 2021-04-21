@@ -23,7 +23,7 @@ public interface VideoService {
               String freeWatchTime,
               MultipartFile cover,
               MultipartFile description
-    ) throws IOException;
+    ) throws Exception;
 
     Video selectOneById(Long id);
 

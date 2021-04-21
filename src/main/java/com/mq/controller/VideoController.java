@@ -3,6 +3,7 @@ package com.mq.controller;
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
 import com.mq.base.BaseController;
+import com.mq.ex.BaseBusinessException;
 import com.mq.model.Video;
 import com.mq.model.VideoClassification;
 import com.mq.query.VideoClassificationQuery;
@@ -60,7 +61,10 @@ public class VideoController extends BaseController {
             String freeWatchTime = request.getParameter("freeWatchTime");
             videoService.save(id, title, subtitle, classification, price, profitShare, profitSale, freeWatchTime, cover, description);
             return success("视频信息已保存");
-        } catch (Exception e) {
+        } catch (BaseBusinessException ex) {
+			ex.printStackTrace();
+			return error(ex.getMsg());
+		} catch (Exception e) {
             e.printStackTrace();
             return error("视频信息保存时出现问题");
         }

@@ -36,6 +36,7 @@ import org.springframework.web.client.RestTemplate;
 import javax.annotation.Resource;
 import javax.net.ssl.SSLContext;
 import java.io.*;
+import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.security.KeyStore;
 import java.util.Map;
@@ -551,6 +552,66 @@ public class WxAPI {
 		return response;
 	}
 
+	public ProfitSharingRatioQueryResponse queryMaxRatio() throws Exception {
+		String domain = "https://api.mch.weixin.qq.com/pay/profitsharingmerchantratioquery";
+		Document doc = DocumentHelper.createDocument();
+		Element xml = doc.addElement("xml");
+		/**
+		 * mch_id
+		 */
+		Element mch_id = xml.addElement("mch_id");
+		mch_id.setText(globalConstants.getMchId());
+		/**
+		 * nonce_str
+		 */
+		Element nonce_str = xml.addElement("nonce_str");
+		nonce_str.setText(SignUtil.md5(UUID.randomUUID().toString()));
+		/**
+		 * sub_mch_id
+		 */
+		Element sub_mch_id = xml.addElement("sub_mch_id");
+		sub_mch_id.setText(globalConstants.getMchId());
+
+		/**
+		 * sign
+		 */
+		Element sign = xml.addElement("sign");
+		Map<String, Object> signData = Maps.newLinkedHashMap();
+		signData.put("mch_id", mch_id.getStringValue());
+		signData.put("nonce_str", nonce_str.getStringValue());
+		signData.put("sub_mch_id", sub_mch_id.getStringValue());
+		signData.put("key", globalConstants.getApiKey());
+		String signStr = SignUtil.HMACSHA256(MapUtil.map2str(signData), globalConstants.getApiKey()).toUpperCase();
+		sign.setText(signStr);
+		OutputFormat format = OutputFormat.createCompactFormat();
+		StringWriter requestString = new StringWriter();
+		XMLWriter output = new XMLWriter(requestString, format);
+		output.write(doc);
+		requestString.close();
+		output.close();
+
+		ResponseEntity<String> responseEntity = http.postForEntity(domain, requestString.toString(), String.class, MediaType.APPLICATION_XML);
+		logger.info("查询分账比例，request：" + requestString);
+		String responseString = responseEntity.getBody();
+		logger.info("查询分账比例，response：" + responseString);
+
+		doc = DocumentHelper.parseText(responseString);
+		Element root = doc.getRootElement();
+		Element r_return_code = root.element("return_code");
+		Element r_mch_id = root.element("mch_id");
+		Element r_max_ratio = root.element("max_ratio");
+		Element r_nonce_str = root.element("nonce_str");
+		Element r_sign = root.element("sign");
+		ProfitSharingRatioQueryResponse response = new ProfitSharingRatioQueryResponse();
+		response.setReturnCode(r_return_code.getStringValue());
+		if (r_max_ratio != null) {
+			// 子商户允许服务商分账的最大比例，单位万分比
+			BigDecimal maxRatio = new BigDecimal(r_max_ratio.getStringValue()).divide(new BigDecimal("10000"));
+			response.setMaxRatio(maxRatio);
+		}
+		return response;
+	}
+
 	private KeyStore getCertificate(String mchId) {
 		try (FileInputStream inputStream = new FileInputStream(new File(globalConstants.getCertPath()))) {
 			KeyStore keyStore = KeyStore.getInstance("PKCS12");
@@ -561,4 +622,5 @@ public class WxAPI {
 			throw new RuntimeException(e.getMessage(), e);
 		}
 	}
+
 }

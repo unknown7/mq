@@ -3,17 +3,20 @@ package com.mq.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.mq.base.GlobalConstants;
+import com.mq.ex.BaseBusinessException;
 import com.mq.mapper.AboutUsMapper;
 import com.mq.mapper.BannerMapper;
 import com.mq.mapper.VideoClassificationMapper;
 import com.mq.model.AboutUs;
 import com.mq.model.Banner;
+import com.mq.model.ProfitSharingRatioQueryResponse;
 import com.mq.model.VideoClassification;
 import com.mq.query.BannerQuery;
 import com.mq.query.VideoClassificationQuery;
 import com.mq.service.BasicConfigService;
 import com.mq.util.FileUtil;
 import com.mq.vo.BannerVo;
+import com.mq.wx.base.WxAPI;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -34,6 +37,8 @@ public class BasicConfigServiceImpl implements BasicConfigService {
     private BannerMapper bannerMapper;
     @Resource
 	private AboutUsMapper aboutUsMapper;
+	@Resource
+	private WxAPI wxAPI;
 
     @Override
     public PageInfo<VideoClassification> findClassificationPageByQuery(VideoClassificationQuery query) {
@@ -44,7 +49,7 @@ public class BasicConfigServiceImpl implements BasicConfigService {
 
     @Override
     @Transactional
-    public void saveClassification(VideoClassification videoClassification) {
+    public void saveClassification(VideoClassification videoClassification) throws Exception {
         Date now = new Date();
         if (videoClassification.getDefaultProfitShare() != null) {
             videoClassification.setDefaultProfitShare(
@@ -54,11 +59,15 @@ public class BasicConfigServiceImpl implements BasicConfigService {
             );
         }
 		if (videoClassification.getDefaultProfitSale() != null) {
-			videoClassification.setDefaultProfitSale(
-					videoClassification.getDefaultProfitSale().divide(
-							new BigDecimal("100")
-					)
-			);
+			ProfitSharingRatioQueryResponse maxRatioResponse = wxAPI.queryMaxRatio();
+			if (!maxRatioResponse.success()) {
+				throw new BaseBusinessException("查询分账比例失败，请稍后重试");
+			}
+			BigDecimal profitSale = videoClassification.getDefaultProfitSale().divide(new BigDecimal("100"));
+			if (profitSale.compareTo(maxRatioResponse.getMaxRatio()) > 0) {
+				throw new BaseBusinessException("默认分账比例大于商户设置的分账比例，请调整后重试");
+			}
+			videoClassification.setDefaultProfitSale(profitSale);
 		}
         /**
          * 新增

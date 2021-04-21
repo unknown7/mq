@@ -15,7 +15,7 @@ import java.util.Map;
 @Component
 public class Http {
     @Resource
-    private RestTemplate restTemplate;
+    public RestTemplate restTemplate;
 
     public <T> ResponseEntity<T> getForEntity(String domain, Map<String, Object> params, Class<T> entityType) {
         StringBuffer buff = new StringBuffer(domain);

@@ -5,9 +5,11 @@ import com.github.pagehelper.PageInfo;
 import com.mq.base.Enums;
 import com.mq.base.GlobalConstants;
 import com.mq.base.RedisObjectHolder;
+import com.mq.ex.BaseBusinessException;
 import com.mq.mapper.ShareCardMapper;
 import com.mq.mapper.VerifySwitchMapper;
 import com.mq.mapper.VideoMapper;
+import com.mq.model.ProfitSharingRatioQueryResponse;
 import com.mq.model.ShareCard;
 import com.mq.model.VerifySwitch;
 import com.mq.model.Video;
@@ -64,7 +66,7 @@ public class VideoServiceImpl implements VideoService {
                      String profitSale,
                      String freeWatchTime,
                      MultipartFile cover,
-                     MultipartFile description) throws IOException {
+                     MultipartFile description) throws Exception {
         Video video = new Video();
         this
         .handleVideo(id, title, subtitle, classification, price, profitShare, profitSale, freeWatchTime, video)
@@ -80,13 +82,21 @@ public class VideoServiceImpl implements VideoService {
                                          String profitShare,
                                          String profitSale,
                                          String freeWatchTime,
-                                         Video video) {
+                                         Video video) throws Exception {
         Date now = new Date();
         if (!StringUtils.isEmpty(profitShare)) {
             video.setProfitShare(new BigDecimal(profitShare).divide(new BigDecimal("100")));
         }
 		if (!StringUtils.isEmpty(profitSale)) {
-			video.setProfitSale(new BigDecimal(profitSale).divide(new BigDecimal("100")));
+			ProfitSharingRatioQueryResponse maxRatioResponse = wxAPI.queryMaxRatio();
+			if (!maxRatioResponse.success()) {
+				throw new BaseBusinessException("查询分账比例失败，请稍后重试");
+			}
+			BigDecimal profitSaleBigDecimal = new BigDecimal(profitSale).divide(new BigDecimal("100"));
+			if (profitSaleBigDecimal.compareTo(maxRatioResponse.getMaxRatio()) > 0) {
+				throw new BaseBusinessException("分账比例大于商户设置的分账比例，请调整后重试");
+			}
+			video.setProfitSale(profitSaleBigDecimal);
 		}
         if (!StringUtils.isEmpty(freeWatchTime)) {
             video.setFreeWatchTime(Integer.valueOf(freeWatchTime));

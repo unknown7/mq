@@ -16,7 +16,7 @@ public interface BasicConfigService {
 
     PageInfo<VideoClassification> findClassificationPageByQuery(VideoClassificationQuery query);
 
-    void saveClassification(VideoClassification videoClassification);
+    void saveClassification(VideoClassification videoClassification) throws Exception;
 
     void removeClassification(Long id);
 

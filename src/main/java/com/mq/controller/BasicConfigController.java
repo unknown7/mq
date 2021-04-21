@@ -3,6 +3,7 @@ package com.mq.controller;
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
 import com.mq.base.BaseController;
+import com.mq.ex.BaseBusinessException;
 import com.mq.model.Banner;
 import com.mq.model.VideoClassification;
 import com.mq.query.BannerQuery;
@@ -42,7 +43,10 @@ public class BasicConfigController extends BaseController {
         try {
             basicConfigService.saveClassification(classification);
             return success("分类设置已保存");
-        } catch (Exception e) {
+        } catch (BaseBusinessException ex) {
+			ex.printStackTrace();
+			return error(ex.getMsg());
+		} catch (Exception e) {
             e.printStackTrace();
             return error("分类设置保存时出现问题");
         }
