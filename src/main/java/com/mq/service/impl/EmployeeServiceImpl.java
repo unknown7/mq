@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.mq.base.GlobalConstants;
 import com.mq.base.RedisObjectHolder;
+import com.mq.ex.BaseBusinessException;
 import com.mq.mapper.EmployeeMapper;
 import com.mq.model.*;
 import com.mq.query.EmployeeQuery;
@@ -237,8 +238,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     		throw new RuntimeException();
 		}
 		Employee employee = employeeMapper.selectByPrimaryKey(id);
-		if (employee == null || !employee.getPassword().equals(SignUtil.md5(oldPassword)) || !newPassword.equals(newPasswordConfirm)) {
-			throw new RuntimeException();
+		if (employee == null) {
+			throw new BaseBusinessException("无效的员工编号，请核对后重试");
+		}
+		if (!employee.getPassword().equals(SignUtil.md5(oldPassword))) {
+			throw new BaseBusinessException("原密码输入错误，请核对后重试");
+		}
+		if (!newPassword.equals(newPasswordConfirm)) {
+			throw new BaseBusinessException("新密码输入不一致，请核对后重试");
 		}
 		employee.setPassword(SignUtil.md5(newPasswordConfirm));
 		employeeMapper.updateByPrimaryKeySelective(employee);
