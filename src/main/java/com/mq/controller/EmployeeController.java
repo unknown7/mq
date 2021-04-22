@@ -3,6 +3,7 @@ package com.mq.controller;
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
 import com.mq.base.BaseController;
+import com.mq.ex.BaseBusinessException;
 import com.mq.model.Employee;
 import com.mq.query.EmployeeQuery;
 import com.mq.service.EmployeeService;
@@ -107,6 +108,9 @@ public class EmployeeController extends BaseController {
 		try {
 			employeeService.passwordModification(id, oldPassword, newPassword, newPasswordConfirm);
 			return success("新的密码已生效");
+		} catch (BaseBusinessException ex) {
+			ex.printStackTrace();
+			return error(ex.getMsg());
 		} catch (Exception e) {
 			e.printStackTrace();
 			return error("修改密码时出现问题");
