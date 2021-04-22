@@ -60,7 +60,7 @@ $(function () {
                         $('button').removeAttr('disabled');
                         if (result.success) {
                             _alert('success', result.msg);
-                            $('#detail-form').modal('hide');
+                            $('#password-modification-form').modal('hide');
                             setTimeout(function() {
                                 window.location = ctx + "/logout";
                             }, 1200);
