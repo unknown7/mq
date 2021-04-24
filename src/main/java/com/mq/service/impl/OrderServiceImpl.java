@@ -32,8 +32,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
 	@Override
-	public Order getByInvitationId(Long invitationId) {
-		Order order = orderMapper.selectByInvitationId(invitationId);
+	public Order getPaidByInvitationId(Long invitationId) {
+		Order order = orderMapper.selectPaidByInvitationId(invitationId);
 		return order;
 	}
 }

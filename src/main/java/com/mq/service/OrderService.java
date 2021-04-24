@@ -9,5 +9,5 @@ public interface OrderService {
 
     PageInfo<OrderVo> findPage(OrderQuery query);
 
-    Order getByInvitationId(Long invitationId);
+    Order getPaidByInvitationId(Long invitationId);
 }

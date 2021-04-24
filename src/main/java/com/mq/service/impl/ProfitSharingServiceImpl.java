@@ -85,7 +85,7 @@ public class ProfitSharingServiceImpl implements ProfitSharingService {
 
 	@Transactional
 	public void doShare(InvitationRecord invitationRecord) throws Exception {
-		Order order = orderService.getByInvitationId(invitationRecord.getId());
+		Order order = orderService.getPaidByInvitationId(invitationRecord.getId());
 		RewardPoints rewardPoints = rewardPointsService.getByOrderId(order.getId());
 		PaymentResult paymentResult = paymentResultMapper.selectSuccessByOutTradeNo(order.getOrderNo());
 		withDrawCheck(order, invitationRecord, rewardPoints, paymentResult);

@@ -25,5 +25,5 @@ public interface OrderMapper {
 
 	Order selectByOrderNo(String orderNo);
 
-	Order selectByInvitationId(Long invitationId);
+	Order selectPaidByInvitationId(Long invitationId);
 }
