@@ -16,5 +16,5 @@ public interface PaymentResultMapper {
 
     int updateByPrimaryKey(PaymentResult record);
 
-    PaymentResult selectByOutTradeNo(@Param("outTradeNo") String outTradeNo);
+    PaymentResult selectSuccessByOutTradeNo(@Param("outTradeNo") String outTradeNo);
 }

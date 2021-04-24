@@ -328,10 +328,12 @@
     where f_id = #{id,jdbcType=BIGINT}
   </update>
 
-    <select id="selectByOutTradeNo" resultMap="BaseResultMap">
+    <select id="selectSuccessByOutTradeNo" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
         from t_payment_result
         where f_out_trade_no = #{outTradeNo,jdbcType=VARCHAR}
+        and f_return_code = 'SUCCESS' and f_result_code = 'SUCCESS'
+        order by f_id desc limit 1
     </select>
 </mapper>

@@ -181,122 +181,70 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    @Transactional
     public void paymentResultNotice(String xml) throws Exception {
-        Document doc = DocumentHelper.parseText(xml);
-        Element root = doc.getRootElement();
-        /**
-         * 验签
-         */
-        Map<String, Object> signData = Maps.newTreeMap();
-        Iterator<Element> iterator = root.elementIterator();
-        while (iterator.hasNext()) {
-            Element next = iterator.next();
-            if (!next.getName().equals("sign")) {
-                signData.put(next.getName(), next.getStringValue());
-            }
-        }
-        String s = MapUtil.map2str(signData);
-        s = s + "&key=" + globalConstants.getApiKey();
-        Element sign = root.element("sign");
-        Assert.isTrue(SignUtil.md5(s).toUpperCase().equals(sign.getStringValue()), "验签失败");
+		Document doc = DocumentHelper.parseText(xml);
+		Element root = doc.getRootElement();
+		/**
+		 * 验签
+		 */
+		Map<String, Object> signData = Maps.newTreeMap();
+		Iterator<Element> iterator = root.elementIterator();
+		while (iterator.hasNext()) {
+			Element next = iterator.next();
+			if (!next.getName().equals("sign")) {
+				signData.put(next.getName(), next.getStringValue());
+			}
+		}
+		String s = MapUtil.map2str(signData);
+		s = s + "&key=" + globalConstants.getApiKey();
+		Element sign = root.element("sign");
+		Assert.isTrue(SignUtil.md5(s).toUpperCase().equals(sign.getStringValue()), "验签失败");
 
-        Element appid = root.element("appid");
-        Element attach = root.element("attach");
-        Element bankType = root.element("bank_type");
-        Element cashFee = root.element("cash_fee");
-        Element feeType = root.element("fee_type");
-        Element isSubscribe = root.element("is_subscribe");
-        Element mchId = root.element("mch_id");
-        Element nonceStr = root.element("nonce_str");
-        Element openid = root.element("openid");
-        Element outTradeNo = root.element("out_trade_no");
-        Element resultCode = root.element("result_code");
-        Element returnCode = root.element("return_code");
-        Element timeEnd = root.element("time_end");
-        Element totalFee = root.element("total_fee");
-        Element tradeType = root.element("trade_type");
-        Element transactionId = root.element("transaction_id");
-        PaymentResult paymentResult = new PaymentResult();
-        paymentResult.setAppid(appid.getStringValue());
-        paymentResult.setAttach(attach != null ? attach.getStringValue() : null);
-        paymentResult.setBankType(bankType.getStringValue());
-        paymentResult.setCashFee(Integer.valueOf(cashFee.getStringValue()));
-        paymentResult.setFeeType(feeType.getStringValue());
-        paymentResult.setIsSubscribe(isSubscribe.getStringValue());
-        paymentResult.setMchId(mchId.getStringValue());
-        paymentResult.setNonceStr(nonceStr.getStringValue());
-        paymentResult.setOpenid(openid.getStringValue());
-        paymentResult.setOutTradeNo(outTradeNo.getStringValue());
-        paymentResult.setResultCode(resultCode.getStringValue());
-        paymentResult.setReturnCode(returnCode.getStringValue());
-        paymentResult.setSign(sign.getStringValue());
-        paymentResult.setTimeEnd(DateUtil.stringToDate(timeEnd.getStringValue(), "yyyyMMddHHmmss"));
-        paymentResult.setTotalFee(Integer.valueOf(totalFee.getStringValue()));
-        paymentResult.setTradeType(tradeType.getStringValue());
-        paymentResult.setTransactionId(transactionId.getStringValue());
-        paymentResultMapper.insertSelective(paymentResult);
-        if ("SUCCESS".equals(paymentResult.getReturnCode())) {
-            if ("SUCCESS".equals(paymentResult.getResultCode())) {
-                /**
-                 * 锁订单号
-                 */
-                synchronized (paymentResult.getOutTradeNo()) {
-                    Order order = orderMapper.selectByOrderNo(paymentResult.getOutTradeNo());
-                    if (Enums.OrderStatus.UNPAID.getKey().equals(order.getOrderStatus())) {
-						Date now = new Date();
-                        order.setOrderStatus(Enums.OrderStatus.PAID.getKey());
-                        order.setModifiedTime(now);
-                        orderMapper.updateByPrimaryKeySelective(order);
-                        /**
-                         * 统计已购买
-                         */
-                        statisticsService.purchaseVideo(order.getSkey(), order.getGoodsId());
-                        /**
-                         * 推荐人奖励
-                         */
-                        if (order.getReferrer() != null) {
-                            User user = userMapper.selectByPrimaryKey(order.getReferrer());
-							UserVo userVo = userService.getVoBySkey(user.getSkey());
-							ShareCard shareCard = shareCardMapper.selectOneByUserIdAndGoodsId(user.getId(), order.getGoodsId(), order.getGoodsType());
-                            BigDecimal goodsPrice = shareCard.getGoodsPrice();
-                            BigDecimal profitPercent;
-                            if (userVo.getIsEmployee()) {
-								profitPercent = shareCard.getProfitSale();
-							} else {
-								profitPercent = shareCard.getProfitShare();
-							}
-                            BigDecimal points = goodsPrice.multiply(profitPercent);
-                            RewardPoints rewardPoints = new RewardPoints();
-                            rewardPoints.setPoints(points);
-                            rewardPoints.setPointsStatus(Enums.PointsStatus.UNUSED.getKey());
-                            rewardPoints.setProfitFrom(order.getUserId());
-                            rewardPoints.setRewardId(shareCard.getId());
-                            rewardPoints.setRewardType(Enums.RewardType.SHARE.getKey());
-                            rewardPoints.setUserId(user.getId());
-                            rewardPoints.setCreatedTime(now);
-                            rewardPoints.setModifiedTime(now);
-                            rewardPoints.setDelFlag(Boolean.FALSE);
-							rewardPoints.setOrderId(order.getId());
-                            rewardPointsMapper.insertSelective(rewardPoints);
+		Element appid = root.element("appid");
+		Element attach = root.element("attach");
+		Element bankType = root.element("bank_type");
+		Element cashFee = root.element("cash_fee");
+		Element feeType = root.element("fee_type");
+		Element isSubscribe = root.element("is_subscribe");
+		Element mchId = root.element("mch_id");
+		Element nonceStr = root.element("nonce_str");
+		Element openid = root.element("openid");
+		Element outTradeNo = root.element("out_trade_no");
+		Element resultCode = root.element("result_code");
+		Element returnCode = root.element("return_code");
+		Element timeEnd = root.element("time_end");
+		Element totalFee = root.element("total_fee");
+		Element tradeType = root.element("trade_type");
+		Element transactionId = root.element("transaction_id");
 
-							invitationRecordService.purchased(order.getInvitationId());
-						}
-                        /**
-                         * 扣取积分
-                         */
-                        if (!StringUtils.isEmpty(paymentResult.getAttach())) {
-                            Map<String, String> attachMap = JSON.parseObject(paymentResult.getAttach(), Map.class);
-                            String unifiedOrderTimeStr = attachMap.get("unifiedOrderTime");
-                            Date unifiedOrderTime = DateUtil.stringToDate(unifiedOrderTimeStr, "yyyyMMddHHmmss");
-                            List<Long> ids = rewardPointsMapper.getUnusedPointsBefore(order.getUserId(), unifiedOrderTime);
-                            rewardPointsMapper.batchUpdateStatus(ids, Enums.PointsStatus.USED.getKey());
-							invitationRecordService.usePoints(order.getUserId(), unifiedOrderTime);
-                        }
-                    }
-                }
-            }
-        }
+		Order order = orderMapper.selectByOrderNo(outTradeNo.getStringValue());
+		if (Enums.OrderStatus.UNPAID.getKey().equals(order.getOrderStatus())) {
+			synchronized (order.getOrderNo()) {
+				order = orderMapper.selectByOrderNo(outTradeNo.getStringValue());
+				if (Enums.OrderStatus.UNPAID.getKey().equals(order.getOrderStatus())) {
+					PaymentResult paymentResult = new PaymentResult();
+					paymentResult.setAppid(appid.getStringValue());
+					paymentResult.setAttach(attach != null ? attach.getStringValue() : null);
+					paymentResult.setBankType(bankType.getStringValue());
+					paymentResult.setCashFee(Integer.valueOf(cashFee.getStringValue()));
+					paymentResult.setFeeType(feeType.getStringValue());
+					paymentResult.setIsSubscribe(isSubscribe.getStringValue());
+					paymentResult.setMchId(mchId.getStringValue());
+					paymentResult.setNonceStr(nonceStr.getStringValue());
+					paymentResult.setOpenid(openid.getStringValue());
+					paymentResult.setOutTradeNo(outTradeNo.getStringValue());
+					paymentResult.setResultCode(resultCode.getStringValue());
+					paymentResult.setReturnCode(returnCode.getStringValue());
+					paymentResult.setSign(sign.getStringValue());
+					paymentResult.setTimeEnd(DateUtil.stringToDate(timeEnd.getStringValue(), "yyyyMMddHHmmss"));
+					paymentResult.setTotalFee(Integer.valueOf(totalFee.getStringValue()));
+					paymentResult.setTradeType(tradeType.getStringValue());
+					paymentResult.setTransactionId(transactionId.getStringValue());
+
+					this.processPaymentResult(paymentResult, order);
+				}
+			}
+		}
     }
 
     /**
@@ -324,4 +272,60 @@ public class PaymentServiceImpl implements PaymentService {
             Assert.isTrue(videoVo.getPrice().compareTo(price) == 0, "invalid_param_price");
         }
     }
+
+	@Transactional
+    public void processPaymentResult(PaymentResult paymentResult, Order order) throws Exception {
+		paymentResultMapper.insertSelective(paymentResult);
+		if ("SUCCESS".equals(paymentResult.getReturnCode()) && "SUCCESS".equals(paymentResult.getResultCode())) {
+			Date now = new Date();
+			order.setOrderStatus(Enums.OrderStatus.PAID.getKey());
+			order.setModifiedTime(now);
+			orderMapper.updateByPrimaryKeySelective(order);
+			/**
+			 * 统计已购买
+			 */
+			statisticsService.purchaseVideo(order.getSkey(), order.getGoodsId());
+			/**
+			 * 推荐人奖励
+			 */
+			if (order.getReferrer() != null) {
+				User user = userMapper.selectByPrimaryKey(order.getReferrer());
+				UserVo userVo = userService.getVoBySkey(user.getSkey());
+				ShareCard shareCard = shareCardMapper.selectOneByUserIdAndGoodsId(user.getId(), order.getGoodsId(), order.getGoodsType());
+				BigDecimal goodsPrice = shareCard.getGoodsPrice();
+				BigDecimal profitPercent;
+				if (userVo.getIsEmployee()) {
+					profitPercent = shareCard.getProfitSale();
+				} else {
+					profitPercent = shareCard.getProfitShare();
+				}
+				BigDecimal points = goodsPrice.multiply(profitPercent);
+				RewardPoints rewardPoints = new RewardPoints();
+				rewardPoints.setPoints(points);
+				rewardPoints.setPointsStatus(Enums.PointsStatus.UNUSED.getKey());
+				rewardPoints.setProfitFrom(order.getUserId());
+				rewardPoints.setRewardId(shareCard.getId());
+				rewardPoints.setRewardType(Enums.RewardType.SHARE.getKey());
+				rewardPoints.setUserId(user.getId());
+				rewardPoints.setCreatedTime(now);
+				rewardPoints.setModifiedTime(now);
+				rewardPoints.setDelFlag(Boolean.FALSE);
+				rewardPoints.setOrderId(order.getId());
+				rewardPointsMapper.insertSelective(rewardPoints);
+
+				invitationRecordService.purchased(order.getInvitationId());
+			}
+			/**
+			 * 扣取积分
+			 */
+			if (!StringUtils.isEmpty(paymentResult.getAttach())) {
+				Map<String, String> attachMap = JSON.parseObject(paymentResult.getAttach(), Map.class);
+				String unifiedOrderTimeStr = attachMap.get("unifiedOrderTime");
+				Date unifiedOrderTime = DateUtil.stringToDate(unifiedOrderTimeStr, "yyyyMMddHHmmss");
+				List<Long> ids = rewardPointsMapper.getUnusedPointsBefore(order.getUserId(), unifiedOrderTime);
+				rewardPointsMapper.batchUpdateStatus(ids, Enums.PointsStatus.USED.getKey());
+				invitationRecordService.usePoints(order.getUserId(), unifiedOrderTime);
+			}
+		}
+	}
 }
