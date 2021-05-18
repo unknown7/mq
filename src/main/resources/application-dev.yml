@@ -40,8 +40,8 @@ server:
 
 global-constants:
   orders-limit-per-day: 1000000
-  app-id: wxbe1297b725055359
-  app-secret: 5c5083238abcd28a120518c7171c24eb
+  app-id: app-id
+  app-secret: app-secret
   mch-id: 1101101101
   api-key: 11011011011011011011011011011011
   notify-url: https://www.unknown7.xyz/mq/wx/paymentResult
